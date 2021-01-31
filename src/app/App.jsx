@@ -139,7 +139,6 @@ function App (props) {
 
           <PrivateRoute path='/profile'
             isAuthenticated={isAuthenticated}
-            currentUser={currentUser}
             component={Profile}
             {...props} />
 
