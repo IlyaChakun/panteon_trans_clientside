@@ -46,7 +46,6 @@ class Profile extends Component {
         },
 
         imageUrl: this.props.currentUser.image === null ? '' : this.props.currentUser.image.imageUrl
-        // imageUrl: this.props.currentUser.image === null ? '' : ''
     }
 
 
@@ -68,7 +67,7 @@ class Profile extends Component {
                     message: localizedStrings.alertAppName,
                     description: localizedStrings.alertSuccessfulUserUpdate,
                 })
-                // this.props.history.push('/profile')
+                this.props.history.push('/profile')
             }).catch(error => {
             notification.error({
                 message: localizedStrings.alertAppName,
