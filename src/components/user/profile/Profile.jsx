@@ -12,6 +12,8 @@ import ImageLoader from "../../common/image/ImageLoader";
 import {withRouter} from "react-router-dom";
 import OrderList from "../../order/OrderList";
 import LoadingIndicator from "../../common/util/LoadingIndicator";
+import { connect } from 'react-redux'
+import { getCurrentUser, updateUserProfile } from '../../../redux/reducers/AuthSliceReducer'
 
 const {TabPane} = Tabs;
 
@@ -28,8 +30,6 @@ const layout = {
 class Profile extends Component {
 
     state = {
-        currentUser: this.props.currentUser,
-
         name: {
             value: this.props.currentUser.name,
             validateStatus: SUCCESS,
@@ -46,12 +46,13 @@ class Profile extends Component {
         },
 
         imageUrl: this.props.currentUser.image === null ? '' : this.props.currentUser.image.imageUrl
+        // imageUrl: this.props.currentUser.image === null ? '' : ''
     }
 
 
     handleSubmit = () => {
         const updateUserRequest = {
-            id: this.state.currentUser.id,
+            id: this.props.currentUser.id,
             name: this.state.name.value,
             phoneNumber: this.state.phoneNumber.value,
             image: {
@@ -61,7 +62,7 @@ class Profile extends Component {
 
         console.log(updateUserRequest)
 
-        updateUserProfileRequest(updateUserRequest)
+        this.props.updateUserProfile(updateUserRequest)
             .then(() => {
                 notification.success({
                     message: localizedStrings.alertAppName,
@@ -79,7 +80,7 @@ class Profile extends Component {
 
     render() {
 
-        const loadingIndicatorOrReadyOrderListForm = this.state.currentUser === null ?
+        const loadingIndicatorOrReadyOrderListForm = this.props.currentUser === null ?
             (
                 <LoadingIndicator/>
             ) : (
@@ -177,7 +178,7 @@ class Profile extends Component {
                                         </Form.Item>
                                     </div>
                                     <div className="col-3">
-                                        <ChangePasswordModal currentUserId={this.state.currentUser.id}/>
+                                        <ChangePasswordModal currentUserId={this.props.currentUser.id}/>
                                     </div>
                                 </div>
                             </Form>
@@ -221,5 +222,11 @@ class Profile extends Component {
 
 }
 
-export default withRouter(Profile)
+const mapStateToProps = state => ({
+  currentUser: state.authState.currentUser.payload
+})
 
+export default withRouter(connect(
+  mapStateToProps,
+  { getCurrentUser, updateUserProfile }
+)(Profile))
