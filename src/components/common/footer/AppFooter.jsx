@@ -4,15 +4,14 @@ import './AppFooter.css'
 import {Link, withRouter} from 'react-router-dom'
 import LoadingIndicator from "../util/LoadingIndicator";
 import {useDispatch, useSelector} from "react-redux";
-import {authSelector, getCurrentCompany, getCurrentUser} from "../../../redux/reducers/AuthSliceReducer";
+import { companySelector, getCurrentCompany } from '../../../redux/reducers/CompanySliceReducer'
 
 const Footer = Layout.Footer
 
 const AppFooter = () => {
 
     const dispatch = useDispatch()
-
-    const {currentCompany} = useSelector(authSelector)
+    const {currentCompany, isLoading} = useSelector(companySelector)
 
     useEffect(() => {
         dispatch(getCurrentCompany())

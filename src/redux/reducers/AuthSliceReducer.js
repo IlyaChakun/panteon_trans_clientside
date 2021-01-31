@@ -8,7 +8,6 @@ const initialState = {
   isLoading: false,
   errors: '',
   currentUser: null,
-  currentCompany: null,
   isAuthenticated: false
 }
 
@@ -25,9 +24,6 @@ const authSlice = createSlice({
     setCurrentUser: (state, payload) => {
       state.currentUser = payload
     },
-    setCurrentCompany: (state, payload) => {
-      state.currentCompany = payload
-    },
     setIsAuthenticated: (state, payload) => {
       state.isAuthenticated = payload
     }
@@ -37,7 +33,6 @@ export const {
   setIsLoading,
   setErrors,
   setCurrentUser,
-  setCurrentCompany,
   setIsAuthenticated
 } = authSlice.actions
 
@@ -72,30 +67,9 @@ export const getCurrentUser = () => {
 
 export const updateUserProfile = (updateUserRequest) => {
   return async dispatch => {
-    const profile = await updateUserProfileRequest(updateUserRequest)
     dispatch(setIsLoading(true))
+    const profile = await updateUserProfileRequest(updateUserRequest)
     dispatch(setCurrentUser(profile))
     dispatch(setIsLoading(false))
-  }
-}
-
-export const getCurrentCompany = () => {
-  return async dispatch => {
-    try {
-      const promise = getCurrentCompanyRequest()
-
-      if (!promise) {
-        return
-      }
-      promise
-        .then(response => {
-          console.log(response)
-          dispatch(setCurrentCompany(response))
-          dispatch(setIsLoading(false))
-        })
-    } catch (error) {
-      dispatch(setErrors(error))
-      dispatch(setIsLoading(false))
-    }
   }
 }

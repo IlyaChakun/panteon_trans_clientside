@@ -33,11 +33,11 @@ import ProductList from '../components/products/product/ProductList'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   authSelector,
-  getCurrentCompany,
   getCurrentUser,
   setCurrentUser,
   setIsAuthenticated
 } from '../redux/reducers/AuthSliceReducer'
+import { getCurrentCompany } from '../redux/reducers/CompanySliceReducer'
 
 const { Content } = Layout
 
@@ -47,7 +47,7 @@ notification.config({
   duration: 2
 })
 
-function App (props) {
+function App(props) {
   const history = useHistory()
 
   const dispatch = useDispatch()
@@ -56,9 +56,10 @@ function App (props) {
     isLoading,
     errors,
     currentUser,
-    currentCompany,
     isAuthenticated
   } = useSelector(authSelector)
+
+  const { currentCompany } = useSelector(authSelector)
 
   useEffect(() => {
     dispatch(getCurrentUser())
@@ -66,8 +67,8 @@ function App (props) {
   }, [dispatch])
 
   const handleLogout = (redirectTo = '/',
-    notificationType = SUCCESS,
-    description = localizedStrings.alertSuccessLogOut) => {
+                        notificationType = SUCCESS,
+                        description = localizedStrings.alertSuccessLogOut) => {
     localStorage.removeItem(ACCESS_TOKEN)
     localStorage.removeItem(REFRESH_TOKEN)
 
@@ -105,8 +106,8 @@ function App (props) {
   return (
     <Layout className='app-wrapper'>
       <AppHeader isAuthenticated={isAuthenticated}
-        currentUser={currentUser}
-        handleLogout={handleLogout}
+                 currentUser={currentUser}
+                 handleLogout={handleLogout}
       />
 
       <Content className='app-content'>
@@ -122,86 +123,86 @@ function App (props) {
         <Switch>
 
           <Route exact path='/login'
-            render={(props) =>
-              <Login onLogin={handleLogin}
-                {...props} />} />
+                 render={(props) =>
+                   <Login onLogin={handleLogin}
+                          {...props} />} />
 
           <Route path='/sign-up'
-            render={(props) =>
-              <SignUp
-                isAuthenticated={isAuthenticated}
-                {...props} />} />
+                 render={(props) =>
+                   <SignUp
+                     isAuthenticated={isAuthenticated}
+                     {...props} />} />
 
           <Route path='/oauth2/redirect'
-            render={(props) =>
-              <OAuth2RedirectHandler onLogin={handleLogin}
-                {...props} />} />
+                 render={(props) =>
+                   <OAuth2RedirectHandler onLogin={handleLogin}
+                                          {...props} />} />
 
           <PrivateRoute path='/profile'
-            isAuthenticated={isAuthenticated}
-            component={Profile}
-            {...props} />
+                        isAuthenticated={isAuthenticated}
+                        component={Profile}
+                        {...props} />
 
           <Route path='/orders/:id'
-            currentUser={currentUser}
-            component={OrderPage} />
+                 currentUser={currentUser}
+                 component={OrderPage} />
 
           <PrivateRoute path='/basket'
-            isAuthenticated={isAuthenticated}
-            currentUser={currentUser}
-            component={Basket}
-            {...props} />
+                        isAuthenticated={isAuthenticated}
+                        currentUser={currentUser}
+                        component={Basket}
+                        {...props} />
 
           <Route exact path='/about/documents'
-            render={(props) =>
-              <DocumentsPage
-                {...props} />} />
+                 render={(props) =>
+                   <DocumentsPage
+                     {...props} />} />
 
           <Route path='/company/shops/:id'
-            render={(props) =>
-              <ShopDetail
-                currentUser={currentUser}
-                currentCompany={currentCompany}
-                {...props} />} />
+                 render={(props) =>
+                   <ShopDetail
+                     currentUser={currentUser}
+                     currentCompany={currentCompany}
+                     {...props} />} />
 
           <Route path='/company/shops'
-            render={(props) =>
-              <ShopsList
-                currentUser={currentUser}
-                currentCompany={currentCompany}
-                {...props} />} />
+                 render={(props) =>
+                   <ShopsList
+                     currentUser={currentUser}
+                     currentCompany={currentCompany}
+                     {...props} />} />
 
           <Route path='/company'
-            render={(props) =>
-              <Company
-                currentUser={currentUser}
-                currentCompany={currentCompany}
-                {...props} />} />
+                 render={(props) =>
+                   <Company
+                     currentUser={currentUser}
+                     currentCompany={currentCompany}
+                     {...props} />} />
 
           <Route exact path='/about/legal'
-            render={(props) =>
-              <LegalPage
-                {...props} />} />
+                 render={(props) =>
+                   <LegalPage
+                     {...props} />} />
 
           <Route path='/company/about'
-            render={(props) =>
-              <AboutPage
-                {...props} />} />
+                 render={(props) =>
+                   <AboutPage
+                     {...props} />} />
 
           <PrivateAdminRoute path='/company'
-            isAuthenticated={isAuthenticated}
-            currentUser={currentUser}
-            currentCompany={currentCompany}
-            component={Company} />
+                             isAuthenticated={isAuthenticated}
+                             currentUser={currentUser}
+                             currentCompany={currentCompany}
+                             component={Company} />
 
           <Route exact path='/about/help'
-            render={(props) =>
-              <HelpPage
-                {...props} />} />
+                 render={(props) =>
+                   <HelpPage
+                     {...props} />} />
 
           <Route path='/products'
-            render={(props) =>
-              <ProductList {...props} />} />
+                 render={(props) =>
+                   <ProductList {...props} />} />
 
           {/* <Route path="/flowers" */}
           {/*       render={(props) => */}
@@ -219,27 +220,27 @@ function App (props) {
           {/*               {...props} />}/> */}
 
           <Route path='/reviews'
-            render={(props) =>
-              <ReviewsList
-                currentUser={currentUser}
-                {...props} />} />
+                 render={(props) =>
+                   <ReviewsList
+                     currentUser={currentUser}
+                     {...props} />} />
 
           <Route path='/'
-            render={(props) =>
-              <Home
-                currentUser={currentUser}
-                {...props} />} />
+                 render={(props) =>
+                   <Home
+                     currentUser={currentUser}
+                     {...props} />} />
 
           <Route component={NotFound} />
 
         </Switch>
       </Content>
-      <AppFooter currentCompany={currentCompany} />
+      <AppFooter/>
     </Layout>
   )
 }
 
-export function isAdmin (currentUser) {
+export function isAdmin(currentUser) {
   if (currentUser !== null && currentUser !== undefined && currentUser.roles !== undefined) {
     const role = currentUser.roles.find(elem => elem.name === ROLE_ADMIN)
     return role === undefined ? false : role.name === ROLE_ADMIN
@@ -247,7 +248,7 @@ export function isAdmin (currentUser) {
   return false
 }
 
-export function isUser (currentUser) {
+export function isUser(currentUser) {
   if (currentUser !== null && currentUser !== undefined && currentUser.roles !== undefined) {
     const role = currentUser.roles.find(elem => elem.name === ROLE_USER)
     return role === undefined ? false : role.name === ROLE_USER
