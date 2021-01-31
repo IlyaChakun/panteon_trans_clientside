@@ -1,0 +1,80 @@
+.ant-layout-header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+
+    background-color: #212121;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
+}
+
+.logo {
+    height: 10vmin;
+    pointer-events: none;
+}
+
+
+.link {
+    color: #61dafb;
+}
+
+
+
+
+.selected {
+    color: #ff372a;
+    border-color: #a5a5a5;
+}
+
+.ant-menu ul li {
+    background-color: #85d7f3;
+}
+
+
+nav.navbar .dropdown:hover > .dropdown-menu {
+    display: block;
+}
+
+@media only screen and (max-device-width: 992px) {
+    nav.navbar .dropdown:hover .dropdown-menu {
+        display: none;
+    }
+}
+
+.container, .container-fluid, .container-sm, .container-md, .container-lg, .container-xl, .container-xxl {
+
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.custom {
+    background-color: #d3ada6;
+}
+
+.title {
+    color: #fff;
+}
+
+header .title a:hover {
+    color: #cf978d;
+}
+
+.wrap_icon {
+    height: 40px;
+}
+
+.header-item {
+    background-color: black;
+    color: white;
+}
+
+.header-item:hover {
+    background-color: darkgrey;
+}
+

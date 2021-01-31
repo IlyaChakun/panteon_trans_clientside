@@ -1,0 +1,8 @@
+
+button {
+  text-transform: uppercase;
+}
+
+.app-wrapper {
+  flex: 1 0 auto;
+}
