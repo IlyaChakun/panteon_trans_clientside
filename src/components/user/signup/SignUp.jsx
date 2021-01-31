@@ -25,28 +25,7 @@ class Signup extends Component {
         },
         confirmedPassword: {
             value: ''
-        },
-        roleTypes: [
-            // {
-            //     role: "ROLE_ADMIN",
-            //     roleName: "Администратор"
-            // },
-            {
-                role: "ROLE_CLIENT",
-                roleName: "Клиент"
-            },
-            // {
-            //     role: "ROLE_ANONYMOUS",
-            //     roleName: "Гость"
-            // },
-            {
-                role: "ROLE_FLORIST",
-                roleName: "Флорист"
-            }
-        ],
-        roleIndex: 0,
-        roleValue:"Клиент"
-
+        }
     }
 
 
@@ -74,7 +53,7 @@ class Signup extends Component {
         } else {
 
             const signupRequest = {
-                roleType: this.state.roleTypes[this.state.roleIndex].role,
+                roleType: 'ROLE_CLIENT',
                 name: this.state.name.value,
                 email: this.state.email.value,
                 password: this.state.password.value,
@@ -109,24 +88,6 @@ class Signup extends Component {
 
 
     render() {
-
-        const roleOptions = this.state.roleTypes.map(
-            (role, index)=>
-                <Option key={index} value={role.role}>
-                    {role.roleName}
-                </Option>
-        )
-
-        const handleRoleChange = (input, option) => {
-            this.setState({
-                roleIndex: option.props.key,
-                roleValue:option.props.value
-            })
-
-            console.log(option.props.key)
-            console.log(option.props.value)
-        }
-
         return (
             <div className={s.container}>
                 <h1 className={s.title}>{localizedStrings.signUp}</h1>
@@ -135,23 +96,6 @@ class Signup extends Component {
                         <Col>
                             <Form {...layout}
                                   onFinish={this.handleSubmit} className={s.form}>
-
-                                <Form.Item
-                                    className={s.formItem}
-                                    label='Выбирете роль'
-                                    hasFeedback
-                                >
-                                    <Select
-                                        name={"roleSelect"}
-                                        showSearch
-                                        defaultValue={{key: this.state.roleIndex, value: this.state.roleValue}}
-                                        value={this.state.roleValue}
-                                        style={{width: 200}}
-                                        onChange={handleRoleChange}
-                                    >
-                                        {roleOptions}
-                                    </Select>
-                                </Form.Item>
 
                                 <Form.Item
                                     className={s.formItem}
