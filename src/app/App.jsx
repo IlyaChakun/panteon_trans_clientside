@@ -48,7 +48,7 @@ notification.config({
 })
 
 function App(props) {
-  const history = useHistory()
+  // const history = useHistory()
 
   const dispatch = useDispatch()
 
@@ -77,8 +77,7 @@ function App(props) {
     dispatch(setCurrentUser(null))
     dispatch(setIsAuthenticated(false))
 
-    // props.history.push(redirectTo)
-    history.push(redirectTo)
+    props.history.push(redirectTo)
 
     notification[notificationType]({
       message: localizedStrings.alertAppName,
@@ -92,7 +91,7 @@ function App(props) {
       description: localizedStrings.alertSuccessLogin
     })
     dispatch(getCurrentUser())
-    history.push('/profile')
+    props.history.push('/profile')
   }
 
   // if (isLoading) {
@@ -139,7 +138,7 @@ function App(props) {
                                           {...props} />} />
 
           <PrivateRoute path='/profile'
-                        isAuthenticated={isAuthenticated}
+                        isAuthenticated={isAuthenticated.payload}
                         component={Profile}
                         {...props} />
 
@@ -225,17 +224,13 @@ function App(props) {
                      currentUser={currentUser}
                      {...props} />} />
 
-          <Route path='/'
-                 render={(props) =>
-                   <Home
-                     currentUser={currentUser}
-                     {...props} />} />
+          <Route path='/' component={Home} />
 
           <Route component={NotFound} />
 
         </Switch>
       </Content>
-      <AppFooter/>
+      <AppFooter />
     </Layout>
   )
 }
