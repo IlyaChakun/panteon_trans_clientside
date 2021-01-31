@@ -18,6 +18,8 @@ export const PASSWORD_MIN_LENGTH = 6
 export const PASSWORD_MAX_LENGTH = 20
 
 export const BASE_URL = 'http://localhost:8081/'
+export const BASE_AUTH_SERVICE_URL = 'http://localhost:8081/'
+export const BASE_COMPANY_SERVICE_URL = 'http://localhost:8082/'
 /* SECURITY HEADERS*/
 export const ACCESS_TOKEN_HEADER_KEY = 'Authorization-Access-Token'
 export const REFRESH_TOKEN_HEADER_KEY = 'Authorization-Refresh-Token'
