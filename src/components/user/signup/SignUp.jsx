@@ -9,8 +9,6 @@ import UserOutlined from '@ant-design/icons/lib/icons/UserOutlined'
 import LockOutlined from '@ant-design/icons/lib/icons/LockOutlined'
 import {validateEmail, validateUserName} from "../../common/validation/ValidationFunctions";
 
-const {Option} = Select;
-
 class Signup extends Component {
 
     state = {
@@ -27,8 +25,6 @@ class Signup extends Component {
             value: ''
         }
     }
-
-
 
     handleInputChange = (event, validationFun) => {
         const target = event.target
