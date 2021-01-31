@@ -46,8 +46,8 @@ const request = (options, grantType) => {
 
   return fetch(options.url, options)
     .then(response => {
-      console.log('request error')
-      console.log('error code= ' + response.status)
+      console.log('request status')
+      console.log('response status code= ' + response.status)
 
       if (response.status === 401) {
         console.log('remove all tokens')
