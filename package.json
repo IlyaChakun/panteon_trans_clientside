@@ -2,6 +2,7 @@
   "name": "flower-shop",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3000/",
   "scripts": {
     "dev": "set PORT=3000 && react-app-rewired start",
     "build": "react-app-rewired build",
