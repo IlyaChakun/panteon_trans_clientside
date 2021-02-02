@@ -1,8 +1,10 @@
 import React, {useEffect} from 'react'
-
-import {Col, List, Row, Select} from 'antd'
 import {withRouter} from "react-router-dom";
+import {Col, List, Row, Select} from 'antd'
 import LoadingIndicator from "../../common/util/LoadingIndicator";
+import AddProductModal from "./AddProductModal"
+import ProductCardProxy from "./ProductCardProxy"
+
 import {useDispatch, useSelector} from "react-redux";
 import {
     getProducts,
@@ -13,8 +15,6 @@ import {
     setShopValue,
     setSize
 } from "../../../redux/reducers/ProductsSliceReducer"
-import AddFlowerModal from "../flower/AddFlowerModal"
-import FlowerCardProxy from "../flower/FlowerCardProxy"
 
 const {Option} = Select;
 
@@ -73,20 +73,20 @@ const ProductList = (props) => {
     }
 
 
-    if (loading === true) {
-        return <LoadingIndicator/>
-    }
+    // if (loading === true) {
+    //     return <LoadingIndicator/>
+    // }
 
     const addProductButton = shopId === undefined ? '' :
         (
-            <AddFlowerModal shopId={shopId}
-                            updateList={updateList}
+            <AddProductModal shopId={shopId}
+                             updateList={updateList}
             />
         )
 
     const productsMap = products
         .map(product => (
-                <FlowerCardProxy
+                <ProductCardProxy
                     history={props.history}
                     key={product.id}
 

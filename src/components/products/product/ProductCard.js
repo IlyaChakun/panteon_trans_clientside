@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Button, Card, Col, Dropdown, Menu, message, Row} from 'antd'
-import '../flower/FlowerCard.css'
+import './ProductCard.css'
 import DownOutlined from "@ant-design/icons/lib/icons/DownOutlined";
 
 const {Meta} = Card

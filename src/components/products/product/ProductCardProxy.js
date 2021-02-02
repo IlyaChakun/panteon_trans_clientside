@@ -1,6 +1,6 @@
 import React from 'react'
 
-import './FlowerCard.css'
+import './ProductCard.css'
 import {isAdmin} from '../../../app/App'
 import DeleteOutlined from '@ant-design/icons/lib/icons/DeleteOutlined'
 import {addProductToBasketRequest} from "../../util/utilsAPI";
@@ -8,6 +8,9 @@ import {notification} from 'antd'
 import {localizedStrings} from "../../util/localization";
 import {useSelector} from "react-redux";
 import {authSelector} from "../../../redux/reducers/AuthSliceReducer";
+import EditProductModal from './EditProductModal'
+import DeleteProductModal from './DeleteProductModal'
+import ProductCard from './ProductCard'
 
 
 const ProductCardProxy = () => {
@@ -41,7 +44,7 @@ const ProductCardProxy = () => {
 
     const editAction = (
         <div className={isAdmin(currentUser) ? '' : 'custom-hidden'}>
-            <EditFlowerModal
+            <EditProductModal
                 shopId={this.props.shopId}
                 productId={this.props.productId}
             />
@@ -49,7 +52,7 @@ const ProductCardProxy = () => {
     )
     const deleteAction = (
         <div className={isAdmin(currentUser) ? '' : 'custom-hidden'}>
-            <DeleteFlowerModal
+            <DeleteProductModal
                 productId={this.props.product.id}
                 button={
                     <DeleteOutlined style={{fontSize: '25px'}}/>
@@ -64,7 +67,7 @@ const ProductCardProxy = () => {
     )
 
     return (
-        <FlowerCard
+        <ProductCard
             key={this.props.productId}
             product={this.props.product}
             firstAction={editAction}

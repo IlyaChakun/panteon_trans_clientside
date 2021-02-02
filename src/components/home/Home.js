@@ -24,8 +24,6 @@ function Home() {
             </Col>
           </Row>
           <ShopsBlock/>
-
-          <SideMenu/>
         </Col>
       </Row>
   )
