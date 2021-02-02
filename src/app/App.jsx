@@ -211,12 +211,6 @@ function App(props) {
           {/*               currentUser={currentUser} */}
           {/*               {...props} />}/> */}
 
-          {/* <Route path="/bouquets" */}
-          {/*       render={(props) => */}
-          {/*           <BouquetList */}
-          {/*               isAuthenticated={isAuthenticated} */}
-          {/*               currentUser={currentUser} */}
-          {/*               {...props} />}/> */}
 
           <Route path='/reviews'
                  render={(props) =>

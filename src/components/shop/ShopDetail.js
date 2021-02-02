@@ -11,7 +11,6 @@ import LoadingIndicator from "../common/util/LoadingIndicator";
 import {SUCCESS} from "../../constants";
 import {localizedStrings} from "../util/localization";
 import FlowersList from "../products/flower/FlowersList";
-import BouquetList from "../products/bouquet/BouquetList";
 import {withRouter} from "react-router-dom";
 import OrderList from "../order/OrderList";
 
@@ -82,14 +81,6 @@ class ShopDetail extends Component {
             );
 
 
-        const loadingIndicatorOrReadyBouquetListForm = this.state.shop === null ?
-            (
-                <LoadingIndicator/>
-            ) : (
-                <BouquetList
-                    currentUser={this.props.currentUser}
-                    shopId={this.state.shop.id}/>
-            );
 
         const loadingIndicatorOrReadyOrderListForm = this.state.shop === null ?
             (
@@ -118,11 +109,6 @@ class ShopDetail extends Component {
                         </div>
                     </TabPane>
 
-                    <TabPane tab="Каталог букетов" key="3">
-                        <div className="container-fluid">
-                            {loadingIndicatorOrReadyBouquetListForm}
-                        </div>
-                    </TabPane>
 
                     <TabPane tab="Список заказов" key="4">
                         <div className="container-fluid">
