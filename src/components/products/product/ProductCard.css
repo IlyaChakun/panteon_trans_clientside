@@ -5,29 +5,39 @@
     word-wrap: break-word;
 }
 
-.ant-card-meta-description{
- color: black;
+.ant-card-meta-description {
+    color: black;
 }
 
-.ant-btn{
+.ant-btn {
     width: 100%;
     padding: 4px;
 }
 
-.ant-btn > .anticon + span, .ant-btn > span + .anticon{
+.ant-btn > .anticon + span, .ant-btn > span + .anticon {
     margin-left: 3px;
 }
 
-.ant-btn > span{
+.ant-btn > span {
     margin-right: 0;
 }
 
 .ant-card-meta-avatar img {
-    width:150px;
-    object-fit:cover;
+    width: 150px;
+    object-fit: cover;
     height: auto;
 }
 
- .ant-card-meta-detail{
-     overflow: visible;
- }
+
+.ant-card-body {
+    text-align: center;
+}
+
+.product-title {
+    font-weight: normal;
+}
+
+.product-art {
+    font-weight: lighter;
+}
+

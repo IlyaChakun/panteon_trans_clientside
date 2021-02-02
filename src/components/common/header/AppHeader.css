@@ -22,18 +22,10 @@
     color: #61dafb;
 }
 
-
-
-
 .selected {
     color: #ff372a;
     border-color: #a5a5a5;
 }
-
-.ant-menu ul li {
-    background-color: #85d7f3;
-}
-
 
 nav.navbar .dropdown:hover > .dropdown-menu {
     display: block;
