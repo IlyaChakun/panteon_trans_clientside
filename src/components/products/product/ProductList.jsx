@@ -15,6 +15,7 @@ import {
     setShopValue,
     setSize
 } from "../../../redux/reducers/ProductsSliceReducer"
+import SideMenu from '../../common/sidemenu/SideMenu'
 
 const {Option} = Select;
 
@@ -92,7 +93,6 @@ const ProductList = (props) => {
 
                     product={product}
                     productId={product.id}
-                    shopId={product.shop.id}
                 />
             )
         )
@@ -141,56 +141,58 @@ const ProductList = (props) => {
                 <Col span={22}>
                     <Row justify="space-between">
                         <Col span={4}>
-                            <h1>Цветы</h1>
+                            <h1>Каталог</h1>
                         </Col>
-                        <Col>
-                            <Select
-                                name={"shopSelect"}
-                                showSearch
-                                defaultValue={{key: shopId, value: shopValue}}
-                                value={shopValue}
-                                style={{width: 200}}
-                                placeholder="Выберите магазин"
-                                onChange={handleShopChange}
-                            >
-                                {shopOptions}
-                            </Select>
-                        </Col>
+                        {/*<Col>*/}
+                        {/*    <Select*/}
+                        {/*        name={"shopSelect"}*/}
+                        {/*        showSearch*/}
+                        {/*        defaultValue={{key: shopId, value: shopValue}}*/}
+                        {/*        value={shopValue}*/}
+                        {/*        style={{width: 200}}*/}
+                        {/*        placeholder="Выберите магазин"*/}
+                        {/*        onChange={handleShopChange}*/}
+                        {/*    >*/}
+                        {/*        {shopOptions}*/}
+                        {/*    </Select>*/}
+                        {/*</Col>*/}
                         <Col span={4}>
                             {addProductButton}
                         </Col>
                     </Row>
-
+                    <Row>
+                        <SideMenu/>
+                    </Row>
                     <List
-                        grid={{
-                            gutter: 16,
-                            column: 3,
-                        }}
-                        pagination={{
+                      grid={{
+                          gutter: 16,
+                          column: 3,
+                      }}
+                      pagination={{
 
-                            loading: loading,
-                            showSizeChanger: true,
+                          loading: loading,
+                          showSizeChanger: true,
 
-                            defaultCurrent: Number(page),
-                            defaultPageSize: Number(size),
+                          defaultCurrent: Number(page),
+                          defaultPageSize: Number(size),
 
-                            pageSizeOptions: ["6", "9", "12"],
-                            position: "bottom",
+                          pageSizeOptions: ["6", "9", "12"],
+                          position: "bottom",
 
-                            total: totalElements,
+                          total: totalElements,
 
-                            showQuickJumper: true,
-                            onShowSizeChange: onSizeChangeHandler,
-                            onChange: onPageChangeHandler,
+                          showQuickJumper: true,
+                          onShowSizeChange: onSizeChangeHandler,
+                          onChange: onPageChangeHandler,
 
-                            loadMore: loadMore
-                        }}
-                        dataSource={productsMap}
-                        renderItem={item => (
-                            <List.Item>
-                                {item}
-                            </List.Item>
-                        )}
+                          loadMore: loadMore
+                      }}
+                      dataSource={productsMap}
+                      renderItem={item => (
+                        <List.Item>
+                            {item}
+                        </List.Item>
+                      )}
                     />
                 </Col>
             </Row>

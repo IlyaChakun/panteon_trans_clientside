@@ -13,17 +13,17 @@ import DeleteProductModal from './DeleteProductModal'
 import ProductCard from './ProductCard'
 
 
-const ProductCardProxy = () => {
+const ProductCardProxy = (props) => {
 
     const {currentUser, isAuthenticated} = useSelector(authSelector)
 
     const addToBasket = () => {
         const productBasket = {
             "userId": currentUser.id,
-            "flowerLengthCostId": this.props.product.flowerLengthCosts[0].id,
-            "productId": this.props.product.id,
+            "flowerLengthCostId": props.product.flowerLengthCosts[0].id,
+            "productId": props.product.id,
             "quantity": 1,
-            "shopId": this.props.shopId
+            "shopId": props.shopId
         };
 
         addProductToBasketRequest(productBasket)
@@ -45,15 +45,14 @@ const ProductCardProxy = () => {
     const editAction = (
         <div className={isAdmin(currentUser) ? '' : 'custom-hidden'}>
             <EditProductModal
-                shopId={this.props.shopId}
-                productId={this.props.productId}
+                productId={props.productId}
             />
         </div>
     )
     const deleteAction = (
         <div className={isAdmin(currentUser) ? '' : 'custom-hidden'}>
             <DeleteProductModal
-                productId={this.props.product.id}
+                productId={props.product.id}
                 button={
                     <DeleteOutlined style={{fontSize: '25px'}}/>
                 }/>
@@ -68,8 +67,8 @@ const ProductCardProxy = () => {
 
     return (
         <ProductCard
-            key={this.props.productId}
-            product={this.props.product}
+            key={props.productId}
+            product={props.product}
             firstAction={editAction}
             secondAction={deleteAction}
             thirdAction={buyAction}

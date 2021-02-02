@@ -1,114 +1,104 @@
-import React, {Component} from 'react'
-import {Button, Card, Col, Dropdown, Menu, message, Row} from 'antd'
+import React from 'react'
+import { Button, Card, Col, Dropdown, Menu, message, Row } from 'antd'
 import './ProductCard.css'
-import DownOutlined from "@ant-design/icons/lib/icons/DownOutlined";
+import DownOutlined from '@ant-design/icons/lib/icons/DownOutlined'
 
-const {Meta} = Card
+import image from '../../../img/8dfe3aad5c7fc4614d3f7a09716b2094.jpg'
+
+const { Meta } = Card
 
 function handleMenuClick(e) {
-    message.info('Click on menu item.');
-    console.log('click', e);
+  message.info('Click on menu item.')
+  console.log('click', e)
 }
 
-class ProductCard extends Component {
+const ProductCard = (props) => {
 
-    state = {
-        dateOfLastUpdate: this.props.product.dateOfLastUpdate,
+  const flowerLengthCosts = props.product.productLengthCost
+    .map(lengthCost => (
+      <Menu.Item
+        key={lengthCost.id}
+      >
+        Длина стебля: {lengthCost.stemLength}
+        <br />
+        Стоимость: {lengthCost.cost}
+      </Menu.Item>
+    ))
+  const flowerLengthCostsMenu = (
+    <Menu onClick={handleMenuClick}>
+      {flowerLengthCosts}
+    </Menu>
+  )
+  const flowerLengthCostsDropdown = (
+    <Dropdown overlay={flowerLengthCostsMenu}
+              overlayStyle={{ width: '100px' }}>
+      <Button>
+        Стоимость и длина <DownOutlined />
+      </Button>
+    </Dropdown>
+  )
 
-        flowerType: this.props.product.flowerType === undefined ? '' : this.props.product.flowerType.flowerType,
+  return (
 
-        flowerColor: this.props.product.flowerColor,
-        flowerLengthCosts: this.props.product.flowerLengthCosts,
-        flowerSort: this.props.product.flowerSort,
-        country: this.props.product.country.countryNameRu,
-        description: this.props.product.description,
-        availableAmountOnStock: this.props.product.availableAmountOnStock,
-        shopAddress: this.props.product.shop.contacts.address,
-        shopCity: this.props.product.shop.contacts.city,
-        shopFirstPhoneNumber: this.props.product.shop.contacts.firstPhoneNumber,
-        imageUrl: this.props.product.image === null ? '' : this.props.product.image.imageUrl
+    <Card
+      hoverable
+      style={{ width: 240 }}
+    >
+      <Meta title="Europe Street beat" description="www.instagram.com" />
+    </Card>,
 
-    }
 
-    render() {
+    <div className='site-card-wrapper'>
+      <Card
+        bodyStyle={{ padding: '10px' }}
+        hoverable
+        // cover={<img alt={props.product.title} src={image} />}
+        // extra={'Страна поставщик: '}
+        // title={<span>{props.product.flowerType}</span>}
+        actions={[
+          props.firstAction,
+          props.secondAction,
+          props.product.availableAmountOnStock > 0 ? props.thirdAction : ''
+        ]}>
 
-        const flowerLengthCosts = this.state.flowerLengthCosts
-            .map(lengthCost => (
-                <Menu.Item
-                    key={lengthCost.id}
-                >
-                    Длина стебля: {lengthCost.stemLength}
-                    <br/>
-                    Стоимость: {lengthCost.price}
-                </Menu.Item>
-            ))
-        const flowerLengthCostsMenu = (
-            <Menu onClick={handleMenuClick}>
-                {flowerLengthCosts}
-            </Menu>
-        )
-        const flowerLengthCostsDropdown = (
-            <Dropdown overlay={flowerLengthCostsMenu}
-                      overlayStyle={{width: '100px'}}>
-                <Button>
-                    Стоимость и длина <DownOutlined/>
-                </Button>
-            </Dropdown>
-        )
+        <Meta
+          style={{ padding: '5px' }}
+          avatar={<img alt={props.product.title} src={image} />}
+          title={
+            <Row>
+              <Col span={24}>
+                <p>
 
-        return (
+                  Сет "Нежный"
+                  Арт.: 009
+                  28 руб.
+                </p>
+                <div>
+                  {flowerLengthCostsDropdown}
+                </div>
+              </Col>
+            </Row>
+          }
 
-            <div className="site-card-wrapper">
-                <Card
-                    bodyStyle={{padding: '10px'}}
-                    hoverable
-                    extra={'Страна поставщик: ' + this.state.country}
-                    title={<span>{this.state.flowerType}</span>}
-                    actions={[
-                        this.props.firstAction,
-                        this.props.secondAction,
-                        this.state.availableAmountOnStock > 0 ? this.props.thirdAction : ''
-                    ]}>
+          description={
+            <div>
+              <div className='product-content-body'>
+                <p>В наличии: {props.product.availableAmount} штук
 
-                    <Meta
-                        style={{padding: "5px"}}
-                        avatar={<img alt={this.state.flowerType} src={this.state.imageUrl}/>}
-                        title={
-                            <Row>
-                                <Col span={24}>
-                                    <p>
-                                        {this.state.flowerColor.colorName}
-                                        <br/>
-                                        {this.state.flowerSort.sortName}
-                                    </p>
-                                    <div>
-                                        {flowerLengthCostsDropdown}
-                                    </div>
-                                </Col>
-                            </Row>
-                        }
+                  Сет "Нежный"
+                  Арт.: 009
+                  28 руб.
+                </p>
+              </div>
 
-                        description={
-                            <div>
-                                <div className="product-content-body">
-                                    <p>В наличии: {this.state.availableAmountOnStock} штук
-                                        <br/>
-                                        В магазине по адресу: {this.state.shopCity}, {this.state.shopAddress}
-                                        <br/>
-                                        Телефон: {this.state.shopFirstPhoneNumber}</p>
-                                </div>
 
-                                <div className="product-rating-footer mb-4">
-                                    Последнее обновление: {this.state.dateOfLastUpdate}
-                                </div>
-                            </div>
-                        }
-                    />
-                </Card>
             </div>
+          }
+        />
+      </Card>
+    </div>
 
-        )
-    }
+  )
 }
 
 export default ProductCard

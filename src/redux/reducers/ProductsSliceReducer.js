@@ -8,8 +8,46 @@ import {
 import { notification } from 'antd'
 import { localizedStrings } from '../../components/util/localization'
 
+import axios from 'axios'
+
 const initialState = {
-  products: [],
+  products: [
+    {
+      id: 1,
+      dateOfLastUpdate: '',
+      unique_id: 1,
+      categoryId: 1,
+      producerId: 1,
+      title: 'rose red',
+      description: 'roses',
+      availableAmount: 10,
+      productLengthCost: [
+        {
+          id: 1,
+          stemLength: 50,
+          cost: 2.5
+        }
+      ]
+    },
+    {
+      id: 2,
+      dateOfLastUpdate: '',
+      unique_id: 2,
+      categoryId: 1,
+      producerId: 1,
+      title: 'pink red',
+      description: 'roses',
+      availableAmount: 100,
+      productLengthCost: [
+        {
+          id: 2,
+          stemLength: 60,
+          cost: 3
+        }
+      ]
+    },
+
+  ],
   categories: ['Готовые букеты', 'Премиум букеты',
     'Корзины с цветами', 'Цветы поштучно', 'Акционные букеты'],
   loading: true,
@@ -59,6 +97,9 @@ const productSlice = createSlice({
     },
     setShopId: (state, payload) => {
       state.shopId = payload
+    },
+    setCategories:(state,payload)=>{
+      state.categories = payload
     }
   }
 })
@@ -72,7 +113,8 @@ export const {
   setSize,
   setShops,
   setShopValue,
-  setShopId
+  setShopId,
+  setCategories
 } = productSlice.actions
 
 export default productSlice.reducer
@@ -132,6 +174,7 @@ export const getShops = () => {
   }
 }
 
+
 export const deleteProduct = (productId) => {
   return async dispatch => {
     // deleteFlowerRequest(productId)
@@ -179,5 +222,22 @@ export const deleteProduct = (productId) => {
     } catch (error) {
       dispatch(setErrors(error))
     }
+  }
+}
+
+
+export const getCategories = () => {
+  return async dispatch => {
+
+    axios.get('http://localhost:8084/categories')
+      .then(resp => {
+        dispatch(setLoading(true))
+        dispatch(setCategories(resp.data))
+        dispatch(setLoading(false))
+      })
+      .catch(error=>{
+        dispatch(setErrors(error))
+        console.log(error)
+      })
   }
 }
