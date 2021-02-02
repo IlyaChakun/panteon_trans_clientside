@@ -139,61 +139,46 @@ const ProductList = (props) => {
         <div className="pb-5">
             <Row justify="center">
                 <Col span={22}>
-                    <Row justify="space-between">
-                        <Col span={4}>
+                    <Row gutter={16} >
+                        <Col span={6}>
                             <h1>Каталог</h1>
-                        </Col>
-                        {/*<Col>*/}
-                        {/*    <Select*/}
-                        {/*        name={"shopSelect"}*/}
-                        {/*        showSearch*/}
-                        {/*        defaultValue={{key: shopId, value: shopValue}}*/}
-                        {/*        value={shopValue}*/}
-                        {/*        style={{width: 200}}*/}
-                        {/*        placeholder="Выберите магазин"*/}
-                        {/*        onChange={handleShopChange}*/}
-                        {/*    >*/}
-                        {/*        {shopOptions}*/}
-                        {/*    </Select>*/}
-                        {/*</Col>*/}
-                        <Col span={4}>
+                            <SideMenu/>
                             {addProductButton}
                         </Col>
+                        <Col span={18}>
+                            <List
+                              grid={{
+                                  gutter: 4,
+                                  column: 3,
+                              }}
+                              pagination={{
+
+                                  loading: loading,
+                                  showSizeChanger: true,
+
+                                  defaultCurrent: Number(page),
+                                  defaultPageSize: Number(size),
+
+                                  pageSizeOptions: ["6", "9", "12"],
+                                  position: "bottom",
+
+                                  total: totalElements,
+
+                                  showQuickJumper: true,
+                                  onShowSizeChange: onSizeChangeHandler,
+                                  onChange: onPageChangeHandler,
+
+                                  loadMore: loadMore
+                              }}
+                              dataSource={productsMap}
+                              renderItem={item => (
+                                <List.Item>
+                                    {item}
+                                </List.Item>
+                              )}
+                            />
+                        </Col>
                     </Row>
-                    <Row>
-                        <SideMenu/>
-                    </Row>
-                    <List
-                      grid={{
-                          gutter: 16,
-                          column: 3,
-                      }}
-                      pagination={{
-
-                          loading: loading,
-                          showSizeChanger: true,
-
-                          defaultCurrent: Number(page),
-                          defaultPageSize: Number(size),
-
-                          pageSizeOptions: ["6", "9", "12"],
-                          position: "bottom",
-
-                          total: totalElements,
-
-                          showQuickJumper: true,
-                          onShowSizeChange: onSizeChangeHandler,
-                          onChange: onPageChangeHandler,
-
-                          loadMore: loadMore
-                      }}
-                      dataSource={productsMap}
-                      renderItem={item => (
-                        <List.Item>
-                            {item}
-                        </List.Item>
-                      )}
-                    />
                 </Col>
             </Row>
         </div>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Card, Col, Dropdown, Menu, message, Row } from 'antd'
+import { Button, Card, Col, Dropdown, Menu, message, Rate, Row } from 'antd'
 import './ProductCard.css'
 import DownOutlined from '@ant-design/icons/lib/icons/DownOutlined'
 
@@ -13,48 +13,12 @@ function handleMenuClick(e) {
 }
 
 const ProductCard = (props) => {
-
-  const flowerLengthCosts = props.product.productLengthCost
-    .map(lengthCost => (
-      <Menu.Item
-        key={lengthCost.id}
-      >
-        Длина стебля: {lengthCost.stemLength}
-        <br />
-        Стоимость: {lengthCost.cost}
-      </Menu.Item>
-    ))
-  const flowerLengthCostsMenu = (
-    <Menu onClick={handleMenuClick}>
-      {flowerLengthCosts}
-    </Menu>
-  )
-  const flowerLengthCostsDropdown = (
-    <Dropdown overlay={flowerLengthCostsMenu}
-              overlayStyle={{ width: '100px' }}>
-      <Button>
-        Стоимость и длина <DownOutlined />
-      </Button>
-    </Dropdown>
-  )
-
   return (
-
-    <Card
-      hoverable
-      style={{ width: 240 }}
-    >
-      <Meta title="Europe Street beat" description="www.instagram.com" />
-    </Card>,
-
-
-    <div className='site-card-wrapper'>
       <Card
-        bodyStyle={{ padding: '10px' }}
+        style={{ border:'1px solid grey', padding:'2px'}}
+        bodyStyle={{ padding: '10px'}}
         hoverable
-        // cover={<img alt={props.product.title} src={image} />}
-        // extra={'Страна поставщик: '}
-        // title={<span>{props.product.flowerType}</span>}
+        cover={<img alt={props.product.title} src={image} />}
         actions={[
           props.firstAction,
           props.secondAction,
@@ -62,42 +26,26 @@ const ProductCard = (props) => {
         ]}>
 
         <Meta
-          style={{ padding: '5px' }}
-          avatar={<img alt={props.product.title} src={image} />}
           title={
             <Row>
               <Col span={24}>
-                <p>
-
+                <div className='product-rating'>
+                  <Rate disabled defaultValue={2} />
+                </div>
+                <div className='product-title'>
                   Сет "Нежный"
+                </div>
+                <div className='product-art'>
                   Арт.: 009
+                </div>
+                <div className='product-cost'>
                   28 руб.
-                </p>
-                <div>
-                  {flowerLengthCostsDropdown}
                 </div>
               </Col>
             </Row>
           }
-
-          description={
-            <div>
-              <div className='product-content-body'>
-                <p>В наличии: {props.product.availableAmount} штук
-
-                  Сет "Нежный"
-                  Арт.: 009
-                  28 руб.
-                </p>
-              </div>
-
-
-            </div>
-          }
         />
       </Card>
-    </div>
-
   )
 }
 

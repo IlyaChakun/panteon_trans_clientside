@@ -46,11 +46,28 @@ const initialState = {
         }
       ]
     },
+    {
+      id: 3,
+      dateOfLastUpdate: '',
+      unique_id: 3,
+      categoryId: 1,
+      producerId: 1,
+      title: 'llll red',
+      description: 'rotttes',
+      availableAmount: 50,
+      productLengthCost: [
+        {
+          id: 3,
+          stemLength: 70,
+          cost: 5
+        }
+      ]
+    },
 
   ],
   categories: ['Готовые букеты', 'Премиум букеты',
     'Корзины с цветами', 'Цветы поштучно', 'Акционные букеты'],
-  loading: true,
+  loading: false,
   errors: '',
 
   shops: [],

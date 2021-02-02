@@ -10,7 +10,7 @@ import githubLogo from '../../../img/github-logo.png'
 
 function SocialLogin () {
   return (
-    <>
+    <div className={s.socialdiv}>
       <div className={s.separator}>
         <span className={s.text}>{localizedStrings.useSocial}</span>
       </div>
@@ -34,7 +34,7 @@ function SocialLogin () {
           {localizedStrings.logInWithFacebook}
         </a>
       </Form.Item>
-    </>
+    </div>
   )
 }
 
