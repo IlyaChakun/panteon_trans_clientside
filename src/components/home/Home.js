@@ -14,7 +14,7 @@ function Home() {
           <div className="mb-5">
             <CarouselComponent/>
           </div>
-          <FlowersList/>
+          {/*<FlowersList/>*/}
           <Row justify="center">
             <Col span={20}>
               <ReviewsList/>

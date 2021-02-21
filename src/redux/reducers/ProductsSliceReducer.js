@@ -62,11 +62,28 @@ const initialState = {
           cost: 5
         }
       ]
-    },
-
+    }
   ],
   categories: ['Готовые букеты', 'Премиум букеты',
     'Корзины с цветами', 'Цветы поштучно', 'Акционные букеты'],
+
+
+  flowerTypesValues: [{ flowerType: 'rose' }, { flowerType: 'fiona' }],
+  flowerSortsValues: [{ sortNameRu: 'naomi' }, { sortNameRu: 'pine' }],
+  flowerColorsValues: [{ colorName: 'red' }, { colorName: 'pink' }],
+  flowerLengthCostValues: [
+    {
+      stemLength: 70,
+      cost: 2.5
+    },
+    {
+      stemLength: 60,
+      cost: 2.0
+    },
+  ],
+  countriesValues: [{ countryNameRu: 'рф' }, { countryNameRu: 'рб' }],
+
+
   loading: false,
   errors: '',
 
@@ -115,9 +132,27 @@ const productSlice = createSlice({
     setShopId: (state, payload) => {
       state.shopId = payload
     },
-    setCategories:(state,payload)=>{
+    setCategories: (state, payload) => {
       state.categories = payload
-    }
+    },
+
+
+    setCountriesValues: (state, payload) => {
+      state.countriesValues = payload
+    },
+    setFlowerTypesValues: (state, payload) => {
+      state.flowerTypesValues = payload
+    },
+    setFlowerSortsValues: (state, payload) => {
+      state.flowerSortsValues = payload
+    },
+    setFlowerColorsValues: (state, payload) => {
+      state.flowerColorsValues = payload
+    },
+    setFlowerLengthCostValues: (state, payload) => {
+      state.flowerLengthCostValues = payload
+    },
+
   }
 })
 export const {
@@ -131,7 +166,12 @@ export const {
   setShops,
   setShopValue,
   setShopId,
-  setCategories
+  setCategories,
+  setCountriesValues,
+  setFlowerTypesValues,
+  setFlowerSortsValues,
+  setFlowerColorsValues,
+  setFlowerLengthCostValues,
 } = productSlice.actions
 
 export default productSlice.reducer
@@ -252,7 +292,89 @@ export const getCategories = () => {
         dispatch(setCategories(resp.data))
         dispatch(setLoading(false))
       })
-      .catch(error=>{
+      .catch(error => {
+        dispatch(setErrors(error))
+        console.log(error)
+      })
+  }
+}
+
+
+
+export const getCountriesValues = () => {
+  return async dispatch => {
+
+    axios.get('http://localhost:8084/countriesValues')
+      .then(resp => {
+        dispatch(setLoading(true))
+        dispatch(setCountriesValues(resp.data))
+        dispatch(setLoading(false))
+      })
+      .catch(error => {
+        dispatch(setErrors(error))
+        console.log(error)
+      })
+  }
+}
+
+export const getFlowerTypesValues = () => {
+  return async dispatch => {
+
+    axios.get('http://localhost:8084/flowerTypesValues')
+      .then(resp => {
+        dispatch(setLoading(true))
+        dispatch(setFlowerTypesValues(resp.data))
+        dispatch(setLoading(false))
+      })
+      .catch(error => {
+        dispatch(setErrors(error))
+        console.log(error)
+      })
+  }
+}
+
+export const getFlowerSortsValues = () => {
+  return async dispatch => {
+
+    axios.get('http://localhost:8084/flowerSortsValues')
+      .then(resp => {
+        dispatch(setLoading(true))
+        dispatch(setFlowerSortsValues(resp.data))
+        dispatch(setLoading(false))
+      })
+      .catch(error => {
+        dispatch(setErrors(error))
+        console.log(error)
+      })
+  }
+}
+
+export const getFlowerColorsValues = () => {
+  return async dispatch => {
+
+    axios.get('http://localhost:8084/flowerColorsValues')
+      .then(resp => {
+        dispatch(setLoading(true))
+        dispatch(setFlowerColorsValues(resp.data))
+        dispatch(setLoading(false))
+      })
+      .catch(error => {
+        dispatch(setErrors(error))
+        console.log(error)
+      })
+  }
+}
+
+export const getFlowerLengthCostValues = () => {
+  return async dispatch => {
+
+    axios.get('http://localhost:8084/flowerLengthCostValues')
+      .then(resp => {
+        dispatch(setLoading(true))
+        dispatch(setFlowerLengthCostValues(resp.data))
+        dispatch(setLoading(false))
+      })
+      .catch(error => {
         dispatch(setErrors(error))
         console.log(error)
       })

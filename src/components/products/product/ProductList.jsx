@@ -16,6 +16,7 @@ import {
     setSize
 } from "../../../redux/reducers/ProductsSliceReducer"
 import SideMenu from '../../common/sidemenu/SideMenu'
+import AddStockModal from './AddStockModal'
 
 const {Option} = Select;
 
@@ -83,6 +84,11 @@ const ProductList = (props) => {
             <AddProductModal shopId={shopId}
                              updateList={updateList}
             />
+
+    // <AddStockModal
+    //   updateList={updateList}
+    //   companyId={shopId}
+    // />
         )
 
     const productsMap = products

@@ -3,16 +3,13 @@ import React, {Component} from 'react'
 import s from "../../user/profile/Profile.module.css";
 import {Button, Form, Select, Input, Row, Col, Space} from "antd";
 import ImageLoader from "../../common/image/ImageLoader";
-import {
-    getCountriesRequest,
-    getFlowerColorsRequest, getFlowerLengthCostsRequest,
-    getFlowerSortsRequest,
-    getFlowerTypesRequest
-} from "../../util/utilsAPI";
 import {ERROR, SUCCESS} from "../../../constants";
 import validateId from "../product/ProductValidation";
 
 import {MinusCircleOutlined, PlusOutlined} from '@ant-design/icons';
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { getCurrentUser, updateUserProfile } from '../../../redux/reducers/AuthSliceReducer'
 
 
 const Option = Select.Option;
@@ -27,17 +24,10 @@ const layout = {
 };
 
 
-export default class ProductForm extends Component {
+class ProductForm extends Component {
 
 
     state = {
-
-        flowerTypesValues: [],
-        flowerSortsValues: [],
-        flowerColorsValues: [],
-        flowerLengthCostValues: [],
-        countiesValues: [],
-
         id: this.props.flower.id,
 
         dateOfLastUpdate: {
@@ -51,7 +41,6 @@ export default class ProductForm extends Component {
             validateStatus: this.props.validateStatus
         },
         flowerColor: {
-            // values: this.props.bouquet.flowerColors,
             value: this.props.flower.flowerColor,
             validateStatus: this.props.validateStatus
         },
@@ -60,7 +49,6 @@ export default class ProductForm extends Component {
             validateStatus: this.props.validateStatus
         },
         flowerSort: {
-            // values: this.props.bouquet.flowerSorts,
             value: this.props.flower.flowerSort,
             validateStatus: this.props.validateStatus
         },
@@ -81,85 +69,8 @@ export default class ProductForm extends Component {
         imageUrl: this.props.flower.image === null ? '' : this.props.flower.image.imageUrl
     }
 
-    componentDidMount() {
-        this.resolveCountries()
-        this.resolveFlowerSorts()
-        this.resolveFlowerTypes()
-        this.resolveFlowerColors()
-        this.resolveFlowerLengthCosts()
-    }
-
-    resolveCountries() {
-        const promise = getCountriesRequest()
-        promise
-            .then(response => {
-
-                this.setState({
-                    countiesValues: response
-                });
-
-            }).catch(() => {
-
-        });
-    }
-
-    resolveFlowerTypes() {
-        const promise = getFlowerTypesRequest()
-        promise
-            .then(response => {
-
-                this.setState({
-                    flowerTypesValues: response
-                });
-
-            }).catch(() => {
-        });
-    }
-
-    resolveFlowerSorts() {
-        const promise = getFlowerSortsRequest()
-        promise
-            .then(response => {
-
-                this.setState({
-                    flowerSortsValues: response
-                });
-
-            }).catch(() => {
-        });
-    }
-
-    resolveFlowerLengthCosts() {
-        const promise = getFlowerLengthCostsRequest()
-        promise
-            .then(response => {
-                console.log("getFlowerLengthCostsRequest")
-                console.log(response)
-                this.setState({
-                    flowerLengthCostValues: response
-                });
-
-            }).catch(() => {
-        });
-    }
-
-
-    resolveFlowerColors() {
-        const promise = getFlowerColorsRequest()
-        promise
-            .then(response => {
-
-                this.setState({
-                    flowerColorsValues: response
-                });
-
-            }).catch(() => {
-        });
-    }
-
 
     isFormInvalid = () => {
-
         return !(
             this.state.country.validateStatus === SUCCESS
         )
@@ -208,14 +119,14 @@ export default class ProductForm extends Component {
 
     render() {
 
-        const countriesOptions = this.state.countiesValues.map(
+        const countriesOptions = this.props.countriesValues.map(
             element =>
                 <Option key={element.id} value={element.countryNameRu}>
                     {element.countryNameRu}
                 </Option>
         )
 
-        const flowerColorsOptions = this.state.flowerColorsValues.map(
+        const flowerColorsOptions = this.props.flowerColorsValues.map(
             element =>
                 <Option key={element.id}
                         value={element.colorName}
@@ -225,32 +136,26 @@ export default class ProductForm extends Component {
                 </Option>
         )
 
-        const flowerTypesOptions = this.state.flowerTypesValues.map(
+        const flowerTypesOptions = this.props.flowerTypesValues.map(
             element =>
                 <Option key={element.id} value={element.flowerType}>
                     {element.flowerType}
                 </Option>
         )
 
-        const flowerSortsOptions = this.state.flowerSortsValues.map(
+        const flowerSortsOptions = this.props.flowerSortsValues.map(
             element =>
                 <Option key={element.id} value={element.sortNameRu}>
                     {element.sortNameRu}
                 </Option>
         )
 
-        const flowerLengthCostsOptions = this.state.flowerLengthCostValues.map(
+        const flowerLengthCostsOptions = this.props.flowerLengthCostValues.map(
             element =>
                 <Option key={element.id} value={element.length}>
-                    {element.stemLength} см - {element.price} руб
+                    {element.stemLength} см - {element.cost} руб
                 </Option>
         )
-
-        const areas = [
-            {label: 'Beijing', value: 'Beijing'},
-            {label: 'Shanghai', value: 'Shanghai'},
-        ];
-
 
         return (
             <Form {...layout}
@@ -275,7 +180,6 @@ export default class ProductForm extends Component {
                                     hasFeedback
                                     help={this.state.country.errorMsg}
                                 >
-
 
                                     <Select
                                         name="country"
@@ -371,7 +275,7 @@ export default class ProductForm extends Component {
                                     </Select>
 
 
-                                    <Form.List name="sights">
+                                    <Form.List name="sights" >
                                         {(fields, {add, remove}) => (
                                             <>
                                                 {fields.map(field => (
@@ -388,12 +292,12 @@ export default class ProductForm extends Component {
                                                                     label="Длина"
                                                                     name={[field.name, 'length']}
                                                                     fieldKey={[field.fieldKey, 'length']}
-                                                                    rules={[{required: true, message: 'Missing length'}]}
+                                                                    rules={[{required: true, message: 'Введите длину'}]}
                                                                 >
                                                                     <Select
                                                                         // disabled={!form.getFieldValue('area')}
                                                                             style={{width: 130}}>
-                                                                        {(this.state.flowerLengthCostValues['stemLength'] || []).map(item => (
+                                                                        {(this.props.flowerLengthCostValues['stemLength'] || []).map(item => (
                                                                             <Option key={item} value={item}>
                                                                                 {item}
                                                                             </Option>
@@ -405,10 +309,10 @@ export default class ProductForm extends Component {
 
                                                         <Form.Item
                                                             {...field}
-                                                            label="Price"
+                                                            label="Цена"
                                                             name={[field.name, 'price']}
                                                             fieldKey={[field.fieldKey, 'price']}
-                                                            rules={[{required: true, message: 'Missing price'}]}
+                                                            rules={[{required: true, message: 'Введите цену'}]}
                                                         >
                                                             <Input/>
                                                         </Form.Item>
@@ -418,7 +322,8 @@ export default class ProductForm extends Component {
                                                 ))}
 
                                                 <Form.Item>
-                                                    <Button type="dashed" onClick={() => add()} block
+                                                    <Button type="dashed" onClick={() => add()}
+                                                            block
                                                             icon={<PlusOutlined/>}>
                                                         Добавить длину и цену
                                                     </Button>
@@ -426,6 +331,7 @@ export default class ProductForm extends Component {
                                             </>
                                         )}
                                     </Form.List>
+
                                 </Form.Item>
 
 
@@ -599,3 +505,16 @@ export default class ProductForm extends Component {
     }
 
 }
+
+const mapStateToProps = state => ({
+    flowerTypesValues: state.productsState.flowerTypesValues,
+    flowerSortsValues: state.productsState.flowerSortsValues,
+    flowerColorsValues: state.productsState.flowerColorsValues,
+    flowerLengthCostValues: state.productsState.flowerLengthCostValues,
+    countriesValues: state.productsState.countriesValues,
+})
+
+export default withRouter(connect(
+  mapStateToProps,
+  { getCurrentUser, updateUserProfile }
+)(ProductForm))

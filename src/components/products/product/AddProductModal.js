@@ -25,14 +25,14 @@ class AddProductModal extends Component {
 
     showModal = () => {
         this.setState({
-            visible: true,
+            visible: true
         });
     };
 
     handleCancel = e => {
         console.log(e);
         this.setState({
-            visible: false,
+            visible: false
         });
     };
 
