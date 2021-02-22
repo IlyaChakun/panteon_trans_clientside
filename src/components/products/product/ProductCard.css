@@ -22,10 +22,39 @@
     margin-right: 0;
 }
 
+button.one-click-buy {
+    color: lawngreen;
+    border: 1px solid lawngreen;
+    margin-top: 16px;
+}
+
+button.cart-buy {
+    background: lawngreen;
+    margin-bottom: 16px;
+}
+
+button.one-click-buy:hover {
+    color: forestgreen;
+    border: 1px solid forestgreen;
+}
+
+button.cart-buy:hover {
+    background: forestgreen;
+}
+
 .ant-card-meta-avatar img {
     width: 150px;
     object-fit: cover;
     height: auto;
+}
+
+
+
+.radio-group{
+    position: absolute;
+    z-index: 100000;
+    top: 260px;
+    right: 0px;
 }
 
 

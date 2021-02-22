@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
 import s from "../../user/profile/Profile.module.css";
-import {Button, Form, Select, Input, Row, Col, Space} from "antd";
+import { Button, Form, Select, Input, Row, Col, Space, Divider, Tooltip } from 'antd'
 import ImageLoader from "../../common/image/ImageLoader";
 import {ERROR, SUCCESS} from "../../../constants";
 import validateId from "../product/ProductValidation";
@@ -16,10 +16,10 @@ const Option = Select.Option;
 
 const layout = {
     labelCol: {
-        span: 8,
+        span: 6,
     },
     wrapperCol: {
-        span: 16,
+        span: 18,
     },
 };
 
@@ -157,22 +157,26 @@ class ProductForm extends Component {
                 </Option>
         )
 
+
+
         return (
             <Form {...layout}
                   onFinish={this.handleSubmit}
                   initialValues={{}}
+                  name="dynamic_form_nest_item"
+                  autoComplete="off"
             >
                 <Row>
                     <Col span={24}>
                         <Row>
-                            <Col span={12}>
+                            <Col span={10}>
                                 <ImageLoader
                                     imageUrl={this.state.imageUrl}
                                     handleImageUrlChange={this.handleImageUrlChange}
                                 />
                             </Col>
 
-                            <Col span={12}>
+                            <Col span={14}>
 
                                 <Form.Item
                                     label={'Страна поставщик'}
@@ -274,65 +278,81 @@ class ProductForm extends Component {
                                         {flowerLengthCostsOptions}
                                     </Select>
 
-
-                                    <Form.List name="sights" >
-                                        {(fields, {add, remove}) => (
-                                            <>
-                                                {fields.map(field => (
-                                                    <Space key={field.key} align="baseline">
-                                                        <Form.Item
-                                                            noStyle
-                                                            shouldUpdate={(prevValues, curValues) =>
-                                                                prevValues.area !== curValues.area || prevValues.sights !== curValues.sights
-                                                            }
-                                                        >
-                                                            {() => (
-                                                                <Form.Item
-                                                                    {...field}
-                                                                    label="Длина"
-                                                                    name={[field.name, 'length']}
-                                                                    fieldKey={[field.fieldKey, 'length']}
-                                                                    rules={[{required: true, message: 'Введите длину'}]}
-                                                                >
-                                                                    <Select
-                                                                        // disabled={!form.getFieldValue('area')}
-                                                                            style={{width: 130}}>
-                                                                        {(this.props.flowerLengthCostValues['stemLength'] || []).map(item => (
-                                                                            <Option key={item} value={item}>
-                                                                                {item}
-                                                                            </Option>
-                                                                        ))}
-                                                                    </Select>
-                                                                </Form.Item>
-                                                            )}
-                                                        </Form.Item>
-
-                                                        <Form.Item
-                                                            {...field}
-                                                            label="Цена"
-                                                            name={[field.name, 'price']}
-                                                            fieldKey={[field.fieldKey, 'price']}
-                                                            rules={[{required: true, message: 'Введите цену'}]}
-                                                        >
-                                                            <Input/>
-                                                        </Form.Item>
-
-                                                        <MinusCircleOutlined onClick={() => remove(field.name)}/>
-                                                    </Space>
-                                                ))}
-
-                                                <Form.Item>
-                                                    <Button type="dashed" onClick={() => add()}
-                                                            block
-                                                            icon={<PlusOutlined/>}>
-                                                        Добавить длину и цену
-                                                    </Button>
-                                                </Form.Item>
-                                            </>
-                                        )}
-                                    </Form.List>
-
                                 </Form.Item>
+
+
+                                <Form.List name="lengthcosts" >
+                                  {(fields, {add, remove}) => (
+                                    <>
+                                      {fields.map((field,index) => (
+                                        <div
+                                          key={field.key}
+                                          style={{ display: 'flex'}}
+                                          align="baseline">
+
+                                          <Form.Item
+                                            noStyle
+                                            shouldUpdate={(prevValues, curValues) =>
+                                              prevValues.area !== curValues.area || prevValues.sights !== curValues.sights
+                                            }
+                                          >
+                                            {() => (
+                                              <Form.Item
+                                                {...field}
+                                                label="Длина"
+                                                name={[field.name, 'length']}
+                                                labelCol={{span: 11, offset: 1}}
+                                                wrapperCol={{span:12}}
+                                                fieldKey={[field.fieldKey, 'length']}
+                                                rules={[{required: true, message: 'Введите длину'}]}
+                                              >
+                                                <Select
+                                                  // disabled={!form.getFieldValue('area')}
+                                                  style={{width:120}}
+                                                >
+                                                  {(this.props.flowerLengthCostValues['stemLength'] || []).map(item => (
+                                                    <Option key={item} value={item}>
+                                                      {item}
+                                                    </Option>
+                                                  ))}
+                                                </Select>
+                                              </Form.Item>
+                                            )}
+                                          </Form.Item>
+
+                                          <Form.Item
+                                            {...field}
+                                            labelCol={{span: 8, offset: 2}}
+                                            wrapperCol={{span:14}}
+                                            label="Цена"
+                                            name={[field.name, 'price']}
+                                            fieldKey={[field.fieldKey, 'price']}
+                                            rules={[{required: true, message: 'Введите цену'}]}
+                                          >
+                                            <Input/>
+                                          </Form.Item>
+
+                                          <MinusCircleOutlined
+                                            style={{marginLeft:16, paddingTop: 8}}
+                                            onClick={() => remove(field.name)}/>
+                                        </div>
+                                      ))}
+
+                                      <Form.Item>
+                                        <Button type="dashed"
+                                                block
+                                                style={{marginBottom:0}}
+                                                onClick={() => add()}
+                                                icon={<PlusOutlined/>}
+                                        >
+                                          Добавить длину и цену
+                                        </Button>
+
+                                      </Form.Item>
+                                    </>
+                                  )}
+                                </Form.List>
+
 
 
                                 <Form.Item

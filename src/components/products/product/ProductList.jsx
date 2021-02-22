@@ -84,11 +84,6 @@ const ProductList = (props) => {
             <AddProductModal shopId={shopId}
                              updateList={updateList}
             />
-
-    // <AddStockModal
-    //   updateList={updateList}
-    //   companyId={shopId}
-    // />
         )
 
     const productsMap = products
@@ -125,10 +120,10 @@ const ProductList = (props) => {
 
     }
 
-    const onSizeChangeHandler = (page, size) => {
-        dispatch(setSize(size))
-        dispatch(setPage(page))
-        loadList(page, size);
+    const onSizeChangeHandler = (currentPage, currentSize) => {
+        dispatch(setSize(currentSize))
+        dispatch(setPage(currentPage))
+        loadList(currentPage, currentSize);
     };
 
     const onPageChangeHandler = (pageNumber) => {

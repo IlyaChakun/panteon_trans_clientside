@@ -7,6 +7,7 @@ import {
 } from '../../components/util/utilsAPI'
 import { notification } from 'antd'
 import { localizedStrings } from '../../components/util/localization'
+import imagePic from '../../img/8dfe3aad5c7fc4614d3f7a09716b2094.jpg'
 
 import axios from 'axios'
 
@@ -18,7 +19,7 @@ const initialState = {
       unique_id: 1,
       categoryId: 1,
       producerId: 1,
-      title: 'rose red',
+      title: 'Сет "Нежный"',
       description: 'roses',
       availableAmount: 10,
       productLengthCost: [
@@ -26,8 +27,14 @@ const initialState = {
           id: 1,
           stemLength: 50,
           cost: 2.5
+        },
+        {
+          id: 2,
+          stemLength: 60,
+          cost: 3
         }
-      ]
+      ],
+      image: imagePic
     },
     {
       id: 2,
@@ -44,7 +51,8 @@ const initialState = {
           stemLength: 60,
           cost: 3
         }
-      ]
+      ],
+      image: imagePic
     },
     {
       id: 3,
@@ -61,7 +69,8 @@ const initialState = {
           stemLength: 70,
           cost: 5
         }
-      ]
+      ],
+      image: imagePic
     }
   ],
   categories: ['Готовые букеты', 'Премиум букеты',
@@ -79,7 +88,7 @@ const initialState = {
     {
       stemLength: 60,
       cost: 2.0
-    },
+    }
   ],
   countriesValues: [{ countryNameRu: 'рф' }, { countryNameRu: 'рб' }],
 
@@ -151,7 +160,7 @@ const productSlice = createSlice({
     },
     setFlowerLengthCostValues: (state, payload) => {
       state.flowerLengthCostValues = payload
-    },
+    }
 
   }
 })
@@ -171,7 +180,7 @@ export const {
   setFlowerTypesValues,
   setFlowerSortsValues,
   setFlowerColorsValues,
-  setFlowerLengthCostValues,
+  setFlowerLengthCostValues
 } = productSlice.actions
 
 export default productSlice.reducer
@@ -298,7 +307,6 @@ export const getCategories = () => {
       })
   }
 }
-
 
 
 export const getCountriesValues = () => {
