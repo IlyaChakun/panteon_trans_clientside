@@ -16,7 +16,6 @@ import {
     setSize
 } from "../../../redux/reducers/ProductsSliceReducer"
 import SideMenu from '../../common/sidemenu/SideMenu'
-import AddStockModal from './AddStockModal'
 
 const {Option} = Select;
 

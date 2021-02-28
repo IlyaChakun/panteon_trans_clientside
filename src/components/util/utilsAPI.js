@@ -6,7 +6,7 @@ import {
   GRANT_TYPE_HEADER_KEY,
   TOKEN_TYPE_HEADER_KEY,
   ACCESS_TOKEN,
-  REFRESH_TOKEN, BASE_AUTH_SERVICE_URL, BASE_COMPANY_SERVICE_URL
+  REFRESH_TOKEN
 } from '../../constants'
 
 /**
@@ -82,7 +82,7 @@ const request = (options, grantType) => {
 
 export function loginRequest (loginRequest) {
   return request({
-    url: BASE_AUTH_SERVICE_URL + 'auth/users/login',
+    url: BASE_URL + 'auth/users/login',
     method: 'POST',
     body: JSON.stringify(loginRequest)
   })
@@ -90,7 +90,7 @@ export function loginRequest (loginRequest) {
 
 export function signUpRequest (signupRequest) {
   return request({
-    url: BASE_AUTH_SERVICE_URL + 'auth/users/sign-up',
+    url: BASE_URL + 'auth/users/sign-up',
     method: 'POST',
     body: JSON.stringify(signupRequest)
   })
@@ -100,7 +100,7 @@ export function updateUserProfileRequest (editUserRequest) {
   console.log('editUserRequest')
   console.log(editUserRequest)
   return request({
-    url: BASE_AUTH_SERVICE_URL + 'users/' + Number(editUserRequest.id),
+    url: BASE_URL + 'users/' + Number(editUserRequest.id),
     method: 'PUT',
     body: JSON.stringify(editUserRequest)
   })
@@ -108,7 +108,7 @@ export function updateUserProfileRequest (editUserRequest) {
 
 export function changeUserPassword (changePasswordUserRequest) {
   return request({
-    url: BASE_AUTH_SERVICE_URL + 'users/' + Number(changePasswordUserRequest.id),
+    url: BASE_URL + 'users/' + Number(changePasswordUserRequest.id),
     method: 'PUT',
     body: JSON.stringify(changePasswordUserRequest)
   })
@@ -120,20 +120,20 @@ export function getCurrentUserRequest () {
   }
 
   return request({
-    url: BASE_AUTH_SERVICE_URL + 'users/me',
+    url: BASE_URL + 'users/me',
     method: 'GET'
   })
 }
 
 export function getCurrentCompanyRequest () {
   return request({
-    url: BASE_COMPANY_SERVICE_URL + 'company',
+    url: BASE_URL + 'company',
     method: 'GET'
   })
 }
 
 export function saveCompanyRequest (companyRequest) {
-  const url = BASE_COMPANY_SERVICE_URL + 'company'
+  const url = BASE_URL + 'company'
 
   return request({
     url: url,
@@ -143,7 +143,7 @@ export function saveCompanyRequest (companyRequest) {
 }
 
 export function updateCompanyInfoRequest (companyId, updateCompanyRequest) {
-  const url = BASE_COMPANY_SERVICE_URL + 'company/' + companyId
+  const url = BASE_URL + 'company/' + companyId
 
   return request({
     url: url,
@@ -154,13 +154,13 @@ export function updateCompanyInfoRequest (companyId, updateCompanyRequest) {
 
 export function checkLoginAvailabilityRequest (login) {
   return request({
-    url: BASE_AUTH_SERVICE_URL + 'auth/user/check-email-availability?email=' + login,
+    url: BASE_URL + 'auth/user/check-email-availability?email=' + login,
     method: 'GET'
   })
 }
 
 export function getAllReviewsRequest () {
-  const url = BASE_COMPANY_SERVICE_URL + 'company/reviews'
+  const url = BASE_URL + 'company/reviews'
 
   return request({
     url: url,
@@ -169,7 +169,7 @@ export function getAllReviewsRequest () {
 }
 
 export function saveReviewRequest (reviewRequest) {
-  const url = BASE_COMPANY_SERVICE_URL + 'company/reviews'
+  const url = BASE_URL + 'company/reviews'
 
   return request({
     url: url,
