@@ -2,9 +2,10 @@ import React, {Component} from 'react'
 import {withRouter} from 'react-router-dom'
 
 import {getClientOrders, getOrdersByShopIdRequest} from "../util/utilsAPI";
-import {List} from 'antd';
+import { List, Tabs } from 'antd'
 import OrderDetail from "./OrderDetail";
 
+const { TabPane } = Tabs;
 
 class OrderList extends Component {
 
@@ -87,7 +88,19 @@ class OrderList extends Component {
 
         return (
 
-            <List
+          <>
+
+              <Tabs defaultActiveKey="1" centered>
+                  <TabPane tab="Активные заказы" key="1">
+                      Content of Tab Pane 1
+                  </TabPane>
+                  <TabPane tab="Завершенные заказы" key="2">
+                      Content of Tab Pane 2
+                  </TabPane>
+              </Tabs>
+
+
+              <List
                 grid={{
                     gutter: 16,
                     column: 1,
@@ -116,11 +129,12 @@ class OrderList extends Component {
                 dataSource={orders}
 
                 renderItem={item => (
-                    <List.Item>
-                        {item}
-                    </List.Item>
+                  <List.Item>
+                      {item}
+                  </List.Item>
                 )}
-            />
+              />
+          </>
         )
     }
 

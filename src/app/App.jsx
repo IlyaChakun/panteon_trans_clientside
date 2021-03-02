@@ -86,10 +86,6 @@ function App(props) {
   }
 
   const handleLogin = () => {
-    notification.success({
-      message: localizedStrings.alertAppName,
-      description: localizedStrings.alertSuccessLogin
-    })
     dispatch(getCurrentUser())
     props.history.push('/profile')
   }
@@ -202,15 +198,6 @@ function App(props) {
           <Route path='/products'
                  render={(props) =>
                    <ProductList {...props} />} />
-
-          {/* <Route path="/flowers" */}
-          {/*       render={(props) => */}
-          {/*           <FlowersList */}
-          {/*               loadCurrentUser={loadCurrentUser} */}
-          {/*               isAuthenticated={isAuthenticated} */}
-          {/*               currentUser={currentUser} */}
-          {/*               {...props} />}/> */}
-
 
           <Route path='/reviews'
                  render={(props) =>

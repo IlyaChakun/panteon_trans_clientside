@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, Col, Radio, Rate, Row } from 'antd'
+import { Card, Col, InputNumber, Radio, Rate, Row } from 'antd'
 import './ProductCard.css'
 
 const { Meta } = Card
@@ -7,6 +7,9 @@ const { Meta } = Card
 function ProductCard({ product, editAction, deleteAction, buyAction, oneClickAction }) {
 
   const [idRadio, setIdRadio] = useState(product.productLengthCost[0].id)
+  const [amount, setAmount] = useState(1)
+
+  const [productState, setProductState] = useState({ amount: 1, lengthId: 0 })
 
   const radioStyle = {
     display: 'block',
@@ -14,9 +17,14 @@ function ProductCard({ product, editAction, deleteAction, buyAction, oneClickAct
     lineHeight: '24px'
   }
 
-  const onChange = (e) => {
-    console.log('radio changed', e.target.value)
+  const onLengthChange = (e) => {
     setIdRadio(e.target.value)
+    setProductState({amount, lengthId: idRadio})
+  }
+
+  const onInputChange = (value) => {
+    setAmount(value)
+    setProductState({amount:value, lengthId: idRadio})
   }
 
   return (
@@ -30,7 +38,7 @@ function ProductCard({ product, editAction, deleteAction, buyAction, oneClickAct
         deleteAction
       ]}
       extra={
-        <Radio.Group className='radio-group' onChange={onChange} value={idRadio}>
+        <Radio.Group className='radio-group' onChange={onLengthChange} value={idRadio}>
           {product.productLengthCost.map(lengthcost => (
             <Radio style={radioStyle} key={lengthcost.id} value={lengthcost.id}
                    checked={lengthcost.id === idRadio}
@@ -45,23 +53,37 @@ function ProductCard({ product, editAction, deleteAction, buyAction, oneClickAct
           <>
             <Row>
               <Col span={24}>
-                <div className='product-rating'>
+                <Row>
+                  <Col span={12} className='product-cost'>
+                    {product.productLengthCost.find(x => x.id === idRadio).cost} BYN
+                  </Col>
+                  <Col span={12} className='product-count'>
+                    <InputNumber
+                      min={1}
+                      max={100000}
+                      defaultValue={1}
+                      onChange={onInputChange}
+                    />
+                  </Col>
+                </Row>
+                <Row align='center'>
+                  <Col span={12}>ИТОГО:</Col>
+                  <Col span={12}>{product.productLengthCost.find(x => x.id === idRadio).cost * amount} BYN</Col>
+                </Row>
+                <Row className='product-rating'>
                   <Rate disabled defaultValue={2} />
-                </div>
-                <div className='product-title'>
+                </Row>
+                <Row className='product-title'>
                   {product.title}
-                </div>
-                <div className='product-art'>
+                </Row>
+                <Row className='product-art'>
                   Арт.: {product.unique_id}
-                </div>
-                <div className='product-cost'>
-                  {product.productLengthCost.find(x => x.id === idRadio).cost} руб.
-                </div>
+                </Row>
               </Col>
             </Row>
             <Row>
-              {oneClickAction}
-              {product.availableAmount > 0 ? buyAction : ''}
+              {oneClickAction(productState)}
+              {product.availableAmount > 0 ? buyAction(productState) : ''}
             </Row>
           </>
         }
@@ -69,14 +91,5 @@ function ProductCard({ product, editAction, deleteAction, buyAction, oneClickAct
     </Card>
   )
 }
-
-// ProductCard.propTypes = {
-//   product: PropTypes.any,
-//   editAction: PropTypes.any,
-//   deleteAction: PropTypes.any,
-//   buyAction: PropTypes.any,
-//   oneClickAction: PropTypes.any,
-//   props: PropTypes.any
-// }
 
 export default ProductCard

@@ -19,7 +19,7 @@ import {
 const request = (options, grantType) => {
   const headers = new Headers({
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*'
+    'Access-Control-Allow-Origin': 'http://localhost:3000'
 })
 
   if (grantType !== 'anon_action') {
@@ -75,7 +75,7 @@ const request = (options, grantType) => {
       }
     })
     .then(json => {
-      console.log('return final json body: ' + json)
+      console.log('return final json body: ', json)
       return json
     })
 }
@@ -253,32 +253,6 @@ export function deleteFlowerRequest (flowerId) {
   })
 }
 
-export function getBouquetByIdRequest (id) {
-  return request({
-    url: BASE_URL + 'bouquets/' + id,
-    method: 'GET'
-  })
-}
-
-export function updateBouquetRequest (id, udpateRequest) {
-  const url = BASE_URL + 'bouquets/' + id
-
-  return request({
-    url: url,
-    method: 'PUT',
-    body: JSON.stringify(udpateRequest)
-  })
-}
-
-export function deleteBouquetRequest (id) {
-  const url = BASE_URL + 'bouquets/' + id
-
-  return request({
-    url: url,
-    method: 'DELETE'
-  })
-}
-
 export function getProductsRequest (searchCriteria) {
   const page = 'page=' + Number(searchCriteria.page === 0 ? searchCriteria.page : searchCriteria.page)
   const size = '&size=' + Number(searchCriteria.size)
@@ -292,36 +266,12 @@ export function getProductsRequest (searchCriteria) {
   })
 }
 
-export function getBouquetsRequest (searchCriteria) {
-  const page = 'page=' + Number(searchCriteria.page === 0 ? searchCriteria.page : searchCriteria.page)
-  const size = '&size=' + Number(searchCriteria.size)
-  // const searchString = searchCriteria.searchString === undefined ? '' : '&searchString=' + searchCriteria.searchString
-
-  const url = BASE_URL + 'bouquets?' + page + size
-
-  return request({
-    url: url,
-    method: 'GET'
-  })
-}
 
 export function getProductsByShopIdRequest (searchCriteria, shopId) {
   const page = 'page=' + Number(searchCriteria.page === 0 ? searchCriteria.page : searchCriteria.page)
   const size = '&size=' + Number(searchCriteria.size)
 
   const url = BASE_URL + 'company/shops/' + shopId + '/flowers?' + page + size
-
-  return request({
-    url: url,
-    method: 'GET'
-  })
-}
-
-export function getBouquetsByShopIdRequest (searchCriteria, shopId) {
-  const page = 'page=' + Number(searchCriteria.page === 0 ? searchCriteria.page : searchCriteria.page)
-  const size = '&size=' + Number(searchCriteria.size)
-
-  const url = BASE_URL + 'company/shops/' + shopId + '/bouquets?' + page + size
 
   return request({
     url: url,
@@ -371,7 +321,7 @@ export function getFlowerColorsRequest () {
   })
 }
 
-export function saveFlowerRequest (flowerRequest) {
+export function saveProductRequest (flowerRequest) {
   const url = BASE_URL + 'flowers'
 
   return request({
@@ -381,15 +331,6 @@ export function saveFlowerRequest (flowerRequest) {
   })
 }
 
-export function saveBouquetRequest (bouquetRequest) {
-  const url = BASE_URL + 'bouquets'
-
-  return request({
-    url: url,
-    method: 'POST',
-    body: JSON.stringify(bouquetRequest)
-  })
-}
 
 export function getBasketRequest () {
   return request({

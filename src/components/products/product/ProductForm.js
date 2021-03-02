@@ -9,7 +9,7 @@ import validateId from "../product/ProductValidation";
 import {MinusCircleOutlined, PlusOutlined} from '@ant-design/icons';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getCurrentUser, updateUserProfile } from '../../../redux/reducers/AuthSliceReducer'
+import { getCountriesValues } from '../../../redux/reducers/ProductsSliceReducer'
 
 
 const Option = Select.Option;
@@ -26,47 +26,50 @@ const layout = {
 
 class ProductForm extends Component {
 
+    componentDidMount() {
+        getCountriesValues()
+    }
 
     state = {
-        id: this.props.flower.id,
+        id: this.props.product.id,
 
         dateOfLastUpdate: {
-            value: this.props.flower.dateOfLastUpdate,
+            value: this.props.product.dateOfLastUpdate,
             validateStatus: this.props.validateStatus
         },
 
         flowerType: {
-            id: this.props.flower.flowerType.id,
-            value: this.props.flower.flowerType.flowerType,
+            id: this.props.product.flowerType.id,
+            value: this.props.product.flowerType.flowerType,
             validateStatus: this.props.validateStatus
         },
         flowerColor: {
-            value: this.props.flower.flowerColor,
+            value: this.props.product.flowerColor,
             validateStatus: this.props.validateStatus
         },
         flowerLengthCosts: {
-            value: this.props.flower.flowerLengthCosts,
+            value: this.props.product.flowerLengthCosts,
             validateStatus: this.props.validateStatus
         },
         flowerSort: {
-            value: this.props.flower.flowerSort,
+            value: this.props.product.flowerSort,
             validateStatus: this.props.validateStatus
         },
         country: {
-            id: this.props.flower.country.id,
-            value: this.props.flower.country.countryNameRu,
+            id: this.props.product.country.id,
+            value: this.props.product.country.countryNameRu,
             validateStatus: this.props.validateStatus
         },
         description: {
-            value: this.props.flower.description,
+            value: this.props.product.description,
             validateStatus: this.props.validateStatus
         },
         availableAmountOnStock: {
-            value: this.props.flower.availableAmountOnStock,
+            value: this.props.product.availableAmountOnStock,
             validateStatus: this.props.validateStatus
         },
 
-        imageUrl: this.props.flower.image === null ? '' : this.props.flower.image.imageUrl
+        imageUrl: this.props.product.image === null ? '' : this.props.product.image.imageUrl
     }
 
 
@@ -111,7 +114,7 @@ class ProductForm extends Component {
             }
         }
 
-        console.log('flowerRequest request: ' + flowerRequest)
+        console.log('flowerRequest request: ', flowerRequest)
 
         this.props.handleSubmitButton(flowerRequest);
     }
@@ -149,15 +152,6 @@ class ProductForm extends Component {
                     {element.sortNameRu}
                 </Option>
         )
-
-        const flowerLengthCostsOptions = this.props.flowerLengthCostValues.map(
-            element =>
-                <Option key={element.id} value={element.length}>
-                    {element.stemLength} см - {element.cost} руб
-                </Option>
-        )
-
-
 
         return (
             <Form {...layout}
@@ -256,28 +250,6 @@ class ProductForm extends Component {
                                     >
                                         {flowerSortsOptions}
                                     </Select>
-                                </Form.Item>
-
-                                <Form.Item
-                                    label={'Длина стебля - цена'}
-                                    validateStatus={this.state.flowerLengthCosts.validateStatus}
-                                    hasFeedback
-                                    help={this.state.flowerLengthCosts.errorMsg}
-                                    rules={[{required: true, message: 'Missing area'}]}
-                                >
-
-                                    <Select
-                                        name="flowerLengthCosts"
-                                        value={this.state.flowerLengthCosts.value}
-                                        showSearch
-                                        style={{width: 200}}
-                                        placeholder="Выберите длину стебля - цена'"
-                                        onChange={this.onChangeFlowerLengthCostsSelect}
-                                        options={this.state.flowerLengthCostValues}
-                                    >
-                                        {flowerLengthCostsOptions}
-                                    </Select>
-
                                 </Form.Item>
 
 
@@ -536,5 +508,5 @@ const mapStateToProps = state => ({
 
 export default withRouter(connect(
   mapStateToProps,
-  { getCurrentUser, updateUserProfile }
+  { getCountriesValues }
 )(ProductForm))

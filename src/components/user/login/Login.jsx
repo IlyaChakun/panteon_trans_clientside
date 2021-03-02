@@ -5,7 +5,7 @@ import s from './Login.module.css'
 import LoginForm from './LoginForm'
 
 class Login extends Component {
-  componentDidMount () {
+  componentDidMount() {
     if (this.props.location.state && this.props.location.state.error) {
       this.showAlertMessage()
     }
@@ -25,15 +25,13 @@ class Login extends Component {
     }, 100)
   }
 
-  render () {
+  render() {
     return (
-      <>
-        <div className={s.container}>
-          <div className={s.content}>
-            <LoginForm onLogin={this.props.onLogin}/>
-          </div>
+      <div className={s.container}>
+        <div className={s.content}>
+          <LoginForm onLogin={this.props.onLogin} />
         </div>
-      </>
+      </div>
     )
   }
 }

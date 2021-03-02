@@ -90,9 +90,7 @@ const ProductList = (props) => {
                 <ProductCardProxy
                     history={props.history}
                     key={product.id}
-
                     product={product}
-                    productId={product.id}
                 />
             )
         )

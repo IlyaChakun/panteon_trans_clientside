@@ -1,53 +1,38 @@
 import React from 'react'
 
-import './ProductCard.css'
 import { isAdmin } from '../../../app/App'
 import DeleteOutlined from '@ant-design/icons/lib/icons/DeleteOutlined'
-import { addProductToBasketRequest } from '../../util/utilsAPI'
-import { Button, notification, Row } from 'antd'
-import { localizedStrings } from '../../util/localization'
-import { useSelector } from 'react-redux'
+import { Button } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
 import { authSelector } from '../../../redux/reducers/AuthSliceReducer'
 import EditProductModal from './EditProductModal'
 import DeleteProductModal from './DeleteProductModal'
 import ProductCard from './ProductCard'
+import { addToCart } from '../../../redux/reducers/CartsSliceReducer'
 
 
-const ProductCardProxy = ({ product, productId, history }) => {
+const ProductCardProxy = ({ product, history }) => {
 
+  const dispatch = useDispatch()
   const { currentUser } = useSelector(authSelector)
 
-  const addToBasket = () => {
-    const productBasket = {
-      'userId': currentUser.id,
-      // 'userId': 1,
-      'flowerLengthCostId': product.productLengthCost[0].id,
+  const addToBasket = (productState) => {
+    const productToCart = {
+      'clientId': currentUser.payload.id,
       'productId': product.id,
-      'quantity': 1
+      'productLengthCostId': product.productLengthCost.find(x => x.id === productState.lengthId).id,
+      'quantity': productState.amount
     }
-
-    console.log(productBasket)
-
-    addProductToBasketRequest(productBasket)
-      .then(() => {
-        notification.success({
-          message: localizedStrings.alertAppName,
-          description: 'Продукт добавлен в корзину!'
-        })
-      }).catch(error => {
-
-      notification.error({
-        message: localizedStrings.alertAppName,
-        description: 'Не удалось добавить продукт в корзину!'
-      })
-    })
+    console.log(productToCart)
+    console.log(productState)
+    dispatch(addToCart(productToCart))
   }
 
 
   const editAction = (
     <div className={isAdmin(currentUser) ? '' : 'custom-hidden'}>
       <EditProductModal
-        productId={productId}
+        productId={product.id}
       />
     </div>
   )
@@ -60,19 +45,23 @@ const ProductCardProxy = ({ product, productId, history }) => {
         } />
     </div>)
 
-  const buyAction = (
+  const buyAction = (productState) => (
     <Button className={isAdmin(currentUser) ? 'custom-hidden' : 'one-click-buy cart-buy'}
             style={{ color: 'white' }}
-            onClick={() => addToBasket()}
+            onClick={() => {
+              console.log('buyAction', productState)
+              addToBasket(productState)
+            }}
     >
       Добавить в корзину
     </Button>
   )
 
-  const oneClickAction = (
+  const oneClickAction = (productState) => (
     <Button className={isAdmin(currentUser) ? 'custom-hidden' : 'one-click-buy'}
             onClick={() => {
-              addToBasket()
+              console.log('oneClickAction', productState)
+              addToBasket(productState)
               history.push('/cart')
             }}
     >
@@ -82,7 +71,7 @@ const ProductCardProxy = ({ product, productId, history }) => {
 
   return (
     <ProductCard
-      key={productId}
+      key={product.id}
       product={product}
       editAction={editAction}
       deleteAction={deleteAction}

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
   deleteFlowerRequest,
-  getAllShops,
+  getAllShops, getCountriesRequest,
   getProductsByShopIdRequest,
   getProductsRequest
 } from '../../components/util/utilsAPI'
@@ -94,6 +94,7 @@ const initialState = {
 
 
   loading: false,
+  countriesLoading: false,
   errors: '',
 
   shops: [],
@@ -113,6 +114,9 @@ const productSlice = createSlice({
   reducers: {
     setLoading: (state, payload) => {
       state.loading = payload
+    },
+    setCountriesLoading: (state, payload) => {
+      state.countriesLoading = payload
     },
     setErrors: (state, payload) => {
       state.errors = payload
@@ -166,6 +170,7 @@ const productSlice = createSlice({
 })
 export const {
   setLoading,
+  setCountriesLoading,
   setErrors,
   setProducts,
   setTotalPages,
@@ -219,7 +224,6 @@ export const getProducts = (searchCriteria, shopId = null) => {
 
 export const getShops = () => {
   return async dispatch => {
-    // dispatch(setLoading(true))
     try {
       const promise = getAllShops()
 
@@ -228,6 +232,7 @@ export const getShops = () => {
       }
       promise
         .then(response => {
+          // dispatch(setLoading(true))
           dispatch(setShops(response.objects.slice()))
           dispatch(setShopValue(response.objects[0] === null ? null : response.objects[0].contacts.address))
           dispatch(setShopId(response.objects[0] === null ? null : response.objects[0].id))
@@ -295,7 +300,7 @@ export const deleteProduct = (productId) => {
 export const getCategories = () => {
   return async dispatch => {
 
-    axios.get('http://localhost:8084/categories')
+    axios.get('http://localhost:8080/categories')
       .then(resp => {
         dispatch(setLoading(true))
         dispatch(setCategories(resp.data))
@@ -311,16 +316,14 @@ export const getCategories = () => {
 
 export const getCountriesValues = () => {
   return async dispatch => {
-
-    axios.get('http://localhost:8084/countriesValues')
-      .then(resp => {
-        dispatch(setLoading(true))
-        dispatch(setCountriesValues(resp.data))
-        dispatch(setLoading(false))
-      })
+    await getCountriesRequest().then(resp => {
+      dispatch(setCountriesLoading(true))
+      dispatch(setCountriesValues(resp))
+      dispatch(setCountriesLoading(false))
+    })
       .catch(error => {
         dispatch(setErrors(error))
-        console.log(error)
+        console.error(error)
       })
   }
 }
@@ -328,7 +331,7 @@ export const getCountriesValues = () => {
 export const getFlowerTypesValues = () => {
   return async dispatch => {
 
-    axios.get('http://localhost:8084/flowerTypesValues')
+    axios.get('http://localhost:8080/flowerTypesValues')
       .then(resp => {
         dispatch(setLoading(true))
         dispatch(setFlowerTypesValues(resp.data))
@@ -344,7 +347,7 @@ export const getFlowerTypesValues = () => {
 export const getFlowerSortsValues = () => {
   return async dispatch => {
 
-    axios.get('http://localhost:8084/flowerSortsValues')
+    axios.get('http://localhost:8080/flowerSortsValues')
       .then(resp => {
         dispatch(setLoading(true))
         dispatch(setFlowerSortsValues(resp.data))
@@ -360,7 +363,7 @@ export const getFlowerSortsValues = () => {
 export const getFlowerColorsValues = () => {
   return async dispatch => {
 
-    axios.get('http://localhost:8084/flowerColorsValues')
+    axios.get('http://localhost:8080/flowerColorsValues')
       .then(resp => {
         dispatch(setLoading(true))
         dispatch(setFlowerColorsValues(resp.data))
@@ -376,7 +379,7 @@ export const getFlowerColorsValues = () => {
 export const getFlowerLengthCostValues = () => {
   return async dispatch => {
 
-    axios.get('http://localhost:8084/flowerLengthCostValues')
+    axios.get('http://localhost:8080/flowerLengthCostValues')
       .then(resp => {
         dispatch(setLoading(true))
         dispatch(setFlowerLengthCostValues(resp.data))

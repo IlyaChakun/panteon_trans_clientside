@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {withRouter} from 'react-router-dom'
 import Modal from "antd/es/modal";
 import FlowerForm from "./FlowerForm";
-import {saveFlowerRequest} from "../../util/utilsAPI";
+import {saveProductRequest} from "../../util/utilsAPI";
 import {localizedStrings} from "../../util/localization";
 import {Button, notification} from "antd";
 
@@ -42,7 +42,7 @@ class AddFlowerModal extends Component {
 
         console.log('flower request: ' + {...flowerRequest})
 
-        saveFlowerRequest(flowerRequest)
+        saveProductRequest(flowerRequest)
             .then(() => {
                 notification.success({
                     message: localizedStrings.alertAppName,
