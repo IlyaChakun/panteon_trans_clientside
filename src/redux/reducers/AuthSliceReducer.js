@@ -92,11 +92,29 @@ export const getCurrentUser = () => {
 
 export const updateUserProfile = (updateUserRequest) => {
   return async dispatch => {
-    dispatch(setIsLoading(true))
-    const profile = await updateUserProfileRequest(updateUserRequest)
-    dispatch(setCurrentUser(profile))
-    dispatch(setIsAuthenticated(true))
-    dispatch(setIsLoading(false))
+    try {
+      const promise = updateUserProfileRequest(updateUserRequest)
+      if (!promise) {
+        return
+      }
+      promise
+        .then(response => {
+          dispatch(setIsLoading(true))
+          dispatch(setCurrentUser(response))
+          dispatch(setIsLoading(false))
+
+          notification.success({
+            message: localizedStrings.alertAppName,
+            description: localizedStrings.alertSuccessfulUserUpdate,
+          })
+        })
+    } catch (error) {
+      dispatch(setErrors(error))
+      notification.error({
+        message: localizedStrings.alertAppName,
+        description: error.message || localizedStrings.alertException
+      })
+    }
   }
 }
 

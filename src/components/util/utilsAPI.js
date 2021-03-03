@@ -97,8 +97,7 @@ export function signUpRequest (signupRequest) {
 }
 
 export function updateUserProfileRequest (editUserRequest) {
-  console.log('editUserRequest')
-  console.log(editUserRequest)
+  console.log('editUserRequest', editUserRequest)
   return request({
     url: BASE_URL + 'users/' + Number(editUserRequest.id),
     method: 'PUT',
