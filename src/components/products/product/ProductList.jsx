@@ -8,7 +8,7 @@ import ProductCardProxy from "./ProductCardProxy"
 import {useDispatch, useSelector} from "react-redux";
 import {
     getProducts,
-    getShops,
+    fetchShops,
     productSelector,
     setPage,
     setShopId,
@@ -39,7 +39,7 @@ const ProductList = (props) => {
     } = useSelector(productSelector)
 
     useEffect(() => {
-        dispatch(getShops())
+        dispatch(fetchShops())
     }, [dispatch])
 
     useEffect(() => {
@@ -95,12 +95,12 @@ const ProductList = (props) => {
             )
         )
 
-    const shopOptions = shops.map(
-        shop =>
-            <Option key={shop.id} value={shop.contacts.address}>
-                {shop.contacts.city}, {shop.contacts.address}
-            </Option>
-    )
+    // const shopOptions = shops.map(
+    //     shop =>
+    //         <Option key={shop.id} value={shop.contacts.address}>
+    //             {shop.contacts.city}, {shop.contacts.address}
+    //         </Option>
+    // )
 
 
     const handleShopChange = (input, option) => {

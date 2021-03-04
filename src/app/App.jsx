@@ -3,12 +3,11 @@ import './App.css'
 import PrivateRoute from './util/PrivateRoute'
 
 import { Col, Layout, notification, Row } from 'antd'
-import { Route, Switch, useHistory, withRouter } from 'react-router-dom'
+import { Route, Switch, withRouter } from 'react-router-dom'
 
 import { localizedStrings } from '../components/util/localization'
 import { ACCESS_TOKEN, REFRESH_TOKEN, ROLE_ADMIN, ROLE_USER, SUCCESS, USER_ID } from '../constants'
 import AppHeader from '../components/common/header/AppHeader'
-import LoadingIndicator from '../components/common/util/LoadingIndicator'
 import OAuth2RedirectHandler from '../components/user/oauth2/OAuth2RedirectHandler'
 import AppFooter from '../components/common/footer/AppFooter'
 import NotFound from '../components/common/error/NotFound'
@@ -31,12 +30,7 @@ import OrderPage from '../components/order/OrderPage'
 import BreadCrumbComponent from '../components/common/breadcrumb/BreadCrumbComponent'
 import ProductList from '../components/products/product/ProductList'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  authSelector,
-  getCurrentUser,
-  setCurrentUser,
-  setIsAuthenticated
-} from '../redux/reducers/AuthSliceReducer'
+import { authSelector, getCurrentUser, setCurrentUser, setIsAuthenticated } from '../redux/reducers/AuthSliceReducer'
 import { getCurrentCompany } from '../redux/reducers/CompanySliceReducer'
 
 const { Content } = Layout

@@ -4,7 +4,7 @@ import './ProductCard.css'
 
 const { Meta } = Card
 
-function ProductCard({ product, editAction, deleteAction, buyAction, oneClickAction }) {
+const ProductCard=({ product, editAction, deleteAction, buyAction, oneClickAction })=> {
 
   const [idRadio, setIdRadio] = useState(product.productLengthCost[0].id)
   const [amount, setAmount] = useState(1)

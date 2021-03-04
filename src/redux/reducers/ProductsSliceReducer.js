@@ -1,15 +1,19 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
   deleteFlowerRequest,
-  getAllShops, getCountriesRequest,
+  getAllShops,
+  getCountriesRequest,
+  getFlowerColorsRequest,
+  getProductLengthCostsRequest,
+  getFlowerSortsRequest,
+  getProductTypesRequest,
   getProductsByShopIdRequest,
-  getProductsRequest
+  getProductsRequest, getCategoriesRequest
 } from '../../components/util/utilsAPI'
 import { notification } from 'antd'
 import { localizedStrings } from '../../components/util/localization'
 import imagePic from '../../img/8dfe3aad5c7fc4614d3f7a09716b2094.jpg'
 
-import axios from 'axios'
 
 const initialState = {
   products: [
@@ -76,7 +80,6 @@ const initialState = {
   categories: ['Готовые букеты', 'Премиум букеты',
     'Корзины с цветами', 'Цветы поштучно', 'Акционные букеты'],
 
-
   flowerTypesValues: [{ flowerType: 'rose' }, { flowerType: 'fiona' }],
   flowerSortsValues: [{ sortNameRu: 'naomi' }, { sortNameRu: 'pine' }],
   flowerColorsValues: [{ colorName: 'red' }, { colorName: 'pink' }],
@@ -106,8 +109,39 @@ const initialState = {
   totalPages: 0,
   totalElements: 0,
 
-  searchString: ''
+  searchString: '',
+  requestStatus: 'idle',
+
 }
+
+
+export const fetchCountries = createAsyncThunk('products/fetchCountries', async () => {
+  const response = await getCountriesRequest()
+  return response
+})
+
+
+export const fetchShops = createAsyncThunk(
+  'products/fetchShops',
+  async () => {
+    try {
+      const response = await getAllShops()
+      // dispatch(setLoading(true))
+      // dispatch(setShops(response.objects.slice()))
+      // dispatch(setShopValue(response.objects[0] === null ? null : response.objects[0].contacts.address))
+      // dispatch(setShopId(response.objects[0] === null ? null : response.objects[0].id))
+      // dispatch(setLoading(false))
+      return response
+    } catch (error) {
+      // dispatch(setErrors(error))
+      // dispatch(setLoading(false))
+      // Use `err.response.data` as `action.payload` for a `rejected` action,
+      // by explicitly returning it using the `rejectWithValue()` utility
+      // return rejectWithValue(error.response.data)
+    }
+  })
+
+
 const productSlice = createSlice({
   name: 'products',
   initialState,
@@ -148,8 +182,6 @@ const productSlice = createSlice({
     setCategories: (state, payload) => {
       state.categories = payload
     },
-
-
     setCountriesValues: (state, payload) => {
       state.countriesValues = payload
     },
@@ -166,6 +198,33 @@ const productSlice = createSlice({
       state.flowerLengthCostValues = payload
     }
 
+  },
+  extraReducers: {
+    [fetchShops.pending]: (state, action) => {
+      state.requestStatus = 'loading'
+    },
+    [fetchShops.fulfilled]: (state, action) => {
+      state.requestStatus = 'fulfilled'
+      // Add any fetched posts to the array
+      state.shops = state.shops.concat(action.payload)
+    },
+    [fetchShops.rejected]: (state, action) => {
+      state.requestStatus = 'rejected'
+      state.errors = action.errors
+    },
+
+    [fetchCountries.pending]: (state, action) => {
+      state.requestStatus = 'loading'
+    },
+    [fetchCountries.fulfilled]: (state, action) => {
+      state.requestStatus = 'fulfilled'
+      // Add any fetched posts to the array
+      state.countries = state.countries.concat(action.payload)
+    },
+    [fetchCountries.rejected]: (state, action) => {
+      state.requestStatus = 'rejected'
+      state.errors = action.errors
+    }
   }
 })
 export const {
@@ -190,9 +249,7 @@ export const {
 
 export default productSlice.reducer
 
-export const productSelector = (state) => {
-  return state.productsState
-}
+export const productSelector = state => state.productsState
 
 export const getProducts = (searchCriteria, shopId = null) => {
   return async dispatch => {
@@ -213,29 +270,6 @@ export const getProducts = (searchCriteria, shopId = null) => {
           dispatch(setProducts(response.objects.slice()))
           dispatch(setTotalPages(response.totalPages))
           dispatch(setTotalElements(response.totalElements))
-          dispatch(setLoading(false))
-        })
-    } catch (error) {
-      dispatch(setErrors(error))
-      dispatch(setLoading(false))
-    }
-  }
-}
-
-export const getShops = () => {
-  return async dispatch => {
-    try {
-      const promise = getAllShops()
-
-      if (!promise) {
-        return
-      }
-      promise
-        .then(response => {
-          // dispatch(setLoading(true))
-          dispatch(setShops(response.objects.slice()))
-          dispatch(setShopValue(response.objects[0] === null ? null : response.objects[0].contacts.address))
-          dispatch(setShopId(response.objects[0] === null ? null : response.objects[0].id))
           dispatch(setLoading(false))
         })
     } catch (error) {
@@ -299,95 +333,124 @@ export const deleteProduct = (productId) => {
 
 export const getCategories = () => {
   return async dispatch => {
+    try {
+      const promise = getCategoriesRequest()
 
-    axios.get('http://localhost:8080/categories')
-      .then(resp => {
-        dispatch(setLoading(true))
-        dispatch(setCategories(resp.data))
-        dispatch(setLoading(false))
-      })
-      .catch(error => {
-        dispatch(setErrors(error))
-        console.log(error)
-      })
+      if (!promise) {
+        return
+      }
+      promise
+        .then(resp => {
+          dispatch(setLoading(true))
+          dispatch(setCategories(resp))
+          dispatch(setLoading(false))
+        })
+    } catch (error) {
+      dispatch(setErrors(error))
+      console.log(error)
+    }
   }
 }
 
 
-export const getCountriesValues = () => {
-  return async dispatch => {
-    await getCountriesRequest().then(resp => {
-      dispatch(setCountriesLoading(true))
-      dispatch(setCountriesValues(resp))
-      dispatch(setCountriesLoading(false))
-    })
-      .catch(error => {
-        dispatch(setErrors(error))
-        console.error(error)
-      })
-  }
-}
+// export const getCountriesValues = () => {
+//   return async dispatch => {
+//     try {
+//       const promise = getCountriesRequest()
+//       if (!promise) {
+//         return
+//       }
+//       promise
+//         .then(resp => {
+//           dispatch(setCountriesLoading(true))
+//           dispatch(setCountriesValues(resp))
+//           dispatch(setCountriesLoading(false))
+//         })
+//     } catch (error) {
+//       dispatch(setErrors(error))
+//       console.error(error)
+//     }
+//   }
+// }
 
-export const getFlowerTypesValues = () => {
-  return async dispatch => {
 
-    axios.get('http://localhost:8080/flowerTypesValues')
-      .then(resp => {
-        dispatch(setLoading(true))
-        dispatch(setFlowerTypesValues(resp.data))
-        dispatch(setLoading(false))
-      })
-      .catch(error => {
-        dispatch(setErrors(error))
-        console.log(error)
-      })
+
+export const getProductTypesValues = () => {
+  return async dispatch => {
+    try {
+      const promise = getProductTypesRequest()
+      if (!promise) {
+        return
+      }
+      promise
+        .then(resp => {
+          dispatch(setLoading(true))
+          dispatch(setFlowerTypesValues(resp))
+          dispatch(setLoading(false))
+        })
+    } catch (error) {
+      dispatch(setErrors(error))
+      console.error(error)
+    }
   }
 }
 
 export const getFlowerSortsValues = () => {
   return async dispatch => {
-
-    axios.get('http://localhost:8080/flowerSortsValues')
-      .then(resp => {
-        dispatch(setLoading(true))
-        dispatch(setFlowerSortsValues(resp.data))
-        dispatch(setLoading(false))
-      })
-      .catch(error => {
-        dispatch(setErrors(error))
-        console.log(error)
-      })
+    try {
+      const promise = getFlowerSortsRequest()
+      if (!promise) {
+        return
+      }
+      promise
+        .then(resp => {
+          dispatch(setLoading(true))
+          dispatch(setFlowerSortsValues(resp))
+          dispatch(setLoading(false))
+        })
+    } catch (error) {
+      dispatch(setErrors(error))
+      console.error(error)
+    }
   }
 }
 
 export const getFlowerColorsValues = () => {
   return async dispatch => {
-
-    axios.get('http://localhost:8080/flowerColorsValues')
-      .then(resp => {
-        dispatch(setLoading(true))
-        dispatch(setFlowerColorsValues(resp.data))
-        dispatch(setLoading(false))
-      })
-      .catch(error => {
-        dispatch(setErrors(error))
-        console.log(error)
-      })
+    try {
+      const promise = getFlowerColorsRequest()
+      if (!promise) {
+        return
+      }
+      promise
+        .then(resp => {
+          dispatch(setLoading(true))
+          dispatch(setFlowerColorsValues(resp))
+          dispatch(setLoading(false))
+        })
+    } catch (error) {
+      dispatch(setErrors(error))
+      console.error(error)
+    }
   }
 }
 
-export const getFlowerLengthCostValues = () => {
+export const getProductLengthCostValues = () => {
   return async dispatch => {
-
-    axios.get('http://localhost:8080/flowerLengthCostValues')
-      .then(resp => {
-        dispatch(setLoading(true))
-        dispatch(setFlowerLengthCostValues(resp.data))
-        dispatch(setLoading(false))
-      })
-      .catch(error => {
-        dispatch(setErrors(error))
-        console.log(error)
-      })
+    try {
+      const promise = getProductLengthCostsRequest()
+      if (!promise) {
+        return
+      }
+      promise
+        .then(resp => {
+          dispatch(setLoading(true))
+          dispatch(setFlowerLengthCostValues(resp))
+          dispatch(setLoading(false))
+        })
+    } catch (error) {
+      dispatch(setErrors(error))
+      console.error(error)
+    }
   }
 }

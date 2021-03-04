@@ -211,7 +211,7 @@ export function getAllShopsRequest (searchCriteria) {
 }
 export function getAllShops () {
 
-  const url = BASE_URL + 'company/shops'
+  const url = BASE_URL + 'shops'
 
   return request({
     url: url,
@@ -285,6 +285,13 @@ export function getCountriesRequest () {
   })
 }
 
+export function getCategoriesRequest () {
+  return request({
+    url: BASE_URL + 'categories',
+    method: 'GET'
+  })
+}
+
 export function getFlowerSortsRequest () {
   return request({
     url: BASE_URL + 'common/flower-sorts',
@@ -292,21 +299,15 @@ export function getFlowerSortsRequest () {
   })
 }
 
-export function getFlowerLengthCostsRequest () {
+export function getProductLengthCostsRequest () {
   return request({
-    url: BASE_URL + 'common/flower-length-costs',
+    url: BASE_URL + 'common/product-lengths',
     method: 'GET'
   })
 }
 
-export function getFlowerBouquetTypesRequest () {
-  return request({
-    url: BASE_URL + 'common/flower-bouquet-types',
-    method: 'GET'
-  })
-}
 
-export function getFlowerTypesRequest () {
+export function getProductTypesRequest () {
   return request({
     url: BASE_URL + 'common/flower-types',
     method: 'GET'

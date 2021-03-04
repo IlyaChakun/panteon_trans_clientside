@@ -1,15 +1,15 @@
 import React, {Component} from 'react'
 
 import s from "../../user/profile/Profile.module.css";
-import { Button, Form, Select, Input, Row, Col, Space, Divider, Tooltip } from 'antd'
+import { Button, Form, Select, Input, Row, Col } from 'antd'
 import ImageLoader from "../../common/image/ImageLoader";
 import {ERROR, SUCCESS} from "../../../constants";
 import validateId from "../product/ProductValidation";
 
 import {MinusCircleOutlined, PlusOutlined} from '@ant-design/icons';
 import { withRouter } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { getCountriesValues } from '../../../redux/reducers/ProductsSliceReducer'
+import { connect, useDispatch } from 'react-redux'
+import { fetchCountries } from '../../../redux/reducers/ProductsSliceReducer'
 
 
 const Option = Select.Option;
@@ -27,7 +27,7 @@ const layout = {
 class ProductForm extends Component {
 
     componentDidMount() {
-        getCountriesValues()
+       fetchCountries()
     }
 
     state = {
@@ -98,12 +98,6 @@ class ProductForm extends Component {
             "flowerSort": {
                 "id": this.state.flowerSort.id,
             },
-            "flowerLengthCosts": [
-                {
-                    "stemLength": 70.5,
-                    "price": 25.3
-                }
-            ],
             "country": {
                 "id": this.state.country.id
             },
@@ -457,17 +451,6 @@ class ProductForm extends Component {
     }
 
 
-    onChangeFlowerLengthCostsSelect = (input, option) => {
-        this.setState({
-            flowerLengthCosts: {
-                id: option.props.key,
-                value: option.props.value,
-                ...validateId(option.props.key)
-            }
-        })
-    }
-
-
     validateDescription = (description) => {
         if (description === undefined || description.length > 520) {
             return {
@@ -508,5 +491,5 @@ const mapStateToProps = state => ({
 
 export default withRouter(connect(
   mapStateToProps,
-  { getCountriesValues }
+  { fetchCountries }
 )(ProductForm))
