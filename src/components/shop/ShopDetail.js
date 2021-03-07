@@ -1,18 +1,16 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 
-import {notification, Tabs} from "antd";
+import { notification, Tabs } from 'antd'
 
-import {
-    getShopByIdRequest, updateShopRequest
-} from "../util/utilsAPI";
+import { getShopByIdRequest, updateShopRequest } from '../util/utilsAPI'
 
-import ShopForm from "./ShopForm";
-import LoadingIndicator from "../common/util/LoadingIndicator";
-import {SUCCESS} from "../../constants";
-import {localizedStrings} from "../util/localization";
-import FlowersList from "../products/flower/FlowersList";
-import {withRouter} from "react-router-dom";
-import OrderList from "../order/OrderList";
+import ShopForm from './ShopForm'
+import LoadingIndicator from '../common/util/LoadingIndicator'
+import { SUCCESS } from '../../constants'
+import { localizedStrings } from '../util/localization'
+import { withRouter } from 'react-router-dom'
+import OrderList from '../order/OrderList'
+import ProductList from '../products/product/ProductList'
 
 const {TabPane} = Tabs;
 
@@ -75,7 +73,7 @@ class ShopDetail extends Component {
             (
                 <LoadingIndicator/>
             ) : (
-                <FlowersList
+                <ProductList
                     currentUser={this.props.currentUser}
                     shopId={this.state.shop.id}/>
             );

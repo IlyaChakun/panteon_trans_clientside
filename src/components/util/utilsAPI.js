@@ -228,13 +228,13 @@ export function getShopByIdRequest (id) {
 
 export function getFlowersByIdRequest (id) {
   return request({
-    url: BASE_URL + 'flowers/' + id,
+    url: BASE_URL + 'products/' + id,
     method: 'GET'
   })
 }
 
 export function updateFlowerRequest (flowerId, updateFlowerRequest) {
-  const url = BASE_URL + 'flowers/' + flowerId
+  const url = BASE_URL + 'products/' + flowerId
 
   return request({
     url: url,
@@ -244,7 +244,7 @@ export function updateFlowerRequest (flowerId, updateFlowerRequest) {
 }
 
 export function deleteFlowerRequest (flowerId) {
-  const url = BASE_URL + 'flowers/' + flowerId
+  const url = BASE_URL + 'products/' + flowerId
 
   return request({
     url: url,
@@ -253,11 +253,10 @@ export function deleteFlowerRequest (flowerId) {
 }
 
 export function getProductsRequest (searchCriteria) {
-  const page = 'page=' + Number(searchCriteria.page === 0 ? searchCriteria.page : searchCriteria.page)
-  const size = '&size=' + Number(searchCriteria.size)
-  // const searchString = searchCriteria.searchString === undefined ? '' : '&searchString=' + searchCriteria.searchString
+  const page = 'page=' + Number(searchCriteria.page === undefined ? 1 : searchCriteria.page)
+  const size = '&size=' + Number( searchCriteria.size === undefined ? 10 : searchCriteria.size)
 
-  const url = BASE_URL + 'flowers?' + page + size
+  const url = BASE_URL + 'products?' + page + size
 
   return request({
     url: url,
@@ -270,7 +269,7 @@ export function getProductsByShopIdRequest (searchCriteria, shopId) {
   const page = 'page=' + Number(searchCriteria.page === 0 ? searchCriteria.page : searchCriteria.page)
   const size = '&size=' + Number(searchCriteria.size)
 
-  const url = BASE_URL + 'company/shops/' + shopId + '/flowers?' + page + size
+  const url = BASE_URL + 'company/shops/' + shopId + '/products?' + page + size
 
   return request({
     url: url,
@@ -292,54 +291,32 @@ export function getCategoriesRequest () {
   })
 }
 
-export function getFlowerSortsRequest () {
-  return request({
-    url: BASE_URL + 'common/flower-sorts',
-    method: 'GET'
-  })
-}
-
-export function getProductLengthCostsRequest () {
+export function getProductLengthsRequest () {
   return request({
     url: BASE_URL + 'common/product-lengths',
     method: 'GET'
   })
 }
 
-
-export function getProductTypesRequest () {
-  return request({
-    url: BASE_URL + 'common/flower-types',
-    method: 'GET'
-  })
-}
-
-export function getFlowerColorsRequest () {
-  return request({
-    url: BASE_URL + 'common/flower-colors',
-    method: 'GET'
-  })
-}
-
-export function saveProductRequest (flowerRequest) {
-  const url = BASE_URL + 'flowers'
+export function saveProductRequest (productRequest) {
+  const url = BASE_URL + 'products'
 
   return request({
     url: url,
     method: 'POST',
-    body: JSON.stringify(flowerRequest)
+    body: JSON.stringify(productRequest)
   })
 }
 
 
 export function getBasketRequest () {
   return request({
-    url: BASE_URL + 'cart',
+    url: BASE_URL + 'carts',
     method: 'GET'
   })
 }
 export function addProductToBasketRequest (productCartRequest) {
-  const url = BASE_URL + 'cart'
+  const url = BASE_URL + 'carts'
 
   return request({
     url: url,
@@ -349,7 +326,7 @@ export function addProductToBasketRequest (productCartRequest) {
 }
 
 export function updateProductToBasketRequest (productCartRequest) {
-  const url = BASE_URL + 'cart'
+  const url = BASE_URL + 'carts'
 
   return request({
     url: url,
@@ -359,7 +336,7 @@ export function updateProductToBasketRequest (productCartRequest) {
 }
 
 export function deleteProductToBasketRequest (productCartRequest) {
-  const url = BASE_URL + 'cart'
+  const url = BASE_URL + 'carts'
 
   return request({
     url: url,

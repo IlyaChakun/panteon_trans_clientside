@@ -1,21 +1,19 @@
-import React, {useEffect} from 'react'
-import {withRouter} from "react-router-dom";
-import {Col, List, Row, Select} from 'antd'
-import LoadingIndicator from "../../common/util/LoadingIndicator";
-import AddProductModal from "./AddProductModal"
-import ProductCardProxy from "./ProductCardProxy"
+import React, { useEffect } from 'react'
+import { withRouter } from 'react-router-dom'
+import { Col, List, Row, Select } from 'antd'
+import AddProductModal from './AddProductModal'
+import ProductCardProxy from './ProductCardProxy'
 
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from 'react-redux'
 import {
-    getProducts,
-    fetchShops,
-    productSelector,
-    setPage,
-    setShopId,
-    setShopValue,
-    setSize
-} from "../../../redux/reducers/ProductsSliceReducer"
+  fetchShops,
+  getProducts,
+  productSelector,
+  setPage,
+  setSize
+} from '../../../redux/reducers/ProductsSliceReducer'
 import SideMenu from '../../common/sidemenu/SideMenu'
+import LoadingIndicator from '../../common/util/LoadingIndicator'
 
 const {Option} = Select;
 
@@ -27,9 +25,6 @@ const ProductList = (props) => {
         products,
         loading,
         errors,
-        shops,
-        shopId,
-        shopValue,
         page,
         size,
         pagesCount,
@@ -47,26 +42,20 @@ const ProductList = (props) => {
     }, [dispatch])
 
     const updateList = () => {
-        loadList(page, size, shopId)
+        loadList(page, size)
     }
 
-    const loadList = (page, size, shopId, minPrice, maxPrice, sortBy, sortType) => {
+    const loadList = (page, size, minPrice, maxPrice, sortBy, sortType) => {
         const searchCriteria = {
             page: page,
             size: size,
-            shopId: shopId,
 
             minPrice: minPrice,
             maxPrice: maxPrice,
             sortBy: sortBy,
             sortType: sortType
         };
-
-        if (!shopId) {
             dispatch(getProducts(searchCriteria))
-        } else {
-            dispatch(getProducts(searchCriteria, shopId))
-        }
     }
 
     const loadSearchList = (productName, minPrice, maxPrice, sortBy, sortType, checkedBrands) => {
@@ -78,15 +67,7 @@ const ProductList = (props) => {
     //     return <LoadingIndicator/>
     // }
 
-    const addProductButton = shopId === undefined ? '' :
-        (
-            <AddProductModal shopId={shopId}
-                             updateList={updateList}
-            />
-        )
-
-    const productsMap = products
-        .map(product => (
+  const productsMap = products.payload === undefined ? [] : products.payload.map(product => (
                 <ProductCardProxy
                     history={props.history}
                     key={product.id}
@@ -94,28 +75,6 @@ const ProductList = (props) => {
                 />
             )
         )
-
-    // const shopOptions = shops.map(
-    //     shop =>
-    //         <Option key={shop.id} value={shop.contacts.address}>
-    //             {shop.contacts.city}, {shop.contacts.address}
-    //         </Option>
-    // )
-
-
-    const handleShopChange = (input, option) => {
-        dispatch(setShopId(option.props.key))
-        dispatch(setShopValue(option.props.value))
-
-        // this.setState({
-        //         shopId: option.props.key,
-        //         shopValue: option.props.value
-        //     },
-        //     () => {
-        //         updateList(productsState.page, productsState.size, productsState.shopId)
-        //     })
-
-    }
 
     const onSizeChangeHandler = (currentPage, currentSize) => {
         dispatch(setSize(currentSize))
@@ -141,7 +100,7 @@ const ProductList = (props) => {
                         <Col span={6}>
                             <h1>Каталог</h1>
                             <SideMenu/>
-                            {addProductButton}
+                            <AddProductModal updateList={updateList}/>
                         </Col>
                         <Col span={18}>
                             <List

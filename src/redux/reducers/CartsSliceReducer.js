@@ -1,26 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
-import {
-  addProductToBasketRequest,
-  deleteFlowerRequest,
-  getAllShops,
-  getProductsByShopIdRequest,
-  getProductsRequest, loginRequest
-} from '../../components/util/utilsAPI'
+import { addProductToBasketRequest } from '../../components/util/utilsAPI'
 import { notification } from 'antd'
 import { localizedStrings } from '../../components/util/localization'
-import imagePic from '../../img/8dfe3aad5c7fc4614d3f7a09716b2094.jpg'
 
 import axios from 'axios'
-import { setCategories } from './ProductsSliceReducer'
-import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../constants'
-import {
-  setAccessToken,
-  setCurrentUser,
-  setExpireDate,
-  setIsAuthenticated,
-  setIsLoading,
-  setRefreshToken
-} from './AuthSliceReducer'
 
 const initialState = {
   cart: {},

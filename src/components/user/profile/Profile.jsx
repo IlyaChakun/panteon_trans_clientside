@@ -29,7 +29,7 @@ const Profile =(props)=> {
   const [name, setName]=useState({  value: currentUser.payload.name,  validateStatus: SUCCESS,  errorMsg: null})
   const [email, setEmail]=useState( {  value: currentUser.payload.email,  validateStatus: SUCCESS})
   const [phoneNumber, setPhoneNumber] = useState({  value: currentUser.payload.phoneNumber,  validateStatus: SUCCESS,  errorMsg: null})
-  const [imageUrl, setImageUrl] = useState(currentUser.payload.image === null ? '' : currentUser.payload.image.imageUrl)
+  const [imageUrl, setImageUrl] = useState(currentUser.payload.image === undefined ? '' : currentUser.payload.image.imageUrl)
 
   const handleSubmit = () => {
     const updateUserRequest = {

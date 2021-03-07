@@ -42,10 +42,18 @@ button.cart-buy:hover {
     background: forestgreen;
 }
 
-.ant-card-meta-avatar img {
+/*.ant-card-meta-avatar img {*/
+/*    width: 150px;*/
+/*    height: 150px;*/
+/*    object-fit: cover;*/
+/*    height: auto;*/
+/*}*/
+
+.ant-card-cover img {
     width: 150px;
+    height: 150px;
     object-fit: cover;
-    height: auto;
+    border-radius: 2px 2px 0 0;
 }
 
 

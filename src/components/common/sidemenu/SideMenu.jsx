@@ -1,18 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Menu } from 'antd'
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons'
+import { AppstoreOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import ProductsSliceReducer, { productSelector } from '../../../redux/reducers/ProductsSliceReducer'
-import FlowerCardProxy from '../../products/flower/FlowerCardProxy'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchCategories, productSelector } from '../../../redux/reducers/ProductsSliceReducer'
 
 const { SubMenu } = Menu
 
 // submenu keys of first level
-const rootSubmenuKeys = ['sub1', 'sub2', 'sub4']
+const rootSubmenuKeys = ['sub1', 'sub2', 'sub3', 'sub4']
 
 
 const SideMenu = () => {
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchCategories())
+  }, [dispatch])
+
   const handleClick = e => {
     console.log('click ', e)
   }
@@ -22,11 +28,15 @@ const SideMenu = () => {
 
   const menuCategories = categories
     .map((category, index) => (
-        <SubMenu key={`sub${index}`} icon={<AppstoreOutlined />} title={category}>
-          <Menu.Item key='1'>Option 1</Menu.Item>
-          <Menu.Item key='2'>Option 2</Menu.Item>
-          <Menu.Item key='3'>Option 3</Menu.Item>
-          <Menu.Item key='4'>Option 4</Menu.Item>
+        //TODO algoritm to show up
+        <SubMenu key={`sub${index}`} icon={<AppstoreOutlined />} title={category.name}>
+          {category.children === undefined ? '' : (
+            category.children
+              .map(child =>
+                <Menu.Item key={`${child.parent}-${child.id}`}>
+                  {child.name}
+                </Menu.Item>)
+          )}
         </SubMenu>
       )
     )
@@ -44,6 +54,7 @@ const SideMenu = () => {
   }
 
   return (
+
     <Menu mode='inline'
           openKeys={openKeys}
           onOpenChange={onOpenChange}

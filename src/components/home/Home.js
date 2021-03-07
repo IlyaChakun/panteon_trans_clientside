@@ -1,11 +1,11 @@
 import React from 'react'
 
-import {withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import ReviewsList from '../company/review/ReviewsList'
 import ShopsBlock from '../shop/ShopsBlock'
-import FlowersList from '../products/flower/FlowersList'
-import {Col, Row} from 'antd'
+import { Col, Row } from 'antd'
 import CarouselComponent from '../common/carousel/CarouselComponent'
+import ProductList from '../products/product/ProductList'
 
 function Home() {
   return (
@@ -14,7 +14,7 @@ function Home() {
           <div className="mb-5">
             <CarouselComponent/>
           </div>
-          {/*<FlowersList/>*/}
+          <ProductList/>
           <Row justify="center">
             <Col span={20}>
               <ReviewsList/>

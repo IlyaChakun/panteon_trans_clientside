@@ -1,16 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import {
-  deleteFlowerRequest,
-  getAllShops,
-  getProductsByShopIdRequest,
-  getProductsRequest
-} from '../../components/util/utilsAPI'
-import { notification } from 'antd'
-import { localizedStrings } from '../../components/util/localization'
-import imagePic from '../../img/8dfe3aad5c7fc4614d3f7a09716b2094.jpg'
-
 import axios from 'axios'
-import { setCategories } from './ProductsSliceReducer'
 
 const initialState = {
   orders: [],

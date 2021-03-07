@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {withRouter} from 'react-router-dom'
 import Modal from "antd/es/modal";
-import ProductForm from "./ProductForm";
+import ProductForm from "./ProductForm.jsx";
 import {getFlowersByIdRequest, updateFlowerRequest} from "../../util/utilsAPI";
 import {localizedStrings} from "../../util/localization";
 import {notification} from "antd";
@@ -70,7 +70,7 @@ class EditProductModal extends Component {
     };
 
     handleCancel = e => {
-        console.log(e);
+        console.log({e});
         this.setState({
             visible: false,
         });
@@ -105,9 +105,8 @@ class EditProductModal extends Component {
                 <LoadingIndicator/>
             ) : (
                 <ProductForm
-                    flower={this.state.product}
+                    product={this.state.product}
                     action={'Изменить'}
-                    shopId={this.state.shopId}
                     validateStatus={SUCCESS}
                     handleSubmitButton={this.handleSubmitButton}
                 />

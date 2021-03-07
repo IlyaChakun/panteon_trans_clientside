@@ -23,8 +23,10 @@ const ProductCardProxy = ({ product, history }) => {
       'productLengthCostId': product.productLengthCost.find(x => x.id === productState.lengthId).id,
       'quantity': productState.amount
     }
-    console.log(productToCart)
-    console.log(productState)
+    console.log('currentUser',currentUser)
+    console.log('product',product)
+    console.log('productToCart',productToCart)
+    console.log('productState',productState )
     dispatch(addToCart(productToCart))
   }
 

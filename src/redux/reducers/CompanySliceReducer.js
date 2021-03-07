@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getCurrentCompanyRequest, updateCompanyInfoRequest } from '../../components/util/utilsAPI'
+import { getCurrentCompanyRequest } from '../../components/util/utilsAPI'
 
 const initialState = {
   isLoading: true,

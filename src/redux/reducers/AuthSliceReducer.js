@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
-  getCurrentUserRequest, loginRequest, signUpRequest, updateUserProfileRequest
-} from '../../components/util/utilsAPI'
+  getCurrentUserRequest, loginRequest, updateUserProfileRequest} from '../../components/util/utilsAPI'
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../constants'
 import { notification } from 'antd'
 import { localizedStrings } from '../../components/util/localization'
