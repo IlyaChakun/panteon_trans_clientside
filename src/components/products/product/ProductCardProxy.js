@@ -11,7 +11,8 @@ import ProductCard from './ProductCard'
 import { addToCart } from '../../../redux/reducers/CartsSliceReducer'
 
 
-const ProductCardProxy = ({ product, history }) => {
+// const ProductCardProxy = ({ product, history }) => {
+const ProductCardProxy = ({ product, history, updateList }) => {
 
   const dispatch = useDispatch()
   const { currentUser } = useSelector(authSelector)
@@ -23,10 +24,10 @@ const ProductCardProxy = ({ product, history }) => {
       'productLengthCostId': product.productLengthCost.find(x => x.id === productState.lengthId).id,
       'quantity': productState.amount
     }
-    console.log('currentUser',currentUser)
-    console.log('product',product)
-    console.log('productToCart',productToCart)
-    console.log('productState',productState )
+    console.log('currentUser', currentUser)
+    console.log('product', product)
+    console.log('productToCart', productToCart)
+    console.log('productState', productState)
     dispatch(addToCart(productToCart))
   }
 
@@ -35,6 +36,7 @@ const ProductCardProxy = ({ product, history }) => {
     <div className={isAdmin(currentUser) ? '' : 'custom-hidden'}>
       <EditProductModal
         productId={product.id}
+        updateList={updateList}
       />
     </div>
   )
@@ -43,8 +45,8 @@ const ProductCardProxy = ({ product, history }) => {
       <DeleteProductModal
         productId={product.id}
         button={
-          <DeleteOutlined style={{ fontSize: '25px' }} />
-        } />
+          <DeleteOutlined style={{ fontSize: '25px' }}/>
+        }/>
     </div>)
 
   const buyAction = (productState) => (

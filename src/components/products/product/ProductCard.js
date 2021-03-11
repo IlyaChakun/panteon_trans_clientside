@@ -4,7 +4,7 @@ import './ProductCard.css'
 
 const { Meta } = Card
 
-const ProductCard=({ product, editAction, deleteAction, buyAction, oneClickAction })=> {
+const ProductCard = ({ product, editAction, deleteAction, buyAction, oneClickAction }) => {
 
   const [idRadio, setIdRadio] = useState(product.productLengthCost[0].id)
   const [amount, setAmount] = useState(1)
@@ -19,12 +19,12 @@ const ProductCard=({ product, editAction, deleteAction, buyAction, oneClickActio
 
   const onLengthChange = (e) => {
     setIdRadio(e.target.value)
-    setProductState({amount, lengthId: idRadio})
+    setProductState({ amount, lengthId: idRadio })
   }
 
   const onInputChange = (value) => {
     setAmount(value)
-    setProductState({amount:value, lengthId: idRadio})
+    setProductState({ amount: value, lengthId: idRadio })
   }
 
   return (
@@ -32,7 +32,7 @@ const ProductCard=({ product, editAction, deleteAction, buyAction, oneClickActio
       style={{ border: '1px solid grey', padding: '2px' }}
       bodyStyle={{ padding: '10px' }}
       hoverable
-      cover={<img alt={product.title} src={product.image} />}
+      cover={<img alt={product.title} src={product.image}/>}
       actions={[
         editAction,
         deleteAction
@@ -71,13 +71,13 @@ const ProductCard=({ product, editAction, deleteAction, buyAction, oneClickActio
                   <Col span={12}>{product.productLengthCost.find(x => x.id === idRadio).cost * amount} BYN</Col>
                 </Row>
                 <Row className='product-rating'>
-                  <Rate disabled defaultValue={2} />
+                  <Rate disabled defaultValue={2}/>
                 </Row>
                 <Row className='product-title'>
                   {product.title}
                 </Row>
                 <Row className='product-art'>
-                  Арт.: {product.unique_id}
+                  Арт.: {product.uniqueId}
                 </Row>
               </Col>
             </Row>

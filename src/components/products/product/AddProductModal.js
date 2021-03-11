@@ -12,12 +12,12 @@ const AddProductModal = (props) => {
     id: '',
     dateOfLastUpdate: '',
     flowerType: '',
-    flowerColor: '',
+    // flowerColor: '',
     flowerLengthCosts: [],
-    flowerSort: '',
+    // flowerSort: '',
     country: '',
     description: '',
-    availableAmountOnStock: '',
+    // availableAmountOnStock: '',
     image: null
   })
 

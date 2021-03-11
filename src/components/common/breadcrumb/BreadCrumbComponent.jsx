@@ -13,7 +13,7 @@ function BreadCrumbComponent(props) {
     '/company/shops': 'Магазины компании',
     '/basket': 'Корзина',
     '/bouquets': 'Букеты',
-    '/flowers': 'Цветы поштучно',
+    '/products': 'Товары',
     '/orders/:id': 'Детальный просмотр заказа'
     //TODO на детальных заказах не отрабатывает
     //TODO на детальных магазинах не отрабатывает

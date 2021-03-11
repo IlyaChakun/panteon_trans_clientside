@@ -1,12 +1,12 @@
-import React, {  useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import s from "../../user/profile/Profile.module.css";
+import s from '../../user/profile/Profile.module.css'
 import { Button, Form, Select, Input, Row, Col } from 'antd'
-import ImageLoader from "../../common/image/ImageLoader";
-import { SUCCESS} from "../../../constants";
+import ImageLoader from '../../common/image/ImageLoader'
+import { SUCCESS } from '../../../constants'
 import { validateId, validateAmount, validateDescription, validateTitle } from './ProductValidation'
 
-import {MinusCircleOutlined, PlusOutlined} from '@ant-design/icons';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -17,8 +17,8 @@ import {
 } from '../../../redux/reducers/ProductsSliceReducer'
 
 
-const ProductForm =(props)=>  {
-  const dispatch =useDispatch()
+const ProductForm = (props) => {
+  const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(fetchCountries())
@@ -32,24 +32,44 @@ const ProductForm =(props)=>  {
     productLengths
   } = useSelector(productSelector)
 
-  const [id, setId]= useState(props.product.id)
-  const [dateOfLastUpdate, setDateOfLastUpdate] = useState({value:props.product.dateOfLastUpdate, validateStatus: props.validateStatus})
+  const [id, setId] = useState(props.product.id)
+  const [dateOfLastUpdate, setDateOfLastUpdate] = useState({
+    value: props.product.dateOfLastUpdate,
+    validateStatus: props.validateStatus
+  })
   const [uniqueId, setUniqueId] = useState(props.product.uniqueId)
-  const [category, setCategory] = useState({ id: props.product.categoryId, value:categories.find(x => x.id === props.product.categoryId), validateStatus: props.validateStatus})
-  const [country, setCountry] = useState({ id: props.product.countryId, value:countries.find(x => x.id === props.product.countryId), validateStatus: props.validateStatus})
-  const [title, setTitle] = useState({value:props.product.title, validateStatus: props.validateStatus})
-  const [description, setDescription] = useState({value:props.product.description, validateStatus: props.validateStatus})
-  const [availableAmount, setAvailableAmount] = useState({value:props.product.availableAmount, validateStatus: props.validateStatus})
+  const [category, setCategory] = useState({
+    id: props.product.categoryId,
+    value: categories.find(x => x.id === props.product.categoryId),
+    validateStatus: props.validateStatus
+  })
+  const [country, setCountry] = useState({
+    id: props.product.countryId,
+    value: countries.find(x => x.id === props.product.countryId),
+    validateStatus: props.validateStatus
+  })
+  const [title, setTitle] = useState({ value: props.product.title, validateStatus: props.validateStatus })
+  const [description, setDescription] = useState({
+    value: props.product.description,
+    validateStatus: props.validateStatus
+  })
+  const [availableAmount, setAvailableAmount] = useState({
+    value: props.product.availableAmount,
+    validateStatus: props.validateStatus
+  })
   const [imageUrl, setImageUrl] = useState(props.product.image == null ? '' : props.product.image.imageUrl)
-  const [productLengthCost, setProductLengthCost] = useState({value:props.product.productLengthCost, validateStatus: props.validateStatus})
+  const [productLengthCost, setProductLengthCost] = useState({
+    value: props.product.productLengthCost,
+    validateStatus: props.validateStatus
+  })
 
 
-  const { Option, OptGroup } = Select;
+  const { Option, OptGroup } = Select
 
   const layout = {
-    labelCol: {span: 6},
-    wrapperCol: {span: 18}
-  };
+    labelCol: { span: 6 },
+    wrapperCol: { span: 18 }
+  }
 
   const isFormInvalid = () => {
     return !(
@@ -63,18 +83,18 @@ const ProductForm =(props)=>  {
     console.log('Received values of form:', values)
 
     const flowerRequest = {
-      "id": id,
-      "categoryId": category.id,
-      "countryId": country.id,
-      "title": title.value,
-      "description": description.value,
-      "availableAmount": availableAmount.value,
-      "productLengthCost": values.productLengthCost,
+      'id': id,
+      'categoryId': category.id,
+      'countryId': country.id,
+      'title': title.value,
+      'description': description.value,
+      'availableAmount': availableAmount.value,
+      'productLengthCost': values.productLengthCost
     }
 
     console.log('flowerRequest request: ', flowerRequest)
 
-    props.handleSubmitButton(flowerRequest);
+    props.handleSubmitButton(flowerRequest)
   }
 
   const handleAmountChange = (event) => {
@@ -128,22 +148,28 @@ const ProductForm =(props)=>  {
       </Option>
   )
 
+  console.log(JSON.stringify(categories))
+
   const categoriesOptions = categories.map(
     element =>
       element.parentId === null ? (
-        <OptGroup label={element.name}>
-          {element.children.map(
-            child=>
-              <Option key={`${element.name}-${element.id}`} value={child.id}>{child.name}</Option>
-          )}
+        <OptGroup key={element.parentId} label={element.name}>
+          {
+            element.children.map(
+              child =>
+                <Option key={element.id} value={child.id}>{child.name}</Option>
+            )
+          }
         </OptGroup>
-        ):''
+      ) : ''
   )
+
+  const initialProductCosts = productLengthCost.value
 
   return (
     <Form {...layout}
           onFinish={handleSubmit}
-          initialValues={{}}
+
           name="dynamic_form_nest_item"
           autoComplete="off"
     >
@@ -168,15 +194,15 @@ const ProductForm =(props)=>  {
                 rules={[
                   {
                     required: true,
-                    message: 'Пожалуйста, введите название!',
-                  },
+                    message: 'Пожалуйста, введите название!'
+                  }
                 ]}
               >
                 <Input
                   name="title"
                   value={title.value}
                   placeholder='Название'
-                  style={{fontSize: '16px', width: 200}}
+                  style={{ fontSize: '16px', width: 200 }}
                 />
               </Form.Item>
 
@@ -190,9 +216,9 @@ const ProductForm =(props)=>  {
 
                 <Select
                   name="country"
-                  value={country.value}
+                  value={country.id}
                   showSearch
-                  style={{width: 200}}
+                  style={{ width: 200 }}
                   placeholder="Выберите страну"
                   onChange={onChangeCountrySelect}
                 >
@@ -210,9 +236,9 @@ const ProductForm =(props)=>  {
 
                 <Select
                   name="category"
-                  value={category.value}
+                  value={category.id}
                   showSearch
-                  style={{width: 200}}
+                  style={{ width: 200 }}
                   placeholder='Выберите категорию продукта'
                   onChange={onChangeCategorySelect}
                 >
@@ -221,13 +247,13 @@ const ProductForm =(props)=>  {
 
               </Form.Item>
 
-              <Form.List name="productLengthCost" >
-                {(fields, {add, remove}) => (
+              <Form.List name="productLengthCost" initialValue={initialProductCosts}>
+                {(fields, { add, remove }) => (
                   <>
-                    {fields.map((field,index) => (
+                    {fields.map((field, index) => (
                       <div
                         key={field.key}
-                        style={{ display: 'flex'}}
+                        style={{ display: 'flex' }}
                         align="baseline">
 
                         <Form.Item
@@ -240,15 +266,15 @@ const ProductForm =(props)=>  {
                             <Form.Item
                               {...field}
                               label="Длина"
-                              labelCol={{span: 11, offset: 1}}
-                              wrapperCol={{span:12}}
+                              labelCol={{ span: 11, offset: 1 }}
+                              wrapperCol={{ span: 12 }}
                               name={[field.name, 'stemLength']}
                               fieldKey={[field.fieldKey, 'stemLength']}
-                              rules={[{required: true, message: 'Введите длину'}]}
+                              rules={[{ required: true, message: 'Введите длину' }]}
                             >
                               <Select
                                 // disabled={!form.getFieldValue('area')}
-                                style={{width:120}}
+                                style={{ width: 120 }}
                               >
                                 {productLengths.map(item => (
                                   <Option key={item} value={item.productLength}>
@@ -262,18 +288,18 @@ const ProductForm =(props)=>  {
 
                         <Form.Item
                           {...field}
-                          labelCol={{span: 8, offset: 2}}
-                          wrapperCol={{span:14}}
+                          labelCol={{ span: 8, offset: 2 }}
+                          wrapperCol={{ span: 14 }}
                           label="Цена"
                           name={[field.name, 'cost']}
                           fieldKey={[field.fieldKey, 'cost']}
-                          rules={[{required: true, message: 'Введите цену'}]}
+                          rules={[{ required: true, message: 'Введите цену' }]}
                         >
                           <Input/>
                         </Form.Item>
 
                         <MinusCircleOutlined
-                          style={{marginLeft:16, paddingTop: 8}}
+                          style={{ marginLeft: 16, paddingTop: 8 }}
                           onClick={() => remove(field.name)}/>
                       </div>
                     ))}
@@ -281,7 +307,7 @@ const ProductForm =(props)=>  {
                     <Form.Item>
                       <Button type="dashed"
                               block
-                              style={{marginBottom:0}}
+                              style={{ marginBottom: 0 }}
                               onClick={() => add()}
                               icon={<PlusOutlined/>}
                       >
@@ -294,7 +320,6 @@ const ProductForm =(props)=>  {
               </Form.List>
 
 
-
               <Form.Item
                 label={'Описание'}
                 validateStatus={description.validateStatus}
@@ -304,16 +329,16 @@ const ProductForm =(props)=>  {
                 rules={[
                   {
                     required: true,
-                    message: 'Пожалуйста, введите описание!',
-                  },
+                    message: 'Пожалуйста, введите описание!'
+                  }
                 ]}
               >
                 <Input.TextArea
                   name="description"
                   value={description.value}
                   placeholder={'описание'}
-                  style={{fontSize: '16px', width: 200}}
-                  autosize={{minRows: 3, maxRows: 6}}/>
+                  style={{ fontSize: '16px', width: 200 }}
+                  autosize={{ minRows: 3, maxRows: 6 }}/>
               </Form.Item>
 
 
@@ -326,17 +351,17 @@ const ProductForm =(props)=>  {
                 rules={[
                   {
                     required: true,
-                    message: 'Пожалуйста, введите описание!',
-                  },
+                    message: 'Пожалуйста, введите описание!'
+                  }
                 ]}
               >
                 <Input
-                  type={"number"}
+                  type={'number'}
                   min={0}
                   max={10_000}
                   name="availableAmount"
                   placeholder={'колво на складе'}
-                  style={{fontSize: '16px', width: 200}}
+                  style={{ fontSize: '16px', width: 200 }}
                   value={availableAmount.value}
                 />
               </Form.Item>

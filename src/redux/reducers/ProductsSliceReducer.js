@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
-  deleteFlowerRequest,
-  getAllShops,
+  deleteProductRequest,
+  sliceAllShops,
   getCategoriesRequest,
   getCountriesRequest,
   getProductLengthsRequest,
   getProductsByShopIdRequest,
   getProductsRequest,
-  saveProductRequest
+  saveProductRequest, updateProductRequest
 } from '../../components/util/utilsAPI'
 import { notification } from 'antd'
 import { localizedStrings } from '../../components/util/localization'
@@ -42,26 +42,27 @@ export const saveProduct = (productRequest) => {
   return async dispatch => {
     const response = await saveProductRequest(productRequest)
 
-   if (response.status === true){
-         notification.success({
-           message: localizedStrings.alertAppName,
-           description:  response.message
-         })
-   }else {
-       notification.error({
-         message: localizedStrings.alertAppName,
-         description:  response.message
-       })
-   }
+    if (response.status === true) {
+      notification.success({
+        message: localizedStrings.alertAppName,
+        description: response.message
+      })
+    } else {
+      notification.error({
+        message: localizedStrings.alertAppName,
+        description: response.message
+      })
+    }
 
-  return await getProductsRequest()
+    return await getProductsRequest()
   }
 }
+
 
 const productSlice = createSlice({
   name: 'products',
   initialState: {
-    products: [ ],
+    products: [],
 
     loading: false,
     errors: '',
@@ -109,7 +110,7 @@ const productSlice = createSlice({
     },
     setSize: (state, payload) => {
       state.size = payload
-    },
+    }
   },
   extraReducers: {
     [fetchShops.pending]: (state, action) => {
@@ -235,7 +236,7 @@ export const deleteProduct = (productId) => {
     // });
 
     try {
-      const promise = deleteFlowerRequest(productId)
+      const promise = deleteProductRequest(productId)
 
       if (!promise) {
         return
@@ -280,3 +281,34 @@ export const deleteProduct = (productId) => {
 //   }
 // }
 
+export const updateProduct = (productId, product) => {
+  return async dispatch => {
+    try {
+      console.log('updateProduct')
+      console.log('productId= ' + JSON.stringify(productId))
+      console.log('product ' + JSON.stringify(product))
+
+      const promise = updateProductRequest(productId, product)
+
+      if (!promise) {
+        return
+      }
+       promise
+        .then(response => {
+          notification.success({
+            message: localizedStrings.alertAppName,
+            description: 'Успешное обновление!'
+          })
+
+          // window.location.href = '/products'
+
+          dispatch(setProducts(response.objects.slice()))
+          dispatch(setTotalPages(response.totalPages))
+          dispatch(setTotalElements(response.totalElements))
+          dispatch(setLoading(false))
+        })
+    } catch (error) {
+      dispatch(setErrors(error))
+    }
+  }
+}

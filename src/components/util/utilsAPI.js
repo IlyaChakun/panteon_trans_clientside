@@ -178,7 +178,7 @@ export function saveReviewRequest (reviewRequest) {
 }
 
 export function saveShopRequest (shopRequest) {
-  const url = BASE_URL + 'company/shops'
+  const url = BASE_URL + 'shops'
 
   return request({
     url: url,
@@ -188,7 +188,7 @@ export function saveShopRequest (shopRequest) {
 }
 
 export function updateShopRequest (shopRequest, shopId) {
-  const url = BASE_URL + 'company/shops/' + shopId
+  const url = BASE_URL + 'shops/' + shopId
 
   return request({
     url: url,
@@ -202,7 +202,7 @@ export function getAllShopsRequest (searchCriteria) {
   const size = '&size=' + Number(searchCriteria.size)
   // const searchString = searchCriteria.searchString === undefined ? '' : '&searchString=' + searchCriteria.searchString
 
-  const url = BASE_URL + 'company/shops?' + page + size
+  const url = BASE_URL + 'shops?' + page + size
 
   return request({
     url: url,
@@ -221,29 +221,29 @@ export function getAllShops () {
 
 export function getShopByIdRequest (id) {
   return request({
-    url: BASE_URL + 'company/shops/' + id,
+    url: BASE_URL + 'shops/' + id,
     method: 'GET'
   })
 }
 
-export function getFlowersByIdRequest (id) {
+export function getProductByIdRequest (id) {
   return request({
     url: BASE_URL + 'products/' + id,
     method: 'GET'
   })
 }
 
-export function updateFlowerRequest (flowerId, updateFlowerRequest) {
-  const url = BASE_URL + 'products/' + flowerId
+export function updateProductRequest (productId, updateProductRequest) {
+  const url = BASE_URL + 'products/' + productId
 
   return request({
     url: url,
     method: 'PUT',
-    body: JSON.stringify(updateFlowerRequest)
+    body: JSON.stringify(updateProductRequest)
   })
 }
 
-export function deleteFlowerRequest (flowerId) {
+export function deleteProductRequest (flowerId) {
   const url = BASE_URL + 'products/' + flowerId
 
   return request({

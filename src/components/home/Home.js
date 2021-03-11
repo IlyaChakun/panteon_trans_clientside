@@ -11,10 +11,12 @@ function Home() {
   return (
       <Row>
         <Col span={24}>
-          <div className="mb-5">
-            <CarouselComponent/>
-          </div>
+          {/*<div className="mb-5">*/}
+          {/*  <CarouselComponent/>*/}
+          {/*</div>*/}
+
           <ProductList/>
+
           <Row justify="center">
             <Col span={20}>
               <ReviewsList/>

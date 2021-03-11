@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {notification, Popconfirm} from "antd";
 
 import {withRouter} from "react-router-dom";
-import {deleteFlowerRequest} from "../../util/utilsAPI";
+import {deleteProductRequest} from "../../util/utilsAPI";
 import {localizedStrings} from "../../util/localization";
 
 
@@ -15,7 +15,7 @@ class DeleteProductModal extends Component {
 
 
     submitDelete = (productId) => {
-        deleteFlowerRequest(productId)
+        deleteProductRequest(productId)
             .then(() => {
                 notification.success({
                     message: localizedStrings.alertAppName,
