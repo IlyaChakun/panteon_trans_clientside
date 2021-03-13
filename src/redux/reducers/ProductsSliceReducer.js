@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
-  deleteProductRequest,
-  sliceAllShops,
+  deleteProductRequest, getAllShops,
   getCategoriesRequest,
   getCountriesRequest,
   getProductLengthsRequest,
@@ -97,7 +96,7 @@ const productSlice = createSlice({
       state.errors = payload
     },
     setProducts: (state, payload) => {
-      state.products = payload
+      state.products = payload.payload
     },
     setTotalPages: (state, payload) => {
       state.totalPages = payload

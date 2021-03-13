@@ -10,6 +10,7 @@ import {
   productSelector, updateProduct
 
 } from '../../../redux/reducers/ProductsSliceReducer'
+import { SUCCESS } from '../../../constants'
 
 const EditProductModal = (props) => {
   const dispatch = useDispatch()
@@ -20,7 +21,7 @@ const EditProductModal = (props) => {
 
   const [product, setProduct] = useState({
     id: props.productId,
-    value: products.payload.find(x => x.id === props.productId)
+    value: products.find(x => x.id === props.productId)
   })
 
   console.log('json: ' + JSON.stringify(product))
@@ -64,7 +65,7 @@ const EditProductModal = (props) => {
         <ProductForm
           product={product.value}
           action={'Изменить'}
-          validateStatus={''}
+          validateStatus={SUCCESS}
           shopId={props.shopId}
           handleSubmitButton={handleSubmitButton}
         />

@@ -64,7 +64,7 @@ const ProductList = (props) => {
   //     return <LoadingIndicator/>
   // }
 
-  const productsMap = products.payload === undefined ? [] : products.payload.map(product => (
+  const productsMap = products === undefined ? [] : products.map(product => (
     <ProductCardProxy
       history={props.history}
       key={product.id}
