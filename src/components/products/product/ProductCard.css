@@ -56,10 +56,12 @@ button.cart-buy:hover {
     border-radius: 2px 2px 0 0;
 }
 
+.product-card{
+    position: relative;
+}
 
 .radio-group{
     position: absolute;
-    z-index: 100000;
     top: 260px;
     right: 0px;
 }

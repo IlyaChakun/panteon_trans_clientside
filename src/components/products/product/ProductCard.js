@@ -29,6 +29,7 @@ const ProductCard = ({ product, editAction, deleteAction, buyAction, oneClickAct
 
   return (
     <Card
+      className={'product-card'}
       style={{ border: '1px solid grey', padding: '2px' }}
       bodyStyle={{ padding: '10px' }}
       hoverable
