@@ -20,26 +20,26 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setErrors: (state, action) => {
-      state.errors = action.payload
+    setErrors: (state, payload) => {
+      state.errors = payload
     },
-    setIsAuthenticated: (state, action) => {
-      state.isAuthenticated = action.payload
+    setIsAuthenticated: (state, payload) => {
+      state.isAuthenticated = payload
     },
-    setIsLoading: (state, action) => {
-      state.isLoading = action.payload
+    setIsLoading: (state, payload) => {
+      state.isLoading = payload
     },
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload
     },
-    setAccessToken: (state, action) => {
-      state.accessToken = action.payload
+    setAccessToken: (state, payload) => {
+      state.accessToken = payload
     },
-    setRefreshToken: (state, action) => {
-      state.refreshToken = action.payload
+    setRefreshToken: (state, payload) => {
+      state.refreshToken = payload
     },
-    setExpireDate: (state, action) => {
-      state.expireDate = action.payload
+    setExpireDate: (state, payload) => {
+      state.expireDate = payload
     }
   }
 })
@@ -129,7 +129,6 @@ export const login = (loginInput) => {
         .then(response => {
           console.log('response in login dispatcher',response)
           dispatch(setIsLoading(true))
-          dispatch(setCurrentUser(response))
           dispatch(setIsAuthenticated(true))
           dispatch(setAccessToken(response.accessToken))
           dispatch(setRefreshToken(response.refreshToken))

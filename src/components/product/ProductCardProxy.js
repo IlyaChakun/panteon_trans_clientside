@@ -11,7 +11,6 @@ import ProductCard from './ProductCard'
 import { addToCart } from '../../redux/reducers/CartsSliceReducer'
 
 
-// const ProductCardProxy = ({ product, history }) => {
 const ProductCardProxy = ({ product, history, updateList }) => {
 
   const dispatch = useDispatch()
@@ -19,7 +18,7 @@ const ProductCardProxy = ({ product, history, updateList }) => {
 
   const addToBasket = (productState) => {
     const productToCart = {
-      'clientId': currentUser.payload.id,
+      'clientId': currentUser.id,
       'productId': product.id,
       'productLengthCostId': product.productLengthCost.find(x => x.id === productState.lengthId).id,
       'quantity': productState.amount

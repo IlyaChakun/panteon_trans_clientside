@@ -9,7 +9,7 @@ const ProductCard = ({ product, editAction, deleteAction, buyAction, oneClickAct
   const [idRadio, setIdRadio] = useState(product.productLengthCost[0].id)
   const [amount, setAmount] = useState(1)
 
-  const [productState, setProductState] = useState({ amount: 1, lengthId: 0 })
+  const [productState, setProductState] = useState({ amount: 1, lengthId: idRadio })
 
   const radioStyle = {
     display: 'block',
@@ -18,11 +18,13 @@ const ProductCard = ({ product, editAction, deleteAction, buyAction, oneClickAct
   }
 
   const onLengthChange = (e) => {
+    console.log(e)
     setIdRadio(e.target.value)
     setProductState({ amount, lengthId: idRadio })
   }
 
   const onInputChange = (value) => {
+    console.log(value)
     setAmount(value)
     setProductState({ amount: value, lengthId: idRadio })
   }
