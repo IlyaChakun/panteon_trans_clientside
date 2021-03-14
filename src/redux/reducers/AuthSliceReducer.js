@@ -20,26 +20,26 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setErrors: (state, payload) => {
-      state.errors = payload
+    setErrors: (state, action) => {
+      state.errors = action.payload
     },
-    setIsAuthenticated: (state, payload) => {
-      state.isAuthenticated = payload
+    setIsAuthenticated: (state, action) => {
+      state.isAuthenticated = action.payload
     },
-    setIsLoading: (state, payload) => {
-      state.isLoading = payload
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload
     },
-    setCurrentUser: (state, payload) => {
-      state.currentUser = payload
+    setCurrentUser: (state, action) => {
+      state.currentUser = action.payload
     },
-    setAccessToken: (state, payload) => {
-      state.accessToken = payload
+    setAccessToken: (state, action) => {
+      state.accessToken = action.payload
     },
-    setRefreshToken: (state, payload) => {
-      state.refreshToken = payload
+    setRefreshToken: (state, action) => {
+      state.refreshToken = action.payload
     },
-    setExpireDate: (state, payload) => {
-      state.expireDate = payload
+    setExpireDate: (state, action) => {
+      state.expireDate = action.payload
     }
   }
 })

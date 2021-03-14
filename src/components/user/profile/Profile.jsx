@@ -19,25 +19,25 @@ const Profile =(props)=> {
   const {TabPane} = Tabs
 
   const layout = {
-    labelCol: {  span: 9   },
-    wrapperCol: {      span: 15    },
+    'labelCol': {  'span': 9   },
+    'wrapperCol': {      'span': 15    },
   }
 
   const dispatch = useDispatch()
   const { currentUser } = useSelector(authSelector)
 
-  const [name, setName]=useState({  value: currentUser.payload.name,  validateStatus: SUCCESS,  errorMsg: null})
-  const [email, setEmail]=useState( {  value: currentUser.payload.email,  validateStatus: SUCCESS})
-  const [phoneNumber, setPhoneNumber] = useState({  value: currentUser.payload.phoneNumber,  validateStatus: SUCCESS,  errorMsg: null})
-  const [imageUrl, setImageUrl] = useState(currentUser.payload.image === undefined ? '' : currentUser.payload.image.imageUrl)
+  const [name, setName]=useState({  'value': currentUser.name,  'validateStatus': SUCCESS,  'errorMsg': null})
+  const email = {  'value': currentUser.email,  'validateStatus': SUCCESS}
+  const [phoneNumber, setPhoneNumber] = useState({  'value': currentUser.phoneNumber,  'validateStatus': SUCCESS,  'errorMsg': null})
+  const [imageUrl, setImageUrl] = useState(currentUser.image === undefined ? '' : currentUser.image.imageUrl)
 
   const handleSubmit = () => {
     const updateUserRequest = {
-      id: currentUser.payload.id,
-      name: name.value,
-      phoneNumber: phoneNumber.value,
-      image: {
-        imageUrl: imageUrl
+      'id': currentUser.id,
+      'name': name.value,
+      'phoneNumber': phoneNumber.value,
+      'image': {
+        'imageUrl': imageUrl
       }
     }
 
@@ -49,12 +49,12 @@ const Profile =(props)=> {
 
 
   const handleNameChange = (event, validationFun) => {
-    setName( {value: event.target.value, ...validationFun(event.target.value) })
+    setName( { 'value': event.target.value, ...validationFun(event.target.value) })
   }
 
   const handlePhoneChange = (event, validationFun) => {
     setPhoneNumber( {
-      value: event.target.value,
+      'value': event.target.value,
       ...validationFun(event.target.value)
     })
   }
@@ -103,8 +103,8 @@ const Profile =(props)=> {
                     help={name.errorMsg}
                     rules={[
                       {
-                        required: true,
-                        message: 'Пожалуйста, введите ваше имя!',
+                        'required': true,
+                        'message': 'Пожалуйста, введите ваше имя!',
                       },
                     ]}
                   >
@@ -139,8 +139,8 @@ const Profile =(props)=> {
                     help={phoneNumber.errorMsg}
                     rules={[
                       {
-                        required: true,
-                        message: 'Пожалуйста, введите ваш телефон!',
+                        'required': true,
+                        'message': 'Пожалуйста, введите ваш телефон!',
                       },
                     ]}
                   >
@@ -160,7 +160,7 @@ const Profile =(props)=> {
                     <Button
                       htmlType="submit"
                       type="primary"
-                      style={{background: "black", color: "white"}}
+                      style={{ 'background': "black", 'color': "white"}}
                       shape="round"
                       disabled={isFormInvalid()}
                     >
@@ -169,7 +169,7 @@ const Profile =(props)=> {
                   </Form.Item>
                 </div>
                 <div className="col-3">
-                  <ChangePasswordModal currentUserId={currentUser.payload.id}/>
+                  <ChangePasswordModal currentUserId={currentUser.id}/>
                 </div>
               </div>
             </Form>
