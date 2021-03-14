@@ -19,21 +19,20 @@ const SideMenu = () => {
     dispatch(fetchCategories())
   }, [dispatch])
 
-  const handleClick = e => {
-    console.log('click ', e)
-  }
+  // const handleClick = e => {
+  //   console.log('click ', e)
+  // }
 
   const { categories } = useSelector(productSelector)
 
 
   const menuCategories = categories
     .map((category, index) => (
-        //TODO algoritm to show up
         <SubMenu key={`sub${index}`} icon={<AppstoreOutlined />} title={category.name}>
           {category.children === undefined ? '' : (
             category.children
               .map(child =>
-                <Menu.Item key={`${child.parent}-${child.id}`}>
+                <Menu.Item key={`${child.parentId}-${child.id}`}>
                   {child.name}
                 </Menu.Item>)
           )}
