@@ -39,10 +39,10 @@ const EditProductModal = (props) => {
     setVisible(false)
   }
 
-  const handleSubmitButton = (productRequest) => {
-    console.log('product request: ' + { ...productRequest })
+  const handleSubmitButton = (updateProductRequest) => {
+    console.log('update product request: ',updateProductRequest )
 
-    dispatch(updateProduct(productRequest.id, productRequest))
+    dispatch(updateProduct(updateProductRequest.id, updateProductRequest))
     props.updateList()
     handleCancel()
   }

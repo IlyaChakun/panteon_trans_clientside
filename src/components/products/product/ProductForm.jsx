@@ -89,7 +89,8 @@ const ProductForm = (props) => {
       'title': title.value,
       'description': description.value,
       'availableAmount': availableAmount.value,
-      'productLengthCost': values.productLengthCost
+      'productLengthCost': values.productLengthCost,
+      'image': imageUrl
     }
 
     console.log('flowerRequest request: ', flowerRequest)

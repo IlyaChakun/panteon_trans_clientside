@@ -73,7 +73,7 @@ const productSlice = createSlice({
     totalElements: 0,
 
     searchString: '',
-    requestStatus: 'idle',
+    updateRequestStatus: 'idle',
 
     categories: [],
     catLoading: 'idle',
@@ -89,26 +89,29 @@ const productSlice = createSlice({
 
   },
   reducers: {
-    setLoading: (state, payload) => {
-      state.loading = payload
+    setLoading: (state, action) => {
+      state.loading = action.payload
     },
-    setErrors: (state, payload) => {
-      state.errors = payload
+    setErrors: (state, action) => {
+      state.errors = action.payload
     },
-    setProducts: (state, payload) => {
-      state.products = payload.payload
+    setProducts: (state, action) => {
+      state.products = action.payload
     },
-    setTotalPages: (state, payload) => {
-      state.totalPages = payload
+    setTotalPages: (state, action) => {
+      state.totalPages = action.payload
     },
-    setTotalElements: (state, payload) => {
-      state.totalElements = payload
+    setTotalElements: (state, action ) => {
+      state.totalElements = action.payload
     },
-    setPage: (state, payload) => {
-      state.page = payload
+    setPage: (state, action) => {
+      state.page = action.payload
     },
-    setSize: (state, payload) => {
-      state.size = payload
+    setSize: (state, action) => {
+      state.size = action.payload
+    },
+    setUpdatedProduct: (state, action) => {
+      state.products.map(obj => state.products.find(product => product.id === action.payload.id) || obj)
     }
   },
   extraReducers: {
@@ -173,7 +176,7 @@ export const {
   setTotalElements,
   setPage,
   setSize,
-  addProduct
+  setUpdatedProduct
 } = productSlice.actions
 
 export default productSlice.reducer
@@ -260,30 +263,10 @@ export const deleteProduct = (productId) => {
 }
 
 
-// export const getCountriesValues = () => {
-//   return async dispatch => {
-//     try {
-//       const promise = getCountriesRequest()
-//       if (!promise) {
-//         return
-//       }
-//       promise
-//         .then(resp => {
-//           dispatch(setCountriesLoading(true))
-//           dispatch(setCountriesValues(resp))
-//           dispatch(setCountriesLoading(false))
-//         })
-//     } catch (error) {
-//       dispatch(setErrors(error))
-//       console.error(error)
-//     }
-//   }
-// }
-
 export const updateProduct = (productId, product) => {
   return async dispatch => {
     try {
-      console.log('updateProduct')
+      console.log('updateProduct', product)
       console.log('productId= ' + JSON.stringify(productId))
       console.log('product ' + JSON.stringify(product))
 
@@ -298,16 +281,28 @@ export const updateProduct = (productId, product) => {
             message: localizedStrings.alertAppName,
             description: 'Успешное обновление!'
           })
-
           // window.location.href = '/products'
-
-          dispatch(setProducts(response.objects.slice()))
-          dispatch(setTotalPages(response.totalPages))
-          dispatch(setTotalElements(response.totalElements))
-          dispatch(setLoading(false))
+          dispatch(setUpdatedProduct(response))
         })
     } catch (error) {
       dispatch(setErrors(error))
     }
+
+
+    // const updatedProduct = await updateProductRequest(productId, product)
+    //
+    // if (updatedProduct) {
+    //   notification.success({
+    //     message: localizedStrings.alertAppName,
+    //     description: 'Успешное обновление!'
+    //   })
+    //   dispatch(updateProduct(updatedProduct))
+    // } else {
+    //   notification.success({
+    //     message: localizedStrings.alertAppName,
+    //     description: 'Что-то пошло не так при обновлении!'
+    //   })
+    // }
+
   }
 }
