@@ -9,8 +9,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   productSelector, updateProduct
 
-} from '../../../redux/reducers/ProductsSliceReducer'
-import { SUCCESS } from '../../../constants'
+} from '../../redux/reducers/ProductsSliceReducer'
+import { SUCCESS } from '../../constants'
 
 const EditProductModal = (props) => {
   const dispatch = useDispatch()

@@ -4,7 +4,7 @@ import Modal from 'antd/es/modal'
 import ProductForm from './ProductForm.jsx'
 import { Button } from 'antd'
 import { useDispatch } from 'react-redux'
-import { saveProduct } from '../../../redux/reducers/ProductsSliceReducer'
+import { saveProduct } from '../../redux/reducers/ProductsSliceReducer'
 
 const AddProductModal = (props) => {
 

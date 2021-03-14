@@ -11,9 +11,9 @@ import {
   productSelector,
   setPage,
   setSize
-} from '../../../redux/reducers/ProductsSliceReducer'
-import SideMenu from '../../common/sidemenu/SideMenu'
-import LoadingIndicator from '../../common/util/LoadingIndicator'
+} from '../../redux/reducers/ProductsSliceReducer'
+import SideMenu from '../common/sidemenu/SideMenu'
+import LoadingIndicator from '../common/util/LoadingIndicator'
 
 const { Option } = Select
 

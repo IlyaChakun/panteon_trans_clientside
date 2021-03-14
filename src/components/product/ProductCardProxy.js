@@ -1,14 +1,14 @@
 import React from 'react'
 
-import { isAdmin } from '../../../app/App'
+import { isAdmin } from '../../app/App'
 import DeleteOutlined from '@ant-design/icons/lib/icons/DeleteOutlined'
 import { Button } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { authSelector } from '../../../redux/reducers/AuthSliceReducer'
+import { authSelector } from '../../redux/reducers/AuthSliceReducer'
 import EditProductModal from './EditProductModal'
 import DeleteProductModal from './DeleteProductModal'
 import ProductCard from './ProductCard'
-import { addToCart } from '../../../redux/reducers/CartsSliceReducer'
+import { addToCart } from '../../redux/reducers/CartsSliceReducer'
 
 
 // const ProductCardProxy = ({ product, history }) => {

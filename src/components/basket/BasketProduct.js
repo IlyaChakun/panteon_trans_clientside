@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import DeleteOutlined from "@ant-design/icons/lib/icons/DeleteOutlined";
 import {InputNumber, notification, Popconfirm} from "antd";
 
-import ProductCard from "../products/product/ProductCard";
+import ProductCard from "../product/ProductCard";
 import {localizedStrings} from "../util/localization";
 
 

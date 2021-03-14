@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {notification, Popconfirm} from "antd";
 
 import {withRouter} from "react-router-dom";
-import {deleteProductRequest} from "../../util/utilsAPI";
-import {localizedStrings} from "../../util/localization";
+import {deleteProductRequest} from "../util/utilsAPI";
+import {localizedStrings} from "../util/localization";
 
 
 class DeleteProductModal extends Component {

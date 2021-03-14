@@ -1,4 +1,4 @@
-import { ERROR, SUCCESS } from '../../../constants'
+import { ERROR, SUCCESS } from '../../constants'
 
 export const validateId = (id) => {
   return {

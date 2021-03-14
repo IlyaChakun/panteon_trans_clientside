@@ -10,7 +10,7 @@ import { SUCCESS } from '../../constants'
 import { localizedStrings } from '../util/localization'
 import { withRouter } from 'react-router-dom'
 import OrderList from '../order/OrderList'
-import ProductList from '../products/product/ProductList'
+import ProductList from '../product/ProductList'
 
 const {TabPane} = Tabs;
 

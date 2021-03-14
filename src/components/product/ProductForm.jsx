@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
-import s from '../../user/profile/Profile.module.css'
+import s from '../user/profile/Profile.module.css'
 import { Button, Form, Select, Input, Row, Col } from 'antd'
-import ImageLoader from '../../common/image/ImageLoader'
-import { SUCCESS } from '../../../constants'
+import ImageLoader from '../common/image/ImageLoader'
+import { SUCCESS } from '../../constants'
 import { validateId, validateAmount, validateDescription, validateTitle } from './ProductValidation'
 
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
@@ -14,7 +14,7 @@ import {
   fetchCountries,
   fetchProductLengths,
   productSelector
-} from '../../../redux/reducers/ProductsSliceReducer'
+} from '../../redux/reducers/ProductsSliceReducer'
 
 
 const ProductForm = (props) => {
