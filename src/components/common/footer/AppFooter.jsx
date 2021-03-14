@@ -16,8 +16,6 @@ const AppFooter = () => {
     return <LoadingIndicator />
   }
 
-  console.log(currentCompany)
-
   const name = currentCompany.name
   // const description = currentCompany.description
   const licenceNumber = currentCompany.licenceNumber

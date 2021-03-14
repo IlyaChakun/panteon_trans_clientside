@@ -101,7 +101,7 @@ const productSlice = createSlice({
     setTotalPages: (state, action) => {
       state.totalPages = action.payload
     },
-    setTotalElements: (state, action ) => {
+    setTotalElements: (state, action) => {
       state.totalElements = action.payload
     },
     setPage: (state, action) => {
@@ -127,7 +127,6 @@ const productSlice = createSlice({
       state.shopsLoading = 'rejected'
       state.errors = action.errors
     },
-
     [fetchCountries.pending]: (state, action) => {
       state.countriesLoading = 'loading'
     },
@@ -140,20 +139,17 @@ const productSlice = createSlice({
       state.countriesLoading = 'rejected'
       state.errors = action.errors
     },
-
     [fetchCategories.pending]: (state, action) => {
       state.catLoading = 'loading'
     },
     [fetchCategories.fulfilled]: (state, action) => {
       state.catLoading = 'fulfilled'
-      // Add any fetched posts to the array
       state.categories = action.payload
     },
     [fetchCategories.rejected]: (state, action) => {
       state.catLoading = 'rejected'
       state.errors = action.errors
     },
-
     [fetchProductLengths.pending]: (state, action) => {
       state.productLengthsLoading = 'loading'
     },
@@ -259,6 +255,13 @@ export const deleteProduct = (productId) => {
     } catch (error) {
       dispatch(setErrors(error))
     }
+
+    // case DELETE_TODO:
+    //     return {  // returning a copy of orignal state
+    //       ...state, //copying the original state
+    //       todos: state.todos.filter(todo => todo.id !== action.payload)
+    //       // returns a new filtered todos array
+    //     }
   }
 }
 
@@ -275,7 +278,7 @@ export const updateProduct = (productId, product) => {
       if (!promise) {
         return
       }
-       promise
+      promise
         .then(response => {
           notification.success({
             message: localizedStrings.alertAppName,
