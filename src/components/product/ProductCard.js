@@ -33,7 +33,7 @@ const ProductCard = ({ product, editAction, deleteAction, buyAction, oneClickAct
       style={{ border: '1px solid grey', padding: '2px' }}
       bodyStyle={{ padding: '10px' }}
       hoverable
-      cover={<img alt={product.title} src={product.image}/>}
+      cover={<img alt={product.title} src={product.image.imageUrl}/>}
       actions={[
         editAction,
         deleteAction
