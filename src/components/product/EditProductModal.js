@@ -7,28 +7,20 @@ import SettingOutlined from '@ant-design/icons/lib/icons/SettingOutlined'
 
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  productSelector, updateProduct
-
+  productSelector,
+  updateProduct
 } from '../../redux/reducers/ProductsSliceReducer'
 import { SUCCESS } from '../../constants'
 
 const EditProductModal = (props) => {
   const dispatch = useDispatch()
-
-  const {
-    products
-  } = useSelector(productSelector)
-
-  const [product, setProduct] = useState({
-    id: props.productId,
-    value: products.find(x => x.id === props.productId)
-  })
+  const [visible, setVisible] = useState(false)
+  const { products } = useSelector(productSelector)
+  const product = products.find(x => x.id === props.productId)
 
   console.log('json: ' + JSON.stringify(product))
-  console.log('product.value.id: ' + product.value.id)
-  console.log('product.value.title: ' + product.value.title)
-
-  const [visible, setVisible] = useState(false)
+  console.log('product.value.id: ' + product.id)
+  console.log('product.value.title: ' + product.title)
 
   const showModal = () => {
     setVisible(true)
@@ -40,8 +32,7 @@ const EditProductModal = (props) => {
   }
 
   const handleSubmitButton = (updateProductRequest) => {
-    console.log('update product request: ',updateProductRequest )
-
+    console.log('update product request: ', updateProductRequest)
     dispatch(updateProduct(updateProductRequest.id, updateProductRequest))
     props.updateList()
     handleCancel()
@@ -51,11 +42,11 @@ const EditProductModal = (props) => {
   return (
     <div>
       <span>
-        <SettingOutlined style={{ fontSize: '25px' }} onClick={showModal}/>
+        <SettingOutlined style={{ fontSize: '25px' }} onClick={showModal} />
       </span>
 
       <Modal
-        title="Изменить продукт"
+        title='Изменить продукт'
         visible={visible}
         okButtonProps={{ style: { display: 'none' } }}
         onCancel={handleCancel}
@@ -63,7 +54,7 @@ const EditProductModal = (props) => {
         width={1200}
       >
         <ProductForm
-          product={product.value}
+          product={product}
           action={'Изменить'}
           validateStatus={SUCCESS}
           shopId={props.shopId}
