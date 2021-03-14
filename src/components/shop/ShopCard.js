@@ -1,71 +1,64 @@
-import React, {Component} from 'react'
+import React from 'react'
 
 import './ShopCard.css'
-import {Card} from 'antd'
-import {withRouter} from "react-router-dom";
+import { Card } from 'antd'
+import { withRouter } from 'react-router-dom'
 
-const {Meta} = Card
+const { Meta } = Card
 
-class ShopCard extends Component {
+const ShopCard = ({ shop, firstAction }) => {
 
-    state = {
-        dateOfCreation: this.props.shop.dateOfCreation,
-        dateOfLastUpdate: this.props.shop.dateOfLastUpdate,
-        contacts: this.props.shop.contacts,
-        workingHours: this.props.shop.workingHours,
-        imageUrl: this.props.shop.image === undefined ? '' : this.props.shop.image.imageUrl
-    }
+  const imageUrl = shop.image === undefined ? '' : shop.image.imageUrl
 
-    render() {
-        return (
-            <div className="site-card-wrapper">
-                <Card
-                    hoverable
-                    style={{marginTop: 16}}
-                    extra={''}
-                    title={<a href="#">{this.state.contacts.city} {this.state.contacts.address}</a>}
-                    actions={[this.props.firstAction]}>
+  return (
+    <div className='site-card-wrapper'>
+      <Card
+        hoverable
+        style={{ marginTop: 16 }}
+        extra={''}
+        title={<a href='#'>{shop.contacts.city} {shop.contacts.address}</a>}
+        actions={[firstAction]}>
 
-                    <Meta
-                        style={{padding: 0}}
-                        avatar={<img src={this.state.imageUrl} alt=""/>}
+        <Meta
+          style={{ padding: 0 }}
+          avatar={<img src={imageUrl} alt='' />}
 
-                        title={
-                            <p>
-                            <span className="text_wrap" data-coordinates="53.930613,27.588529">
-                                <i className="fas fa-map-marker-alt"/>
-                                <span className="text"> Показать на карте</span>
+          title={
+            <p>
+                            <span className='text_wrap' data-coordinates='53.930613,27.588529'>
+                                <i className='fas fa-map-marker-alt' />
+                                <span className='text'> Показать на карте</span>
                             </span>
-                            </p>
-                        }
+            </p>
+          }
 
-                        description={
-                            <div>
-                                <div>
-                                    <i className="far fa-clock"/>
-                                    <span className="text  muted777">{this.state.workingHours.hours}</span>
-                                </div>
-                                <div className="phone">
-                                    <a href="tel:{contacts.firstPhoneNumber}" className="black">
-                                        {this.state.contacts.firstPhoneNumber}</a>
-                                </div>
-                                <div className="phone">
-                                    <a href="tel:{contacts.firstPhoneNumber}" className="black">
-                                        {this.state.contacts.secondPhoneNumber}</a>
-                                </div>
+          description={
+            <div>
+              <div>
+                <i className='far fa-clock' />
+                <span className='text  muted777'>{shop.workingHours.hours}</span>
+              </div>
+              <div className='phone'>
+                <a href='tel:{contacts.firstPhoneNumber}' className='black'>
+                  {shop.contacts.firstPhoneNumber}</a>
+              </div>
+              <div className='phone'>
+                <a href='tel:{contacts.firstPhoneNumber}' className='black'>
+                  {shop.contacts.secondPhoneNumber}</a>
+              </div>
 
-                                <div>
-                                    Последнее обновление: {this.state.dateOfLastUpdate}
-                                    <br/>
-                                    Дата открытия: {this.state.dateOfCreation}
-                                </div>
-                            </div>
-                        }
-                    />
-                </Card>
+              <div>
+                Последнее обновление: {shop.dateOfLastUpdate}
+                <br />
+                Дата открытия: {shop.dateOfCreation}
+              </div>
             </div>
-        )
-    }
+          }
+        />
+      </Card>
+    </div>
+  )
+
 }
 
 export default withRouter(ShopCard)

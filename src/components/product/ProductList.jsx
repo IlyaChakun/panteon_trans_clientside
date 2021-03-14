@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Col, List, Row, Select } from 'antd'
+import { Col, List, Row } from 'antd'
 import AddProductModal from './AddProductModal'
 import ProductCardProxy from './ProductCardProxy'
 
@@ -13,22 +13,16 @@ import {
   setSize
 } from '../../redux/reducers/ProductsSliceReducer'
 import SideMenu from '../common/sidemenu/SideMenu'
-import LoadingIndicator from '../common/util/LoadingIndicator'
 
-const { Option } = Select
 
 const ProductList = (props) => {
   const dispatch = useDispatch() //без него  ниче в стор нельзя положить фукнци ядя связи со сторром
   const {
     products,
     loading,
-    errors,
     page,
     size,
-    pagesCount,
-    totalPages,
-    totalElements,
-    searchString
+    totalElements
   } = useSelector(productSelector)   // селектор вытягивает все поля из конкретного стора
 
   useEffect(() => {
@@ -56,9 +50,9 @@ const ProductList = (props) => {
     dispatch(getProducts(searchCriteria))
   }
 
-  const loadSearchList = (productName, minPrice, maxPrice, sortBy, sortType, checkedBrands) => {
-    loadList(page, size, productName, minPrice, maxPrice, sortBy, sortType, checkedBrands)
-  }
+  // const loadSearchList = (productName, minPrice, maxPrice, sortBy, sortType, checkedBrands) => {
+  //   loadList(page, size, productName, minPrice, maxPrice, sortBy, sortType, checkedBrands)
+  // }
 
   // if (loading === true) {
   //     return <LoadingIndicator/>

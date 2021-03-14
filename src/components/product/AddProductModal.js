@@ -7,61 +7,32 @@ import { useDispatch } from 'react-redux'
 import { saveProduct } from '../../redux/reducers/ProductsSliceReducer'
 
 const AddProductModal = (props) => {
+  const dispatch = useDispatch()
+  const [visible, setVisible] = useState(false)
 
-  const [product, setProduct] = useState({
+  const product = {
     id: '',
     dateOfLastUpdate: '',
     flowerType: '',
-    // flowerColor: '',
     flowerLengthCosts: [],
-    // flowerSort: '',
     country: '',
     description: '',
-    // availableAmountOnStock: '',
     image: null
-  })
-
-
-  const [visible, setVisible] = useState(false)
-
-  const dispatch = useDispatch()
+  }
 
   const showModal = () => {
     setVisible(true)
   }
 
   const handleCancel = e => {
-    console.log(e)
     setVisible(false)
   }
 
-
   const handleSubmitButton = (productRequest) => {
-
     console.log('product request: ' + { ...productRequest })
-
     dispatch(saveProduct(productRequest))
         props.updateList()
         handleCancel()
-
-
-    // saveProductRequest(productRequest)
-    //   .then(() => {
-    //     notification.success({
-    //       message: localizedStrings.alertAppName,
-    //       description: 'Продукт сохранен!'
-    //     })
-    //
-    //     props.updateList()
-    //
-    //     handleCancel()
-    //
-    //   }).catch(error => {
-    //   notification.error({
-    //     message: localizedStrings.alertAppName,
-    //     description: 'Чет пошло не так. сорян'
-    //   })
-    // })
   }
 
   return (
@@ -94,7 +65,6 @@ const AddProductModal = (props) => {
       </Modal>
     </div>
   )
-
 }
 
 export default withRouter(AddProductModal)

@@ -47,8 +47,7 @@ function App(props) {
   const dispatch = useDispatch()
 
   const {
-    isLoading,
-    errors,
+    // isLoading,
     currentUser,
     isAuthenticated
   } = useSelector(authSelector)
