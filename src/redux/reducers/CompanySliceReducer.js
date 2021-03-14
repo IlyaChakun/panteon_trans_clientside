@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getCurrentCompanyRequest } from '../../components/util/utilsAPI'
+import { getCurrentCompanyRequest, updateCompanyInfoRequest } from '../../components/util/utilsAPI'
 
 const initialState = {
   isLoading: true,
@@ -11,14 +11,14 @@ const companySlice = createSlice({
   name: 'company',
   initialState,
   reducers: {
-    setIsLoading: (state, payload) => {
-      state.isLoading = payload
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload
     },
-    setErrors: (state, payload) => {
-      state.errors = payload
+    setErrors: (state, action) => {
+      state.errors = action.payload
     },
-    setCurrentCompany: (state, payload) => {
-      state.currentCompany = payload
+    setCurrentCompany: (state, action) => {
+      state.currentCompany = action.payload
     }
   }
 })
@@ -37,13 +37,14 @@ export const companySelector = (state) => {
 
 export const getCurrentCompany = () => {
   return async dispatch => {
-    dispatch(setIsLoading(true))
+
     try {
       const promise = getCurrentCompanyRequest()
       if (!promise) return
       promise
         .then(response => {
           console.log(response)
+          dispatch(setIsLoading(true))
           dispatch(setCurrentCompany(response))
           dispatch(setIsLoading(false))
         })
@@ -54,11 +55,21 @@ export const getCurrentCompany = () => {
   }
 }
 
-// export const updateCompany = (companyId, updateCompanyRequest) => {
-//   return async dispatch => {
-//     dispatch(setIsLoading(true))
-//     const company = await updateCompanyInfoRequest(companyId, updateCompanyRequest)
-//     dispatch(setCurrentCompany(company))
-//     dispatch(setIsLoading(false))
-//   }
-// }
+export const updateCompany = (companyId, updateCompanyRequest) => {
+  return async dispatch => {
+    try {
+      const promise = updateCompanyInfoRequest(companyId, updateCompanyRequest)
+      if (!promise) return
+      promise
+        .then(response => {
+          console.log(response)
+          dispatch(setIsLoading(true))
+          dispatch(setCurrentCompany(promise))
+          dispatch(setIsLoading(false))
+        })
+    } catch (error) {
+      dispatch(setErrors(error))
+      dispatch(setIsLoading(false))
+    }
+  }
+}

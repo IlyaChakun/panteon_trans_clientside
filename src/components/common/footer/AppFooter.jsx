@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Col, Layout, Row } from 'antd'
 import './AppFooter.css'
 import { Link, withRouter } from 'react-router-dom'
@@ -18,20 +18,20 @@ const AppFooter = () => {
 
   console.log(currentCompany)
 
-  const name = currentCompany.payload.name
-  const description = currentCompany.payload.description
-  const licenceNumber = currentCompany.payload.licenceNumber
-  const firstPhoneNumber = currentCompany.payload.contacts.firstPhoneNumber
-  const secondPhoneNumber = currentCompany.payload.contacts.secondPhoneNumber
-  const email = currentCompany.payload.contacts.email
-  const city = currentCompany.payload.contacts.city
-  const address = currentCompany.payload.contacts.address
-  const payerAccountNumber = currentCompany.payload.companyLegalAddress.payerAccountNumber
-  const checkingAccount = currentCompany.payload.companyLegalAddress.checkingAccount
-  const bankName = currentCompany.payload.companyLegalAddress.bankInfo.bankName
-  const bankCode = currentCompany.payload.companyLegalAddress.bankInfo.bankCode
-  const postalCode = currentCompany.payload.companyLegalAddress.bankInfo.contacts ? currentCompany.payload.companyLegalAddress.bankInfo.contacts.postalCode : ''
-  const bankAddress = currentCompany.payload.companyLegalAddress.bankInfo.contacts ? currentCompany.payload.companyLegalAddress.bankInfo.contacts.address : ''
+  const name = currentCompany.name
+  // const description = currentCompany.description
+  const licenceNumber = currentCompany.licenceNumber
+  const firstPhoneNumber = currentCompany.contacts.firstPhoneNumber
+  const secondPhoneNumber = currentCompany.contacts.secondPhoneNumber
+  const email = currentCompany.contacts.email
+  const city = currentCompany.contacts.city
+  const address = currentCompany.contacts.address
+  const payerAccountNumber = currentCompany.companyLegalAddress.payerAccountNumber
+  const checkingAccount = currentCompany.companyLegalAddress.checkingAccount
+  const bankName = currentCompany.companyLegalAddress.bankInfo.bankName
+  const bankCode = currentCompany.companyLegalAddress.bankInfo.bankCode
+  const postalCode = currentCompany.companyLegalAddress.bankInfo.contacts ? currentCompany.companyLegalAddress.bankInfo.contacts.postalCode : ''
+  const bankAddress = currentCompany.companyLegalAddress.bankInfo.contacts ? currentCompany.companyLegalAddress.bankInfo.contacts.address : ''
 
   return (
     <Footer>
