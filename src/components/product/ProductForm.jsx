@@ -32,12 +32,7 @@ const ProductForm = (props) => {
     productLengths
   } = useSelector(productSelector)
 
-  const [id, setId] = useState(props.product.id)
-  const [dateOfLastUpdate, setDateOfLastUpdate] = useState({
-    value: props.product.dateOfLastUpdate,
-    validateStatus: props.validateStatus
-  })
-  const [uniqueId, setUniqueId] = useState(props.product.uniqueId)
+  const id = props.product.id
   const [category, setCategory] = useState({
     id: props.product.categoryId,
     value: categories.find(x => x.id === props.product.categoryId),
@@ -58,10 +53,7 @@ const ProductForm = (props) => {
     validateStatus: props.validateStatus
   })
   const [imageUrl, setImageUrl] = useState(props.product.image == null ? '' : props.product.image.imageUrl)
-  const [productLengthCost, setProductLengthCost] = useState({
-    value: props.product.productLengthCost,
-    validateStatus: props.validateStatus
-  })
+  const productLengthCost = props.product.productLengthCost
 
 
   const { Option, OptGroup } = Select
@@ -89,7 +81,7 @@ const ProductForm = (props) => {
       'title': title.value,
       'description': description.value,
       'availableAmount': availableAmount.value,
-      'productLengthCost': values.productLengthCost,
+      'productLengthCost': values.productLengthCostList,
       'image': imageUrl
     }
 
@@ -165,7 +157,7 @@ const ProductForm = (props) => {
       ) : ''
   )
 
-  const initialProductCosts = productLengthCost.value
+  const initialProductCosts = productLengthCost
 
   return (
     <Form {...layout}
@@ -248,7 +240,7 @@ const ProductForm = (props) => {
 
               </Form.Item>
 
-              <Form.List name="productLengthCost" initialValue={initialProductCosts}>
+              <Form.List name="productLengthCostList" initialValue={initialProductCosts}>
                 {(fields, { add, remove }) => (
                   <>
                     {fields.map((field, index) => (
