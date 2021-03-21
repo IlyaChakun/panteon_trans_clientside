@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { Card, Col, InputNumber, Radio, Rate, Row } from 'antd'
+import { Card, Col, InputNumber, notification, Radio, Rate, Row } from 'antd'
 import './ProductCard.css'
 
 const { Meta } = Card
 
-const ProductCard = ({ product, editAction, deleteAction, buyAction, oneClickAction }) => {
+const ProductCard = (props) => {
 
-  const [idRadio, setIdRadio] = useState(product.productLengthCost[0].id)
+  const [idRadio, setIdRadio] = useState(props.product.productLengthCost[0].id)
   const [amount, setAmount] = useState(1)
 
   const [productState, setProductState] = useState({ amount: 1, lengthId: idRadio })
@@ -24,7 +24,6 @@ const ProductCard = ({ product, editAction, deleteAction, buyAction, oneClickAct
   }
 
   const onInputChange = (value) => {
-
     setAmount(value)
     setProductState({ amount: value, lengthId: idRadio })
   }
@@ -35,14 +34,15 @@ const ProductCard = ({ product, editAction, deleteAction, buyAction, oneClickAct
       style={{ border: '1px solid grey', padding: '2px' }}
       bodyStyle={{ padding: '10px' }}
       hoverable
-      cover={<img alt={product.title} src={product.image.imageUrl}/>}
+      cover={<img alt={props.product.title} src={props.product.image.imageUrl} />}
       actions={[
-        editAction,
-        deleteAction
+        props.firstAction,
+        props.secondAction,
+        props.product.availableAmount > 0 ? props.thirdAction : ''
       ]}
       extra={
         <Radio.Group className='radio-group' onChange={onLengthChange} value={idRadio}>
-          {product.productLengthCost.map(lengthcost => (
+          {props.product.productLengthCost.map(lengthcost => (
             <Radio style={radioStyle} key={lengthcost.id} value={lengthcost.id}
                    checked={lengthcost.id === idRadio}
             >
@@ -58,12 +58,12 @@ const ProductCard = ({ product, editAction, deleteAction, buyAction, oneClickAct
               <Col span={24}>
                 <Row>
                   <Col span={12} className='product-cost'>
-                    {product.productLengthCost.find(x => x.id === idRadio).cost} BYN
+                    {props.product.productLengthCost.find(x => x.id === idRadio).cost} BYN
                   </Col>
                   <Col span={12} className='product-count'>
                     <InputNumber
                       min={1}
-                      max={100000}
+                      max={100}
                       defaultValue={1}
                       onChange={onInputChange}
                     />
@@ -71,22 +71,22 @@ const ProductCard = ({ product, editAction, deleteAction, buyAction, oneClickAct
                 </Row>
                 <Row align='center'>
                   <Col span={12}>ИТОГО:</Col>
-                  <Col span={12}>{product.productLengthCost.find(x => x.id === idRadio).cost * amount} BYN</Col>
+                  <Col span={12}>{props.product.productLengthCost.find(x => x.id === idRadio).cost * amount} BYN</Col>
                 </Row>
                 <Row className='product-rating'>
-                  <Rate disabled defaultValue={2}/>
+                  <Rate disabled defaultValue={2} />
                 </Row>
                 <Row className='product-title'>
-                  {product.title}
+                  {props.product.title}
                 </Row>
                 <Row className='product-art'>
-                  Арт.: {product.uniqueId}
+                  Арт.: {props.product.uniqueId}
                 </Row>
               </Col>
             </Row>
             <Row>
-              {oneClickAction(productState)}
-              {product.availableAmount > 0 ? buyAction(productState) : ''}
+              {props.oneClickAction ? props.oneClickAction(productState) : ''}
+              {props.thirdAction && props.product.availableAmount > 0 ? props.thirdAction(productState) : ''}
             </Row>
           </>
         }

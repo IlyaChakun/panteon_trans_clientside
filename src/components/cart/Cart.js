@@ -12,6 +12,7 @@ import { validateEntranceNumber, validateFlourNumber } from './CartValidation'
 import { placeOrder } from '../../redux/reducers/OrdersSliceReducer'
 import { productSelector } from '../../redux/reducers/ProductsSliceReducer'
 import { validateId } from '../product/ProductValidation'
+import LoadingIndicator from '../common/util/LoadingIndicator'
 
 const { TextArea } = Input
 const { Option, OptGroup } = Select
@@ -66,16 +67,40 @@ const Cart = (props) => {
   }
 
   const handleSubmitOrder = () => {
+
+    const orderProducts = []
+
+    cart.cartItems.forEach(cartItem => {
+      orderProducts.push({
+        'productId': cartItem.id,
+        'quantity': cartItem.quantity
+      })
+    })
+
     const order = {
+      'orderProducts': orderProducts,
       'comment': comment.value,
-      'address': address.value,
-      'floorNumber': floorNumber.value,
-      'entranceNumber': entranceNumber.value
+      'orderPriceInfo': {
+        'totalAmount': cart.totalPrice
+      },
+      'orderDeliveryInfo': {
+        'address': address.value,
+        'floorNumber': floorNumber.value,
+        'entranceNumber': entranceNumber.value,
+        'deliveryType': {
+          'deliveryTypeName': 'simple'
+        }
+      },
+      'orderFloristInfo': {
+        'orderId': '',
+        'floristId': '',
+        'floristAppointmentTime': ''
+      }
     }
+
 
     dispatch(placeOrder(order))
     props.history.push('/')
-
 
     console.log('order request:', order)
   }
@@ -135,23 +160,25 @@ const Cart = (props) => {
     })
   }
 
+
+  if (loading) {
+    return <LoadingIndicator />
+  }
+
   let cartProducts = []
-  cartProducts = (cart === undefined || cart.cartItems === undefined) ? []
-    :
-    cart.cartItems.forEach((cartProduct) => {
-      console.log('cartItems', cart.cartItems)
+  console.log('cart', cart)
 
-
-      cartProducts.push(
-        <CartProduct
-          history={props.history}
-          key={cartProduct.productId}
-          productWithQuantity={cartProduct}
-          deleteProductFromBasket={deleteProductFromCart}
-          updateProductQuantity={updateProductQuantity}
-        />
-      )
-    })
+  cart.cartItems.forEach((cartProduct) => {
+    cartProducts.push(
+      <CartProduct
+        history={props.history}
+        key={cartProduct.productId}
+        productWithQuantity={cartProduct}
+        deleteProductFromBasket={deleteProductFromCart}
+        updateProductQuantity={updateProductQuantity}
+      />
+    )
+  })
 
 
   const shopOptions = shops.objects.map(

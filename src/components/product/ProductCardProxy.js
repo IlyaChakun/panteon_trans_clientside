@@ -31,7 +31,7 @@ const ProductCardProxy = ({ product, history, updateList }) => {
   }
 
 
-  const editAction = (
+  const editAction =()=> (
     <div className={isAdmin(currentUser) ? '' : 'custom-hidden'}>
       <EditProductModal
         productId={product.id}
@@ -39,7 +39,7 @@ const ProductCardProxy = ({ product, history, updateList }) => {
       />
     </div>
   )
-  const deleteAction = (
+  const deleteAction =()=> (
     <div className={isAdmin(currentUser) ? '' : 'custom-hidden'}>
       <DeleteProductModal
         productId={product.id}
@@ -76,9 +76,9 @@ const ProductCardProxy = ({ product, history, updateList }) => {
     <ProductCard
       key={product.id}
       product={product}
-      editAction={editAction}
-      deleteAction={deleteAction}
-      buyAction={buyAction}
+      firstAction={editAction}
+      secondAction={deleteAction}
+      thirdAction={buyAction}
       oneClickAction={oneClickAction}
     />
   )

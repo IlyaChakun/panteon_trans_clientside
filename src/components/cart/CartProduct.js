@@ -14,10 +14,6 @@ const CartProduct = (props) => {
 
   const [quantity, setQuantity] = useState(props.productWithQuantity.quantity)
 
-  const confirm = () => {
-    props.deleteProductFromBasket(props.productWithQuantity.product.id)
-  }
-
   const updateProductCount = (quantity) => {
     if (quantity >= 1 && quantity < 99) {
       if (Number(quantity) !== 0) {
@@ -40,11 +36,11 @@ const CartProduct = (props) => {
     return value < 1 || value > 99 ? quantity : value
   }
 
-  const deleteAction = (
+  const deleteAction = () => (
     <div>
       <Popconfirm
         title='Вы уверены, что хотите удалить продукт из корзины?'
-        onConfirm={confirm}
+        onConfirm={props.deleteProductFromBasket(props.productWithQuantity.product.id)}
         okText='Да'
         cancelText='Нет'>
         <DeleteOutlined style={{ fontSize: '25px' }} />
@@ -56,7 +52,14 @@ const CartProduct = (props) => {
     return products.find(x => x.id === props.productWithQuantity.productId)
   }
 
-  const countAction = (
+
+  const getProductLengthCost = () => {
+    const productCost = getProduct().productLengthCost.find(x =>
+      x.id === props.productWithQuantity.productLengthCostId)
+    return productCost.cost
+  }
+
+  const countAction =()=> (
     <div>
       <InputNumber
         key={'quantityPicker'}
@@ -64,18 +67,17 @@ const CartProduct = (props) => {
         value={quantity}
         type={'number'}
         min={1}
-        max={props.productWithQuantity.product.availableAmount}
+        max={getProduct().availableAmount}
         formatter={customFormatter}
         onChange={updateProductCount}
       />
 
       <span className='quantity-cost-text'>
         Стоимость:
-        {Number(props.productWithQuantity.quantity *
-          getProduct().productLengthCost
-            .find(x => x.id === props.productWithQuantity.productLengthCostId)
-            .price)
-        }
+        {Number(
+          props.productWithQuantity.quantity *
+          getProductLengthCost()
+        )}
       </span>
     </div>
   )
@@ -86,7 +88,7 @@ const CartProduct = (props) => {
       key={props.productWithQuantity.productId}
       product={getProduct()}
       secondAction={deleteAction}
-      thirdAction={countAction}
+      // thirdAction={countAction}
     />
   )
 

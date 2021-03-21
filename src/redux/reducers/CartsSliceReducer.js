@@ -13,8 +13,11 @@ const initialState = {
   loading: false,
   errors: '',
 
-  cartItems: [],
-  cart: {}
+  cart: {
+    cartItems:[],
+    totalElements:'',
+    totalPrice: ''
+  }
 }
 const cartSlice = createSlice({
   name: 'cart',
@@ -28,16 +31,12 @@ const cartSlice = createSlice({
     },
     setCart: (state, action) => {
       state.cart = action.payload
-    },
-    setCartItems: (state, action) => {
-      state.cartItems = action.payload
     }
   }
 })
 export const {
   setLoading,
   setErrors,
-  setCartItems,
   setCart
 } = cartSlice.actions
 
@@ -81,8 +80,6 @@ export const addToCart = (cartItem) => {
       promise
         .then(response => {
           console.log('response in addToCart dispatcher', response)
-
-          // dispatch(setCartItems(response.cartItems))
           dispatch(setCart(response))
 
           notification.success({
