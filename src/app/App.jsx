@@ -32,6 +32,7 @@ import ProductList from '../components/product/ProductList'
 import { useDispatch, useSelector } from 'react-redux'
 import { authSelector, getCurrentUser, setCurrentUser, setIsAuthenticated } from '../redux/reducers/AuthSliceReducer'
 import { getCurrentCompany } from '../redux/reducers/CompanySliceReducer'
+import LoadingIndicator from '../components/common/util/LoadingIndicator'
 
 const { Content } = Layout
 
@@ -46,7 +47,7 @@ const App = (props) => {
   const dispatch = useDispatch()
 
   const {
-    // isLoading,
+    isLoading,
     currentUser,
     isAuthenticated
   } = useSelector(authSelector)
@@ -83,13 +84,13 @@ const App = (props) => {
     props.history.push('/profile')
   }
 
-  // if (isLoading) {
-  //     return <LoadingIndicator/>
-  // }
+  if (isLoading) {
+      return <LoadingIndicator/>
+  }
 
-  // if (localStorage.getItem(ACCESS_TOKEN) && currentUser === undefined) {
-  //     return <LoadingIndicator/>
-  // }
+  if (localStorage.getItem(ACCESS_TOKEN) && currentUser === undefined) {
+      return <LoadingIndicator/>
+  }
 
   return (
     <Layout className='app-wrapper'>
