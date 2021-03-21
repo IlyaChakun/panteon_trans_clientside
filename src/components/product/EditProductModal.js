@@ -18,9 +18,9 @@ const EditProductModal = (props) => {
   const { products } = useSelector(productSelector)
   const product = products.find(x => x.id === props.productId)
 
-  console.log('json: ' + JSON.stringify(product))
-  console.log('product.value.id: ' + product.id)
-  console.log('product.value.title: ' + product.title)
+  // console.log('json: ' + JSON.stringify(product))
+  // console.log('product.value.id: ' + product.id)
+  // console.log('product.value.title: ' + product.title)
 
   const showModal = () => {
     setVisible(true)

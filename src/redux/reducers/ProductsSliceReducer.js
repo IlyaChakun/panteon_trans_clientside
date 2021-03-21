@@ -121,7 +121,7 @@ const productSlice = createSlice({
     [fetchShops.fulfilled]: (state, action) => {
       state.shopsLoading = 'fulfilled'
       // Add any fetched posts to the array
-      state.shops = state.shops.concat(action.payload)
+      state.shops = action.objects
     },
     [fetchShops.rejected]: (state, action) => {
       state.shopsLoading = 'rejected'

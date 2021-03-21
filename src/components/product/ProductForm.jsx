@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 
 import s from '../user/profile/Profile.module.css'
-import { Button, Form, Select, Input, Row, Col } from 'antd'
+import { Button, Col, Form, Input, Row, Select } from 'antd'
 import ImageLoader from '../common/image/ImageLoader'
 import { SUCCESS } from '../../constants'
-import { validateId, validateAmount, validateDescription, validateTitle } from './ProductValidation'
+import { validateAmount, validateDescription, validateId, validateTitle } from './ProductValidation'
 
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router-dom'
@@ -163,8 +163,8 @@ const ProductForm = (props) => {
     <Form {...layout}
           onFinish={handleSubmit}
 
-          name="dynamic_form_nest_item"
-          autoComplete="off"
+          name='dynamic_form_nest_item'
+          autoComplete='off'
     >
       <Row>
         <Col span={24}>
@@ -192,7 +192,7 @@ const ProductForm = (props) => {
                 ]}
               >
                 <Input
-                  name="title"
+                  name='title'
                   value={title.value}
                   placeholder='Название'
                   style={{ fontSize: '16px', width: 200 }}
@@ -208,11 +208,11 @@ const ProductForm = (props) => {
               >
 
                 <Select
-                  name="country"
+                  name='country'
                   value={country.id}
                   showSearch
                   style={{ width: 200 }}
-                  placeholder="Выберите страну"
+                  placeholder='Выберите страну'
                   onChange={onChangeCountrySelect}
                 >
                   {countriesOptions}
@@ -228,7 +228,7 @@ const ProductForm = (props) => {
               >
 
                 <Select
-                  name="category"
+                  name='category'
                   value={category.id}
                   showSearch
                   style={{ width: 200 }}
@@ -240,14 +240,14 @@ const ProductForm = (props) => {
 
               </Form.Item>
 
-              <Form.List name="productLengthCostList" initialValue={initialProductCosts}>
+              <Form.List name='productLengthCostList' initialValue={initialProductCosts}>
                 {(fields, { add, remove }) => (
                   <>
                     {fields.map((field, index) => (
                       <div
                         key={field.key}
                         style={{ display: 'flex' }}
-                        align="baseline">
+                        align='baseline'>
 
                         <Form.Item
                           noStyle
@@ -258,7 +258,7 @@ const ProductForm = (props) => {
                           {() => (
                             <Form.Item
                               {...field}
-                              label="Длина"
+                              label='Длина'
                               labelCol={{ span: 11, offset: 1 }}
                               wrapperCol={{ span: 12 }}
                               name={[field.name, 'stemLength']}
@@ -283,26 +283,26 @@ const ProductForm = (props) => {
                           {...field}
                           labelCol={{ span: 8, offset: 2 }}
                           wrapperCol={{ span: 14 }}
-                          label="Цена"
+                          label='Цена'
                           name={[field.name, 'cost']}
                           fieldKey={[field.fieldKey, 'cost']}
                           rules={[{ required: true, message: 'Введите цену' }]}
                         >
-                          <Input/>
+                          <Input />
                         </Form.Item>
 
                         <MinusCircleOutlined
                           style={{ marginLeft: 16, paddingTop: 8 }}
-                          onClick={() => remove(field.name)}/>
+                          onClick={() => remove(field.name)} />
                       </div>
                     ))}
 
                     <Form.Item>
-                      <Button type="dashed"
+                      <Button type='dashed'
                               block
                               style={{ marginBottom: 0 }}
                               onClick={() => add()}
-                              icon={<PlusOutlined/>}
+                              icon={<PlusOutlined />}
                       >
                         Добавить длину и цену
                       </Button>
@@ -327,11 +327,11 @@ const ProductForm = (props) => {
                 ]}
               >
                 <Input.TextArea
-                  name="description"
+                  name='description'
                   value={description.value}
                   placeholder={'описание'}
                   style={{ fontSize: '16px', width: 200 }}
-                  autosize={{ minRows: 3, maxRows: 6 }}/>
+                  autosize={{ minRows: 3, maxRows: 6 }} />
               </Form.Item>
 
 
@@ -352,7 +352,7 @@ const ProductForm = (props) => {
                   type={'number'}
                   min={0}
                   max={10_000}
-                  name="availableAmount"
+                  name='availableAmount'
                   placeholder={'колво на складе'}
                   style={{ fontSize: '16px', width: 200 }}
                   value={availableAmount.value}
@@ -365,9 +365,9 @@ const ProductForm = (props) => {
             <Col span={4} offset={20}>
               <Form.Item className={s.formItem}>
                 <Button
-                  type="primary"
-                  htmlType="submit"
-                  size="large"
+                  type='primary'
+                  htmlType='submit'
+                  size='large'
                   className={s.button}
                   disabled={isFormInvalid()}>
                   {props.action}

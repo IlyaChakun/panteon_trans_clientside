@@ -18,13 +18,13 @@ const ProductCard = ({ product, editAction, deleteAction, buyAction, oneClickAct
   }
 
   const onLengthChange = (e) => {
-    console.log(e)
+
     setIdRadio(e.target.value)
     setProductState({ amount, lengthId: idRadio })
   }
 
   const onInputChange = (value) => {
-    console.log(value)
+
     setAmount(value)
     setProductState({ amount: value, lengthId: idRadio })
   }

@@ -23,23 +23,23 @@ const authSlice = createSlice({
     setErrors: (state, payload) => {
       state.errors = payload
     },
-    setIsAuthenticated: (state, payload) => {
-      state.isAuthenticated = payload
+    setIsAuthenticated: (state, action) => {
+      state.isAuthenticated = action.payload
     },
-    setIsLoading: (state, payload) => {
-      state.isLoading = payload
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload
     },
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload
     },
-    setAccessToken: (state, payload) => {
-      state.accessToken = payload
+    setAccessToken: (state, action) => {
+      state.accessToken = action.payload
     },
-    setRefreshToken: (state, payload) => {
-      state.refreshToken = payload
+    setRefreshToken: (state, action) => {
+      state.refreshToken = action.payload
     },
-    setExpireDate: (state, payload) => {
-      state.expireDate = payload
+    setExpireDate: (state, action) => {
+      state.expireDate = action.payload
     }
   }
 })
@@ -76,7 +76,7 @@ export const getCurrentUser = () => {
       }
       promise
         .then(response => {
-          console.log(response)
+          console.log("current user" ,response)
           dispatch(setIsLoading(true))
           dispatch(setCurrentUser(response))
           dispatch(setIsAuthenticated(true))
@@ -129,7 +129,6 @@ export const login = (loginInput) => {
         .then(response => {
           console.log('response in login dispatcher',response)
           dispatch(setIsLoading(true))
-          dispatch(setIsAuthenticated(true))
           dispatch(setAccessToken(response.accessToken))
           dispatch(setRefreshToken(response.refreshToken))
           dispatch(setExpireDate(response.expireDate))

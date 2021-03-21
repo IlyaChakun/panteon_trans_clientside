@@ -31,7 +31,6 @@ export const REFRESH_TOKEN = 'refreshToken'
 export const TOKEN = 'token'
 
 export const USER_ID = 'id'
-export const LANGUAGE = 'language'
 export const ROLE_ADMIN = 'ROLE_ADMIN'
 export const ROLE_USER = 'Viewer'
 export const SUCCESS = 'success'

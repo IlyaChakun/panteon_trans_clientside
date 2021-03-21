@@ -17,8 +17,6 @@ const Header = Layout.Header
 
 const AppHeader = (props) => {
 
-  const [language, setLanguage] = useState()
-
   const handleMenuClick = ({ key }) => {
     if (key === 'logout') {
       props.handleLogout()
@@ -30,9 +28,9 @@ const AppHeader = (props) => {
 
   const makeMenuForUser = () => {
     return [
-      <Menu.Item key='/basket'>
+      <Menu.Item key='/cart'>
         <Link
-          to={'/basket'}>
+          to={'/cart'}>
           <ShoppingCartOutlined style={{ fontSize: '20px' }} />
         </Link>
       </Menu.Item>,
@@ -96,12 +94,6 @@ const AppHeader = (props) => {
     ]
   }
 
-  const updateLanguage = lang => {
-    setLanguage(lang)
-    props.handleLanguageChange(lang)
-  }
-
-
   let menuItems
 
   if (props.currentUser) {
@@ -145,11 +137,6 @@ const AppHeader = (props) => {
               Каталог
             </Link>
           </Menu.Item>
-          {/*<Menu.Item key="/bouquets">*/}
-          {/*    <Link to="/bouquets">*/}
-          {/*        Букеты*/}
-          {/*    </Link>*/}
-          {/*</Menu.Item>*/}
           <Menu.Item key='/reviews'>
             <Link to='/reviews'>
               Отзывы

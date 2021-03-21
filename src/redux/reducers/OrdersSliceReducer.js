@@ -1,5 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { createOrderRequest, updateProductInCartRequest } from '../../components/util/utilsAPI'
+import { notification } from 'antd'
+import { localizedStrings } from '../../components/util/localization'
+import { getCart } from './CartsSliceReducer'
 
 const initialState = {
   orders: [],
@@ -78,17 +82,27 @@ export const getOrders = () => {
 }
 
 
-export const placeOrder = () => {
+export const placeOrder = (order) => {
   return async dispatch => {
-    axios.get('http://localhost:8080/buy-now-orders')
-      .then(resp => {
-        dispatch(setLoading(true))
-        dispatch(setOrders(resp.data))
-        dispatch(setLoading(false))
-      })
-      .catch(error => {
-        dispatch(setErrors(error))
-        console.log(error)
-      })
+    try {
+      const promise = createOrderRequest(order)
+
+      if (!promise) {
+        return
+      }
+      promise
+        .then(response => {
+          notification.success({
+            message: localizedStrings.alertAppName,
+            description: 'Заказ принят!',
+          });
+        })
+    } catch (error) {
+      dispatch(setErrors(error))
+      notification.error({
+        message: localizedStrings.alertAppName,
+        description: 'Не удалось создать заказ!' + error.message,
+      });
+    }
   }
 }

@@ -59,13 +59,13 @@ const ProductList = (props) => {
   // }
 
   const productsMap = products === undefined ? [] : products.map(product => (
-    <ProductCardProxy
-      history={props.history}
-      key={product.id}
-      product={product}
-      updateList={updateList}
-    />
-  )
+      <ProductCardProxy
+        history={props.history}
+        key={product.id}
+        product={product}
+        updateList={updateList}
+      />
+    )
   )
 
   const onSizeChangeHandler = (currentPage, currentSize) => {
@@ -84,14 +84,14 @@ const ProductList = (props) => {
   }
 
   return (
-    <div className="pb-5">
-      <Row justify="center">
+    <div className='pb-5'>
+      <Row justify='center'>
         <Col span={22}>
-          <Row gutter={16} >
+          <Row gutter={16}>
             <Col span={6}>
               <h1>Каталог</h1>
-              <SideMenu/>
-              <AddProductModal updateList={updateList}/>
+              <SideMenu />
+              <AddProductModal updateList={updateList} />
             </Col>
             <Col span={18}>
               <List

@@ -24,7 +24,7 @@ import DocumentsPage from '../components/common/pages/DocumentsPage'
 import HelpPage from '../components/common/pages/HelpPage'
 import AboutPage from '../components/common/pages/AboutPage'
 import ShopDetail from '../components/shop/ShopDetail'
-import Basket from '../components/basket/Basket'
+import Cart from '../components/cart/Cart'
 import PrivateAdminRoute from './util/PrivateAdminRoute'
 import OrderPage from '../components/order/OrderPage'
 import BreadCrumbComponent from '../components/common/breadcrumb/BreadCrumbComponent'
@@ -41,8 +41,7 @@ notification.config({
   duration: 2
 })
 
-function App(props) {
-  // const history = useHistory()
+const App = (props) => {
 
   const dispatch = useDispatch()
 
@@ -79,6 +78,7 @@ function App(props) {
   }
 
   const handleLogin = () => {
+
     dispatch(getCurrentUser())
     props.history.push('/profile')
   }
@@ -127,7 +127,7 @@ function App(props) {
                                           {...props} />} />
 
           <PrivateRoute path='/profile'
-                        isAuthenticated={isAuthenticated.payload}
+                        isAuthenticated={isAuthenticated}
                         component={Profile}
                         {...props} />
 
@@ -135,10 +135,10 @@ function App(props) {
                  currentUser={currentUser}
                  component={OrderPage} />
 
-          <PrivateRoute path='/basket'
+          <PrivateRoute path='/cart'
                         isAuthenticated={isAuthenticated}
                         currentUser={currentUser}
-                        component={Basket}
+                        component={Cart}
                         {...props} />
 
           <Route exact path='/about/documents'

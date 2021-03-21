@@ -20,7 +20,7 @@ const request = (options, grantType) => {
   const headers = new Headers({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': 'http://localhost:3000'
-})
+  })
 
   if (grantType !== 'anon_action') {
     if (localStorage.getItem(ACCESS_TOKEN)) {
@@ -80,7 +80,7 @@ const request = (options, grantType) => {
     })
 }
 
-export function loginRequest (loginRequest) {
+export function loginRequest(loginRequest) {
   return request({
     url: BASE_URL + 'auth/users/login',
     method: 'POST',
@@ -88,7 +88,7 @@ export function loginRequest (loginRequest) {
   })
 }
 
-export function signUpRequest (signupRequest) {
+export function signUpRequest(signupRequest) {
   return request({
     url: BASE_URL + 'auth/users/sign-up',
     method: 'POST',
@@ -96,7 +96,7 @@ export function signUpRequest (signupRequest) {
   })
 }
 
-export function updateUserProfileRequest (editUserRequest) {
+export function updateUserProfileRequest(editUserRequest) {
   console.log('editUserRequest', editUserRequest)
   return request({
     url: BASE_URL + 'users/' + Number(editUserRequest.id),
@@ -105,7 +105,7 @@ export function updateUserProfileRequest (editUserRequest) {
   })
 }
 
-export function changeUserPassword (changePasswordUserRequest) {
+export function changeUserPassword(changePasswordUserRequest) {
   return request({
     url: BASE_URL + 'users/' + Number(changePasswordUserRequest.id),
     method: 'PUT',
@@ -113,7 +113,7 @@ export function changeUserPassword (changePasswordUserRequest) {
   })
 }
 
-export function getCurrentUserRequest () {
+export function getCurrentUserRequest() {
   if (!localStorage.getItem(ACCESS_TOKEN)) {
     return Promise.reject('No access token set.')
   }
@@ -124,14 +124,14 @@ export function getCurrentUserRequest () {
   })
 }
 
-export function getCurrentCompanyRequest () {
+export function getCurrentCompanyRequest() {
   return request({
     url: BASE_URL + 'company',
     method: 'GET'
   })
 }
 
-export function saveCompanyRequest (companyRequest) {
+export function saveCompanyRequest(companyRequest) {
   const url = BASE_URL + 'company'
 
   return request({
@@ -141,7 +141,7 @@ export function saveCompanyRequest (companyRequest) {
   })
 }
 
-export function updateCompanyInfoRequest (companyId, updateCompanyRequest) {
+export function updateCompanyInfoRequest(companyId, updateCompanyRequest) {
   const url = BASE_URL + 'company/' + companyId
 
   return request({
@@ -151,14 +151,14 @@ export function updateCompanyInfoRequest (companyId, updateCompanyRequest) {
   })
 }
 
-export function checkLoginAvailabilityRequest (login) {
+export function checkLoginAvailabilityRequest(login) {
   return request({
     url: BASE_URL + 'auth/user/check-email-availability?email=' + login,
     method: 'GET'
   })
 }
 
-export function getAllReviewsRequest () {
+export function getAllReviewsRequest() {
   const url = BASE_URL + 'company/reviews'
 
   return request({
@@ -167,7 +167,7 @@ export function getAllReviewsRequest () {
   }, 'anon_action')
 }
 
-export function saveReviewRequest (reviewRequest) {
+export function saveReviewRequest(reviewRequest) {
   const url = BASE_URL + 'company/reviews'
 
   return request({
@@ -177,7 +177,7 @@ export function saveReviewRequest (reviewRequest) {
   })
 }
 
-export function saveShopRequest (shopRequest) {
+export function saveShopRequest(shopRequest) {
   const url = BASE_URL + 'shops'
 
   return request({
@@ -187,7 +187,7 @@ export function saveShopRequest (shopRequest) {
   })
 }
 
-export function updateShopRequest (shopRequest, shopId) {
+export function updateShopRequest(shopRequest, shopId) {
   const url = BASE_URL + 'shops/' + shopId
 
   return request({
@@ -197,7 +197,7 @@ export function updateShopRequest (shopRequest, shopId) {
   })
 }
 
-export function getAllShopsRequest (searchCriteria) {
+export function getAllShopsRequest(searchCriteria) {
   const page = 'page=' + Number(searchCriteria.page === 0 ? searchCriteria.page : searchCriteria.page)
   const size = '&size=' + Number(searchCriteria.size)
   // const searchString = searchCriteria.searchString === undefined ? '' : '&searchString=' + searchCriteria.searchString
@@ -209,7 +209,8 @@ export function getAllShopsRequest (searchCriteria) {
     method: 'GET'
   })
 }
-export function getAllShops () {
+
+export function getAllShops() {
 
   const url = BASE_URL + 'shops'
 
@@ -219,21 +220,21 @@ export function getAllShops () {
   })
 }
 
-export function getShopByIdRequest (id) {
+export function getShopByIdRequest(id) {
   return request({
     url: BASE_URL + 'shops/' + id,
     method: 'GET'
   })
 }
 
-export function getProductByIdRequest (id) {
+export function getProductByIdRequest(id) {
   return request({
     url: BASE_URL + 'products/' + id,
     method: 'GET'
   })
 }
 
-export function updateProductRequest (productId, updateProductRequest) {
+export function updateProductRequest(productId, updateProductRequest) {
   const url = BASE_URL + 'products/' + productId
 
   return request({
@@ -243,7 +244,7 @@ export function updateProductRequest (productId, updateProductRequest) {
   })
 }
 
-export function deleteProductRequest (flowerId) {
+export function deleteProductRequest(flowerId) {
   const url = BASE_URL + 'products/' + flowerId
 
   return request({
@@ -252,9 +253,9 @@ export function deleteProductRequest (flowerId) {
   })
 }
 
-export function getProductsRequest (searchCriteria) {
+export function getProductsRequest(searchCriteria) {
   const page = 'page=' + Number(searchCriteria.page === undefined ? 1 : searchCriteria.page)
-  const size = '&size=' + Number( searchCriteria.size === undefined ? 10 : searchCriteria.size)
+  const size = '&size=' + Number(searchCriteria.size === undefined ? 10 : searchCriteria.size)
 
   const url = BASE_URL + 'products?' + page + size
 
@@ -265,7 +266,7 @@ export function getProductsRequest (searchCriteria) {
 }
 
 
-export function getProductsByShopIdRequest (searchCriteria, shopId) {
+export function getProductsByShopIdRequest(searchCriteria, shopId) {
   const page = 'page=' + Number(searchCriteria.page === 0 ? searchCriteria.page : searchCriteria.page)
   const size = '&size=' + Number(searchCriteria.size)
 
@@ -277,28 +278,28 @@ export function getProductsByShopIdRequest (searchCriteria, shopId) {
   })
 }
 
-export function getCountriesRequest () {
+export function getCountriesRequest() {
   return request({
     url: BASE_URL + 'common/countries',
     method: 'GET'
   })
 }
 
-export function getCategoriesRequest () {
+export function getCategoriesRequest() {
   return request({
     url: BASE_URL + 'categories',
     method: 'GET'
   })
 }
 
-export function getProductLengthsRequest () {
+export function getProductLengthsRequest() {
   return request({
     url: BASE_URL + 'common/product-lengths',
     method: 'GET'
   })
 }
 
-export function saveProductRequest (productRequest) {
+export function saveProductRequest(productRequest) {
   const url = BASE_URL + 'products'
 
   return request({
@@ -309,13 +310,14 @@ export function saveProductRequest (productRequest) {
 }
 
 
-export function getBasketRequest () {
+export function getCartRequest(userId) {
   return request({
-    url: BASE_URL + 'carts',
+    url: BASE_URL + 'carts?userId=' + userId,
     method: 'GET'
   })
 }
-export function addProductToBasketRequest (productCartRequest) {
+
+export function addProductToCartRequest(productCartRequest) {
   const url = BASE_URL + 'carts'
 
   return request({
@@ -325,7 +327,7 @@ export function addProductToBasketRequest (productCartRequest) {
   })
 }
 
-export function updateProductToBasketRequest (productCartRequest) {
+export function updateProductInCartRequest(productCartRequest) {
   const url = BASE_URL + 'carts'
 
   return request({
@@ -335,7 +337,7 @@ export function updateProductToBasketRequest (productCartRequest) {
   })
 }
 
-export function deleteProductToBasketRequest (productCartRequest) {
+export function deleteProductFromCartRequest(productCartRequest) {
   const url = BASE_URL + 'carts'
 
   return request({
@@ -345,7 +347,7 @@ export function deleteProductToBasketRequest (productCartRequest) {
   })
 }
 
-export function getClientOrders (searchCriteria) {
+export function getClientOrders(searchCriteria) {
   const page = 'page=' + Number(searchCriteria.page === 0 ? searchCriteria.page : searchCriteria.page)
   const size = '&size=' + Number(searchCriteria.size)
 
@@ -357,7 +359,7 @@ export function getClientOrders (searchCriteria) {
   })
 }
 
-export function getOrderById (id) {
+export function getOrderById(id) {
   const url = BASE_URL + 'orders/' + id
 
   return request({
@@ -366,7 +368,7 @@ export function getOrderById (id) {
   })
 }
 
-export function getOrdersByShopIdRequest (searchCriteria, shopId) {
+export function getOrdersByShopIdRequest(searchCriteria, shopId) {
   const page = 'page=' + Number(searchCriteria.page === 0 ? searchCriteria.page : searchCriteria.page)
   const size = '&size=' + Number(searchCriteria.size)
 
@@ -378,7 +380,7 @@ export function getOrdersByShopIdRequest (searchCriteria, shopId) {
   })
 }
 
-export function createOrder (orderRequest) {
+export function createOrderRequest(orderRequest) {
   const url = BASE_URL + 'orders'
 
   return request({

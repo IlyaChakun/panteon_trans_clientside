@@ -81,12 +81,12 @@ class ShopsBlock extends Component {
                     {shopElements}
                 </div>
                 <div className="col-7">
-                    <MapContainer
-                        google={this.props.google}
-                        center={{lat: 53.893009, lng: 27.567444}}
-                        height='300px'
-                        zoom={14}
-                    />
+                    {/*<MapContainer*/}
+                    {/*    google={this.props.google}*/}
+                    {/*    center={{lat: 53.893009, lng: 27.567444}}*/}
+                    {/*    height='300px'*/}
+                    {/*    zoom={14}*/}
+                    {/*/>*/}
                 </div>
             </div>
         )

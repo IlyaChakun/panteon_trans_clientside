@@ -44,8 +44,8 @@ const ProductCardProxy = ({ product, history, updateList }) => {
       <DeleteProductModal
         productId={product.id}
         button={
-          <DeleteOutlined style={{ fontSize: '25px' }}/>
-        }/>
+          <DeleteOutlined style={{ fontSize: '25px' }} />
+        } />
     </div>)
 
   const buyAction = (productState) => (
