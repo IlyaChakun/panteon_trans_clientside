@@ -1,12 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
-  deleteProductRequest, getAllShops,
+  deleteProductRequest,
+  getAllShops,
   getCategoriesRequest,
   getCountriesRequest,
   getProductLengthsRequest,
   getProductsByShopIdRequest,
   getProductsRequest,
-  saveProductRequest, updateProductRequest
+  saveProductRequest,
+  updateProductRequest
 } from '../../components/util/utilsAPI'
 import { notification } from 'antd'
 import { localizedStrings } from '../../components/util/localization'
@@ -121,7 +123,11 @@ const productSlice = createSlice({
     [fetchShops.fulfilled]: (state, action) => {
       state.shopsLoading = 'fulfilled'
       // Add any fetched posts to the array
-      state.shops = action.objects
+      state.shops = {
+        objects: action.payload.objects,
+        totalElements: action.payload.totalElements,
+        totalPages: action.payload.totalPages
+      }
     },
     [fetchShops.rejected]: (state, action) => {
       state.shopsLoading = 'rejected'

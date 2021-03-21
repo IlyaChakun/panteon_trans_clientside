@@ -42,8 +42,8 @@ const Cart = (props) => {
   } = useSelector(productSelector)
 
   const [shop, setShop] = useState({
-    id: '',
-    value: shops.find(x => x.id === shop.id),
+    id: shops.objects[0].id,
+    value: shops.objects.find(x => x.id === shops.objects[0].id),
     validateStatus: props.validateStatus
   })
   const [comment, setComment] = useState({ value: '', validateStatus: '' })
@@ -139,6 +139,8 @@ const Cart = (props) => {
   cartProducts = (cart === undefined || cart.cartItems === undefined) ? []
     :
     cart.cartItems.forEach((cartProduct) => {
+      console.log('cartItems', cart.cartItems)
+
 
       cartProducts.push(
         <CartProduct
@@ -152,18 +154,11 @@ const Cart = (props) => {
     })
 
 
-  const shopOptions = shops.map(
+  const shopOptions = shops.objects.map(
     element =>
-      element.parentId === null ? (
-        <OptGroup key={element.parentId} label={element.name}>
-          {
-            element.children.map(
-              child =>
-                <Option key={element.id} value={child.id}>{child.name}</Option>
-            )
-          }
-        </OptGroup>
-      ) : ''
+      <Option key={`${element.id}-${element.contacts.address}`} value={element.id}>
+        {element.contacts.address}
+      </Option>
   )
 
   const onChangeShopSelect = (input, option) => {

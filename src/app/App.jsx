@@ -3,7 +3,7 @@ import './App.css'
 import PrivateRoute from './util/PrivateRoute'
 
 import { Col, Layout, notification, Row } from 'antd'
-import { Route, Switch, withRouter } from 'react-router-dom'
+import { Route, Switch, useHistory, withRouter } from 'react-router-dom'
 
 import { localizedStrings } from '../components/util/localization'
 import { ACCESS_TOKEN, REFRESH_TOKEN, ROLE_ADMIN, ROLE_USER, SUCCESS, USER_ID } from '../constants'
@@ -46,6 +46,8 @@ const App = (props) => {
 
   const dispatch = useDispatch()
 
+  let history = useHistory();
+
   const {
     isLoading,
     currentUser,
@@ -70,7 +72,7 @@ const App = (props) => {
     dispatch(setCurrentUser(null))
     dispatch(setIsAuthenticated(false))
 
-    props.history.push(redirectTo)
+    history.push(redirectTo)
 
     notification[notificationType]({
       message: localizedStrings.alertAppName,
@@ -81,15 +83,15 @@ const App = (props) => {
   const handleLogin = () => {
 
     dispatch(getCurrentUser())
-    props.history.push('/profile')
+    history.push('/profile')
   }
 
   if (isLoading) {
-      return <LoadingIndicator/>
+    return <LoadingIndicator />
   }
 
   if (localStorage.getItem(ACCESS_TOKEN) && currentUser === undefined) {
-      return <LoadingIndicator/>
+    return <LoadingIndicator />
   }
 
   return (

@@ -8,7 +8,7 @@ const { Meta } = Card
 
 const ShopCard = ({ shop, firstAction }) => {
 
-  const imageUrl = shop.image === undefined ? '' : shop.image.imageUrl
+  const imageUrl = shop.image === null ? '' : shop.image.imageUrl
 
   return (
     <div className='site-card-wrapper'>
