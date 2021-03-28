@@ -3,7 +3,7 @@ import { notification } from 'antd'
 import { localizedStrings } from '../../components/util/localization'
 import {
   addFloristRequest,
-  getAllFloristsRequest,
+  getAllFloristsRequest, getFloristRequest,
   updateProductInCartRequest
 } from '../../components/util/utilsAPI'
 

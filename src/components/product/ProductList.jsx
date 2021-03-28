@@ -13,6 +13,7 @@ import {
   setSize
 } from '../../redux/reducers/ProductsSliceReducer'
 import SideMenu from '../common/sidemenu/SideMenu'
+import LoadingIndicator from '../common/util/LoadingIndicator'
 
 
 const ProductList = (props) => {
@@ -54,9 +55,9 @@ const ProductList = (props) => {
   //   loadList(page, size, productName, minPrice, maxPrice, sortBy, sortType, checkedBrands)
   // }
 
-  // if (loading === true) {
-  //     return <LoadingIndicator/>
-  // }
+  if (loading === true) {
+      return <LoadingIndicator/>
+  }
 
   const productsMap = products === undefined ? [] : products.map(product => (
       <ProductCardProxy

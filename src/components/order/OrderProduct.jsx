@@ -6,7 +6,6 @@ const {Meta} = Card
 class OrderProduct extends Component {
     state = {
         id: this.props.orderProduct.id,
-        // flowerType: this.props.orderProduct.product.flowerType.flowerType,
         flowerColor: this.props.orderProduct.product.flowerColor.colorName,
         flowerSort: this.props.orderProduct.product.flowerSort.sortNameRu,
         stemLength: this.props.orderProduct.product.flowerLengthCosts[0].stemLength,

@@ -1,166 +1,119 @@
-import React, {Component} from 'react'
-import {withRouter} from 'react-router-dom'
-
-import {getClientOrders, getOrdersByShopIdRequest} from "../util/utilsAPI";
+import React, { useEffect } from 'react'
+import { withRouter } from 'react-router-dom'
 import { List, Tabs } from 'antd'
-import OrderDetail from "./OrderDetail";
+import OrderDetail from './OrderDetail'
+import { useDispatch, useSelector } from 'react-redux'
+import { getUsualOrders, orderSelector, setPage, setSize } from '../../redux/reducers/OrdersSliceReducer'
+import LoadingIndicator from '../common/util/LoadingIndicator'
 
-const { TabPane } = Tabs;
+const { TabPane } = Tabs
 
-class OrderList extends Component {
+const OrderList = (props) => {
+  const dispatch = useDispatch()
+  const {
+    orders,
+    loading,
+    page,
+    size,
+    totalElements
+  } = useSelector(orderSelector)
 
-    state = {
 
-        orders: [],
+  useEffect(() => {
+    updateList()
+  }, [dispatch])
 
-        page: 1,
-        size: 6,
-        pagesCount: 0,
 
-        totalPages: 0,
-        totalElements: 0,
+  const updateList = () => {
+    loadList(page, size)
+  }
 
-        isLoading: false
+  const loadList = (page, size) => {
+    const searchCriteria = {
+      page: page,
+      size: size,
+      clientId: props.currentUser.id
     }
+    dispatch(getUsualOrders(searchCriteria))
+  }
 
-    componentDidMount() {
-        this.updateList()
-    }
+  const onSizeChangeHandler = (page, size) => {
+    dispatch(setPage(page))
+    dispatch(setSize(size))
+    loadList(page, size)
+  }
 
-    updateList = () => {
-        this.loadList(this.state.page, this.state.size)
-    }
+  const onPageChangeHandler = (pageNumber) => {
+    dispatch(setPage(pageNumber))
+    loadList(pageNumber, size)
+  }
 
-    loadList = (page, size) => {
-
-        const searchCriteria = {
-            page: page,
-            size: size
-        };
-
-        if (!this.props.shopId) {
-            const promise = getClientOrders(searchCriteria);
-            if (!promise) {
-                return;
-            }
-            this.extractPromise(promise);
-        } else {
-            const promise = getOrdersByShopIdRequest(searchCriteria, this.props.shopId);
-            if (!promise) {
-                return;
-            }
-            this.extractPromise(promise);
-        }
-    };
+  const loadMore = () => {
+    loadList(page + 1, size)
+  }
 
 
-    extractPromise = (promise) => {
+  if (loading === true) {
+    return <LoadingIndicator/>
+  }
 
-        this.setState({
-            isLoading: true
-        });
+  const ordersList = orders.map(order => (
+        <OrderDetail
+          key={order.id}
+          order={order}
+        />
+      )
+    )
 
-        promise
-            .then(response => {
-                this.setState({
-                    orders: response.objects.slice(),
-                    totalPages: response.totalPages,
-                    totalElements: response.totalElements,
-                });
+  return (
+    <>
 
-            }).catch(() => {
-            this.setState({
-                isLoading: false
-            });
-        });
-    };
-
-    render() {
-
-        const orders = this.state.orders
-            .map(order => (
-                    <OrderDetail
-                        key={order.id}
-                        order={order}
-                    />
-                )
-            )
-
-        return (
-
-          <>
-
-              <Tabs defaultActiveKey="1" centered>
-                  <TabPane tab="Активные заказы" key="1">
-                      Content of Tab Pane 1
-                  </TabPane>
-                  <TabPane tab="Завершенные заказы" key="2">
-                      Content of Tab Pane 2
-                  </TabPane>
-              </Tabs>
+      <Tabs defaultActiveKey='1' centered>
+        <TabPane tab='Активные заказы' key='1'>
+          Content of Tab Pane 1
+        </TabPane>
+        <TabPane tab='Завершенные заказы' key='2'>
+          Content of Tab Pane 2
+        </TabPane>
+      </Tabs>
 
 
-              <List
-                grid={{
-                    gutter: 16,
-                    column: 1,
-                }}
+      <List
+        grid={{
+          gutter: 16,
+          column: 1
+        }}
 
-                pagination={{
+        pagination={{
 
-                    loading: this.state.isLoading,
-                    showSizeChanger: true,
+          loading: loading,
+          showSizeChanger: true,
 
-                    defaultCurrent: Number(this.state.page),
-                    defaultPageSize: Number(this.state.size),
+          defaultCurrent: page,
+          defaultPageSize: size,
 
-                    pageSizeOptions: ["6", "9", "12"],
-                    position: "bottom",
+          pageSizeOptions: ['6', '9', '12'],
+          position: 'bottom',
 
-                    total: this.state.totalElements,
+          total: totalElements,
 
-                    showQuickJumper: true,
-                    onShowSizeChange: this.onSizeChangeHandler,
-                    onChange: this.onPageChangeHandler,
+          showQuickJumper: true,
+          onShowSizeChange: onSizeChangeHandler,
+          onChange: onPageChangeHandler,
 
-                    loadMore: this.loadMore
-                }}
+          loadMore: loadMore
+        }}
 
-                dataSource={orders}
+        dataSource={ordersList}
 
-                renderItem={item => (
-                  <List.Item>
-                      {item}
-                  </List.Item>
-                )}
-              />
-          </>
-        )
-    }
-
-
-    onSizeChangeHandler = (page, size) => {
-
-        this.setState({
-            page: page,
-            size: size
-        });
-        this.loadList(page, size);
-    };
-
-    onPageChangeHandler = (pageNumber) => {
-        this.setState({
-            page: pageNumber
-        });
-
-
-        this.loadList(pageNumber, this.state.size);
-    };
-
-    loadMore = () => {
-        this.loadList(this.state.page + 1, this.state.size);
-    }
-
+        renderItem={item => (
+          <List.Item>
+            {item}
+          </List.Item>
+        )}
+      />
+    </>
+  )
 }
 
 export default withRouter(OrderList)

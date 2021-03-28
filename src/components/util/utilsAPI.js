@@ -350,8 +350,9 @@ export function deleteProductFromCartRequest(productCartRequest) {
 export function getClientOrders(searchCriteria) {
   const page = 'page=' + Number(searchCriteria.page === 0 ? searchCriteria.page : searchCriteria.page)
   const size = '&size=' + Number(searchCriteria.size)
+  const clientId = '&clientId=' + Number(searchCriteria.clientId)
 
-  const url = BASE_URL + 'orders?' + page + size
+  const url = BASE_URL + 'orders?' + page + size + clientId
 
   return request({
     url: url,

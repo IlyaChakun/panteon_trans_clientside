@@ -24,29 +24,29 @@ const orderSlice = createSlice({
   name: 'orders',
   initialState,
   reducers: {
-    setLoading: (state, payload) => {
-      state.loading = payload
+    setLoading: (state, action) => {
+      state.loading = action.payload
     },
-    setErrors: (state, payload) => {
-      state.errors = payload
+    setErrors: (state, action) => {
+      state.errors = action.payload
     },
-    setOrders: (state, payload) => {
-      state.orders = payload
+    setOrders: (state, action) => {
+      state.orders = action.payload
     },
-    setOrder: (state, payload) => {
-      state.order = payload
+    setOrder: (state, action) => {
+      state.order = action.payload
     },
-    setTotalPages: (state, payload) => {
-      state.totalPages = payload
+    setTotalPages: (state, action) => {
+      state.totalPages = action.payload
     },
-    setTotalElements: (state, payload) => {
-      state.totalElements = payload
+    setTotalElements: (state, action) => {
+      state.totalElements = action.payload
     },
-    setPage: (state, payload) => {
-      state.page = payload
+    setPage: (state, action) => {
+      state.page = action.payload
     },
-    setSize: (state, payload) => {
-      state.size = payload
+    setSize: (state, action) => {
+      state.size = action.payload
     }
   }
 })
@@ -64,14 +64,14 @@ export const {
 export default orderSlice.reducer
 
 export const orderSelector = (state) => {
-  return state.productsState
+  return state.ordersState
 }
 
-export const getOrders = () => {
+export const getUsualOrders = (searchCriteria) => {
   return async dispatch => {
-    dispatch(setLoading(true))
     try {
-      let promise = getClientOrders()
+      console.log('in orders disp')
+      let promise = getClientOrders(searchCriteria)
 
       if (!promise) {
         return
@@ -79,7 +79,9 @@ export const getOrders = () => {
       promise
         .then(response => {
           dispatch(setLoading(true))
-          dispatch(setOrders(response))
+          dispatch(setOrders(response.objects))
+          dispatch(setTotalPages(response.totalPages))
+          dispatch(setTotalElements(response.totalElements))
           dispatch(setLoading(false))
         })
     } catch (error) {
