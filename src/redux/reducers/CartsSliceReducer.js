@@ -14,8 +14,8 @@ const initialState = {
   errors: '',
 
   cart: {
-    cartItems:[],
-    totalElements:'',
+    cartItems: [],
+    totalElements: '',
     totalPrice: ''
   }
 }
@@ -49,14 +49,14 @@ export const cartSelector = (state) => {
 export const getCart = (userId) => {
   return async dispatch => {
     try {
-      console.log("start cart request")
+      console.log('start cart request')
       const promise = getCartRequest(userId)
       if (!promise) {
         return
       }
       promise
         .then(response => {
-          console.log("cart" ,response)
+          console.log('cart', response)
           dispatch(setLoading(true))
           dispatch(setCart(response))
           dispatch(setLoading(false))
@@ -77,7 +77,8 @@ export const addToCart = (cartItem) => {
       if (!promise) {
         return
       }
-      promise
+
+      await promise
         .then(response => {
           console.log('response in addToCart dispatcher', response)
           dispatch(setCart(response))
@@ -91,7 +92,7 @@ export const addToCart = (cartItem) => {
       dispatch(setErrors(error))
       notification.error({
         message: localizedStrings.alertAppName,
-        description: 'что-то не так'
+        description: error.errorDescription
       })
     }
   }
@@ -114,8 +115,8 @@ export const updateItemInCart = (cartItem) => {
       dispatch(setErrors(error))
       notification.error({
         message: localizedStrings.alertAppName,
-        description: 'Не удалось изменить кол-во в корзине!Вы выбрали больше чем доступно!',
-      });
+        description: 'Не удалось изменить кол-во в корзине!Вы выбрали больше чем доступно!'
+      })
     }
   }
 }
@@ -133,16 +134,16 @@ export const deleteItemFromCart = (productCart) => {
           console.log('response in delete from cart', response)
           notification.success({
             message: localizedStrings.alertAppName,
-            description: 'Продукт удален из корзины!',
-          });
+            description: 'Продукт удален из корзины!'
+          })
           dispatch(getCart(productCart.userId))
         })
     } catch (error) {
       dispatch(setErrors(error))
       notification.error({
         message: localizedStrings.alertAppName,
-        description: 'Не удалось удалить продукт из корзину!',
-      });
+        description: 'Не удалось удалить продукт из корзину!'
+      })
     }
   }
 }

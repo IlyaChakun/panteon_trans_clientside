@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import CartProduct from './CartProduct'
 import { withRouter } from 'react-router-dom'
 
-import { Button, Col, Form, Input, List, Popconfirm, Row, Select } from 'antd'
+import { Button, Col, Form, Input, List, Popconfirm, Radio, Row, Select } from 'antd'
 import { validateAddress, validateText } from '../common/validation/ValidationFunctions'
 import { SUCCESS } from '../../constants'
 import { useDispatch, useSelector } from 'react-redux'
@@ -29,18 +29,9 @@ const layout = {
 const Cart = (props) => {
 
   const dispatch = useDispatch()
-  const {
-    loading,
-    cart
-  } = useSelector(cartSelector)
-
-  const {
-    currentUser
-  } = useSelector(authSelector)
-
-  const {
-    shops
-  } = useSelector(productSelector)
+  const { loading, cart } = useSelector(cartSelector)
+  const { currentUser } = useSelector(authSelector)
+  const { shops } = useSelector(productSelector)
 
   const [shop, setShop] = useState({
     id: shops.objects[0].id,
@@ -51,6 +42,8 @@ const Cart = (props) => {
   const [address, setAddress] = useState({ value: '', validateStatus: '' })
   const [floorNumber, setFloorNumber] = useState({ value: '', validateStatus: '' })
   const [entranceNumber, setEntranceNumber] = useState({ value: '', validateStatus: '' })
+
+  const [delivery, setDelivery] = useState(1)
 
 
   useEffect(() => {
@@ -78,33 +71,24 @@ const Cart = (props) => {
     })
 
     const order = {
+      '@type': 'UsualOrder',
       'orderProducts': orderProducts,
       'comment': comment.value,
-      'orderPriceInfo': {
-        'totalAmount': cart.totalPrice
-      },
       'orderDeliveryInfo': {
         'address': address.value,
         'floorNumber': floorNumber.value,
         'entranceNumber': entranceNumber.value,
         'deliveryType': {
-          'deliveryTypeName': 'simple'
+          'id': delivery
         }
-      },
-      'orderFloristInfo': {
-        'orderId': '',
-        'floristId': '',
-        'floristAppointmentTime': ''
       }
     }
-
 
     dispatch(placeOrder(order))
     props.history.push('/')
 
     console.log('order request:', order)
   }
-
 
   const deleteProductFromCart = (productId) => {
     const productCart = {
@@ -113,7 +97,6 @@ const Cart = (props) => {
     }
     dispatch(deleteItemFromCart(productCart))
   }
-
 
   const updateProductQuantity = (productLengthCostId, quantity, productId) => {
     const cartItem = {
@@ -125,7 +108,6 @@ const Cart = (props) => {
 
     dispatch(updateItemInCart(cartItem))
   }
-
 
   const handleTextChange = (event) => {
     const inputValue = event.target.value
@@ -180,7 +162,6 @@ const Cart = (props) => {
     )
   })
 
-
   const shopOptions = shops.objects.map(
     element =>
       <Option key={`${element.id}-${element.contacts.address}`} value={element.id}>
@@ -194,6 +175,118 @@ const Cart = (props) => {
       value: option.value,
       ...validateId(option.key)
     })
+
+  }
+
+  const onChangeDelivery = (e) => {
+    setDelivery(e.target.value)
+  }
+
+  const deliveryOptions = () => {
+    if (delivery == 1) {
+      return (
+        <Form.Item
+          label='Пункт самовывоза'
+          validateStatus={shop.validateStatus}
+          hasFeedback
+          help={shop.errorMsg}
+        >
+
+          <Select
+            name='category'
+            value={shop.id}
+            showSearch
+            style={{ width: 200 }}
+            placeholder='Выберите пункт самовывоза'
+            onChange={onChangeShopSelect}
+          >
+            {shopOptions}
+          </Select>
+
+        </Form.Item>
+      )
+    }
+
+    if (delivery == 2) {
+      return (
+        <>
+          <Form.Item
+            label={'Комментарий к заказу'}
+            validateStatus={comment.validateStatus}
+            hasFeedback
+            onChange={(event) => handleTextChange(event)}
+            help={comment.errorMsg}
+          >
+            <TextArea
+              rows={3}
+              name='comment'
+              size='middle'
+              value={comment.value}>
+            </TextArea>
+          </Form.Item>
+
+          <Form.Item
+            label={'Адрес'}
+            validateStatus={address.validateStatus}
+            hasFeedback
+            onChange={(event) => handleAddressChange(event)}
+            help={address.errorMsg}
+            rules={[
+              {
+                required: true,
+                message: 'Пожалуйста, введите адрес!'
+              }
+            ]}
+          >
+            <Input
+              name='address'
+              placeholder={'Адрес'}
+              style={{ fontSize: '16px' }}
+              autosize={{ minRows: 3, maxRows: 6 }} />
+          </Form.Item>
+
+          <Form.Item
+            label={'Этаж'}
+            validateStatus={floorNumber.validateStatus}
+            hasFeedback
+            onChange={(event) => handleFlourNumberChange(event)}
+            help={floorNumber.errorMsg}
+            rules={[
+              {
+                required: true,
+                message: 'Пожалуйста, введите этаж!'
+              }
+            ]}
+          >
+            <Input
+              name='floorNumber'
+              placeholder={'Этаж'}
+              style={{ fontSize: '16px' }}
+              autosize={{ minRows: 3, maxRows: 6 }} />
+          </Form.Item>
+
+          <Form.Item
+            label={'Подъезд'}
+            validateStatus={entranceNumber.validateStatus}
+            hasFeedback
+            onChange={(event) => handleEntranceNumberChange(event)}
+            help={entranceNumber.errorMsg}
+            rules={[
+              {
+                required: true,
+                message: 'Пожалуйста, введите подъезд!'
+              }
+            ]}
+          >
+            <Input
+              name='entranceNumber'
+              placeholder={'Подъезд'}
+              style={{ fontSize: '16px' }}
+              autosize={{ minRows: 3, maxRows: 6 }} />
+          </Form.Item>
+        </>
+      )
+    }
   }
 
   return (
@@ -227,100 +320,15 @@ const Cart = (props) => {
                   onFinish={handleSubmitOrder}>
 
               <Form.Item
-                label='Пункт самовывоза'
-                validateStatus={shop.validateStatus}
-                hasFeedback
-                help={shop.errorMsg}
+                label='Тип доставки'
               >
-
-                <Select
-                  name='category'
-                  value={shop.id}
-                  showSearch
-                  style={{ width: 200 }}
-                  placeholder='Выберите пункт самовывоза'
-                  onChange={onChangeShopSelect}
-                >
-                  {shopOptions}
-                </Select>
-
+                <Radio.Group onChange={onChangeDelivery} value={delivery}>
+                  <Radio value={1}>Самовывоз</Radio>
+                  <Radio value={2}>Доставка курьером</Radio>
+                </Radio.Group>
               </Form.Item>
 
-              <Form.Item
-                label={'Комментарий к заказу'}
-                validateStatus={comment.validateStatus}
-                hasFeedback
-                onChange={(event) => handleTextChange(event)}
-                help={comment.errorMsg}
-              >
-                <TextArea
-                  rows={3}
-                  name='comment'
-                  size='middle'
-                  value={comment.value}>
-                </TextArea>
-              </Form.Item>
-
-              <Form.Item
-                label={'Адрес'}
-                validateStatus={address.validateStatus}
-                hasFeedback
-                onChange={(event) => handleAddressChange(event)}
-                help={address.errorMsg}
-                rules={[
-                  {
-                    required: true,
-                    message: 'Пожалуйста, введите адрес!'
-                  }
-                ]}
-              >
-                <Input
-                  name='address'
-                  placeholder={'Адрес'}
-                  style={{ fontSize: '16px' }}
-                  autosize={{ minRows: 3, maxRows: 6 }} />
-              </Form.Item>
-
-
-              <Form.Item
-                label={'Этаж'}
-                validateStatus={floorNumber.validateStatus}
-                hasFeedback
-                onChange={(event) => handleFlourNumberChange(event)}
-                help={floorNumber.errorMsg}
-                rules={[
-                  {
-                    required: true,
-                    message: 'Пожалуйста, введите этаж!'
-                  }
-                ]}
-              >
-                <Input
-                  name='floorNumber'
-                  placeholder={'Этаж'}
-                  style={{ fontSize: '16px' }}
-                  autosize={{ minRows: 3, maxRows: 6 }} />
-              </Form.Item>
-
-              <Form.Item
-                label={'Подъезд'}
-                validateStatus={entranceNumber.validateStatus}
-                hasFeedback
-                onChange={(event) => handleEntranceNumberChange(event)}
-                help={entranceNumber.errorMsg}
-                rules={[
-                  {
-                    required: true,
-                    message: 'Пожалуйста, введите подъезд!'
-                  }
-                ]}
-              >
-                <Input
-                  name='entranceNumber'
-                  placeholder={'Подъезд'}
-                  style={{ fontSize: '16px' }}
-                  autosize={{ minRows: 3, maxRows: 6 }} />
-              </Form.Item>
+              {deliveryOptions()}
 
               <Form.Item wrapperCol={{ span: 8, offset: 8 }}>
                              <span className='quantity-cost-text'>

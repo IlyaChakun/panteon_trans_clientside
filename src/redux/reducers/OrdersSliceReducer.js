@@ -1,13 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
-import { createOrderRequest, updateProductInCartRequest } from '../../components/util/utilsAPI'
+import {
+  createOrderRequest,
+  getClientOrders
+} from '../../components/util/utilsAPI'
 import { notification } from 'antd'
 import { localizedStrings } from '../../components/util/localization'
-import { getCart } from './CartsSliceReducer'
 
 const initialState = {
   orders: [],
-  order:{},
+  order: {},
   loading: false,
   errors: '',
 
@@ -68,16 +69,23 @@ export const orderSelector = (state) => {
 
 export const getOrders = () => {
   return async dispatch => {
-    axios.get('http://localhost:8080/buy-now-orders')
-      .then(resp => {
-        dispatch(setLoading(true))
-        dispatch(setOrders(resp.data))
-        dispatch(setLoading(false))
-      })
-      .catch(error => {
-        dispatch(setErrors(error))
-        console.log(error)
-      })
+    dispatch(setLoading(true))
+    try {
+      let promise = getClientOrders()
+
+      if (!promise) {
+        return
+      }
+      promise
+        .then(response => {
+          dispatch(setLoading(true))
+          dispatch(setOrders(response))
+          dispatch(setLoading(false))
+        })
+    } catch (error) {
+      dispatch(setErrors(error))
+      dispatch(setLoading(false))
+    }
   }
 }
 
@@ -94,15 +102,15 @@ export const placeOrder = (order) => {
         .then(response => {
           notification.success({
             message: localizedStrings.alertAppName,
-            description: 'Заказ принят!',
-          });
+            description: 'Заказ принят!'
+          })
         })
     } catch (error) {
       dispatch(setErrors(error))
       notification.error({
         message: localizedStrings.alertAppName,
-        description: 'Не удалось создать заказ!' + error.message,
-      });
+        description: 'Не удалось создать заказ!' + error.message
+      })
     }
   }
 }

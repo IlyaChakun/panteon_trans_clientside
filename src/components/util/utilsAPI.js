@@ -60,12 +60,12 @@ const request = (options, grantType) => {
       }
 
       if (response.status === 400 || response.status === 409 || response.status === 403 || response.status === 404) { // если совсем пиздец
-        console.log('throw exception: ' + response)
-        console.log('throw exception: ' + response.json())
+        console.log('throw exception: ', response)
+        console.log('throw exception: ', response.json())
 
-        console.log('response.code: ' + response.code)
-        console.log('response.error: ' + response.error)
-        console.log('response.errorDescription: ' + response.errorDescription)
+        console.log('response.code: '+ response.code)
+        console.log('response.error: '+ response.error)
+        console.log('response.errorDescription: '+ response.errorDescription)
 
         throw response
       }
