@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import DeleteOutlined from '@ant-design/icons/lib/icons/DeleteOutlined'
-import { InputNumber, notification, Popconfirm } from 'antd'
+import { Button, notification, Popconfirm } from 'antd'
 
 import ProductCard from '../product/ProductCard'
 import { localizedStrings } from '../util/localization'
@@ -11,20 +11,19 @@ import { productSelector } from '../../redux/reducers/ProductsSliceReducer'
 const CartProduct = (props) => {
 
   const { products } = useSelector(productSelector)
+  const [quantity, setQuantity] = useState(props.cartProduct.quantity)
 
-  const [quantity, setQuantity] = useState(props.productWithQuantity.quantity)
+  const onQuantityChange = (quantityValue) => {
+    if (quantityValue >= 1 && quantityValue <= 99) {
+      if (Number(quantityValue) !== 0) {
+        const productId = props.cartProduct.productId
+        const productLengthCostId = props.cartProduct.productLengthCostId
 
-  const updateProductCount = (quantity) => {
-    if (quantity >= 1 && quantity < 99) {
-      if (Number(quantity) !== 0) {
-        const productId = props.productWithQuantity.product.id
-        const productLengthCostId = props.productWithQuantity.productLengthCost.id
-
-        props.updateProductQuantity(productLengthCostId, quantity, productId)
+        props.updateProductQuantity(productLengthCostId, quantityValue, productId)
       }
-      setQuantity(quantity)
+      setQuantity(quantityValue)
     } else {
-      setQuantity(props.productWithQuantity.quantity)
+      setQuantity(props.cartProduct.quantity)
       notification.error({
         message: localizedStrings.alertAppName,
         description: 'Количество должно быть не менее 0 и не более 99'
@@ -32,15 +31,11 @@ const CartProduct = (props) => {
     }
   }
 
-  const customFormatter = (value) => {
-    return value < 1 || value > 99 ? quantity : value
-  }
-
-  const deleteAction = () => (
+  const deleteAction = (
     <div>
       <Popconfirm
         title='Вы уверены, что хотите удалить продукт из корзины?'
-        onConfirm={props.deleteProductFromBasket(props.productWithQuantity.product.id)}
+        onConfirm={props.deleteProductFromBasket(props.cartProduct.productId)}
         okText='Да'
         cancelText='Нет'>
         <DeleteOutlined style={{ fontSize: '25px' }} />
@@ -49,46 +44,18 @@ const CartProduct = (props) => {
   )
 
   const getProduct = () => {
-    return products.find(x => x.id === props.productWithQuantity.productId)
+    return products.find(x => x.id === props.cartProduct.productId)
   }
-
-
-  const getProductLengthCost = () => {
-    const productCost = getProduct().productLengthCost.find(x =>
-      x.id === props.productWithQuantity.productLengthCostId)
-    return productCost.cost
-  }
-
-  const countAction =()=> (
-    <div>
-      <InputNumber
-        key={'quantityPicker'}
-        defaultValue={quantity}
-        value={quantity}
-        type={'number'}
-        min={1}
-        max={getProduct().availableAmount}
-        formatter={customFormatter}
-        onChange={updateProductCount}
-      />
-
-      <span className='quantity-cost-text'>
-        Стоимость:
-        {Number(
-          props.productWithQuantity.quantity *
-          getProductLengthCost()
-        )}
-      </span>
-    </div>
-  )
 
   return (
     <ProductCard
       history={props.history}
-      key={props.productWithQuantity.productId}
+      key={props.cartProduct.productId}
       product={getProduct()}
+      quantity={quantity}
+      onQuantityChange={onQuantityChange}
       secondAction={deleteAction}
-      // thirdAction={countAction}
+      lengthId={props.cartProduct.productLengthCostId}
     />
   )
 

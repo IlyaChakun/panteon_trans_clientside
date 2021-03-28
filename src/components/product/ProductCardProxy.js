@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { isAdmin } from '../../app/App'
 import DeleteOutlined from '@ant-design/icons/lib/icons/DeleteOutlined'
@@ -15,23 +15,29 @@ const ProductCardProxy = ({ product, history, updateList }) => {
 
   const dispatch = useDispatch()
   const { currentUser } = useSelector(authSelector)
+  const [quantity, setQuantity] = useState(1)
+  const [lengthId, setLengthId] = useState(product.productLengthCost[0].id)
 
-  const addToBasket = (productState) => {
+  const onQuantityChange = (value) => {
+    setQuantity(value)
+  }
+
+  const onProductLengthChange = (value) => {
+    setLengthId(value)
+  }
+
+  const addToBasket = () => {
     const productToCart = {
       'clientId': currentUser.id,
       'productId': product.id,
-      'productLengthCostId': product.productLengthCost.find(x => x.id === productState.lengthId).id,
-      'quantity': productState.amount
+      'productLengthCostId': product.productLengthCost.find(x => x.id === lengthId).id,
+      'quantity': quantity
     }
-    console.log('currentUser', currentUser)
-    console.log('product', product)
     console.log('productToCart', productToCart)
-    console.log('productState', productState)
     dispatch(addToCart(productToCart))
   }
 
-
-  const editAction =()=> (
+  const editAction = (
     <div className={isAdmin(currentUser) ? '' : 'custom-hidden'}>
       <EditProductModal
         productId={product.id}
@@ -39,32 +45,30 @@ const ProductCardProxy = ({ product, history, updateList }) => {
       />
     </div>
   )
-  const deleteAction =()=> (
+
+  const deleteAction = (
     <div className={isAdmin(currentUser) ? '' : 'custom-hidden'}>
       <DeleteProductModal
         productId={product.id}
         button={
           <DeleteOutlined style={{ fontSize: '25px' }} />
         } />
-    </div>)
+    </div>
+  )
 
-  const buyAction = (productState) => (
+  const buyAction = (
     <Button className={isAdmin(currentUser) ? 'custom-hidden' : 'one-click-buy cart-buy'}
             style={{ color: 'white' }}
-            onClick={() => {
-              console.log('buyAction', productState)
-              addToBasket(productState)
-            }}
+            onClick={() => addToBasket()}
     >
       Добавить в корзину
     </Button>
   )
 
-  const oneClickAction = (productState) => (
+  const oneClickAction = (
     <Button className={isAdmin(currentUser) ? 'custom-hidden' : 'one-click-buy'}
             onClick={() => {
-              console.log('oneClickAction', productState)
-              addToBasket(productState)
+              addToBasket()
               history.push('/cart')
             }}
     >
@@ -76,10 +80,14 @@ const ProductCardProxy = ({ product, history, updateList }) => {
     <ProductCard
       key={product.id}
       product={product}
+      quantity={quantity}
+      onQuantityChange={onQuantityChange}
+      onProductLengthChange={onProductLengthChange}
       firstAction={editAction}
       secondAction={deleteAction}
       thirdAction={buyAction}
       oneClickAction={oneClickAction}
+      lengthId={lengthId}
     />
   )
 

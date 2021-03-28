@@ -155,7 +155,7 @@ const Cart = (props) => {
       <CartProduct
         history={props.history}
         key={cartProduct.productId}
-        productWithQuantity={cartProduct}
+        cartProduct={cartProduct}
         deleteProductFromBasket={deleteProductFromCart}
         updateProductQuantity={updateProductQuantity}
       />
