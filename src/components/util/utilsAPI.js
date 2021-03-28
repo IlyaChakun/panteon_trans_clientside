@@ -1,12 +1,12 @@
 import {
-  BASE_URL,
-  VALID_TOKEN_TYPE_VALUE,
-  ACCESS_TOKEN_HEADER_KEY,
-  REFRESH_TOKEN_HEADER_KEY,
-  GRANT_TYPE_HEADER_KEY,
-  TOKEN_TYPE_HEADER_KEY,
   ACCESS_TOKEN,
-  REFRESH_TOKEN
+  ACCESS_TOKEN_HEADER_KEY,
+  BASE_URL,
+  GRANT_TYPE_HEADER_KEY,
+  REFRESH_TOKEN,
+  REFRESH_TOKEN_HEADER_KEY,
+  TOKEN_TYPE_HEADER_KEY,
+  VALID_TOKEN_TYPE_VALUE
 } from '../../constants'
 
 /**
@@ -63,9 +63,9 @@ const request = (options, grantType) => {
         console.log('throw exception: ', response)
         console.log('throw exception: ', response.json())
 
-        console.log('response.code: '+ response.code)
-        console.log('response.error: '+ response.error)
-        console.log('response.errorDescription: '+ response.errorDescription)
+        console.log('response.code: ' + response.code)
+        console.log('response.error: ' + response.error)
+        console.log('response.errorDescription: ' + response.errorDescription)
 
         throw response
       }
@@ -389,3 +389,38 @@ export function createOrderRequest(orderRequest) {
     body: JSON.stringify(orderRequest)
   })
 }
+
+export function getAllFloristsRequest() {
+  return request({
+    url: BASE_URL + 'florists',
+    method: 'GET'
+  })
+}
+
+export function getFloristRequest(floristId) {
+  return request({
+    url: BASE_URL + 'florists' + floristId,
+    method: 'GET'
+  })
+}
+
+export function addFloristRequest(floristToAdd) {
+  const url = BASE_URL + 'florists'
+
+  return request({
+    url: url,
+    method: 'POST',
+    body: JSON.stringify(floristToAdd)
+  })
+}
+
+export function updateFloristRequest(floristToUpdate) {
+  const url = BASE_URL + 'florists' + floristToUpdate.id
+
+  return request({
+    url: url,
+    method: 'PUT',
+    body: JSON.stringify(floristToUpdate)
+  })
+}
+
