@@ -15,7 +15,7 @@ import { validateId } from '../product/ProductValidation'
 import LoadingIndicator from '../common/util/LoadingIndicator'
 
 const { TextArea } = Input
-const { Option, OptGroup } = Select
+const { Option } = Select
 
 const layout = {
   labelCol: {
@@ -50,6 +50,15 @@ const Cart = (props) => {
     dispatch(getCart(currentUser.id))
   }, [dispatch])
 
+  if (cart === null) {
+    return (
+      <>
+        Ваша корзина пуста, сначала добавьте продукты в корзину!
+      </>
+    )
+  }
+
+
   const isFormInvalid = () => {
     return !(
       comment.validateStatus === SUCCESS &&
@@ -65,15 +74,20 @@ const Cart = (props) => {
 
     cart.cartItems.forEach(cartItem => {
       orderProducts.push({
-        'productId': cartItem.id,
-        'quantity': cartItem.quantity
+        'productId': cartItem.productId,
+        'quantity': cartItem.quantity,
+        'productLengthCostId': cartItem.productLengthCostId
       })
     })
 
     const order = {
       '@type': 'UsualOrder',
+      'clientId': currentUser.id,
       'orderProducts': orderProducts,
       'comment': comment.value,
+      'orderPriceInfo': {
+        'totalAmount': cart.totalPrice
+      },
       'orderDeliveryInfo': {
         'address': address.value,
         'floorNumber': floorNumber.value,
@@ -84,23 +98,25 @@ const Cart = (props) => {
       }
     }
 
+    console.log('place order with order=', order)
     dispatch(placeOrder(order))
     props.history.push('/')
 
     console.log('order request:', order)
   }
 
-  const deleteProductFromCart = (productId) => {
+  const deleteProductFromCart = (productId, productLengthCostId) => {
     const productCart = {
-      'userId': currentUser.id,
-      'productId': productId
+      'clientId': currentUser.id,
+      'productId': productId,
+      'productLengthCostId': productLengthCostId
     }
     dispatch(deleteItemFromCart(productCart))
   }
 
   const updateProductQuantity = (productLengthCostId, quantity, productId) => {
     const cartItem = {
-      'userId': currentUser.id,
+      'clientId': currentUser.id,
       'productLengthCostId': productLengthCostId,
       'productId': productId,
       'quantity': quantity
@@ -183,7 +199,7 @@ const Cart = (props) => {
   }
 
   const deliveryOptions = () => {
-    if (delivery == 1) {
+    if (delivery === 1) {
       return (
         <Form.Item
           label='Пункт самовывоза'
@@ -206,8 +222,7 @@ const Cart = (props) => {
         </Form.Item>
       )
     }
-
-    if (delivery == 2) {
+    if (delivery === 2) {
       return (
         <>
           <Form.Item
@@ -289,6 +304,7 @@ const Cart = (props) => {
     }
   }
 
+
   return (
     <div className='pb-5'>
       <Row justify='center'>
@@ -360,6 +376,7 @@ const Cart = (props) => {
       </Row>
     </div>
   )
+
 }
 
 

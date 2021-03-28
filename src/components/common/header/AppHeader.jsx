@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { Avatar, Button, Col, Dropdown, Layout, Menu, Row } from 'antd'
 import { getAvatarColor } from '../../util/colors'

@@ -54,7 +54,7 @@ export const getCart = (userId) => {
       if (!promise) {
         return
       }
-      promise
+      await promise
         .then(response => {
           console.log('cart', response)
           dispatch(setLoading(true))
@@ -63,7 +63,12 @@ export const getCart = (userId) => {
         })
     } catch (error) {
       dispatch(setLoading(false))
-      dispatch(setErrors(error))
+      dispatch(setCart(null))
+
+      notification.error({
+        message: localizedStrings.alertAppName,
+        description: 'Ваша корзина пуста!'
+      })
     }
   }
 }
@@ -109,7 +114,7 @@ export const updateItemInCart = (cartItem) => {
       promise
         .then(response => {
           console.log('response in update from cart', response)
-          dispatch(getCart(cartItem.userId))
+          dispatch(getCart(cartItem.clientId))
         })
     } catch (error) {
       dispatch(setErrors(error))
