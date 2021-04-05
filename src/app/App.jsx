@@ -33,6 +33,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { authSelector, getCurrentUser, setCurrentUser, setIsAuthenticated } from '../redux/reducers/AuthSliceReducer'
 import { getCurrentCompany } from '../redux/reducers/CompanySliceReducer'
 import LoadingIndicator from '../components/common/util/LoadingIndicator'
+import FloristList from '../components/florist/FloristList'
 
 const { Content } = Layout
 
@@ -43,10 +44,9 @@ notification.config({
 })
 
 const App = (props) => {
-
   const dispatch = useDispatch()
 
-  let history = useHistory();
+  const history = useHistory()
 
   const {
     isLoading,
@@ -62,8 +62,8 @@ const App = (props) => {
   }, [dispatch])
 
   const handleLogout = (redirectTo = '/',
-                        notificationType = SUCCESS,
-                        description = localizedStrings.alertSuccessLogOut) => {
+    notificationType = SUCCESS,
+    description = localizedStrings.alertSuccessLogOut) => {
     localStorage.removeItem(ACCESS_TOKEN)
     localStorage.removeItem(REFRESH_TOKEN)
 
@@ -81,24 +81,23 @@ const App = (props) => {
   }
 
   const handleLogin = () => {
-
     dispatch(getCurrentUser())
     history.push('/profile')
   }
 
   if (isLoading) {
-    return <LoadingIndicator />
+    return <LoadingIndicator/>
   }
 
   if (localStorage.getItem(ACCESS_TOKEN) && currentUser === undefined) {
-    return <LoadingIndicator />
+    return <LoadingIndicator/>
   }
 
   return (
     <Layout className='app-wrapper'>
       <AppHeader isAuthenticated={isAuthenticated}
-                 currentUser={currentUser}
-                 handleLogout={handleLogout}
+        currentUser={currentUser}
+        handleLogout={handleLogout}
       />
 
       <Content className='app-content'>
@@ -106,7 +105,7 @@ const App = (props) => {
         <div className='mb-5'>
           <Row justify='center'>
             <Col span={22}>
-              <BreadCrumbComponent properties={props} />
+              <BreadCrumbComponent properties={props}/>
             </Col>
           </Row>
         </div>
@@ -114,113 +113,126 @@ const App = (props) => {
         <Switch>
 
           <Route exact path='/login'
-                 render={(props) =>
-                   <Login onLogin={handleLogin}
-                          {...props} />} />
+            render={(props) =>
+              <Login onLogin={handleLogin}
+                {...props} />}/>
 
           <Route path='/sign-up'
-                 render={(props) =>
-                   <SignUp
-                     isAuthenticated={isAuthenticated}
-                     {...props} />} />
+            render={(props) =>
+              <SignUp
+                isAuthenticated={isAuthenticated}
+                {...props} />}/>
 
           <Route path='/oauth2/redirect'
-                 render={(props) =>
-                   <OAuth2RedirectHandler onLogin={handleLogin}
-                                          {...props} />} />
+            render={(props) =>
+              <OAuth2RedirectHandler onLogin={handleLogin}
+                {...props} />}/>
 
           <PrivateRoute path='/profile'
-                        isAuthenticated={isAuthenticated}
-                        component={Profile}
-                        {...props} />
+            isAuthenticated={isAuthenticated}
+            component={Profile}
+            {...props} />
 
           <Route path='/orders/:id'
-                 currentUser={currentUser}
-                 component={OrderPage} />
+            currentUser={currentUser}
+            component={OrderPage}/>
 
           <PrivateRoute path='/cart'
-                        isAuthenticated={isAuthenticated}
-                        currentUser={currentUser}
-                        component={Cart}
-                        {...props} />
+            isAuthenticated={isAuthenticated}
+            currentUser={currentUser}
+            component={Cart}
+            {...props} />
 
           <Route exact path='/about/documents'
-                 render={(props) =>
-                   <DocumentsPage
-                     {...props} />} />
+            render={(props) =>
+              <DocumentsPage
+                {...props} />}/>
 
           <Route path='/company/shops/:id'
-                 render={(props) =>
-                   <ShopDetail
-                     currentUser={currentUser}
-                     currentCompany={currentCompany}
-                     {...props} />} />
+            render={(props) =>
+              <ShopDetail
+                currentUser={currentUser}
+                currentCompany={currentCompany}
+                {...props} />}/>
 
           <Route path='/company/shops'
-                 render={(props) =>
-                   <ShopsList
-                     currentUser={currentUser}
-                     currentCompany={currentCompany}
-                     {...props} />} />
+            render={(props) =>
+              <ShopsList
+                currentUser={currentUser}
+                currentCompany={currentCompany}
+                {...props} />}/>
 
           <Route path='/company'
-                 render={(props) =>
-                   <Company
-                     currentUser={currentUser}
-                     currentCompany={currentCompany}
-                     {...props} />} />
+            render={(props) =>
+              <Company
+                currentUser={currentUser}
+                currentCompany={currentCompany}
+                {...props} />}/>
 
           <Route exact path='/about/legal'
-                 render={(props) =>
-                   <LegalPage
-                     {...props} />} />
+            render={(props) =>
+              <LegalPage
+                {...props} />}/>
 
           <Route path='/company/about'
-                 render={(props) =>
-                   <AboutPage
-                     {...props} />} />
+            render={(props) =>
+              <AboutPage
+                {...props} />}/>
 
           <PrivateAdminRoute path='/company'
-                             isAuthenticated={isAuthenticated}
-                             currentUser={currentUser}
-                             currentCompany={currentCompany}
-                             component={Company} />
+            isAuthenticated={isAuthenticated}
+            currentUser={currentUser}
+            currentCompany={currentCompany}
+            component={Company}/>
 
           <Route exact path='/about/help'
-                 render={(props) =>
-                   <HelpPage
-                     {...props} />} />
+            render={(props) =>
+              <HelpPage
+                {...props} />}/>
 
           <Route path='/products'
-                 render={(props) =>
-                   <ProductList {...props} />} />
+            render={(props) =>
+              <ProductList {...props} />}/>
+
+          <PrivateAdminRoute path='/florists'
+            isAuthenticated={isAuthenticated}
+            currentUser={currentUser}
+            currentCompany={currentCompany}
+            component={FloristList}/>
 
           <Route path='/reviews'
-                 render={(props) =>
-                   <ReviewsList
-                     currentUser={currentUser}
-                     {...props} />} />
+            render={(props) =>
+              <ReviewsList
+                currentUser={currentUser}
+                {...props} />}/>
 
-          <Route path='/' component={Home} />
+          <Route path='/' component={Home}/>
 
-          <Route component={NotFound} />
+          <Route component={NotFound}/>
 
         </Switch>
       </Content>
-      <AppFooter />
+      <AppFooter/>
     </Layout>
   )
 }
 
-export function isAdmin(currentUser) {
-  if (currentUser !== null && currentUser !== undefined && currentUser.roles !== undefined) {
-    const role = currentUser.roles.find(elem => elem.name === ROLE_ADMIN)
-    return role === undefined ? false : role.name === ROLE_ADMIN
+export function isAdmin (currentUser) {
+  // if (currentUser !== null && currentUser !== undefined && currentUser.roles !== undefined) {
+  //   const role = currentUser.roles.find(elem => elem.name === ROLE_ADMIN)
+  //   return role === undefined ? false : role.name === ROLE_ADMIN
+  // }
+  if (currentUser !== null &&
+    currentUser !== undefined &&
+    currentUser.userType !== undefined &&
+    currentUser.userType === 'ROLE_ADMIN') {
+    return true
+  } else {
+    return false
   }
-  return false
 }
 
-export function isUser(currentUser) {
+export function isUser (currentUser) {
   if (currentUser !== null && currentUser !== undefined && currentUser.roles !== undefined) {
     const role = currentUser.roles.find(elem => elem.name === ROLE_USER)
     return role === undefined ? false : role.name === ROLE_USER

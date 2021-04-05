@@ -18,11 +18,9 @@ const OrderList = (props) => {
     totalElements
   } = useSelector(orderSelector)
 
-
   useEffect(() => {
     updateList()
   }, [dispatch])
-
 
   const updateList = () => {
     loadList(page, size)
@@ -52,31 +50,28 @@ const OrderList = (props) => {
     loadList(page + 1, size)
   }
 
-
   if (loading === true) {
     return <LoadingIndicator/>
   }
 
   const ordersList = orders.map(order => (
-        <OrderDetail
-          key={order.id}
-          order={order}
-        />
-      )
-    )
+    <OrderDetail
+      key={order.id}
+      order={order}
+    />)
+  )
 
   return (
     <>
 
       <Tabs defaultActiveKey='1' centered>
         <TabPane tab='Активные заказы' key='1'>
-          Content of Tab Pane 1
+          Активные заказы
         </TabPane>
         <TabPane tab='Завершенные заказы' key='2'>
-          Content of Tab Pane 2
+          Завершенные заказы
         </TabPane>
       </Tabs>
-
 
       <List
         grid={{

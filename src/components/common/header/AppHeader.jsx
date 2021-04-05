@@ -16,7 +16,6 @@ import ShoppingCartOutlined from '@ant-design/icons/lib/icons/ShoppingCartOutlin
 const Header = Layout.Header
 
 const AppHeader = (props) => {
-
   const handleMenuClick = ({ key }) => {
     if (key === 'logout') {
       props.handleLogout()
@@ -45,7 +44,6 @@ const AppHeader = (props) => {
   }
 
   const makeMenuForGuest = () => {
-
     return [
       <Menu.Item key='/sign-up'>
         <Link to='/sign-up'>
@@ -61,9 +59,7 @@ const AppHeader = (props) => {
     ]
   }
 
-
   const makeMenuForShopAdmin = () => {
-
     return [
       <Menu.Item key='/company' className=''>
         <Link to='/company'>
@@ -77,6 +73,12 @@ const AppHeader = (props) => {
         </Link>
       </Menu.Item>,
 
+      <Menu.Item key='/florists' className=''>
+        <Link to='/florists'>
+          Флористы
+        </Link>
+      </Menu.Item>,
+
       <Menu.Item key='#' className='report-menu'>
         <ReportsDropdownMenu
           currentUser={props.currentUser}
@@ -85,7 +87,7 @@ const AppHeader = (props) => {
       </Menu.Item>,
 
       <Menu.Item key='/profile'
-                 className='profile-menu'>
+        className='profile-menu'>
         <ProfileDropdownMenu
           currentUser={props.currentUser}
           handleMenuClick={handleMenuClick}
@@ -111,10 +113,10 @@ const AppHeader = (props) => {
       <Row justify='center'>
         <Col span={8}>
           <img alt='logo'
-               width='50%'
-               height='35%'
-               className='img-fluid'
-               src='https://atlanticcityflorist.com/wp-content/uploads/2019/10/logoacfstransparentbg.png' />
+            width='50%'
+            height='35%'
+            className='img-fluid'
+            src='https://atlanticcityflorist.com/wp-content/uploads/2019/10/logoacfstransparentbg.png' />
         </Col>
       </Row>
 
@@ -150,24 +152,24 @@ const AppHeader = (props) => {
   )
 }
 
-function ProfileDropdownMenu(props) {
+function ProfileDropdownMenu (props) {
   const image = props.currentUser.imageUrl ? (
     <img src={props.currentUser.imageUrl} alt={props.currentUser.name} />
   ) : (
     <div className='text-avatar'>
-      {/*<span>{props.currentUser.name && props.currentUser.name[0]}</span>*/}
+      {/* <span>{props.currentUser.name && props.currentUser.name[0]}</span> */}
     </div>
   )
 
   const dropdownMenu = (
     <Menu onClick={props.handleMenuClick} className='profile-dropdown-menu'>
       <Menu.Item key='user-info'
-                 className='dropdown-item'
-                 disabled>
+        className='dropdown-item'
+        disabled>
         <Avatar className='user-avatar-circle'
-                icon={image}
-                style={{ backgroundColor: getAvatarColor(props.currentUser.name) }}>
-          {/*{props.currentUser.name[0].toUpperCase()}*/}
+          icon={image}
+          style={{ backgroundColor: getAvatarColor(props.currentUser.name) }}>
+          {/* {props.currentUser.name[0].toUpperCase()} */}
         </Avatar>
         <div className='user-full-name-info'>
           {props.currentUser.name}
@@ -183,7 +185,6 @@ function ProfileDropdownMenu(props) {
     </Menu>
   )
 
-
   return (
     <Dropdown
       overlay={dropdownMenu}
@@ -198,40 +199,39 @@ function ProfileDropdownMenu(props) {
   )
 }
 
-function ReportsDropdownMenu(props) {
-
+function ReportsDropdownMenu (props) {
   const dropdownMenu = (
     <Menu onClick={props.handleMenuClick} className='report-dropdown-menu'>
       <Menu.Item key='about'
-                 className='dropdown-item'
-                 disabled>
+        className='dropdown-item'
+        disabled>
         <div className=''>
           Отчеты
         </div>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key='companyReport' className='dropdown-item'>
-        {/*<Link to="/users/admin/company-presentation/pdf"  target="_blank">*/}
-        {/*    Презентация компании*/}
-        {/*</Link>*/}
+        {/* <Link to="/users/admin/company-presentation/pdf"  target="_blank"> */}
+        {/*    Презентация компании */}
+        {/* </Link> */}
 
         <Button type='link' href='/users/admin/company-presentation/pdf' target='_top'>
           Презентация компании
         </Button>
       </Menu.Item>
       <Menu.Item key='yearSaleReport' className='dropdown-item'>
-        {/*<Link to="/yearSaleReport" target="_self">*/}
-        {/*    Отчет продаж годовой*/}
-        {/*</Link>*/}
+        {/* <Link to="/yearSaleReport" target="_self"> */}
+        {/*    Отчет продаж годовой */}
+        {/* </Link> */}
 
         <Button type='link' href='/users/admin/company-annual-report/pdf' target='_top'>
           Отчет продаж годовой
         </Button>
       </Menu.Item>
       <Menu.Item key='monthSaleReport' className='dropdown-item'>
-        {/*<Link to="/monthSaleReport" target="_self">*/}
-        {/*    Отчет продаж за текущий месяц*/}
-        {/*</Link>*/}
+        {/* <Link to="/monthSaleReport" target="_self"> */}
+        {/*    Отчет продаж за текущий месяц */}
+        {/* </Link> */}
 
         <Button type='link' href='/users/admin/company-monthly-report/pdf' target='_top'>
           Отчет продаж годовой
@@ -239,7 +239,6 @@ function ReportsDropdownMenu(props) {
       </Menu.Item>
     </Menu>
   )
-
 
   return (
     <Dropdown

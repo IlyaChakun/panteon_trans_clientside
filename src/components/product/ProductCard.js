@@ -5,7 +5,6 @@ import './ProductCard.css'
 const { Meta } = Card
 
 const ProductCard = (props) => {
-
   const onRadioChange = (e) => {
     props.onProductLengthChange(e.target.value)
   }
@@ -25,16 +24,17 @@ const ProductCard = (props) => {
       style={{ border: '1px solid grey', padding: '2px' }}
       bodyStyle={{ padding: '10px' }}
       hoverable
-      cover={<img alt={props.product.title} src={props.product.image.imageUrl} />}
+      cover={<img alt={props.product.title}
+        src={props.product.image === null ? '' : props.product.image.imageUrl}/>}
       actions={[
         props.firstAction,
-        props.secondAction,
+        props.secondAction
       ]}
       extra={
         <Radio.Group className='radio-group' onChange={onRadioChange} value={props.lengthId}>
           {props.product.productLengthCost.map(lengthcost => (
             <Radio style={radioStyle} key={lengthcost.id} value={lengthcost.id}
-                   checked={lengthcost.id === props.lengthId}
+              checked={lengthcost.id === props.lengthId}
             >
               {lengthcost.stemLength + 'см'}
             </Radio>
@@ -64,7 +64,7 @@ const ProductCard = (props) => {
                   <Col span={12}>{priceById} BYN</Col>
                 </Row>
                 <Row className='product-rating'>
-                  <Rate disabled defaultValue={2} />
+                  <Rate disabled defaultValue={2}/>
                 </Row>
                 <Row className='product-title'>
                   {props.product.title}

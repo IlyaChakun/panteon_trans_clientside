@@ -6,13 +6,21 @@ import {
   getAllFloristsRequest, getFloristRequest,
   updateProductInCartRequest
 } from '../../components/util/utilsAPI'
+import { setOrders } from './OrdersSliceReducer'
 
 const initialState = {
 
   loading: false,
   errors: '',
 
-  florists: []
+  florists: [],
+
+  page: 1,
+  size: 6,
+  pagesCount: 0,
+  totalPages: 0,
+  totalElements: 0
+
 }
 const floristsSlice = createSlice({
   name: 'florists',
@@ -26,13 +34,31 @@ const floristsSlice = createSlice({
     },
     setFlorists: (state, action) => {
       state.florists = action.payload
+    },
+
+    setTotalPages: (state, action) => {
+      state.totalPages = action.payload
+    },
+    setTotalElements: (state, action) => {
+      state.totalElements = action.payload
+    },
+    setPage: (state, action) => {
+      state.page = action.payload
+    },
+    setSize: (state, action) => {
+      state.size = action.payload
     }
   }
 })
 export const {
   setLoading,
   setErrors,
-  setFlorists
+  setFlorists,
+
+  setTotalPages,
+  setTotalElements,
+  setPage,
+  setSize
 } = floristsSlice.actions
 
 export default floristsSlice.reducer
@@ -41,11 +67,11 @@ export const floristsSelector = (state) => {
   return state.floristsState
 }
 
-export const getFlorists = () => {
+export const getFlorists = (searchCriteria) => {
   return async dispatch => {
     try {
       console.log('start getting all florists ')
-      const promise = getAllFloristsRequest()
+      const promise = getAllFloristsRequest(searchCriteria)
       if (!promise) {
         return
       }
@@ -53,7 +79,9 @@ export const getFlorists = () => {
         .then(response => {
           console.log('all florists', response)
           dispatch(setLoading(true))
-          dispatch(setFlorists(response))
+          dispatch(setFlorists(response.objects))
+          dispatch(setTotalPages(response.totalPages))
+          dispatch(setTotalElements(response.totalElements))
           dispatch(setLoading(false))
         })
     } catch (error) {
@@ -62,7 +90,6 @@ export const getFlorists = () => {
     }
   }
 }
-
 
 export const addFlorist = (floristToAdd) => {
   return async dispatch => {
