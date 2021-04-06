@@ -104,18 +104,12 @@ export const addToCart = (cartItem) => {
 }
 
 export const updateItemInCart = (cartItem) => {
-  return async dispatch => {
+  return async (dispatch) => {
     try {
-      const promise = updateProductInCartRequest(cartItem)
-
-      if (!promise) {
-        return
-      }
-      promise
-        .then(response => {
-          console.log('response in update from cart', response)
-          dispatch(getCart(cartItem.clientId))
-        })
+      // dispatch(setLoading(true))
+      const promise = await updateProductInCartRequest(cartItem)
+      console.log('response in update from cart', promise)
+      dispatch(getCart(cartItem.clientId))
     } catch (error) {
       dispatch(setErrors(error))
       notification.error({

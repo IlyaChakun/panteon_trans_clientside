@@ -74,7 +74,7 @@ const ProductForm = (props) => {
 
     console.log('Received values of form:', values)
 
-    const flowerRequest = {
+    const productRequest = {
       'id': id,
       'categoryId': category.id,
       'countryId': country.id,
@@ -84,10 +84,9 @@ const ProductForm = (props) => {
       'productLengthCost': values.productLengthCostList,
       'image': imageUrl
     }
+    console.log('productRequest: ', productRequest)
 
-    console.log('flowerRequest request: ', flowerRequest)
-
-    props.handleSubmitButton(flowerRequest)
+    props.handleSubmitButton(productRequest)
   }
 
   const handleAmountChange = (event) => {

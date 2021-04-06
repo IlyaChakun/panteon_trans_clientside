@@ -12,7 +12,7 @@ const AppFooter = () => {
 
   const { currentCompany, isLoading } = useSelector(companySelector)
 
-  if (!currentCompany || isLoading.payload) {
+  if (!currentCompany || isLoading) {
     return <LoadingIndicator />
   }
 
