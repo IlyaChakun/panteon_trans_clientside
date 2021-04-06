@@ -253,8 +253,8 @@ export function deleteProductRequest (flowerId) {
 }
 
 export function getProductsRequest (searchCriteria) {
-  const page = 'page=' + Number(searchCriteria.page === undefined ? 1 : searchCriteria.page)
-  const size = '&size=' + Number(searchCriteria.size === undefined ? 10 : searchCriteria.size)
+  const page = 'page=' + Number((searchCriteria === undefined || searchCriteria.page === undefined) ? 1 : searchCriteria.page)
+  const size = '&size=' + Number((searchCriteria === undefined || searchCriteria.size === undefined) ? 10 : searchCriteria.size)
 
   const url = BASE_URL + 'products?' + page + size
 

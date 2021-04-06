@@ -43,7 +43,7 @@ export const saveProduct = (productRequest) => {
   return async dispatch => {
     const response = await saveProductRequest(productRequest)
 
-    if (response.status === true) {
+    if (response.success === true) {
       notification.success({
         message: localizedStrings.alertAppName,
         description: response.message
@@ -274,44 +274,25 @@ export const deleteProduct = (productId) => {
 
 export const updateProduct = (productId, product) => {
   return async dispatch => {
-    try {
+
       console.log('updateProduct', product)
       console.log('productId= ' + JSON.stringify(productId))
       console.log('product ' + JSON.stringify(product))
 
-      const promise = updateProductRequest(productId, product)
+      const updatedProduct =  await updateProductRequest(productId, product)
 
-      if (!promise) {
-        return
-      }
-      promise
-        .then(response => {
+      if (updatedProduct){
           notification.success({
             message: localizedStrings.alertAppName,
             description: 'Успешное обновление!'
           })
-          // window.location.href = '/products'
-          dispatch(setUpdatedProduct(response))
-        })
-    } catch (error) {
-      dispatch(setErrors(error))
-    }
-
-
-    // const updatedProduct = await updateProductRequest(productId, product)
-    //
-    // if (updatedProduct) {
-    //   notification.success({
-    //     message: localizedStrings.alertAppName,
-    //     description: 'Успешное обновление!'
-    //   })
-    //   dispatch(updateProduct(updatedProduct))
-    // } else {
-    //   notification.success({
-    //     message: localizedStrings.alertAppName,
-    //     description: 'Что-то пошло не так при обновлении!'
-    //   })
-    // }
-
+          window.location.href = '/products'
+          dispatch(setUpdatedProduct(updatedProduct))
+        }else{
+          notification.success({
+            message: localizedStrings.alertAppName,
+            description: 'Что-то пошло не так при обновлении!'
+          })
+      }
   }
 }
