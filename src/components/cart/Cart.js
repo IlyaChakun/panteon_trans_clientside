@@ -10,9 +10,9 @@ import { cartSelector, deleteItemFromCart, getCart, updateItemInCart } from '../
 import { authSelector } from '../../redux/reducers/AuthSliceReducer'
 import { validateEntranceNumber, validateFlourNumber } from './CartValidation'
 import { placeOrder } from '../../redux/reducers/OrdersSliceReducer'
-import { productSelector } from '../../redux/reducers/ProductsSliceReducer'
 import { validateId } from '../product/ProductValidation'
 import LoadingIndicator from '../common/util/LoadingIndicator'
+import { shopSelector } from '../../redux/reducers/ShopsSliceReducer'
 
 const { TextArea } = Input
 const { Option } = Select
@@ -31,11 +31,11 @@ const Cart = (props) => {
   const dispatch = useDispatch()
   const { loading, cart } = useSelector(cartSelector)
   const { currentUser } = useSelector(authSelector)
-  const { shops } = useSelector(productSelector)
+  const { shops } = useSelector(shopSelector)
 
   const [shop, setShop] = useState({
-    id: shops.objects[0].id,
-    value: shops.objects.find(x => x.id === shops.objects[0].id),
+    id: shops[0].id,
+    value: shops.find(x => x.id === shops[0].id),
     validateStatus: props.validateStatus
   })
   const [comment, setComment] = useState({ value: '', validateStatus: '' })
@@ -178,7 +178,7 @@ const Cart = (props) => {
     )
   })
 
-  const shopOptions = shops.objects.map(
+  const shopOptions = shops.map(
     element =>
       <Option key={`${element.id}-${element.contacts.address}`} value={element.id}>
         {element.contacts.address}
