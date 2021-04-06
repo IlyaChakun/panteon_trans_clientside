@@ -6,7 +6,6 @@ import ProductCardProxy from './ProductCardProxy'
 
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  fetchShops,
   getProducts,
   productSelector,
   setPage,
@@ -25,10 +24,6 @@ const ProductList = (props) => {
     size,
     totalElements
   } = useSelector(productSelector)   // селектор вытягивает все поля из конкретного стора
-
-  useEffect(() => {
-    dispatch(fetchShops())
-  }, [dispatch])
 
   useEffect(() => {
     loadList()

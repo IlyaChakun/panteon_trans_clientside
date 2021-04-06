@@ -35,6 +35,7 @@ import { getCurrentCompany } from '../redux/reducers/CompanySliceReducer'
 import LoadingIndicator from '../components/common/util/LoadingIndicator'
 import FloristList from '../components/florist/FloristList'
 import AdminOrderList from '../components/order/AdminOrderList'
+import { fetchShops } from '../redux/reducers/ShopsSliceReducer'
 
 const { Content } = Layout
 
@@ -60,6 +61,7 @@ const App = (props) => {
   useEffect(() => {
     dispatch(getCurrentUser())
     dispatch(getCurrentCompany())
+    dispatch(fetchShops())
   }, [dispatch])
 
   const handleLogout = (redirectTo = '/',

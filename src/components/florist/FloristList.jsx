@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import LoadingIndicator from '../common/util/LoadingIndicator'
 import { floristsSelector, getFlorists, setPage, setSize } from '../../redux/reducers/FloristSliceReducer'
-import AddProductModal from '../product/AddProductModal'
 import AddFloristModal from './AddFloristModal'
 
 const FloristList = () => {

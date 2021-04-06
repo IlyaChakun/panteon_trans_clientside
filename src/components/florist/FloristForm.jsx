@@ -11,8 +11,8 @@ import LockOutlined from '@ant-design/icons/lib/icons/LockOutlined'
 import { validateExperience, validateSalary } from './FloristValidation'
 import ImageLoader from '../common/image/ImageLoader'
 import { useSelector } from 'react-redux'
-import { productSelector } from '../../redux/reducers/ProductsSliceReducer'
 import { validateId } from '../product/ProductValidation'
+import { shopSelector } from '../../redux/reducers/ShopsSliceReducer'
 
 const { Option } = Select
 
@@ -34,11 +34,11 @@ const FloristForm = (props) => {
   const [password, setPassword] = useState({ value: props.florist.user.password, validateStatus: props.validateStatus })
   const [imageUrl, setImageUrl] = useState(props.florist.user.image === undefined ? '' : props.florist.user.image.imageUrl)
 
-  const { shops } = useSelector(productSelector)
+  const { shops } = useSelector(shopSelector)
 
   const [shop, setShop] = useState({
-    id: shops.objects[0].id,
-    value: shops.objects.find(x => x.id === shops.objects[0].id),
+    id: shops[0].id,
+    value: shops.find(x => x.id === shops[0].id),
     validateStatus: props.validateStatus
   })
 
@@ -73,7 +73,7 @@ const FloristForm = (props) => {
       },
       experience: experience.value,
       salary: salary.value,
-      shopId: 1
+      shopId: shop.id
     }
 
     console.log('floristRequest request: ', floristRequest)
@@ -124,7 +124,7 @@ const FloristForm = (props) => {
     })
   }
 
-  const shopOptions = shops.objects.map(
+  const shopOptions = shops.map(
     element =>
       <Option key={`${element.id}-${element.contacts.address}`} value={element.id}>
         {element.contacts.address}
@@ -149,10 +149,10 @@ const FloristForm = (props) => {
         <Col span={24}>
           <Row>
             <Col span={10}>
-                <ImageLoader
-                  imageUrl={imageUrl}
-                  handleImageUrlChange={handleImageUrlChange}
-                />
+              <ImageLoader
+                imageUrl={imageUrl}
+                handleImageUrlChange={handleImageUrlChange}
+              />
             </Col>
 
             <Col span={14}>

@@ -6,7 +6,6 @@ import {
   getAllFloristsRequest, getFloristRequest,
   updateProductInCartRequest
 } from '../../components/util/utilsAPI'
-import { setOrders } from './OrdersSliceReducer'
 
 const initialState = {
 

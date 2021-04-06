@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
   deleteProductRequest,
-  getAllShops,
   getCategoriesRequest,
   getCountriesRequest,
   getProductLengthsRequest,
@@ -31,13 +30,6 @@ export const fetchCategories = createAsyncThunk(
   async () => {
     return await getCategoriesRequest()
   })
-
-export const fetchShops = createAsyncThunk(
-  'products/fetchShops',
-  async () => {
-    return await getAllShops()
-  })
-
 
 export const saveProduct = (productRequest) => {
   return async dispatch => {
@@ -84,11 +76,7 @@ const productSlice = createSlice({
     countriesLoading: 'idle',
 
     productLengths: [],
-    productLengthsLoading: 'idle',
-
-    shops: [],
-    shopsLoading: 'idle'
-
+    productLengthsLoading: 'idle'
   },
   reducers: {
     setLoading: (state, action) => {
@@ -117,22 +105,6 @@ const productSlice = createSlice({
     }
   },
   extraReducers: {
-    [fetchShops.pending]: (state, action) => {
-      state.shopsLoading = 'loading'
-    },
-    [fetchShops.fulfilled]: (state, action) => {
-      state.shopsLoading = 'fulfilled'
-      // Add any fetched posts to the array
-      state.shops = {
-        objects: action.payload.objects,
-        totalElements: action.payload.totalElements,
-        totalPages: action.payload.totalPages
-      }
-    },
-    [fetchShops.rejected]: (state, action) => {
-      state.shopsLoading = 'rejected'
-      state.errors = action.errors
-    },
     [fetchCountries.pending]: (state, action) => {
       state.countriesLoading = 'loading'
     },
@@ -275,24 +247,24 @@ export const deleteProduct = (productId) => {
 export const updateProduct = (productId, product) => {
   return async dispatch => {
 
-      console.log('updateProduct', product)
-      console.log('productId= ' + JSON.stringify(productId))
-      console.log('product ' + JSON.stringify(product))
+    console.log('updateProduct', product)
+    console.log('productId= ' + JSON.stringify(productId))
+    console.log('product ' + JSON.stringify(product))
 
-      const updatedProduct =  await updateProductRequest(productId, product)
+    const updatedProduct = await updateProductRequest(productId, product)
 
-      if (updatedProduct){
-          notification.success({
-            message: localizedStrings.alertAppName,
-            description: 'Успешное обновление!'
-          })
-          window.location.href = '/products'
-          dispatch(setUpdatedProduct(updatedProduct))
-        }else{
-          notification.success({
-            message: localizedStrings.alertAppName,
-            description: 'Что-то пошло не так при обновлении!'
-          })
-      }
+    if (updatedProduct) {
+      notification.success({
+        message: localizedStrings.alertAppName,
+        description: 'Успешное обновление!'
+      })
+      window.location.href = '/products'
+      dispatch(setUpdatedProduct(updatedProduct))
+    } else {
+      notification.success({
+        message: localizedStrings.alertAppName,
+        description: 'Что-то пошло не так при обновлении!'
+      })
+    }
   }
 }
