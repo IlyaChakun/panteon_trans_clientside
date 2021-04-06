@@ -135,23 +135,23 @@ const AppFooter = () => {
         <Row>
           <Col span={24}>
             <div className='social-block'>
-              <ul className='list-group list-group-horizontal justify-content-center pb-2'>
-                <li className='vk'>
+              <ul className='list-group list-group-horizontal justify-content-center'>
+                <li class='list-group-item vk'>
                   <a href='#' target='_blank' rel='nofollow' title='Вконтакте'>
                     <i className='fa fa-vk' aria-hidden='true'></i>
                   </a>
                 </li>
-                <li className='facebook'>
+                <li class='list-group-item facebook'>
                   <a href='#' target='_blank' rel='nofollow' title='Facebook'>
                     <i className='fa fa-facebook'></i>
                   </a>
                 </li>
-                <li className='instagram'>
+                <li class='list-group-item instagram'>
                   <a href='#' target='_blank' rel='nofollow' title='Instagram'>
                     <i className='fa fa-instagram' aria-hidden='true'></i>
                   </a>
                 </li>
-                <li className='telegram'>
+                <li class='list-group-item telegram'>
                   <a href='#' target='_blank' rel='nofollow' title='Telegram'>
                     <i className='fa fa-telegram' aria-hidden='true'></i>
                   </a>
