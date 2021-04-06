@@ -12,36 +12,35 @@ import OrderList from '../../order/OrderList'
 import LoadingIndicator from '../../common/util/LoadingIndicator'
 import { useDispatch, useSelector } from 'react-redux'
 import { authSelector, updateUserProfile } from '../../../redux/reducers/AuthSliceReducer'
-
+import { isAdmin } from '../../../app/App'
 
 const Profile = (props) => {
-
   const { TabPane } = Tabs
 
   const layout = {
-    'labelCol': { 'span': 9 },
-    'wrapperCol': { 'span': 15 }
+    labelCol: { span: 9 },
+    wrapperCol: { span: 15 }
   }
 
   const dispatch = useDispatch()
   const { currentUser } = useSelector(authSelector)
 
-  const [name, setName] = useState({ 'value': currentUser.name, 'validateStatus': SUCCESS, 'errorMsg': null })
-  const email = { 'value': currentUser.email, 'validateStatus': SUCCESS }
+  const [name, setName] = useState({ value: currentUser.name, validateStatus: SUCCESS, errorMsg: null })
+  const email = { value: currentUser.email, validateStatus: SUCCESS }
   const [phoneNumber, setPhoneNumber] = useState({
-    'value': currentUser.phoneNumber,
-    'validateStatus': SUCCESS,
-    'errorMsg': null
+    value: currentUser.phoneNumber,
+    validateStatus: SUCCESS,
+    errorMsg: null
   })
   const [imageUrl, setImageUrl] = useState(currentUser.image === undefined ? '' : currentUser.image.imageUrl)
 
   const handleSubmit = () => {
     const updateUserRequest = {
-      'id': currentUser.id,
-      'name': name.value,
-      'phoneNumber': phoneNumber.value,
-      'image': {
-        'imageUrl': imageUrl
+      id: currentUser.id,
+      name: name.value,
+      phoneNumber: phoneNumber.value,
+      image: {
+        imageUrl: imageUrl
       }
     }
 
@@ -51,14 +50,13 @@ const Profile = (props) => {
     props.history.push('/profile')
   }
 
-
   const handleNameChange = (event, validationFun) => {
-    setName({ 'value': event.target.value, ...validationFun(event.target.value) })
+    setName({ value: event.target.value, ...validationFun(event.target.value) })
   }
 
   const handlePhoneChange = (event, validationFun) => {
     setPhoneNumber({
-      'value': event.target.value,
+      value: event.target.value,
       ...validationFun(event.target.value)
     })
   }
@@ -75,8 +73,8 @@ const Profile = (props) => {
     setImageUrl(imageUrl)
   }
 
-  const loadingIndicatorOrReadyOrderListForm = currentUser === null ?
-    (
+  const loadingIndicatorOrReadyOrderListForm = currentUser === null
+    ? (
       <LoadingIndicator />
     ) : (
       <OrderList currentUser={currentUser} />
@@ -88,7 +86,7 @@ const Profile = (props) => {
         <TabPane tab='Личный кабинет' key='1'>
           <div className='col-sm-12 mb-5'>
             <Form {...layout}
-                  onFinish={handleSubmit} className={s.form}>
+              onFinish={handleSubmit} className={s.form}>
 
               <div className='row mb-5'>
                 <div className='col-sm-6'>
@@ -107,8 +105,8 @@ const Profile = (props) => {
                     help={name.errorMsg}
                     rules={[
                       {
-                        'required': true,
-                        'message': 'Пожалуйста, введите ваше имя!'
+                        required: true,
+                        message: 'Пожалуйста, введите ваше имя!'
                       }
                     ]}
                   >
@@ -143,8 +141,8 @@ const Profile = (props) => {
                     help={phoneNumber.errorMsg}
                     rules={[
                       {
-                        'required': true,
-                        'message': 'Пожалуйста, введите ваш телефон!'
+                        required: true,
+                        message: 'Пожалуйста, введите ваш телефон!'
                       }
                     ]}
                   >
@@ -164,7 +162,7 @@ const Profile = (props) => {
                     <Button
                       htmlType='submit'
                       type='primary'
-                      style={{ 'background': 'black', 'color': 'white' }}
+                      style={{ background: 'black', color: 'white' }}
                       shape='round'
                       disabled={isFormInvalid()}
                     >
@@ -179,9 +177,12 @@ const Profile = (props) => {
             </Form>
           </div>
         </TabPane>
-        <TabPane tab='Ваши заказы' key='2'>
-          {loadingIndicatorOrReadyOrderListForm}
-        </TabPane>
+        {!isAdmin(currentUser) ? (
+          <TabPane tab='Ваши заказы' key='2'>
+            {loadingIndicatorOrReadyOrderListForm}
+          </TabPane>
+        ) : ''}
+
       </Tabs>
     </div>
   )

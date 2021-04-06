@@ -81,7 +81,7 @@ const Cart = (props) => {
     })
 
     const order = {
-      '@type': 'UsualOrder',
+
       'clientId': currentUser.id,
       'orderProducts': orderProducts,
       'comment': comment.value,

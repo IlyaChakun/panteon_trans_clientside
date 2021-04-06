@@ -344,12 +344,20 @@ export function deleteProductFromCartRequest (productCartRequest) {
   })
 }
 
-export function getClientOrders (searchCriteria) {
+export function getAllOrders (searchCriteria) {
   const page = 'page=' + Number(searchCriteria.page === 0 ? searchCriteria.page : searchCriteria.page)
   const size = '&size=' + Number(searchCriteria.size)
-  const clientId = '&clientId=' + Number(searchCriteria.clientId)
 
-  const url = BASE_URL + 'orders?' + page + size + clientId
+  let clientId = ''
+  if (searchCriteria.clientId !== null && searchCriteria.clientId !== undefined) {
+    clientId = '&clientId=' + Number(searchCriteria.clientId)
+  }
+  const orderStatus = '&orderStatus=' + searchCriteria.orderStatus
+
+  let url = BASE_URL + 'orders?' + page + size + orderStatus
+  if (clientId !== '') {
+    url += clientId
+  }
 
   return request({
     url: url,

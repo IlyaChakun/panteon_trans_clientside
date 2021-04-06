@@ -30,7 +30,7 @@ const AppHeader = (props) => {
       <Menu.Item key='/cart'>
         <Link
           to={'/cart'}>
-          <ShoppingCartOutlined style={{ fontSize: '20px' }} />
+          <ShoppingCartOutlined style={{ fontSize: '20px' }}/>
         </Link>
       </Menu.Item>,
 
@@ -47,13 +47,13 @@ const AppHeader = (props) => {
     return [
       <Menu.Item key='/sign-up'>
         <Link to='/sign-up'>
-          <UserAddOutlined style={{ fontSize: '20px' }} />
+          <UserAddOutlined style={{ fontSize: '20px' }}/>
         </Link>
       </Menu.Item>,
 
       <Menu.Item key='/login'>
         <Link to='/login'>
-          <LoginOutlined style={{ fontSize: '20px' }} />
+          <LoginOutlined style={{ fontSize: '20px' }}/>
         </Link>
       </Menu.Item>
     ]
@@ -79,6 +79,12 @@ const AppHeader = (props) => {
         </Link>
       </Menu.Item>,
 
+      <Menu.Item key='/store-orders' className=''>
+        <Link to='/store-orders'>
+          Заказы магазина
+        </Link>
+      </Menu.Item>,
+
       <Menu.Item key='#' className='report-menu'>
         <ReportsDropdownMenu
           currentUser={props.currentUser}
@@ -87,7 +93,7 @@ const AppHeader = (props) => {
       </Menu.Item>,
 
       <Menu.Item key='/profile'
-        className='profile-menu'>
+                 className='profile-menu'>
         <ProfileDropdownMenu
           currentUser={props.currentUser}
           handleMenuClick={handleMenuClick}
@@ -113,10 +119,10 @@ const AppHeader = (props) => {
       <Row justify='center'>
         <Col span={8}>
           <img alt='logo'
-            width='50%'
-            height='35%'
-            className='img-fluid'
-            src='https://atlanticcityflorist.com/wp-content/uploads/2019/10/logoacfstransparentbg.png' />
+               width='50%'
+               height='35%'
+               className='img-fluid'
+               src='https://atlanticcityflorist.com/wp-content/uploads/2019/10/logoacfstransparentbg.png'/>
         </Col>
       </Row>
 
@@ -130,7 +136,7 @@ const AppHeader = (props) => {
 
           <Menu.Item key='/'>
             <Link to='/'>
-              <HomeOutlined style={{ fontSize: '20px' }} />
+              <HomeOutlined style={{ fontSize: '20px' }}/>
             </Link>
           </Menu.Item>
 
@@ -152,9 +158,9 @@ const AppHeader = (props) => {
   )
 }
 
-function ProfileDropdownMenu (props) {
+function ProfileDropdownMenu(props) {
   const image = props.currentUser.imageUrl ? (
-    <img src={props.currentUser.imageUrl} alt={props.currentUser.name} />
+    <img src={props.currentUser.imageUrl} alt={props.currentUser.name}/>
   ) : (
     <div className='text-avatar'>
       {/* <span>{props.currentUser.name && props.currentUser.name[0]}</span> */}
@@ -164,18 +170,18 @@ function ProfileDropdownMenu (props) {
   const dropdownMenu = (
     <Menu onClick={props.handleMenuClick} className='profile-dropdown-menu'>
       <Menu.Item key='user-info'
-        className='dropdown-item'
-        disabled>
+                 className='dropdown-item'
+                 disabled>
         <Avatar className='user-avatar-circle'
-          icon={image}
-          style={{ backgroundColor: getAvatarColor(props.currentUser.name) }}>
+                icon={image}
+                style={{ backgroundColor: getAvatarColor(props.currentUser.name) }}>
           {/* {props.currentUser.name[0].toUpperCase()} */}
         </Avatar>
         <div className='user-full-name-info'>
           {props.currentUser.name}
         </div>
       </Menu.Item>
-      <Menu.Divider />
+      <Menu.Divider/>
       <Menu.Item key='profile' className='dropdown-item'>
         {localizedStrings.profile}
       </Menu.Item>
@@ -192,24 +198,24 @@ function ProfileDropdownMenu (props) {
       getPopupContainer={() => document.getElementsByClassName('profile-menu')[0]}>
 
       <Button type='link' className='ant-dropdown-link' onClick={event => event.preventDefault()}>
-        <UserOutlined style={{ marginRight: 0, fontSize: '20px' }} />
-        <CaretDownOutlined />
+        <UserOutlined style={{ marginRight: 0, fontSize: '20px' }}/>
+        <CaretDownOutlined/>
       </Button>
     </Dropdown>
   )
 }
 
-function ReportsDropdownMenu (props) {
+function ReportsDropdownMenu(props) {
   const dropdownMenu = (
     <Menu onClick={props.handleMenuClick} className='report-dropdown-menu'>
       <Menu.Item key='about'
-        className='dropdown-item'
-        disabled>
+                 className='dropdown-item'
+                 disabled>
         <div className=''>
           Отчеты
         </div>
       </Menu.Item>
-      <Menu.Divider />
+      <Menu.Divider/>
       <Menu.Item key='companyReport' className='dropdown-item'>
         {/* <Link to="/users/admin/company-presentation/pdf"  target="_blank"> */}
         {/*    Презентация компании */}
@@ -248,7 +254,7 @@ function ReportsDropdownMenu (props) {
 
       <Button type='link' className='ant-dropdown-link' onClick={event => event.preventDefault()}>
         <i className='fa fa-file' aria-hidden='true'></i>
-        <CaretDownOutlined />
+        <CaretDownOutlined/>
       </Button>
     </Dropdown>
   )

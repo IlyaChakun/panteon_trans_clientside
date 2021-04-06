@@ -34,6 +34,7 @@ import { authSelector, getCurrentUser, setCurrentUser, setIsAuthenticated } from
 import { getCurrentCompany } from '../redux/reducers/CompanySliceReducer'
 import LoadingIndicator from '../components/common/util/LoadingIndicator'
 import FloristList from '../components/florist/FloristList'
+import AdminOrderList from '../components/order/AdminOrderList'
 
 const { Content } = Layout
 
@@ -179,7 +180,8 @@ const App = (props) => {
               <AboutPage
                 {...props} />}/>
 
-          <PrivateAdminRoute path='/company'
+          <PrivateAdminRoute
+            path='/company'
             isAuthenticated={isAuthenticated}
             currentUser={currentUser}
             currentCompany={currentCompany}
@@ -194,11 +196,19 @@ const App = (props) => {
             render={(props) =>
               <ProductList {...props} />}/>
 
-          <PrivateAdminRoute path='/florists'
+          <PrivateAdminRoute
+            path='/florists'
             isAuthenticated={isAuthenticated}
             currentUser={currentUser}
             currentCompany={currentCompany}
             component={FloristList}/>
+
+          <PrivateAdminRoute
+            path='/store-orders'
+            isAuthenticated={isAuthenticated}
+            currentUser={currentUser}
+            currentCompany={currentCompany}
+            component={AdminOrderList}/>
 
           <Route path='/reviews'
             render={(props) =>

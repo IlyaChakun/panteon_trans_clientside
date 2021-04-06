@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
-  createOrderRequest,
-  getClientOrders
+  createOrderRequest, getAllOrders
 } from '../../components/util/utilsAPI'
 import { notification } from 'antd'
 import { localizedStrings } from '../../components/util/localization'
@@ -67,11 +66,11 @@ export const orderSelector = (state) => {
   return state.ordersState
 }
 
-export const getUsualOrders = (searchCriteria) => {
+export const getOrders = (searchCriteria) => {
   return async dispatch => {
     try {
       console.log('in orders disp')
-      let promise = getClientOrders(searchCriteria)
+      const promise = getAllOrders(searchCriteria)
 
       if (!promise) {
         return

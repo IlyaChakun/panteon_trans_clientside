@@ -3,13 +3,13 @@ import { withRouter } from 'react-router-dom'
 import { Button, Divider, List, Tabs } from 'antd'
 import OrderDetail from './OrderDetail'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllOrders, getOrders, orderSelector, setPage, setSize } from '../../redux/reducers/OrdersSliceReducer'
+import { getOrders, orderSelector, setPage, setSize } from '../../redux/reducers/OrdersSliceReducer'
 import LoadingIndicator from '../common/util/LoadingIndicator'
 import s from '../user/profile/Profile.module.css'
 
 const { TabPane } = Tabs
 
-const OrderList = (props) => {
+const AdminOrderList = (props) => {
   const dispatch = useDispatch()
   const {
     orders,
@@ -34,7 +34,6 @@ const OrderList = (props) => {
     const searchCriteria = {
       page: page,
       size: size,
-      clientId: props.currentUser.id,
       orderStatus: orderStatus
     }
     dispatch(getOrders(searchCriteria))
@@ -59,6 +58,7 @@ const OrderList = (props) => {
 
     loadList(page, size)
   }
+
   const loadMore = () => {
     loadList(page + 1, size)
   }
@@ -78,7 +78,17 @@ const OrderList = (props) => {
     <>
       <Tabs activeKey={activeTab} centered onChange={onOrderStatusChangeHandler}>
         <TabPane tab='Новые заказы' key='NEW'>
-          <Divider>Ваши новые заказы</Divider>
+          <Divider>Новые заказы</Divider>
+
+
+          <Button
+            type='primary'
+            htmlType='submit'
+            size='large'
+            className={s.button}
+          >
+            Передать выбранный заказ флористу
+          </Button>
 
           <Button
             type='primary'
@@ -110,15 +120,6 @@ const OrderList = (props) => {
             className={s.button}
           >
             Подробнее (модалка высплывающая)
-          </Button>
-
-          <Button
-            type='primary'
-            htmlType='submit'
-            size='large'
-            className={s.button}
-          >
-            Оставить отзыв (модалка высплывающая)
           </Button>
 
         </TabPane>
@@ -162,4 +163,4 @@ const OrderList = (props) => {
   )
 }
 
-export default withRouter(OrderList)
+export default withRouter(AdminOrderList)
