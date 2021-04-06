@@ -4,46 +4,53 @@ import { withRouter } from 'react-router-dom'
 
 const { Meta } = Card
 
-function FloristCard(props) {
-
+const FloristCard=({florist})=> {
   return (
     <Card
       bodyStyle={{ padding: '10px' }}
       hoverable
+      cover={
+          <Row>
+            <Col span={12}>
+              <img alt={florist.user.name}
+                   src={florist.user.image === null ? ''
+                     : florist.user.image.imageUrl}
+              />
+            </Col>
+            <Col span={12}>
+              <Row>
+                <span>E-mail: {florist.user.email}</span>
+              </Row>
+              <Row>
+               <span>Тел: {florist.user.phoneNumber}</span>
+              </Row>
+            </Col>
+          </Row>
+      }
       title={
-        <span>{props.florist.user.name}</span>
+        <span>{florist.user.name.toUpperCase()}</span>
       }
     >
 
       <Meta
         style={{ padding: '5px' }}
         title={
-          <>
-            <Row>
-              <Col span={7}>
-                <span>{props.florist.user.email}</span>
-              </Col>
-              <Col span={7}>
-                <span>{props.florist.user.phoneNumber}</span>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col span={7}>
-                <span>Количество выполненных заказов: {props.florist.floristStatistic.completedOrdersCount}</span>
-              </Col>
-              <Col span={7}>
+          <Row>
+            <Col span={24}>
+              <Row>
+                <span>Количество выполненных заказов: {florist.floristStatistic.completedOrdersCount}</span>
+              </Row>
+              <Row>
                 <span>Рейтинг: </span>
-                <Rate disabled value={props.florist.floristStatistic.floristRating} defaultValue={2}/>
-              </Col>
-            </Row>
-          </>
+                <Rate disabled value={florist.floristStatistic.floristRating} defaultValue={2} />
+              </Row>
+            </Col>
+          </Row>
+
         }
         description={
           <div>
-            <div className="">
-              Дата создания записи: {props.florist.dateOfCreation}
-            </div>
+            Дата создания записи: {florist.dateOfCreation}
           </div>
         }
       />

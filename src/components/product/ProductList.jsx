@@ -46,22 +46,21 @@ const ProductList = (props) => {
     dispatch(getProducts(searchCriteria))
   }
 
-  // const loadSearchList = (productName, minPrice, maxPrice, sortBy, sortType, checkedBrands) => {
-  //   loadList(page, size, productName, minPrice, maxPrice, sortBy, sortType, checkedBrands)
-  // }
-
-  if (loading === true) {
-      return <LoadingIndicator/>
+  const loadSearchList = (productName, minPrice, maxPrice, sortBy, sortType, checkedBrands) => {
+    loadList(page, size, productName, minPrice, maxPrice, sortBy, sortType, checkedBrands)
   }
 
-  const productsMap = products === undefined ? [] : products.map(product => (
-      <ProductCardProxy
-        history={props.history}
-        key={product.id}
-        product={product}
-        updateList={updateList}
-      />
-    )
+  if (loading === true) {
+    return <LoadingIndicator />
+  }
+
+  const productsMap = products === undefined ? [] : products.map(product =>
+    <ProductCardProxy
+      history={props.history}
+      key={product.id}
+      product={product}
+      updateList={updateList}
+    />
   )
 
   const onSizeChangeHandler = (currentPage, currentSize) => {

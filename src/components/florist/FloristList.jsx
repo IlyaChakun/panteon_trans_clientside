@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import LoadingIndicator from '../common/util/LoadingIndicator'
 import { floristsSelector, getFlorists, setPage, setSize } from '../../redux/reducers/FloristSliceReducer'
 import AddFloristModal from './AddFloristModal'
+import ProductCardProxy from '../product/ProductCardProxy'
 
 const FloristList = () => {
   const dispatch = useDispatch()
@@ -53,16 +54,14 @@ const FloristList = () => {
   }
 
   if (loading === true) {
-    return <LoadingIndicator/>
+    return <LoadingIndicator />
   }
 
-  console.log(florists)
-
-  const floristList = florists.map(florist => (
+  const floristList = florists === undefined ? [] : florists.map(florist =>
     <FloristCard
       key={florist.id}
       florist={florist}
-    />)
+    />
   )
 
   const onClose = () => {
@@ -75,7 +74,6 @@ const FloristList = () => {
 
 
   return (
-    <>
       <div className='pb-5'>
         <Row justify='center'>
           <Col span={22}>
@@ -92,7 +90,7 @@ const FloristList = () => {
                 <List
                   grid={{
                     gutter: 16,
-                    column: 1
+                    column: 2
                   }}
 
                   pagination={{
@@ -128,7 +126,6 @@ const FloristList = () => {
           </Col>
         </Row>
       </div>
-    </>
   )
 }
 
