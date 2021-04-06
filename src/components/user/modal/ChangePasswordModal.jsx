@@ -79,8 +79,6 @@ class ChangePasswordModal extends React.Component {
             <div className=" float-right">
                 <Button
                     type="primary"
-                    style={{background: "black", color: "white"}}
-                    shape="round"
                     onClick={this.showModal}
                 >
                     Изменить пароль

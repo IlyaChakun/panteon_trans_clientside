@@ -1,31 +1,6 @@
-import {
-  COMPANY_LICENCE_NUM_MAX_LENGTH,
-  COMPANY_NAME_MAX_LENGTH,
-  ERROR,
-  NAME_MAX_LENGTH,
-  NAME_MIN_LENGTH,
-  SUCCESS
-} from '../../constants'
+import { COMPANY_LICENCE_NUM_MAX_LENGTH, COMPANY_NAME_MAX_LENGTH, ERROR, SUCCESS } from '../../constants'
 import { localizedStrings } from '../util/localization'
 
-export function validateUserName (name) {
-  if (name.length < NAME_MIN_LENGTH) {
-    return {
-      validateStatus: ERROR,
-      errorMsg: localizedStrings.alertBadNameTooShort
-    }
-  } else if (name.length > NAME_MAX_LENGTH) {
-    return {
-      validationStatus: ERROR,
-      errorMsg: localizedStrings.alertBadNameTooLong
-    }
-  } else {
-    return {
-      validateStatus: SUCCESS,
-      errorMsg: null
-    }
-  }
-}
 
 export function validateName (name) {
   if (!name) {

@@ -1,4 +1,11 @@
-import { EMAIL_MAX_LENGTH, ERROR, NAME_MAX_LENGTH, NAME_MIN_LENGTH, SUCCESS } from '../../../constants'
+import {
+  EMAIL_MAX_LENGTH,
+  ERROR,
+  NAME_MAX_LENGTH,
+  NAME_MIN_LENGTH, PASSWORD_MAX_LENGTH,
+  PASSWORD_MIN_LENGTH,
+  SUCCESS
+} from '../../../constants'
 import { localizedStrings } from '../../util/localization'
 
 export function validateUserName (name) {
@@ -131,3 +138,25 @@ export function validateCity (city) {
     errorMsg: null
   }
 }
+
+
+export function validatePassword  (password) {
+  if (password.length < PASSWORD_MIN_LENGTH) {
+    return {
+      validateStatus: ERROR,
+      errorMsg: localizedStrings.alertBadPasswordTooShort
+    }
+  } else if (password.length > PASSWORD_MAX_LENGTH) {
+    return {
+      validationStatus: ERROR,
+      errorMsg: localizedStrings.alertBadPasswordTooLong
+    }
+  } else {
+    return {
+      validateStatus: SUCCESS,
+      errorMsg: null,
+    }
+  }
+}
+
+

@@ -38,8 +38,7 @@ const AddProductModal = (props) => {
   return (
     <div className='pt-3 float-right'>
       <Button type='primary'
-              style={{ background: 'black', color: 'white' }}
-              shape='round'
+              size='large'
               onClick={showModal}
       >
         Добавить продукт

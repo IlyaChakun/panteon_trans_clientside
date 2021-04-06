@@ -1,14 +1,20 @@
 import React, { useState } from 'react'
 
 import s from '../user/profile/Profile.module.css'
-import { Button, Col, Form, Input, Row } from 'antd'
+import { Button, Col, Form, Input, Row, Select } from 'antd'
 import { SUCCESS } from '../../constants'
 
 import { withRouter } from 'react-router-dom'
-import { validateEmail, validateUserName } from '../common/validation/ValidationFunctions'
+import { validateEmail, validatePassword, validateUserName } from '../common/validation/ValidationFunctions'
 import { localizedStrings } from '../util/localization'
 import LockOutlined from '@ant-design/icons/lib/icons/LockOutlined'
-import { validatePassoword } from './FloristValidation'
+import { validateExperience, validateSalary } from './FloristValidation'
+import ImageLoader from '../common/image/ImageLoader'
+import { useSelector } from 'react-redux'
+import { productSelector } from '../../redux/reducers/ProductsSliceReducer'
+import { validateId } from '../product/ProductValidation'
+
+const { Option } = Select
 
 const FloristForm = (props) => {
 
@@ -17,7 +23,24 @@ const FloristForm = (props) => {
     value: props.florist.user.email,
     validateStatus: props.validateStatus
   })
+  const [experience, setExperience] = useState({
+    value: props.florist.experience,
+    validateStatus: props.validateStatus
+  })
+  const [salary, setSalary] = useState({
+    value: props.florist.salary,
+    validateStatus: props.validateStatus
+  })
   const [password, setPassword] = useState({ value: props.florist.user.password, validateStatus: props.validateStatus })
+  const [imageUrl, setImageUrl] = useState(props.florist.user.image === undefined ? '' : props.florist.user.image.imageUrl)
+
+  const { shops } = useSelector(productSelector)
+
+  const [shop, setShop] = useState({
+    id: shops.objects[0].id,
+    value: shops.objects.find(x => x.id === shops.objects[0].id),
+    validateStatus: props.validateStatus
+  })
 
   const layout = {
     labelCol: { span: 6 },
@@ -27,28 +50,38 @@ const FloristForm = (props) => {
   const isFormInvalid = () => {
     return !(
       name.validateStatus === SUCCESS,
-      email.validateStatus === SUCCESS
+      email.validateStatus === SUCCESS,
+      experience.validateStatus === SUCCESS,
+      salary.validateStatus === SUCCESS
     )
   }
 
   const handleSubmit = (values) => {
     console.log('Received values of form:', values)
 
-    const flowerRequest = {
+    const floristRequest = {
 
       userSignUpRequest: {
         roleType: 'ROLE_FLORIST',
         name: name.value,
         email: email.value,
+        image: {
+          imageUrl: imageUrl
+        },
         password: password.value,
         confirmedPassword: password.value
       },
-      experience: 1,
+      experience: experience.value,
+      salary: salary.value,
       shopId: 1
     }
 
-    console.log('flowerRequest request: ', flowerRequest)
-    props.handleSubmitButton(flowerRequest)
+    console.log('floristRequest request: ', floristRequest)
+    props.handleSubmitButton(floristRequest)
+  }
+
+  const handleImageUrlChange = (imageUrl) => {
+    setImageUrl(imageUrl)
   }
 
   const handleNameChange = (event) => {
@@ -67,11 +100,42 @@ const FloristForm = (props) => {
     })
   }
 
+  const handleExperienceChange = (event) => {
+    console.log('handleExperienceChange event', event)
+    setExperience({
+      value: event.target.value,
+      ...validateExperience(event.target.value)
+    })
+  }
+
+  const handleSalaryChange = (event) => {
+    console.log('handleSalaryChange event', event)
+    setSalary({
+      value: event.target.value,
+      ...validateSalary(event.target.value)
+    })
+  }
+
   const handlePasswordChange = (event) => {
     console.log('password event', event)
     setPassword({
       value: event.target.value,
-      ...validatePassoword(event.target.value)
+      ...validatePassword(event.target.value)
+    })
+  }
+
+  const shopOptions = shops.objects.map(
+    element =>
+      <Option key={`${element.id}-${element.contacts.address}`} value={element.id}>
+        {element.contacts.address}
+      </Option>
+  )
+
+  const onChangeShopSelect = (input, option) => {
+    setShop({
+      id: option.value,
+      value: option.value,
+      ...validateId(option.key)
     })
   }
 
@@ -85,10 +149,33 @@ const FloristForm = (props) => {
         <Col span={24}>
           <Row>
             <Col span={10}>
-
+                <ImageLoader
+                  imageUrl={imageUrl}
+                  handleImageUrlChange={handleImageUrlChange}
+                />
             </Col>
 
             <Col span={14}>
+
+              <Form.Item
+                label='Место работы'
+                validateStatus={shop.validateStatus}
+                hasFeedback
+                help={shop.errorMsg}
+              >
+
+                <Select
+                  name='shop'
+                  value={shop.id}
+                  showSearch
+                  style={{ width: 200 }}
+                  placeholder='Выберите пункт самовывоза'
+                  onChange={onChangeShopSelect}
+                >
+                  {shopOptions}
+                </Select>
+
+              </Form.Item>
 
               <Form.Item
                 label={'Имя'}
@@ -120,7 +207,7 @@ const FloristForm = (props) => {
                 rules={[
                   {
                     required: true,
-                    message: 'Пожалуйста, введите электронная почта!'
+                    message: 'Пожалуйста, введите электронную почту!'
                   }
                 ]}
               >
@@ -129,6 +216,50 @@ const FloristForm = (props) => {
                   value={email.value}
                   type={email}
                   placeholder='Электронная почта'
+                  style={{ fontSize: '16px', width: 200 }}
+                />
+              </Form.Item>
+
+              <Form.Item
+                label={'Стаж работы'}
+                validateStatus={experience.validateStatus}
+                hasFeedback
+                onChange={(event) => handleExperienceChange(event)}
+                help={experience.errorMsg}
+                rules={[
+                  {
+                    required: true,
+                    message: 'Пожалуйста, введите стаж работы!'
+                  }
+                ]}
+              >
+                <Input
+                  name='experience'
+                  value={experience.value}
+                  type={experience}
+                  placeholder='Стаж работы'
+                  style={{ fontSize: '16px', width: 200 }}
+                />
+              </Form.Item>
+
+              <Form.Item
+                label={'Сумма оклада'}
+                validateStatus={salary.validateStatus}
+                hasFeedback
+                onChange={(event) => handleSalaryChange(event)}
+                help={salary.errorMsg}
+                rules={[
+                  {
+                    required: true,
+                    message: 'Пожалуйста, введите сумму оклада!'
+                  }
+                ]}
+              >
+                <Input
+                  name='salary'
+                  value={salary.value}
+                  type={salary}
+                  placeholder='Сумма оклада'
                   style={{ fontSize: '16px', width: 200 }}
                 />
               </Form.Item>
@@ -147,7 +278,7 @@ const FloristForm = (props) => {
                 ]}
               >
                 <Input.Password
-                  prefix={<LockOutlined/>}
+                  prefix={<LockOutlined />}
                   name='password'
                   type='password'
                   autoComplete='off'

@@ -191,7 +191,6 @@ const Cart = (props) => {
       value: option.value,
       ...validateId(option.key)
     })
-
   }
 
   const onChangeDelivery = (e) => {

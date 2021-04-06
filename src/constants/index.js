@@ -5,8 +5,8 @@ export const SENSOR_MODEL_MAX_LENGTH = 15
 export const SENSOR_LOCATION_MAX_LENGTH = 40
 export const SENSOR_DESCRIPTION_MAX_LENGTH = 200
 
-export const NAME_MIN_LENGTH = 5
-export const NAME_MAX_LENGTH = 30
+export const NAME_MIN_LENGTH = 2
+export const NAME_MAX_LENGTH = 128
 
 export const COMPANY_NAME_MAX_LENGTH = 48
 export const COMPANY_DESCRIPTION_MAX_LENGTH = 512

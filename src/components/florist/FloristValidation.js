@@ -1,16 +1,16 @@
 import { ERROR, PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH, SUCCESS } from '../../constants'
 import { localizedStrings } from '../util/localization'
 
-export const validatePassoword = (password) => {
-  if (password.length < PASSWORD_MIN_LENGTH) {
+export const validateExperience = (experience) => {
+  if (experience < 0.5) {
     return {
       validateStatus: ERROR,
-      errorMsg: localizedStrings.alertBadPasswordTooShort
+      errorMsg: 'Мы не берем на работу со стажем меньше чем 0,5 года'
     }
-  } else if (password.length > PASSWORD_MAX_LENGTH) {
+  } else if (experience > 50) {
     return {
       validationStatus: ERROR,
-      errorMsg: localizedStrings.alertBadPasswordTooLong
+      errorMsg: 'Мы не берем на работу пенсионеров. Извините! Вам надо отдыхать'
     }
   } else {
     return {
@@ -19,3 +19,23 @@ export const validatePassoword = (password) => {
     }
   }
 }
+
+export const validateSalary = (salary) => {
+  if (salary < 250) {
+    return {
+      validateStatus: ERROR,
+      errorMsg: 'Зарплаты меньше 250 просто не бывает'
+    }
+  } else if (salary > 5000) {
+    return {
+      validationStatus: ERROR,
+      errorMsg: 'Поумерьте Ваш пыл, мы маленькая фирма!'
+    }
+  } else {
+    return {
+      validateStatus: SUCCESS,
+      errorMsg: null
+    }
+  }
+}
+

@@ -18,7 +18,8 @@ const AddFloristModal = (props) => {
       email: '',
       password: ''
     },
-    experience: ''
+    experience: '',
+    salary:''
   }
 
   const showModal = () => {

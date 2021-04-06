@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Form, Input, Tabs } from 'antd'
+import { Button, Col, Form, Input, Row, Tabs } from 'antd'
 import s from './Profile.module.css'
 
 import ChangePasswordModal from '../modal/ChangePasswordModal'
@@ -84,18 +84,20 @@ const Profile = (props) => {
     <div className='container py-5 px-3 mb-5'>
       <Tabs defaultActiveKey='1'>
         <TabPane tab='Личный кабинет' key='1'>
-          <div className='col-sm-12 mb-5'>
+          <Col span={24}>
             <Form {...layout}
               onFinish={handleSubmit} className={s.form}>
 
-              <div className='row mb-5'>
-                <div className='col-sm-6'>
+              <Row>
+
+                <Col span={10}>
                   <ImageLoader
                     imageUrl={imageUrl}
                     handleImageUrlChange={handleImageUrlChange}
                   />
-                </div>
-                <div className='col-sm-6'>
+                </Col>
+
+                <Col span={14}>
                   <Form.Item
                     className={s.formItem}
                     label='Ваше имя'
@@ -153,8 +155,9 @@ const Profile = (props) => {
                       value={phoneNumber.value}>
                     </Input>
                   </Form.Item>
-                </div>
-              </div>
+                </Col>
+
+              </Row>
 
               <div className='row mb-5 d-flex justify-content-end'>
                 <div className='col-3'>
@@ -162,8 +165,6 @@ const Profile = (props) => {
                     <Button
                       htmlType='submit'
                       type='primary'
-                      style={{ background: 'black', color: 'white' }}
-                      shape='round'
                       disabled={isFormInvalid()}
                     >
                       Изменить профиль
@@ -175,7 +176,7 @@ const Profile = (props) => {
                 </div>
               </div>
             </Form>
-          </div>
+          </Col>
         </TabPane>
         {!isAdmin(currentUser) ? (
           <TabPane tab='Ваши заказы' key='2'>
