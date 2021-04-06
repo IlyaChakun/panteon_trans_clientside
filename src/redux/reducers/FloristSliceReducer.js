@@ -6,6 +6,7 @@ import {
   getAllFloristsRequest, getFloristRequest,
   updateProductInCartRequest
 } from '../../components/util/utilsAPI'
+import { getCart } from './CartsSliceReducer'
 
 const initialState = {
 
@@ -34,6 +35,13 @@ const floristsSlice = createSlice({
     setFlorists: (state, action) => {
       state.florists = action.payload
     },
+    setAddFlorist: (state, action) => {
+      const florist = action.payload
+      state.florists = (florist) = {
+        ...state.florists,
+        florist
+      }
+    },
 
     setTotalPages: (state, action) => {
       state.totalPages = action.payload
@@ -53,7 +61,7 @@ export const {
   setLoading,
   setErrors,
   setFlorists,
-
+  setAddFlorist,
   setTotalPages,
   setTotalElements,
   setPage,
@@ -93,29 +101,65 @@ export const getFlorists = (searchCriteria) => {
 export const addFlorist = (floristToAdd) => {
   return async dispatch => {
     try {
-      const promise = addFloristRequest(floristToAdd)
+      const promise = await addFloristRequest(floristToAdd)
+      console.log('response in addFloristRequest dispatcher', promise)
 
-      if (!promise) {
-        return
+      if (promise.status === 400) {
+        notification.error({
+          message: localizedStrings.alertAppName,
+          description: promise.error()
+        })
+      } else {
+        notification.success({
+          message: localizedStrings.alertAppName,
+          description: 'Флорист добавлен'
+        })
+
+        dispatch(getFlorists())
       }
 
-      await promise
-        .then(response => {
-          console.log('response in addFloristRequest dispatcher', response)
-          dispatch(setFlorists(response))
-
-          notification.success({
-            message: localizedStrings.alertAppName,
-            description: 'добавлено  addFloristRequest'
-          })
-        })
     } catch (error) {
       dispatch(setErrors(error))
       notification.error({
         message: localizedStrings.alertAppName,
-        description: error.errorDescription
+        description: error.description
       })
     }
+
+
+
+    // try {
+    //   const promise = addFloristRequest(floristToAdd)
+    //
+    //   if (!promise) {
+    //     return
+    //   }
+    //
+    //   await promise
+    //     .then(response => {
+    //       console.log('response in addFloristRequest dispatcher', response)
+    //
+    //       if (response.code === 400) {
+    //         notification.error({
+    //           message: localizedStrings.alertAppName,
+    //           description: response.errorDescription
+    //         })
+    //       } else {
+    //         dispatch(setAddFlorist(response))
+    //
+    //         notification.success({
+    //           message: localizedStrings.alertAppName,
+    //           description: 'Флорист добавлен'
+    //         })
+    //       }
+    //     })
+    // } catch (error) {
+    //   dispatch(setErrors(error))
+    //   notification.error({
+    //     message: localizedStrings.alertAppName,
+    //     description: error.description
+    //   })
+    // }
   }
 }
 

@@ -185,32 +185,8 @@ export const getProducts = (searchCriteria, shopId = null) => {
   }
 }
 
-
 export const deleteProduct = (productId) => {
   return async dispatch => {
-    // deleteFlowerRequest(productId)
-    //     .then(() => {
-    //         notification.success({
-    //             message: localizedStrings.alertAppName,
-    //             description: 'Успешное удаление!'
-    //         });
-    //         window.location.href = "/";
-    //     }).catch(error => {
-    //     if (error.status === 401) {
-    //         this.props.handleLogout('/login', 'error', localizedStrings.alertLoggedOut);
-    //     } else if (error.status === 404) {
-    //         notification.error({
-    //             message: localizedStrings.alertAppName,
-    //             description: 'Продукт не найден!'
-    //         });
-    //     } else {
-    //         notification.error({
-    //             message: localizedStrings.alertAppName,
-    //             description: error.message || localizedStrings.alertException
-    //         });
-    //     }
-    // });
-
     try {
       const promise = deleteProductRequest(productId)
 
@@ -223,15 +199,34 @@ export const deleteProduct = (productId) => {
             message: localizedStrings.alertAppName,
             description: 'Успешное удаление!'
           })
-          window.location.href = '/'
+          window.location.href = '/products'
 
-          dispatch(setProducts(response.objects.slice()))
+          dispatch(setProducts(response.objects))
           dispatch(setTotalPages(response.totalPages))
           dispatch(setTotalElements(response.totalElements))
           dispatch(setLoading(false))
         })
     } catch (error) {
       dispatch(setErrors(error))
+
+      if (error.status === 401) {
+        window.location.href = '/'
+        notification.success({
+          message: localizedStrings.alertAppName,
+          description: localizedStrings.alertLoggedOut
+        })
+      } else if (error.status === 404) {
+        notification.error({
+          message: localizedStrings.alertAppName,
+          description: 'Продукт не найден!'
+        })
+      } else {
+        notification.error({
+          message: localizedStrings.alertAppName,
+          description: error.message || localizedStrings.alertException
+        })
+      }
+
     }
 
     // case DELETE_TODO:

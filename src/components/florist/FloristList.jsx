@@ -23,7 +23,7 @@ const FloristList = () => {
   } = useSelector(floristsSelector)
 
   useEffect(() => {
-    updateList()
+    loadList(page, size)
   }, [dispatch])
 
   const updateList = () => {

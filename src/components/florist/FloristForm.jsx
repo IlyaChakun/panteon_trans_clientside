@@ -13,6 +13,7 @@ import ImageLoader from '../common/image/ImageLoader'
 import { useSelector } from 'react-redux'
 import { validateId } from '../product/ProductValidation'
 import { shopSelector } from '../../redux/reducers/ShopsSliceReducer'
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 
 const { Option } = Select
 
@@ -85,7 +86,7 @@ const FloristForm = (props) => {
   }
 
   const handleNameChange = (event) => {
-    console.log('name event', event)
+    console.log('name event', event.target.value)
     setName({
       value: event.target.value,
       ...validateUserName(event.target.value)
@@ -93,7 +94,7 @@ const FloristForm = (props) => {
   }
 
   const handleEmailChange = (event) => {
-    console.log('email event', event)
+    console.log('email event', event.target.value)
     setEmail({
       value: event.target.value,
       ...validateEmail(event.target.value)
@@ -101,7 +102,7 @@ const FloristForm = (props) => {
   }
 
   const handleExperienceChange = (event) => {
-    console.log('handleExperienceChange event', event)
+    console.log('handleExperienceChange event', event.target.value)
     setExperience({
       value: event.target.value,
       ...validateExperience(event.target.value)
@@ -109,7 +110,7 @@ const FloristForm = (props) => {
   }
 
   const handleSalaryChange = (event) => {
-    console.log('handleSalaryChange event', event)
+    console.log('handleSalaryChange event', event.target.value)
     setSalary({
       value: event.target.value,
       ...validateSalary(event.target.value)
@@ -117,7 +118,7 @@ const FloristForm = (props) => {
   }
 
   const handlePasswordChange = (event) => {
-    console.log('password event', event)
+    console.log('password event', event.target.value)
     setPassword({
       value: event.target.value,
       ...validatePassword(event.target.value)
@@ -140,6 +141,7 @@ const FloristForm = (props) => {
   }
 
   return (
+
     <Form {...layout}
           onFinish={handleSubmit}
           name='dynamic_form_nest_item'
@@ -282,8 +284,10 @@ const FloristForm = (props) => {
                   name='password'
                   type='password'
                   autoComplete='off'
-                  placeholder={localizedStrings.helpForPass}
+                  placeholder={'Введите пароль'}
                   value={password.value}
+                  maxLength={200}
+                  iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                 />
               </Form.Item>
 
