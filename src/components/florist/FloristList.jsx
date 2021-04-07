@@ -72,60 +72,59 @@ const FloristList = () => {
     setVisible(true)
   }
 
-
   return (
-      <div className='pb-5'>
-        <Row justify='center'>
-          <Col span={22}>
-            <Row gutter={16}>
-              <Col span={6}>
-                <h1>Управление</h1>
+    <div className='pb-5'>
+      <Row justify='center'>
+        <Col span={22}>
+          <Row gutter={16}>
+            <Col span={6}>
+              <h1>Управление</h1>
 
-                <AddFloristModal updateList={updateList} />
+              <AddFloristModal updateList={updateList} />
 
-              </Col>
-              <Col span={18}>
-                <Divider>Флористы</Divider>
+            </Col>
+            <Col span={18}>
+              <Divider>Флористы</Divider>
 
-                <List
-                  grid={{
-                    gutter: 16,
-                    column: 2
-                  }}
+              <List
+                grid={{
+                  gutter: 16,
+                  column: 2
+                }}
 
-                  pagination={{
+                pagination={{
 
-                    loading: loading,
-                    showSizeChanger: true,
+                  loading: loading,
+                  showSizeChanger: true,
 
-                    defaultCurrent: page,
-                    defaultPageSize: size,
+                  defaultCurrent: page,
+                  defaultPageSize: size,
 
-                    pageSizeOptions: ['6', '9', '12'],
-                    position: 'bottom',
+                  pageSizeOptions: ['6', '9', '12'],
+                  position: 'bottom',
 
-                    total: totalElements,
+                  total: totalElements,
 
-                    showQuickJumper: true,
-                    onShowSizeChange: onSizeChangeHandler,
-                    onChange: onPageChangeHandler,
+                  showQuickJumper: true,
+                  onShowSizeChange: onSizeChangeHandler,
+                  onChange: onPageChangeHandler,
 
-                    loadMore: loadMore
-                  }}
+                  loadMore: loadMore
+                }}
 
-                  dataSource={floristList}
+                dataSource={floristList}
 
-                  renderItem={item => (
-                    <List.Item>
-                      {item}
-                    </List.Item>
-                  )}
-                />
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </div>
+                renderItem={item => (
+                  <List.Item>
+                    {item}
+                  </List.Item>
+                )}
+              />
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </div>
   )
 }
 

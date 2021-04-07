@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Button, Divider, List, Tabs } from 'antd'
-import OrderDetail from './OrderDetail'
+import { Button, Col, Divider, Row, Table, Tabs } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { getOrders, orderSelector, setPage, setSize } from '../../redux/reducers/OrdersSliceReducer'
 import LoadingIndicator from '../common/util/LoadingIndicator'
 import s from '../user/profile/Profile.module.css'
+import AddFloristModal from '../florist/AddFloristModal'
 
 const { TabPane } = Tabs
 
@@ -67,19 +67,46 @@ const AdminOrderList = (props) => {
     return <LoadingIndicator/>
   }
 
-  const ordersList = orders.map(order => (
-    <OrderDetail
-      key={order.id}
-      order={order}
-    />)
-  )
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+    },
+    getCheckboxProps: (record) => ({
+      disabled: record.name === 'Disabled User',
+      // Column configuration not to be checked
+      name: record.name
+    })
+  }
+
+  const columns = [
+
+    {
+      title: 'Статус',
+      dataIndex: 'orderStatus'
+    },
+    {
+      title: 'Комментарий',
+      dataIndex: 'comment'
+
+    },
+    {
+      title: 'стоимость',
+      dataIndex: 'orderPriceInfo.totalAmount'
+
+    },
+    {
+      title: 'Способ получения',
+      dataIndex: 'orderDeliveryInfo.deliveryType.deliveryTypeName'
+
+    }
+  ]
 
   return (
     <>
+
       <Tabs activeKey={activeTab} centered onChange={onOrderStatusChangeHandler}>
         <TabPane tab='Новые заказы' key='NEW'>
           <Divider>Новые заказы</Divider>
-
 
           <Button
             type='primary'
@@ -125,40 +152,41 @@ const AdminOrderList = (props) => {
         </TabPane>
       </Tabs>
 
-      <List
-        grid={{
-          gutter: 16,
-          column: 1
-        }}
+      <div>
 
-        pagination={{
+        <Divider/>
 
-          loading: loading,
-          showSizeChanger: true,
+        <Table
+          pagination={{
 
-          defaultCurrent: page,
-          defaultPageSize: size,
+            loading: loading,
+            showSizeChanger: true,
 
-          pageSizeOptions: ['6', '9', '12'],
-          position: 'bottom',
+            defaultCurrent: page,
+            defaultPageSize: size,
 
-          total: totalElements,
+            pageSizeOptions: ['10', '20', '30'],
+            position: 'bottom',
 
-          showQuickJumper: true,
-          onShowSizeChange: onSizeChangeHandler,
-          onChange: onPageChangeHandler,
+            total: totalElements,
 
-          loadMore: loadMore
-        }}
+            showQuickJumper: true,
+            onShowSizeChange: onSizeChangeHandler,
+            onChange: onPageChangeHandler,
 
-        dataSource={ordersList}
+            loadMore: loadMore
+          }}
 
-        renderItem={item => (
-          <List.Item>
-            {item}
-          </List.Item>
-        )}
-      />
+          rowSelection={{
+            type: 'radio',
+            ...rowSelection
+          }}
+          rowKey={'id'}
+          columns={columns}
+          dataSource={orders}
+        />
+      </div>
+
     </>
   )
 }

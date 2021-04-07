@@ -12,7 +12,6 @@ import OrderList from '../../order/OrderList'
 import LoadingIndicator from '../../common/util/LoadingIndicator'
 import { useDispatch, useSelector } from 'react-redux'
 import { authSelector, updateUserProfile } from '../../../redux/reducers/AuthSliceReducer'
-import { isAdmin } from '../../../app/App'
 
 const Profile = (props) => {
   const { TabPane } = Tabs
@@ -75,9 +74,9 @@ const Profile = (props) => {
 
   const loadingIndicatorOrReadyOrderListForm = currentUser === null
     ? (
-      <LoadingIndicator />
+      <LoadingIndicator/>
     ) : (
-      <OrderList currentUser={currentUser} />
+      <OrderList currentUser={currentUser}/>
     )
 
   return (
@@ -86,7 +85,7 @@ const Profile = (props) => {
         <TabPane tab='Личный кабинет' key='1'>
           <Col span={24}>
             <Form {...layout}
-              onFinish={handleSubmit} className={s.form}>
+                  onFinish={handleSubmit} className={s.form}>
 
               <Row>
 
@@ -172,17 +171,17 @@ const Profile = (props) => {
                   </Form.Item>
                 </div>
                 <div className='col-3'>
-                  <ChangePasswordModal currentUserId={currentUser.id} />
+                  <ChangePasswordModal currentUserId={currentUser.id}/>
                 </div>
               </div>
             </Form>
           </Col>
         </TabPane>
-        {!isAdmin(currentUser) ? (
-          <TabPane tab='Ваши заказы' key='2'>
-            {loadingIndicatorOrReadyOrderListForm}
-          </TabPane>
-        ) : ''}
+
+        <TabPane tab='Ваши заказы' key='2'>
+          {loadingIndicatorOrReadyOrderListForm}
+        </TabPane>
+
 
       </Tabs>
     </div>

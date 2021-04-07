@@ -12,7 +12,7 @@ const initialState = {
   errors: '',
 
   page: 1,
-  size: 6,
+  size: 10,
   pagesCount: 0,
   totalPages: 0,
   totalElements: 0,
