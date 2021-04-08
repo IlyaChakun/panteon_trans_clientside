@@ -244,6 +244,36 @@ export function isAdmin (currentUser) {
   }
 }
 
+export function isUserClient (currentUser) {
+  // if (currentUser !== null && currentUser !== undefined && currentUser.roles !== undefined) {
+  //   const role = currentUser.roles.find(elem => elem.name === ROLE_ADMIN)
+  //   return role === undefined ? false : role.name === ROLE_ADMIN
+  // }
+  if (currentUser !== null &&
+    currentUser !== undefined &&
+    currentUser.userType !== undefined &&
+    currentUser.userType === 'ROLE_CLIENT') {
+    return true
+  } else {
+    return false
+  }
+}
+
+export function isUserFlorist (currentUser) {
+  // if (currentUser !== null && currentUser !== undefined && currentUser.roles !== undefined) {
+  //   const role = currentUser.roles.find(elem => elem.name === ROLE_ADMIN)
+  //   return role === undefined ? false : role.name === ROLE_ADMIN
+  // }
+  if (currentUser !== null &&
+    currentUser !== undefined &&
+    currentUser.userType !== undefined &&
+    currentUser.userType === 'ROLE_FLORIST') {
+    return true
+  } else {
+    return false
+  }
+}
+
 export function isUser (currentUser) {
   if (currentUser !== null && currentUser !== undefined && currentUser.roles !== undefined) {
     const role = currentUser.roles.find(elem => elem.name === ROLE_USER)

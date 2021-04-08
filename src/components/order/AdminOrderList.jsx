@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Button, Col, Divider, Row, Table, Tabs } from 'antd'
+import { Divider, Space, Table, Tabs, Tag } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { getOrders, orderSelector, setPage, setSize } from '../../redux/reducers/OrdersSliceReducer'
 import LoadingIndicator from '../common/util/LoadingIndicator'
-import s from '../user/profile/Profile.module.css'
-import AddFloristModal from '../florist/AddFloristModal'
+import { isAdmin, isUserClient, isUserFlorist } from '../../app/App'
 
+const { Column, ColumnGroup } = Table
 const { TabPane } = Tabs
 
 const AdminOrderList = (props) => {
@@ -70,36 +70,8 @@ const AdminOrderList = (props) => {
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-    },
-    getCheckboxProps: (record) => ({
-      disabled: record.name === 'Disabled User',
-      // Column configuration not to be checked
-      name: record.name
-    })
-  }
-
-  const columns = [
-
-    {
-      title: 'Статус',
-      dataIndex: 'orderStatus'
-    },
-    {
-      title: 'Комментарий',
-      dataIndex: 'comment'
-
-    },
-    {
-      title: 'стоимость',
-      dataIndex: 'orderPriceInfo.totalAmount'
-
-    },
-    {
-      title: 'Способ получения',
-      dataIndex: 'orderDeliveryInfo.deliveryType.deliveryTypeName'
-
     }
-  ]
+  }
 
   return (
     <>
@@ -107,48 +79,12 @@ const AdminOrderList = (props) => {
       <Tabs activeKey={activeTab} centered onChange={onOrderStatusChangeHandler}>
         <TabPane tab='Новые заказы' key='NEW'>
           <Divider>Новые заказы</Divider>
-
-          <Button
-            type='primary'
-            htmlType='submit'
-            size='large'
-            className={s.button}
-          >
-            Передать выбранный заказ флористу
-          </Button>
-
-          <Button
-            type='primary'
-            htmlType='submit'
-            size='large'
-            className={s.button}
-          >
-            Отменить заказ
-          </Button>
-
         </TabPane>
         <TabPane tab='Выполняемые заказы' key='IN_PROCESS'>
           <Divider>Выполняемые заказы</Divider>
-          <Button
-            type='primary'
-            htmlType='submit'
-            size='large'
-            className={s.button}
-          >
-            Подробнее (модалка высплывающая)
-          </Button>
         </TabPane>
         <TabPane tab='Завершенные заказы' key='COMPLETED'>
           <Divider>Завершенные заказы</Divider>
-          <Button
-            type='primary'
-            htmlType='submit'
-            size='large'
-            className={s.button}
-          >
-            Подробнее (модалка высплывающая)
-          </Button>
-
         </TabPane>
       </Tabs>
 
@@ -182,9 +118,63 @@ const AdminOrderList = (props) => {
             ...rowSelection
           }}
           rowKey={'id'}
-          columns={columns}
-          dataSource={orders}
-        />
+          dataSource={orders}>
+          <Column
+            title="Статус заказа"
+            dataIndex="orderStatus"
+            render={orderStatus => (
+              <Tag color="blue" key={orderStatus}>
+                {orderStatus}
+              </Tag>
+            )}
+          />
+
+          <Column title="comment" dataIndex="comment"/>
+          <Column title="Способ получения" dataIndex="deliveryTypeName"/>
+
+          <Column
+            title="Действия"
+            key="action"
+            render={(text, record) => (
+              <Space size="middle">
+
+                {orderStatus === 'NEW' ? (
+                  <>
+                    <a>Закрыть заказ</a>
+                    {isAdmin(props.currentUser)
+                      ?
+                      <a>Передать флористу</a>
+                      : ''
+                    }
+                  </>
+                ) : ''}
+
+                {orderStatus === 'COMPLETED' ? (
+                  <>
+                    {isUserClient(props.currentUser)
+                      ?
+                      <a>Оставить отзыв</a>
+                      : ''
+                    }
+                  </>
+                ) : ''}
+
+
+                {orderStatus === 'IN_PROCESS' ? (
+                  <>
+                    {isUserFlorist(props.currentUser)
+                      ?
+                      <a>Выполнить заказ</a>
+                      : ''
+                    }
+                  </>
+                ) : ''}
+
+                <a>Подбронее</a>
+              </Space>
+            )}
+          />
+        </Table>
       </div>
 
     </>
