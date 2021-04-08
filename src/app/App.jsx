@@ -34,7 +34,7 @@ import { authSelector, getCurrentUser, setCurrentUser, setIsAuthenticated } from
 import { getCurrentCompany } from '../redux/reducers/CompanySliceReducer'
 import LoadingIndicator from '../components/common/util/LoadingIndicator'
 import FloristList from '../components/florist/FloristList'
-import AdminOrderList from '../components/order/AdminOrderList'
+import OrderList from '../components/order/OrderList'
 import { fetchShops } from '../redux/reducers/ShopsSliceReducer'
 
 const { Content } = Layout
@@ -206,11 +206,11 @@ const App = (props) => {
             component={FloristList}/>
 
           <PrivateAdminRoute
-            path='/store-orders'
+            path='/orders'
             isAuthenticated={isAuthenticated}
             currentUser={currentUser}
             currentCompany={currentCompany}
-            component={AdminOrderList}/>
+            component={OrderList}/>
 
           <Route path='/reviews'
             render={(props) =>
@@ -238,6 +238,7 @@ export function isAdmin (currentUser) {
     currentUser !== undefined &&
     currentUser.userType !== undefined &&
     currentUser.userType === 'ROLE_ADMIN') {
+    console.log('admin')
     return true
   } else {
     return false

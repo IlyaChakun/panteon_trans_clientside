@@ -79,8 +79,8 @@ const AppHeader = (props) => {
         </Link>
       </Menu.Item>,
 
-      <Menu.Item key='/store-orders' className=''>
-        <Link to='/store-orders'>
+      <Menu.Item key='/orders' className=''>
+        <Link to='/orders'>
           Заказы магазина
         </Link>
       </Menu.Item>,

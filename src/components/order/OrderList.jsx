@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Button, Divider, List, Tabs } from 'antd'
-import OrderDetail from './OrderDetail'
+import { Button, Divider, Space, Table, Tabs, Tag } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllOrders, getOrders, orderSelector, setPage, setSize } from '../../redux/reducers/OrdersSliceReducer'
+import { getOrders, orderSelector, setPage, setSize } from '../../redux/reducers/OrdersSliceReducer'
 import LoadingIndicator from '../common/util/LoadingIndicator'
-import s from '../user/profile/Profile.module.css'
+import { isAdmin, isUserClient, isUserFlorist } from '../../app/App'
+import AddFloristToOrderModal from './ChooseFloristModal'
 
+const { Column, ColumnGroup } = Table
 const { TabPane } = Tabs
 
 const OrderList = (props) => {
@@ -34,7 +35,6 @@ const OrderList = (props) => {
     const searchCriteria = {
       page: page,
       size: size,
-      clientId: props.currentUser.id,
       orderStatus: orderStatus
     }
     dispatch(getOrders(searchCriteria))
@@ -59,6 +59,7 @@ const OrderList = (props) => {
 
     loadList(page, size)
   }
+
   const loadMore = () => {
     loadList(page + 1, size)
   }
@@ -67,97 +68,143 @@ const OrderList = (props) => {
     return <LoadingIndicator/>
   }
 
-  const ordersList = orders.map(order => (
-    <OrderDetail
-      key={order.id}
-      order={order}
-    />)
-  )
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+    }
+  }
 
+  console.log(JSON.stringify(orders))
   return (
     <>
+
       <Tabs activeKey={activeTab} centered onChange={onOrderStatusChangeHandler}>
         <TabPane tab='Новые заказы' key='NEW'>
-          <Divider>Ваши новые заказы</Divider>
-
-          <Button
-            type='primary'
-            htmlType='submit'
-            size='large'
-            className={s.button}
-          >
-            Отменить заказ
-          </Button>
-
+          <Divider>Новые заказы</Divider>
         </TabPane>
         <TabPane tab='Выполняемые заказы' key='IN_PROCESS'>
           <Divider>Выполняемые заказы</Divider>
-          <Button
-            type='primary'
-            htmlType='submit'
-            size='large'
-            className={s.button}
-          >
-            Подробнее (модалка высплывающая)
-          </Button>
         </TabPane>
         <TabPane tab='Завершенные заказы' key='COMPLETED'>
           <Divider>Завершенные заказы</Divider>
-          <Button
-            type='primary'
-            htmlType='submit'
-            size='large'
-            className={s.button}
-          >
-            Подробнее (модалка высплывающая)
-          </Button>
-
-          <Button
-            type='primary'
-            htmlType='submit'
-            size='large'
-            className={s.button}
-          >
-            Оставить отзыв (модалка высплывающая)
-          </Button>
-
         </TabPane>
       </Tabs>
 
-      <List
-        grid={{
-          gutter: 16,
-          column: 1
-        }}
+      <div>
 
-        pagination={{
+        <Divider/>
 
-          loading: loading,
-          showSizeChanger: true,
+        <Table
+          pagination={{
 
-          defaultCurrent: page,
-          defaultPageSize: size,
+            loading: loading,
+            showSizeChanger: true,
 
-          pageSizeOptions: ['6', '9', '12'],
-          position: 'bottom',
+            defaultCurrent: page,
+            defaultPageSize: size,
 
-          total: totalElements,
+            pageSizeOptions: ['10', '20', '30'],
+            position: 'bottom',
 
-          showQuickJumper: true,
-          onShowSizeChange: onSizeChangeHandler,
-          onChange: onPageChangeHandler,
+            total: totalElements,
 
-          loadMore: loadMore
-        }}
+            showQuickJumper: true,
+            onShowSizeChange: onSizeChangeHandler,
+            onChange: onPageChangeHandler,
 
-        dataSource={ordersList}
+            loadMore: loadMore
+          }}
 
-        renderItem={item => (
-          <List.Item>
-            {item}
-          </List.Item>
-        )}
-      />
+          rowSelection={{
+            type: 'radio',
+            ...rowSelection
+          }}
+          rowKey={'id'}
+          dataSource={orders}
+          footer={() => ''}
+        >
+          <Column
+            title="Статус заказа"
+            dataIndex="orderStatus"
+            render={orderStatus => (
+              <Tag color="blue" key={orderStatus}>
+                {orderStatus}
+              </Tag>
+            )}
+          />
+          dateOfCreation
+          <Column title="Дата создания" dataIndex="dateOfCreation"/>
+          <Column title="Комментарий" dataIndex="comment"/>
+          <Column title="Сумма заказа" dataIndex={'orderPriceInfo'}/>
+          <Column title="Способ получения" dataIndex="orderDeliveryInfo.deliveryType.deliveryTypeName"/>
+
+          <Column
+            title="Действия"
+            key="action"
+            render={(text, record) => (
+              <Space size="middle">
+
+                {orderStatus === 'NEW' ? (
+                  <>
+                    <Button
+                      type='primary'
+                      size='large'
+                      // onClick={showModal}
+                    >
+                      Закрыть заказ
+                    </Button>
+
+                    {isAdmin(props.currentUser) === false
+                      ? <AddFloristToOrderModal
+                        updateList={updateList}/>
+                      : ''
+                    }
+                  </>
+                ) : ''}
+
+                {orderStatus === 'COMPLETED' ? (
+                  <>
+                    {isUserClient(props.currentUser)
+                      ? <Button
+                        type='primary'
+                        size='large'
+                        // onClick={showModal}
+                      >
+                        Оставить отзыв
+                      </Button>
+                      : ''
+                    }
+                  </>
+                ) : ''}
+
+                {orderStatus === 'IN_PROCESS' ? (
+                  <>
+                    {isUserFlorist(props.currentUser)
+                      ? <Button
+                        type='primary'
+                        size='large'
+                        // onClick={showModal}
+                      >
+                        Выполнить заказ
+                      </Button>
+                      : ''
+                    }
+                  </>
+                ) : ''}
+
+                <Button
+                  type='primary'
+                  size='large'
+                  // onClick={showModal}
+                >
+                  Подбронее
+                </Button>
+              </Space>
+            )}
+          />
+        </Table>
+      </div>
+
     </>
   )
 }
