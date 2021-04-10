@@ -104,6 +104,9 @@ const OrderList = (props) => {
         <TabPane tab='Завершенные заказы' key='COMPLETED'>
           <Divider>Завершенные заказы</Divider>
         </TabPane>
+        <TabPane tab='Отмененные заказы' key='CLOSED'>
+          <Divider>Завершенные заказы</Divider>
+        </TabPane>
       </Tabs>
 
       <div>
