@@ -47,7 +47,7 @@ export const saveProduct = (productRequest) => {
       })
     }
 
-    return await getProductsRequest()
+    dispatch(getProducts({ page: productSelector.page, size: productSelector.size }))
   }
 }
 
@@ -189,10 +189,6 @@ export const deleteProduct = (productId) => {
   return async dispatch => {
     try {
       const promise = deleteProductRequest(productId)
-
-      if (!promise) {
-        return
-      }
       promise
         .then(response => {
           notification.success({
@@ -226,15 +222,7 @@ export const deleteProduct = (productId) => {
           description: error.message || localizedStrings.alertException
         })
       }
-
     }
-
-    // case DELETE_TODO:
-    //     return {  // returning a copy of orignal state
-    //       ...state, //copying the original state
-    //       todos: state.todos.filter(todo => todo.id !== action.payload)
-    //       // returns a new filtered todos array
-    //     }
   }
 }
 

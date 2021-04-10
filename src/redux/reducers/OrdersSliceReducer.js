@@ -1,13 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { createOrderRequest, getAllOrders, partialOrderUpdateRequest } from '../../components/util/utilsAPI'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import {
+  createOrderRequest,
+  getAllOrders,
+  getOrderByIdRequest, getProductLengthsRequest,
+  partialOrderUpdateRequest
+} from '../../components/util/utilsAPI'
 import { notification } from 'antd'
 import { localizedStrings } from '../../components/util/localization'
 
 const initialState = {
   orders: [],
-  order: {},
   loading: false,
   errors: '',
+
+  order: {},
+  orderProducts: [],
+  orderLoading:false,
 
   page: 1,
   size: 10,
@@ -17,6 +25,7 @@ const initialState = {
 
   searchString: ''
 }
+
 const orderSlice = createSlice({
   name: 'orders',
   initialState,
@@ -30,8 +39,14 @@ const orderSlice = createSlice({
     setOrders: (state, action) => {
       state.orders = action.payload
     },
+    setOrderLoading: (state, action) => {
+      state.orderLoading = action.payload
+    },
     setOrder: (state, action) => {
       state.order = action.payload
+    },
+    setOrderProducts: (state, action) => {
+      state.orderProducts = action.payload
     },
     setTotalPages: (state, action) => {
       state.totalPages = action.payload
@@ -51,7 +66,9 @@ export const {
   setLoading,
   setErrors,
   setOrders,
+  setOrderLoading,
   setOrder,
+  setOrderProducts,
   setTotalPages,
   setTotalElements,
   setPage,
@@ -84,6 +101,27 @@ export const getOrders = (searchCriteria) => {
     } catch (error) {
       dispatch(setErrors(error))
       dispatch(setLoading(false))
+    }
+  }
+}
+
+export const getOrderById = (orderId) => {
+  return async dispatch => {
+    try {
+      console.log('inside getOrderByIdRequest')
+      const promise = getOrderByIdRequest(orderId)
+
+     await promise
+        .then(response => {
+          dispatch(setOrderLoading(true))
+          console.log(response.orderProducts.length)
+          dispatch(setOrder(response))
+          dispatch(setOrderProducts(response.orderProducts.slice()))
+          dispatch(setOrderLoading(false))
+        })
+    } catch (error) {
+      dispatch(setErrors(error))
+      dispatch(setOrderLoading(false))
     }
   }
 }

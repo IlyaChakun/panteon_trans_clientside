@@ -1,14 +1,52 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import Modal from 'antd/es/modal'
-import { Button } from 'antd'
-import { useDispatch } from 'react-redux'
-import { saveProduct } from '../../redux/reducers/ProductsSliceReducer'
+import { Button, Space, Table, Tabs } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
+import { floristsSelector, getFlorists } from '../../redux/reducers/FloristSliceReducer'
+import { partialOrderUpdate, setPage, setSize } from '../../redux/reducers/OrdersSliceReducer'
+import LoadingIndicator from '../common/util/LoadingIndicator'
 
-const AddFloristToOrderModal = (props) => {
+const { Column } = Table
+
+const ChooseFloristModal = (props) => {
   const dispatch = useDispatch()
   const [visible, setVisible] = useState(false)
 
+  const { florists, totalElements, loading, page, size } = useSelector(floristsSelector)
+
+  useEffect(() => {
+    updateList()
+  }, [dispatch])
+
+  const updateList = () => {
+    loadList(page, size)
+  }
+
+  const loadList = (page, size) => {
+    const searchCriteria = {
+      page: page,
+      size: size
+    }
+    dispatch(getFlorists(searchCriteria))
+  }
+
+  const onSizeChangeHandler = (page, size) => {
+    dispatch(setPage(page))
+    dispatch(setSize(size))
+    loadList(page, size)
+  }
+
+  const onPageChangeHandler = (pageNumber) => {
+    dispatch(setPage(pageNumber))
+    loadList(pageNumber, size)
+  }
+
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+    }
+  }
 
   const showModal = () => {
     setVisible(true)
@@ -18,19 +56,49 @@ const AddFloristToOrderModal = (props) => {
     setVisible(false)
   }
 
-  const handleSubmitButton = (request) => {
-    console.log('choose florist request: ' + { ...request })
-    dispatch(saveProduct(request))
+  const onChooseFlorist = (floristId) => {
+    const orderPartialUpdate = {
+      orderId: props.orderId,
+      orderFloristChoice: {
+        floristId: floristId
+      }
+      // orderFloristCompletion: '',
+      // orderReview: '',
+      // orderAutoFloristChoose: '',
+      // orderClose: {
+      //   description: 'I don\'t want this order'
+      // }
+    }
+
+    dispatch(partialOrderUpdate(orderPartialUpdate))
     props.updateList()
     handleCancel()
   }
 
+  const loadMore = () => {
+    loadList(page + 1, size)
+  }
+
+  if (loading === true) {
+    return <LoadingIndicator />
+  }
+
+  const dataSource = []
+
+  florists.map(florist => {
+    dataSource.push({
+      key: florist.id,
+      floristName: florist.user.name,
+      rating: florist.floristStatistic.rating,
+      experience: florist.experience,
+      completedOrdersCount: florist.floristStatistic.completedOrdersCount,
+      floristId: florist.id
+    })
+  })
+
   return (
     <>
-      <Button type='primary'
-              size='large'
-              onClick={showModal}
-      >
+      <Button type='primary' size='large' onClick={showModal}>
         Выбрать флориста
       </Button>
 
@@ -42,13 +110,50 @@ const AddFloristToOrderModal = (props) => {
         centered
         width={1200}
       >
+        <Table
+          pagination={{
 
-        тут красиво список флористов
+            loading: loading,
+            showSizeChanger: true,
 
+            defaultCurrent: page,
+            defaultPageSize: size,
+
+            pageSizeOptions: ['10', '20', '30'],
+            position: 'bottom',
+
+            total: totalElements,
+
+            showQuickJumper: true,
+            onShowSizeChange: onSizeChangeHandler,
+            onChange: onPageChangeHandler,
+
+            loadMore: loadMore
+          }}
+
+          // rowSelection={{
+          //   type: 'radio',
+          //   ...rowSelection
+          // }}
+          // rowKey={'key'}
+          dataSource={dataSource}
+          footer={() => ''}
+        >
+          <Column title='Флорист' dataIndex='floristName' key='floristName' />
+          <Column title='Рейтинг' dataIndex='rating' key='rating' />
+          <Column title='Опыт(лет)' dataIndex='experience' key='experience' />
+          <Column title='Заказов выполнено' dataIndex='completedOrdersCount' key='completedOrdersCount' />
+          <Column title='Действия' dataIndex='floristId' key='floristId' render={floristId => (
+            <Space size='middle'>
+              <Button type='primary' size='large' onClick={() => onChooseFlorist(floristId)}>
+                Передать заказ
+              </Button>
+            </Space>
+          )} />
+        </Table>
       </Modal>
-
     </>
   )
 }
 
-export default withRouter(AddFloristToOrderModal)
+export default withRouter(ChooseFloristModal)

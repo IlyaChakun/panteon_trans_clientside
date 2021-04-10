@@ -365,7 +365,7 @@ export function getAllOrders(searchCriteria) {
   })
 }
 
-export function getOrderById(id) {
+export function getOrderByIdRequest(id) {
   const url = BASE_URL + 'orders/' + id
 
   return request({

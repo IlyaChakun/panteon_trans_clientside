@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getOrders, orderSelector, setPage, setSize } from '../../redux/reducers/OrdersSliceReducer'
 import LoadingIndicator from '../common/util/LoadingIndicator'
 import { isAdmin, isUserClient, isUserFlorist } from '../../app/App'
-import AddFloristToOrderModal from './ChooseFloristModal'
-import DeleteOutlined from '@ant-design/icons/lib/icons/DeleteOutlined'
 import CloseOrderModal from './CloseOrderModal'
+import ChooseFloristModal from './ChooseFloristModal'
+import OrderDetailModal from './OrderDetailModal'
 
 const { Column } = Table
 const { TabPane } = Tabs
@@ -70,11 +70,11 @@ const OrderList = (props) => {
     return <LoadingIndicator />
   }
 
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-    }
-  }
+  // const rowSelection = {
+  //   onChange: (selectedRowKeys, selectedRows) => {
+  //     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+  //   }
+  // }
 
   const dataSource = []
 
@@ -86,7 +86,7 @@ const OrderList = (props) => {
       comment: order.comment,
       orderPriceInfo: order.orderPriceInfo.totalAmount,
       deliveryTypeName: order.orderDeliveryInfo.deliveryType.deliveryTypeName,
-      actionId: order.id
+      orderId: order.id
     })
   })
 
@@ -130,11 +130,11 @@ const OrderList = (props) => {
             loadMore: loadMore
           }}
 
-          rowSelection={{
-            type: 'radio',
-            ...rowSelection
-          }}
-          rowKey={'id'}
+          // rowSelection={{
+          //   type: 'radio',
+          //   ...rowSelection
+          // }}
+          // rowKey={'id'}
           dataSource={dataSource}
           footer={() => ''}
         >
@@ -152,19 +152,20 @@ const OrderList = (props) => {
           <Column title='Комментарий' dataIndex='comment' key='comment' />
           <Column title='Сумма заказа' dataIndex='orderPriceInfo' key='orderPriceInfo' />
           <Column title='Способ получения' dataIndex='deliveryTypeName' key='deliveryTypeName' />
-          <Column title='Действия' dataIndex='actionId' key='actionId' render={actionId => (
+          <Column title='Действия' dataIndex='orderId' key='orderId' render={orderId => (
             <Space size='middle'>
               {orderStatus === 'NEW' ? (
                 <>
 
                   <div className={isAdmin(props.currentUser) ? '' : 'custom-hidden'}>
                     <CloseOrderModal
-                      orderId={actionId}
+                      orderId={orderId}
                       button={<Button type='primary' size='large'> Закрыть заказ </Button>} />
                   </div>
 
                   {isAdmin(props.currentUser) === false
-                    ? <AddFloristToOrderModal
+                    ? <ChooseFloristModal
+                      orderId={orderId}
                       updateList={updateList} />
                     : ''
                   }
@@ -201,13 +202,10 @@ const OrderList = (props) => {
                 </>
               ) : ''}
 
-              <Button
-                type='primary'
-                size='large'
-                // onClick={showModal}
-              >
-                Подбронее
-              </Button>
+              <OrderDetailModal
+                orderId={orderId}
+              />
+
             </Space>
           )} />
         </Table>
