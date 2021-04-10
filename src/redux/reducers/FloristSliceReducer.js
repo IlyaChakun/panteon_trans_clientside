@@ -5,7 +5,7 @@ import {
   addFloristRequest,
   getAllFloristsRequest,
   getFloristRequest,
-  updateProductInCartRequest
+  updateFloristRequest
 } from '../../components/util/utilsAPI'
 
 const initialState = {
@@ -14,6 +14,7 @@ const initialState = {
   errors: '',
 
   florists: [],
+  florist: {},
 
   page: 1,
   size: 6,
@@ -35,9 +36,12 @@ const floristsSlice = createSlice({
     setFlorists: (state, action) => {
       state.florists = action.payload
     },
+    setFlorist: (state, action) => {
+      state.florist = action.payload
+    },
     setAddFlorist: (state, action) => {
       const florist = action.payload
-      state.florists  = {
+      state.florists = {
         ...state.florists,
         florist
       }
@@ -61,7 +65,7 @@ export const {
   setLoading,
   setErrors,
   setFlorists,
-  setAddFlorist,
+  setFlorist,
   setTotalPages,
   setTotalElements,
   setPage,
@@ -127,7 +131,6 @@ export const addFlorist = (floristToAdd) => {
     }
 
 
-
     // try {
     //   const promise = addFloristRequest(floristToAdd)
     //
@@ -163,17 +166,17 @@ export const addFlorist = (floristToAdd) => {
   }
 }
 
-export const updateFlorist = (floristToUpdate) => {
+export const updateFlorist = (floristId, floristToUpdate) => {
   return async dispatch => {
     try {
-      const promise = updateProductInCartRequest(floristToUpdate)
+      const promise = updateFloristRequest(floristId, floristToUpdate)
 
       if (!promise) {
         return
       }
       promise
         .then(response => {
-          console.log('response in updateProductInCartRequest  ', response)
+          console.log('response in updateFloristRequest  ', response)
           dispatch(getFlorists())
         })
     } catch (error) {
@@ -196,18 +199,18 @@ export const getFlorist = (floristId) => {
       }
       promise
         .then(response => {
-          console.log('response in delete florist ', response)
+          console.log('response in florist ', response)
           notification.success({
             message: localizedStrings.alertAppName,
-            description: 'Florist удален!'
+            description: 'Florist найден!'
           })
-          dispatch(getFlorists())
+          dispatch(setFlorist())
         })
     } catch (error) {
       dispatch(setErrors(error))
       notification.error({
         message: localizedStrings.alertAppName,
-        description: 'Не удалось удалить!'
+        description: 'Не удалось найти флориста!'
       })
     }
   }

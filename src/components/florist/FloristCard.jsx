@@ -4,29 +4,32 @@ import { withRouter } from 'react-router-dom'
 
 const { Meta } = Card
 
-const FloristCard=({florist})=> {
+const FloristCard = ({ florist, firstAction }) => {
   return (
     <Card
       bodyStyle={{ padding: '10px' }}
       hoverable
       cover={
-          <Row>
-            <Col span={12}>
-              <img alt={florist.user.name}
-                   src={florist.user.image === null ? ''
-                     : florist.user.image.imageUrl}
-              />
-            </Col>
-            <Col span={12}>
-              <Row>
-                <span>E-mail: {florist.user.email}</span>
-              </Row>
-              <Row>
-               <span>Тел: {florist.user.phoneNumber}</span>
-              </Row>
-            </Col>
-          </Row>
+        <Row>
+          <Col span={12}>
+            <img alt={florist.user.name}
+                 src={florist.user.image === null ? ''
+                   : florist.user.image.imageUrl}
+            />
+          </Col>
+          <Col span={12}>
+            <Row>
+              <span>E-mail: {florist.user.email}</span>
+            </Row>
+            <Row>
+              <span>Тел: {florist.user.phoneNumber}</span>
+            </Row>
+          </Col>
+        </Row>
       }
+      actions={[
+        firstAction
+      ]}
       title={
         <span>{florist.user.name.toUpperCase()}</span>
       }

@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
   deleteProductRequest,
   getCategoriesRequest,
-  getCountriesRequest,
-  getProductLengthsRequest,
+  getCountriesRequest, getFloristRequest,
+  getProductLengthsRequest, getProductRequest,
   getProductsByShopIdRequest,
   getProductsRequest,
   saveProductRequest,
@@ -11,6 +11,7 @@ import {
 } from '../../components/util/utilsAPI'
 import { notification } from 'antd'
 import { localizedStrings } from '../../components/util/localization'
+import { setFlorist } from './FloristSliceReducer'
 
 
 export const fetchProductLengths = createAsyncThunk(
@@ -56,6 +57,7 @@ const productSlice = createSlice({
   name: 'products',
   initialState: {
     products: [],
+    product: {},
 
     loading: false,
     errors: '',
@@ -87,6 +89,9 @@ const productSlice = createSlice({
     },
     setProducts: (state, action) => {
       state.products = action.payload
+    },
+    setProduct: (state, action) => {
+      state.product = action.payload
     },
     setTotalPages: (state, action) => {
       state.totalPages = action.payload
@@ -146,6 +151,7 @@ export const {
   setLoading,
   setErrors,
   setProducts,
+  setProduct,
   setTotalPages,
   setTotalElements,
   setPage,
@@ -247,6 +253,33 @@ export const updateProduct = (productId, product) => {
       notification.success({
         message: localizedStrings.alertAppName,
         description: 'Что-то пошло не так при обновлении!'
+      })
+    }
+  }
+}
+
+export const getProduct = (productId) => {
+  return async dispatch => {
+    try {
+      const promise = getProductRequest(productId)
+
+      if (!promise) {
+        return
+      }
+      promise
+        .then(response => {
+          console.log('response in product ', response)
+          notification.success({
+            message: localizedStrings.alertAppName,
+            description: 'product найден!'
+          })
+          dispatch(setProduct())
+        })
+    } catch (error) {
+      dispatch(setErrors(error))
+      notification.error({
+        message: localizedStrings.alertAppName,
+        description: 'Не удалось найти product!'
       })
     }
   }

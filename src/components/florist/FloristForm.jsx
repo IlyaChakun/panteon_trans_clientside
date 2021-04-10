@@ -5,7 +5,12 @@ import { Button, Col, Form, Input, Row, Select } from 'antd'
 import { SUCCESS } from '../../constants'
 
 import { withRouter } from 'react-router-dom'
-import { validateEmail, validatePassword, validateUserName } from '../common/validation/ValidationFunctions'
+import {
+  validateEmail,
+  validatePassword,
+  validatePhoneNumber,
+  validateUserName
+} from '../common/validation/ValidationFunctions'
 import LockOutlined from '@ant-design/icons/lib/icons/LockOutlined'
 import { validateExperience, validateSalary } from './FloristValidation'
 import ImageLoader from '../common/image/ImageLoader'
@@ -25,6 +30,10 @@ const FloristForm = (props) => {
   })
   const [experience, setExperience] = useState({
     value: props.florist.experience,
+    validateStatus: props.validateStatus
+  })
+  const [phoneNumber, setPhoneNumber] = useState({
+    value: props.florist.user.phoneNumber,
     validateStatus: props.validateStatus
   })
   const [salary, setSalary] = useState({
@@ -60,20 +69,16 @@ const FloristForm = (props) => {
     console.log('Received values of form:', values)
 
     const floristRequest = {
-
-      userSignUpRequest: {
-        roleType: 'ROLE_FLORIST',
-        name: name.value,
-        email: email.value,
-        image: {
-          imageUrl: imageUrl
-        },
-        password: password.value,
-        confirmedPassword: password.value
-      },
+      roleType: 'ROLE_FLORIST',
+      name: name.value,
+      email: email.value,
+      imageUrl: imageUrl,
+      password: password.value,
+      confirmedPassword: password.value,
       experience: experience.value,
       salary: salary.value,
-      shopId: shop.id
+      shopId: shop.id,
+      phoneNumber: phoneNumber.value
     }
 
     console.log('floristRequest request: ', floristRequest)
@@ -108,6 +113,14 @@ const FloristForm = (props) => {
     })
   }
 
+  const handlePhoneNumberChange = (event) => {
+    console.log('handlePhoneNumberChange event', event.target.value)
+    setPhoneNumber({
+      value: event.target.value,
+      ...validatePhoneNumber(event.target.value)
+    })
+  }
+
   const handleSalaryChange = (event) => {
     console.log('handleSalaryChange event', event.target.value)
     setSalary({
@@ -137,6 +150,73 @@ const FloristForm = (props) => {
       value: option.value,
       ...validateId(option.key)
     })
+  }
+
+  const phoneOption = () => {
+    if (props.florist.id === null) {
+      return ''
+    } else {
+      return (
+        <>
+          <Form.Item
+            label={'Телефон'}
+            validateStatus={phoneNumber.validateStatus}
+            hasFeedback
+            onChange={(event) => handlePhoneNumberChange(event)}
+            help={phoneNumber.errorMsg}
+            rules={[
+              {
+                required: false,
+                message: 'Пожалуйста, введите телефон!'
+              }
+            ]}
+          >
+            <Input
+              name='phoneNumber'
+              value={phoneNumber.value}
+              type={'tel'}
+              placeholder='Телефон'
+              style={{ fontSize: '16px', width: 200 }}
+            />
+          </Form.Item>
+        </>
+      )
+    }
+  }
+
+  const passwordOption = () => {
+    if (props.florist.id !== null) {
+      return ''
+    } else {
+      return (
+        <>
+          <Form.Item
+            label={'Пароль'}
+            validateStatus={password.validateStatus}
+            hasFeedback
+            onChange={(event) => handlePasswordChange(event)}
+            help={password.errorMsg}
+            rules={[
+              {
+                required: true,
+                message: 'Пожалуйста, введите пароль!'
+              }
+            ]}
+          >
+            <Input.Password
+              prefix={<LockOutlined />}
+              name='password'
+              type='password'
+              autoComplete='off'
+              placeholder={'Введите пароль'}
+              value={password.value}
+              maxLength={200}
+              iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+            />
+          </Form.Item>
+        </>
+      )
+    }
   }
 
   return (
@@ -221,6 +301,8 @@ const FloristForm = (props) => {
                 />
               </Form.Item>
 
+              {phoneOption()}
+
               <Form.Item
                 label={'Стаж работы'}
                 validateStatus={experience.validateStatus}
@@ -265,30 +347,7 @@ const FloristForm = (props) => {
                 />
               </Form.Item>
 
-              <Form.Item
-                label={'Пароль'}
-                validateStatus={password.validateStatus}
-                hasFeedback
-                onChange={(event) => handlePasswordChange(event)}
-                help={password.errorMsg}
-                rules={[
-                  {
-                    required: true,
-                    message: 'Пожалуйста, введите пароль!'
-                  }
-                ]}
-              >
-                <Input.Password
-                  prefix={<LockOutlined />}
-                  name='password'
-                  type='password'
-                  autoComplete='off'
-                  placeholder={'Введите пароль'}
-                  value={password.value}
-                  maxLength={200}
-                  iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-                />
-              </Form.Item>
+              {passwordOption()}
 
             </Col>
           </Row>

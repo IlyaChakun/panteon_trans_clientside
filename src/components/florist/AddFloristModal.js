@@ -19,7 +19,7 @@ const AddFloristModal = (props) => {
       password: ''
     },
     experience: '',
-    salary:''
+    salary: ''
   }
 
   const showModal = () => {
@@ -33,7 +33,23 @@ const AddFloristModal = (props) => {
   const handleSubmitButton = (floristRequest) => {
     console.log('florist request: ' + { ...floristRequest })
 
-    dispatch(addFlorist(floristRequest))
+    const addFloristRequest = {
+      userSignUpRequest: {
+        roleType: floristRequest.roleType,
+        name: floristRequest.name,
+        email: floristRequest.email,
+        image: {
+          imageUrl: floristRequest.imageUrl
+        },
+        password: floristRequest.password,
+        confirmedPassword: floristRequest.password
+      },
+      experience: floristRequest.experience,
+      salary: floristRequest.salary,
+      shopId: floristRequest.shopId
+    }
+
+    dispatch(addFlorist(addFloristRequest))
     props.updateList()
     handleCancel()
   }
@@ -41,10 +57,10 @@ const AddFloristModal = (props) => {
   return (
     <div className='pt-3 float-right'>
       <Button type='primary'
-        htmlType='submit'
-        size='large'
-        className={s.button}
-        onClick={showModal}
+              htmlType='submit'
+              size='large'
+              className={s.button}
+              onClick={showModal}
       >
         Добавить флориста
       </Button>

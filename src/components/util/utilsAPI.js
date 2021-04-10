@@ -264,6 +264,15 @@ export function getProductsRequest(searchCriteria) {
   })
 }
 
+export function getProductRequest(productId) {
+  const url = BASE_URL + 'products/' + productId
+
+  return request({
+    url: url,
+    method: 'GET'
+  })
+}
+
 export function getProductsByShopIdRequest(searchCriteria, shopId) {
   const page = 'page=' + Number(searchCriteria.page === 0 ? searchCriteria.page : searchCriteria.page)
   const size = '&size=' + Number(searchCriteria.size)
@@ -425,8 +434,8 @@ export function addFloristRequest(floristToAdd) {
   })
 }
 
-export function updateFloristRequest(floristToUpdate) {
-  const url = BASE_URL + 'florists/' + floristToUpdate.id
+export function updateFloristRequest(floristId, floristToUpdate) {
+  const url = BASE_URL + 'florists/' + floristId
 
   return request({
     url: url,

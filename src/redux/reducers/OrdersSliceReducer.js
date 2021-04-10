@@ -1,8 +1,8 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import {
   createOrderRequest,
   getAllOrders,
-  getOrderByIdRequest, getProductLengthsRequest,
+  getOrderByIdRequest,
   partialOrderUpdateRequest
 } from '../../components/util/utilsAPI'
 import { notification } from 'antd'
@@ -15,7 +15,7 @@ const initialState = {
 
   order: {},
   orderProducts: [],
-  orderLoading:false,
+  orderLoading: false,
 
   page: 1,
   size: 10,
@@ -111,7 +111,7 @@ export const getOrderById = (orderId) => {
       console.log('inside getOrderByIdRequest')
       const promise = getOrderByIdRequest(orderId)
 
-     await promise
+      await promise
         .then(response => {
           dispatch(setOrderLoading(true))
           console.log(response.orderProducts.length)

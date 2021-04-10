@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import { Col, Divider, List, Row } from 'antd'
-import FloristCard from './FloristCard'
 import { useDispatch, useSelector } from 'react-redux'
 
 import LoadingIndicator from '../common/util/LoadingIndicator'
 import { floristsSelector, getFlorists, setPage, setSize } from '../../redux/reducers/FloristSliceReducer'
 import AddFloristModal from './AddFloristModal'
+import FloristCardProxy from './FloristCardProxy'
 
 const FloristList = () => {
   const dispatch = useDispatch()
-
-  const [visible, setVisible] = useState(false)
 
   const {
     florists,
@@ -23,7 +21,7 @@ const FloristList = () => {
 
   useEffect(() => {
     loadList(page, size)
-  }, page, size)
+  }, [dispatch, page, size])
 
   const updateList = () => {
     loadList(page, size)
@@ -57,19 +55,12 @@ const FloristList = () => {
   }
 
   const floristList = florists === undefined ? [] : florists.map(florist =>
-    <FloristCard
+    <FloristCardProxy
       key={florist.id}
       florist={florist}
+      updateList={updateList}
     />
   )
-
-  const onClose = () => {
-    setVisible(false)
-  }
-
-  const onOpen = () => {
-    setVisible(true)
-  }
 
   return (
     <div className='pb-5'>
