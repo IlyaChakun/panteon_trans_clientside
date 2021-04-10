@@ -37,7 +37,7 @@ const floristsSlice = createSlice({
     },
     setAddFlorist: (state, action) => {
       const florist = action.payload
-      state.florists = (florist) = {
+      state.florists  = {
         ...state.florists,
         florist
       }

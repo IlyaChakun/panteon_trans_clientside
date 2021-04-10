@@ -23,7 +23,7 @@ const FloristList = () => {
 
   useEffect(() => {
     loadList(page, size)
-  }, [dispatch])
+  }, page, size)
 
   const updateList = () => {
     loadList(page, size)

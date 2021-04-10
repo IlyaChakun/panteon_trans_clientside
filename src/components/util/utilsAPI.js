@@ -410,7 +410,7 @@ export function getAllFloristsRequest(searchCriteria) {
 
 export function getFloristRequest(floristId) {
   return request({
-    url: BASE_URL + 'florists' + floristId,
+    url: BASE_URL + 'florists/' + floristId,
     method: 'GET'
   })
 }
@@ -426,11 +426,21 @@ export function addFloristRequest(floristToAdd) {
 }
 
 export function updateFloristRequest(floristToUpdate) {
-  const url = BASE_URL + 'florists' + floristToUpdate.id
+  const url = BASE_URL + 'florists/' + floristToUpdate.id
 
   return request({
     url: url,
     method: 'PUT',
     body: JSON.stringify(floristToUpdate)
+  })
+}
+
+export function partialOrderUpdateRequest(orderPartialUpdate) {
+  const url = BASE_URL + 'orders/' + orderPartialUpdate.orderId
+
+  return request({
+    url: url,
+    method: 'PATCH',
+    body: JSON.stringify(orderPartialUpdate)
   })
 }

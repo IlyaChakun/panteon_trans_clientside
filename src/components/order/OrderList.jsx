@@ -6,8 +6,10 @@ import { getOrders, orderSelector, setPage, setSize } from '../../redux/reducers
 import LoadingIndicator from '../common/util/LoadingIndicator'
 import { isAdmin, isUserClient, isUserFlorist } from '../../app/App'
 import AddFloristToOrderModal from './ChooseFloristModal'
+import DeleteOutlined from '@ant-design/icons/lib/icons/DeleteOutlined'
+import CloseOrderModal from './CloseOrderModal'
 
-const { Column, ColumnGroup } = Table
+const { Column } = Table
 const { TabPane } = Tabs
 
 const OrderList = (props) => {
@@ -65,7 +67,7 @@ const OrderList = (props) => {
   }
 
   if (loading === true) {
-    return <LoadingIndicator/>
+    return <LoadingIndicator />
   }
 
   const rowSelection = {
@@ -73,6 +75,20 @@ const OrderList = (props) => {
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
     }
   }
+
+  const dataSource = []
+
+  orders.map(order => {
+    dataSource.push({
+      key: order.id,
+      orderStatus: order.orderStatus,
+      dateOfCreation: order.dateOfCreation,
+      comment: order.comment,
+      orderPriceInfo: order.orderPriceInfo.totalAmount,
+      deliveryTypeName: order.orderDeliveryInfo.deliveryType.deliveryTypeName,
+      actionId: order.id
+    })
+  })
 
   console.log(JSON.stringify(orders))
   return (
@@ -92,7 +108,6 @@ const OrderList = (props) => {
 
       <div>
 
-        <Divider/>
 
         <Table
           pagination={{
@@ -120,88 +135,81 @@ const OrderList = (props) => {
             ...rowSelection
           }}
           rowKey={'id'}
-          dataSource={orders}
+          dataSource={dataSource}
           footer={() => ''}
         >
           <Column
-            title="Статус заказа"
-            dataIndex="orderStatus"
+            title='Статус заказа'
+            dataIndex='orderStatus'
+            key='orderStatus'
             render={orderStatus => (
-              <Tag color="blue" key={orderStatus}>
+              <Tag color='blue' key={orderStatus}>
                 {orderStatus}
               </Tag>
             )}
           />
-          dateOfCreation
-          <Column title="Дата создания" dataIndex="dateOfCreation"/>
-          <Column title="Комментарий" dataIndex="comment"/>
-          <Column title="Сумма заказа" dataIndex={'orderPriceInfo'}/>
-          <Column title="Способ получения" dataIndex="orderDeliveryInfo.deliveryType.deliveryTypeName"/>
+          <Column title='Дата создания' dataIndex='dateOfCreation' key='dateOfCreation' />
+          <Column title='Комментарий' dataIndex='comment' key='comment' />
+          <Column title='Сумма заказа' dataIndex='orderPriceInfo' key='orderPriceInfo' />
+          <Column title='Способ получения' dataIndex='deliveryTypeName' key='deliveryTypeName' />
+          <Column title='Действия' dataIndex='actionId' key='actionId' render={actionId => (
+            <Space size='middle'>
+              {orderStatus === 'NEW' ? (
+                <>
 
-          <Column
-            title="Действия"
-            key="action"
-            render={(text, record) => (
-              <Space size="middle">
+                  <div className={isAdmin(props.currentUser) ? '' : 'custom-hidden'}>
+                    <CloseOrderModal
+                      orderId={actionId}
+                      button={<Button type='primary' size='large'> Закрыть заказ </Button>} />
+                  </div>
 
-                {orderStatus === 'NEW' ? (
-                  <>
-                    <Button
+                  {isAdmin(props.currentUser) === false
+                    ? <AddFloristToOrderModal
+                      updateList={updateList} />
+                    : ''
+                  }
+                </>
+              ) : ''}
+
+              {orderStatus === 'COMPLETED' ? (
+                <>
+                  {isUserClient(props.currentUser)
+                    ? <Button
                       type='primary'
                       size='large'
                       // onClick={showModal}
                     >
-                      Закрыть заказ
+                      Оставить отзыв
                     </Button>
+                    : ''
+                  }
+                </>
+              ) : ''}
 
-                    {isAdmin(props.currentUser) === false
-                      ? <AddFloristToOrderModal
-                        updateList={updateList}/>
-                      : ''
-                    }
-                  </>
-                ) : ''}
+              {orderStatus === 'IN_PROCESS' ? (
+                <>
+                  {isUserFlorist(props.currentUser)
+                    ? <Button
+                      type='primary'
+                      size='large'
+                      // onClick={showModal}
+                    >
+                      Выполнить заказ
+                    </Button>
+                    : ''
+                  }
+                </>
+              ) : ''}
 
-                {orderStatus === 'COMPLETED' ? (
-                  <>
-                    {isUserClient(props.currentUser)
-                      ? <Button
-                        type='primary'
-                        size='large'
-                        // onClick={showModal}
-                      >
-                        Оставить отзыв
-                      </Button>
-                      : ''
-                    }
-                  </>
-                ) : ''}
-
-                {orderStatus === 'IN_PROCESS' ? (
-                  <>
-                    {isUserFlorist(props.currentUser)
-                      ? <Button
-                        type='primary'
-                        size='large'
-                        // onClick={showModal}
-                      >
-                        Выполнить заказ
-                      </Button>
-                      : ''
-                    }
-                  </>
-                ) : ''}
-
-                <Button
-                  type='primary'
-                  size='large'
-                  // onClick={showModal}
-                >
-                  Подбронее
-                </Button>
-              </Space>
-            )}
-          />
+              <Button
+                type='primary'
+                size='large'
+                // onClick={showModal}
+              >
+                Подбронее
+              </Button>
+            </Space>
+          )} />
         </Table>
       </div>
 

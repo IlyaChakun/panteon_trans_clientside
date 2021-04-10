@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { createOrderRequest, getAllOrders } from '../../components/util/utilsAPI'
+import { createOrderRequest, getAllOrders, partialOrderUpdateRequest } from '../../components/util/utilsAPI'
 import { notification } from 'antd'
 import { localizedStrings } from '../../components/util/localization'
 
@@ -113,3 +113,39 @@ export const placeOrder = (order) => {
     }
   }
 }
+
+export const partialOrderUpdate = (orderPartialUpdate) => {
+  return async dispatch => {
+    try {
+      const promise = partialOrderUpdateRequest(orderPartialUpdate)
+
+      if (!promise) {
+        return
+      }
+
+      promise
+        .then(() => {
+          notification.success({
+            message: localizedStrings.alertAppName,
+            description: 'Успешное удаление!'
+          })
+          window.location.href = '/'
+        })
+    } catch (error) {
+      if (error.status === 401) {
+        this.props.handleLogout('/login', 'error', localizedStrings.alertLoggedOut)
+      } else if (error.status === 404) {
+        notification.error({
+          message: localizedStrings.alertAppName,
+          description: 'Заказ не найден!'
+        })
+      } else {
+        notification.error({
+          message: localizedStrings.alertAppName,
+          description: error.message || localizedStrings.alertException
+        })
+      }
+    }
+  }
+}
+
