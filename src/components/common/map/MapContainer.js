@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {GoogleMap, withGoogleMap, withScriptjs} from "react-google-maps";
-import Geocode from "react-geocode";
-import {GoogleMapsAPI} from "../../../constants";
-import Autocomplete from 'react-google-autocomplete';
+import React, { Component } from 'react'
+import { GoogleMap, withGoogleMap, withScriptjs } from 'react-google-maps'
+import Geocode from 'react-geocode'
+import { GoogleMapsAPI } from '../../../constants'
+import Autocomplete from 'react-google-autocomplete'
 
 Geocode.setApiKey(GoogleMapsAPI);
 Geocode.enableDebug();

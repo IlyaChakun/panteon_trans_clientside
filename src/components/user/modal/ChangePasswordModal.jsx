@@ -1,8 +1,8 @@
-import React from 'react';
-import {Button, Form, Input, Modal, notification} from 'antd';
-import {localizedStrings} from '../../util/localization'
-import {ERROR, PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH, SUCCESS} from "../../../constants";
-import {changeUserPassword} from "../../util/utilsAPI";
+import React from 'react'
+import { Button, Form, Input, Modal, notification } from 'antd'
+import { localizedStrings } from '../../util/localization'
+import { ERROR, PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH, SUCCESS } from '../../../constants'
+import { changeUserPassword } from '../../util/utilsAPI'
 
 class ChangePasswordModal extends React.Component {
     state = {

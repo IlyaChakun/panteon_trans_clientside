@@ -1,10 +1,10 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 
-import ReviewCard from './ReviewCard';
-import {getAllReviewsRequest} from '../../util/utilsAPI';
-import AddReviewModal from './AddReviewModal';
+import ReviewCard from './ReviewCard'
+import { getAllReviewsRequest } from '../../util/utilsAPI'
+import AddReviewModal from './AddReviewModal'
 import './ReviewsBlock.css'
-import {Col, List, Row} from 'antd';
+import { Col, List, Row } from 'antd'
 
 
 class ReviewsList extends Component {

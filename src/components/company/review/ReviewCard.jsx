@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import {Card, Rate} from "antd"
+import React, { Component } from 'react'
+import { Card, Rate } from 'antd'
 import './ReviewCard.css'
 
 const {Meta} = Card

@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
-import {ACCESS_TOKEN, ERROR, REFRESH_TOKEN} from '../../../constants'
-import {Redirect, withRouter} from 'react-router-dom'
+import React, { Component } from 'react'
+import { ACCESS_TOKEN, ERROR, REFRESH_TOKEN } from '../../../constants'
+import { Redirect, withRouter } from 'react-router-dom'
 
 class OAuth2RedirectHandler extends Component {
 

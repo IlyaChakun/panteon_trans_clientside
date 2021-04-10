@@ -1,6 +1,6 @@
-import {configureStore, getDefaultMiddleware} from '@reduxjs/toolkit'
-import ProductsSliceReducer from "./reducers/ProductsSliceReducer";
-import AuthSliceReducer from "./reducers/AuthSliceReducer";
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
+import ProductsSliceReducer from './reducers/ProductsSliceReducer'
+import AuthSliceReducer from './reducers/AuthSliceReducer'
 import CompanySliceReducer from './reducers/CompanySliceReducer'
 import OrdersSliceReducer from './reducers/OrdersSliceReducer'
 import CartsSliceReducer from './reducers/CartsSliceReducer'

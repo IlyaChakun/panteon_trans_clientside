@@ -1,9 +1,9 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import LoadingOutlined from '@ant-design/icons/lib/icons/LoadingOutlined'
 import InboxOutlined from '@ant-design/icons/lib/icons/InboxOutlined'
-import {beforeUpload, getBase64} from '../../util/pictureLoaderUtil'
+import { beforeUpload, getBase64 } from '../../util/pictureLoaderUtil'
 import './ImageLoader.css'
-import {Upload} from 'antd'
+import { Upload } from 'antd'
 
 const {Dragger} = Upload
 

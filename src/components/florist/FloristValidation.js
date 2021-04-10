@@ -1,5 +1,4 @@
-import { ERROR, PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH, SUCCESS } from '../../constants'
-import { localizedStrings } from '../util/localization'
+import { ERROR, SUCCESS } from '../../constants'
 
 export const validateExperience = (experience) => {
   if (experience < 0.5) {

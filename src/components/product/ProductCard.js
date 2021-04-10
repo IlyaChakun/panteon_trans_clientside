@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Card, Col, InputNumber, Radio, Rate, Row } from 'antd'
 import './ProductCard.css'
 

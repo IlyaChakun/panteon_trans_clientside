@@ -1,9 +1,9 @@
-import React, {Component} from 'react'
-import {withRouter} from 'react-router-dom'
-import {getOrderById} from "../util/utilsAPI";
-import LoadingIndicator from "../common/util/LoadingIndicator";
-import OrderProduct from "./OrderProduct";
-import {Col, List, Row} from "antd";
+import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
+import { getOrderById } from '../util/utilsAPI'
+import LoadingIndicator from '../common/util/LoadingIndicator'
+import OrderProduct from './OrderProduct'
+import { Col, List, Row } from 'antd'
 
 class OrderPage extends Component {
 

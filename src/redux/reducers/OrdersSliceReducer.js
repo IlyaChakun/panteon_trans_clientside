@@ -1,7 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import {
-  createOrderRequest, getAllOrders
-} from '../../components/util/utilsAPI'
+import { createOrderRequest, getAllOrders } from '../../components/util/utilsAPI'
 import { notification } from 'antd'
 import { localizedStrings } from '../../components/util/localization'
 

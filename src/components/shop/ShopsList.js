@@ -1,12 +1,12 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import ShopCard from './ShopCard'
-import {withRouter} from 'react-router-dom'
-import MapContainer from "../common/map/MapContainer";
-import AddShopModal from "./AddShopModal";
-import {getAllShopsRequest} from "../util/utilsAPI";
-import {Col, List, Row} from "antd";
-import Link from "react-router-dom/Link";
-import SettingOutlined from "@ant-design/icons/lib/icons/SettingOutlined";
+import { withRouter } from 'react-router-dom'
+import MapContainer from '../common/map/MapContainer'
+import AddShopModal from './AddShopModal'
+import { getAllShopsRequest } from '../util/utilsAPI'
+import { Col, List, Row } from 'antd'
+import Link from 'react-router-dom/Link'
+import SettingOutlined from '@ant-design/icons/lib/icons/SettingOutlined'
 
 class ShopsList extends Component {
 

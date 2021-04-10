@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import {Card, Col, Row} from 'antd'
+import React, { Component } from 'react'
+import { Card, Col, Row } from 'antd'
 
 const {Meta} = Card
 

@@ -3,10 +3,10 @@ import { notification } from 'antd'
 import { localizedStrings } from '../../components/util/localization'
 import {
   addFloristRequest,
-  getAllFloristsRequest, getFloristRequest,
+  getAllFloristsRequest,
+  getFloristRequest,
   updateProductInCartRequest
 } from '../../components/util/utilsAPI'
-import { getCart } from './CartsSliceReducer'
 
 const initialState = {
 

@@ -6,10 +6,7 @@ import ProductForm from './ProductForm.jsx'
 import SettingOutlined from '@ant-design/icons/lib/icons/SettingOutlined'
 
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  productSelector,
-  updateProduct
-} from '../../redux/reducers/ProductsSliceReducer'
+import { productSelector, updateProduct } from '../../redux/reducers/ProductsSliceReducer'
 import { SUCCESS } from '../../constants'
 
 const EditProductModal = (props) => {

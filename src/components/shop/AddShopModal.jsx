@@ -1,10 +1,10 @@
-import React, {Component} from 'react'
-import {withRouter} from 'react-router-dom'
+import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 
-import {Button, Modal, notification} from "antd";
-import {localizedStrings} from "../util/localization";
-import {saveShopRequest} from "../util/utilsAPI";
-import ShopForm from "./ShopForm";
+import { Button, Modal, notification } from 'antd'
+import { localizedStrings } from '../util/localization'
+import { saveShopRequest } from '../util/utilsAPI'
+import ShopForm from './ShopForm'
 
 
 class AddShopModal extends Component {

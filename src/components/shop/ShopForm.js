@@ -1,18 +1,18 @@
-import React, {Component} from 'react'
-import {localizedStrings} from '../util/localization'
+import React, { Component } from 'react'
+import { localizedStrings } from '../util/localization'
 
-import s from "../user/profile/Profile.module.css";
-import {Button, Form, Input} from "antd";
+import s from '../user/profile/Profile.module.css'
+import { Button, Form, Input } from 'antd'
 
-import {ERROR, SUCCESS,} from "../../constants";
+import { ERROR, SUCCESS } from '../../constants'
 
-import ImageLoader from "../common/image/ImageLoader";
+import ImageLoader from '../common/image/ImageLoader'
 import {
-    validateAddress,
-    validateCity,
-    validateEmail,
-    validatePhoneNumber
-} from "../common/validation/ValidationFunctions";
+  validateAddress,
+  validateCity,
+  validateEmail,
+  validatePhoneNumber
+} from '../common/validation/ValidationFunctions'
 
 const layout = {
     labelCol: {

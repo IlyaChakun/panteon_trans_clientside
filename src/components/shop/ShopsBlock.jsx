@@ -1,10 +1,8 @@
-import React, {Component} from 'react'
-
-import MapContainer from "../common/map/MapContainer";
-import "./ShopsBlock.css"
-import {Link} from "react-router-dom";
-import ShopCard from "./ShopCard";
-import {getAllShopsRequest} from "../util/utilsAPI";
+import React, { Component } from 'react'
+import './ShopsBlock.css'
+import { Link } from 'react-router-dom'
+import ShopCard from './ShopCard'
+import { getAllShopsRequest } from '../util/utilsAPI'
 
 class ShopsBlock extends Component {
 

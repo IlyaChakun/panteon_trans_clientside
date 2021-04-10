@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Button, Col, Divider, Drawer, List, Row } from 'antd'
+import { Col, Divider, List, Row } from 'antd'
 import FloristCard from './FloristCard'
 import { useDispatch, useSelector } from 'react-redux'
 
 import LoadingIndicator from '../common/util/LoadingIndicator'
 import { floristsSelector, getFlorists, setPage, setSize } from '../../redux/reducers/FloristSliceReducer'
 import AddFloristModal from './AddFloristModal'
-import ProductCardProxy from '../product/ProductCardProxy'
 
 const FloristList = () => {
   const dispatch = useDispatch()

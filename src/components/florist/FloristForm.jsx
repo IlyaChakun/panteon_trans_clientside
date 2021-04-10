@@ -6,7 +6,6 @@ import { SUCCESS } from '../../constants'
 
 import { withRouter } from 'react-router-dom'
 import { validateEmail, validatePassword, validateUserName } from '../common/validation/ValidationFunctions'
-import { localizedStrings } from '../util/localization'
 import LockOutlined from '@ant-design/icons/lib/icons/LockOutlined'
 import { validateExperience, validateSalary } from './FloristValidation'
 import ImageLoader from '../common/image/ImageLoader'

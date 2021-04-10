@@ -5,12 +5,7 @@ import AddProductModal from './AddProductModal'
 import ProductCardProxy from './ProductCardProxy'
 
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  getProducts,
-  productSelector,
-  setPage,
-  setSize
-} from '../../redux/reducers/ProductsSliceReducer'
+import { getProducts, productSelector, setPage, setSize } from '../../redux/reducers/ProductsSliceReducer'
 import SideMenu from '../common/sidemenu/SideMenu'
 import LoadingIndicator from '../common/util/LoadingIndicator'
 
