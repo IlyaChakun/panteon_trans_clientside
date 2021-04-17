@@ -165,7 +165,7 @@ export const partialOrderUpdate = (orderPartialUpdate) => {
         .then(() => {
           notification.success({
             message: localizedStrings.alertAppName,
-            description: 'Успешное удаление!'
+            description: 'Операция выполнена успешна!'
           })
           window.location.href = '/'
         })

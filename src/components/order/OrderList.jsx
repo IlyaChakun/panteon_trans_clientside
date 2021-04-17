@@ -33,6 +33,15 @@ const OrderList = (props) => {
     loadList(page, size)
   }
 
+  const loadListWithOrderStatus = (orderStatus) => {
+    const searchCriteria = {
+      page: page,
+      size: size,
+      orderStatus: orderStatus
+    }
+    dispatch(getOrders(searchCriteria))
+  }
+
   const loadList = (page, size) => {
     const searchCriteria = {
       page: page,
@@ -59,7 +68,7 @@ const OrderList = (props) => {
     setOrderStatus(orderStatus)
     setActiveTab(orderStatus)
 
-    loadList(page, size)
+    loadListWithOrderStatus(orderStatus)
   }
 
   const loadMore = () => {
@@ -67,7 +76,7 @@ const OrderList = (props) => {
   }
 
   if (loading === true) {
-    return <LoadingIndicator />
+    return <LoadingIndicator/>
   }
 
   // const rowSelection = {
@@ -111,7 +120,6 @@ const OrderList = (props) => {
 
       <div>
 
-
         <Table
           pagination={{
 
@@ -151,10 +159,10 @@ const OrderList = (props) => {
               </Tag>
             )}
           />
-          <Column title='Дата создания' dataIndex='dateOfCreation' key='dateOfCreation' />
-          <Column title='Комментарий' dataIndex='comment' key='comment' />
-          <Column title='Сумма заказа' dataIndex='orderPriceInfo' key='orderPriceInfo' />
-          <Column title='Способ получения' dataIndex='deliveryTypeName' key='deliveryTypeName' />
+          <Column title='Дата создания' dataIndex='dateOfCreation' key='dateOfCreation'/>
+          <Column title='Комментарий' dataIndex='comment' key='comment'/>
+          <Column title='Сумма заказа' dataIndex='orderPriceInfo' key='orderPriceInfo'/>
+          <Column title='Способ получения' dataIndex='deliveryTypeName' key='deliveryTypeName'/>
           <Column title='Действия' dataIndex='orderId' key='orderId' render={orderId => (
             <Space size='middle'>
               {orderStatus === 'NEW' ? (
@@ -163,13 +171,13 @@ const OrderList = (props) => {
                   <div className={isAdmin(props.currentUser) ? '' : 'custom-hidden'}>
                     <CloseOrderModal
                       orderId={orderId}
-                      button={<Button type='primary' size='large'> Закрыть заказ </Button>} />
+                      button={<Button type='primary' size='large'> Закрыть заказ </Button>}/>
                   </div>
 
                   {isAdmin(props.currentUser) === false
                     ? <ChooseFloristModal
                       orderId={orderId}
-                      updateList={updateList} />
+                      updateList={updateList}/>
                     : ''
                   }
                 </>
@@ -210,7 +218,7 @@ const OrderList = (props) => {
               />
 
             </Space>
-          )} />
+          )}/>
         </Table>
       </div>
 

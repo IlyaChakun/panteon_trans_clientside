@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import Modal from 'antd/es/modal'
-import { Button, Space, Table, Tabs } from 'antd'
+import { Button, Space, Table } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { floristsSelector, getFlorists } from '../../redux/reducers/FloristSliceReducer'
 import { partialOrderUpdate, setPage, setSize } from '../../redux/reducers/OrdersSliceReducer'
@@ -80,20 +80,23 @@ const ChooseFloristModal = (props) => {
   }
 
   if (loading === true) {
-    return <LoadingIndicator />
+    return <LoadingIndicator/>
   }
 
   const dataSource = []
 
   florists.map(florist => {
-    dataSource.push({
-      key: florist.id,
-      floristName: florist.user.name,
-      rating: florist.floristStatistic.rating,
-      experience: florist.experience,
-      completedOrdersCount: florist.floristStatistic.completedOrdersCount,
-      floristId: florist.id
-    })
+    if (florist.activeOrdersCount < 3) {
+      dataSource.push({
+        key: florist.id,
+        floristName: florist.user.name,
+        rating: florist.floristStatistic.rating,
+        experience: florist.experience,
+        completedOrdersCount: florist.floristStatistic.completedOrdersCount,
+        floristId: florist.id,
+        activeOrdersCount: florist.activeOrdersCount
+      })
+    }
   })
 
   return (
@@ -139,17 +142,18 @@ const ChooseFloristModal = (props) => {
           dataSource={dataSource}
           footer={() => ''}
         >
-          <Column title='Флорист' dataIndex='floristName' key='floristName' />
-          <Column title='Рейтинг' dataIndex='rating' key='rating' />
-          <Column title='Опыт(лет)' dataIndex='experience' key='experience' />
-          <Column title='Заказов выполнено' dataIndex='completedOrdersCount' key='completedOrdersCount' />
+          <Column title='Флорист' dataIndex='floristName' key='floristName'/>
+          <Column title='Рейтинг' dataIndex='rating' key='rating'/>
+          <Column title='Опыт(лет)' dataIndex='experience' key='experience'/>
+          <Column title='Заказов выполнено' dataIndex='completedOrdersCount' key='completedOrdersCount'/>
+          <Column title='Активных заказов' dataIndex='activeOrdersCount' key='activeOrdersCount'/>
           <Column title='Действия' dataIndex='floristId' key='floristId' render={floristId => (
             <Space size='middle'>
               <Button type='primary' size='large' onClick={() => onChooseFlorist(floristId)}>
                 Передать заказ
               </Button>
             </Space>
-          )} />
+          )}/>
         </Table>
       </Modal>
     </>
