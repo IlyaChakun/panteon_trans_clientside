@@ -97,6 +97,12 @@ const Profile = (props) => {
                 </Col>
 
                 <Col span={14}>
+
+                  <div>
+                    Вы: {currentUser.userType === 'ROLE_CLIENT' ? 'Клиент'
+                    : currentUser.userType === 'ROLE_FLORIST' ? 'Флорист' : 'Администратор'}
+                  </div>
+
                   <Form.Item
                     className={s.formItem}
                     label='Ваше имя'
@@ -181,7 +187,6 @@ const Profile = (props) => {
         <TabPane tab='Ваши заказы' key='2'>
           {loadingIndicatorOrReadyOrderListForm}
         </TabPane>
-
 
       </Tabs>
     </div>

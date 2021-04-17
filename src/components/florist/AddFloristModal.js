@@ -56,11 +56,12 @@ const AddFloristModal = (props) => {
 
   return (
     <div className='pt-3 float-right'>
-      <Button type='primary'
-              htmlType='submit'
-              size='large'
-              className={s.button}
-              onClick={showModal}
+      <Button
+        type='primary'
+        htmlType='submit'
+        size='large'
+        className={s.button}
+        onClick={showModal}
       >
         Добавить флориста
       </Button>

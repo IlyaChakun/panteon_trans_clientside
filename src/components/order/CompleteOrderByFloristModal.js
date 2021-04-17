@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import { partialOrderUpdate } from '../../redux/reducers/OrdersSliceReducer'
 
 
-const CloseOrderModal = ({ orderId, button }) => {
+const CompleteOrderByFloristModal = ({ orderId, button }) => {
   const dispatch = useDispatch()
 
 
@@ -15,8 +15,8 @@ const CloseOrderModal = ({ orderId, button }) => {
 
     const orderPartialUpdate = {
       orderId: orderId,
-      orderClose: {
-        description: 'Хочу отменить заказ'
+      orderFloristCompletion: {
+        floristComment: 'I don\'t want this order'
       }
     }
 
@@ -30,7 +30,7 @@ const CloseOrderModal = ({ orderId, button }) => {
 
   return (
     <Popconfirm
-      title='Вы уверены, что хотите отменить заказ?'
+      title='Вы уверены, что хотите выполнить заказ?'
       onConfirm={confirm}
       onCancel={cancel}
       okText='Да'
@@ -40,4 +40,4 @@ const CloseOrderModal = ({ orderId, button }) => {
   )
 }
 
-export default withRouter(CloseOrderModal)
+export default withRouter(CompleteOrderByFloristModal)

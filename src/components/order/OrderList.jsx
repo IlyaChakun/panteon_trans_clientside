@@ -8,6 +8,7 @@ import { isAdmin, isUserClient, isUserFlorist } from '../../app/App'
 import CloseOrderModal from './CloseOrderModal'
 import ChooseFloristModal from './ChooseFloristModal'
 import OrderDetailModal from './OrderDetailModal'
+import CompleteOrderByFloristModal from './CompleteOrderByFloristModal'
 
 const { Column } = Table
 const { TabPane } = Tabs
@@ -201,13 +202,9 @@ const OrderList = (props) => {
               {orderStatus === 'IN_PROCESS' ? (
                 <>
                   {isUserFlorist(props.currentUser)
-                    ? <Button
-                      type='primary'
-                      size='large'
-                      // onClick={showModal}
-                    >
-                      Выполнить заказ
-                    </Button>
+                    ? <CompleteOrderByFloristModal
+                      orderId={orderId}
+                      button={<Button type='primary' size='large'> Выполнить заказ </Button>}/>
                     : ''
                   }
                 </>

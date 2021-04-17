@@ -204,14 +204,14 @@ const FloristForm = (props) => {
             ]}
           >
             <Input.Password
-              prefix={<LockOutlined />}
+              prefix={<LockOutlined/>}
               name='password'
               type='password'
               autoComplete='off'
               placeholder={'Введите пароль'}
               value={password.value}
               maxLength={200}
-              iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+              iconRender={visible => (visible ? <EyeTwoTone/> : <EyeInvisibleOutlined/>)}
             />
           </Form.Item>
         </>
@@ -297,6 +297,28 @@ const FloristForm = (props) => {
                   value={email.value}
                   type={email}
                   placeholder='Электронная почта'
+                  style={{ fontSize: '16px', width: 200 }}
+                />
+              </Form.Item>
+
+              <Form.Item
+                label={'Пароль'}
+                validateStatus={password.validateStatus}
+                hasFeedback
+                onChange={(event) => handlePasswordChange(event)}
+                help={password.errorMsg}
+                rules={[
+                  {
+                    required: true,
+                    message: 'Пожалуйста, введите пароль!'
+                  }
+                ]}
+              >
+                <Input.Password
+                  name='password'
+                  value={password.value}
+                  type={password}
+                  placeholder='пароль'
                   style={{ fontSize: '16px', width: 200 }}
                 />
               </Form.Item>
