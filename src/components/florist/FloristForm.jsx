@@ -186,7 +186,7 @@ const FloristForm = (props) => {
   }
 
   const passwordOption = () => {
-    if (props.florist.id !=='') {
+    if (props.florist.id !== '') {
       return ''
     } else {
       return (
@@ -220,7 +220,9 @@ const FloristForm = (props) => {
     }
   }
 
-  const isEmailReadOnly = props.florist.id === ''
+  const isEmailReadOnly = props.florist.id !== ''
+
+  console.log('isEmailReadOnly=' + isEmailReadOnly)
 
   return (
 
@@ -286,7 +288,6 @@ const FloristForm = (props) => {
                 label={'Электронная почта'}
                 validateStatus={email.validateStatus}
                 hasFeedback
-                disabled={isEmailReadOnly}
                 onChange={(event) => handleEmailChange(event)}
                 help={email.errorMsg}
                 rules={[
