@@ -38,6 +38,7 @@ const AddFloristModal = (props) => {
         roleType: floristRequest.roleType,
         name: floristRequest.name,
         email: floristRequest.email,
+        phoneNumber: floristRequest.phoneNumber,
         image: {
           imageUrl: floristRequest.imageUrl
         },

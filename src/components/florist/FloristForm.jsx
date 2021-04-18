@@ -185,7 +185,7 @@ const FloristForm = (props) => {
   }
 
   const passwordOption = () => {
-    if (props.florist.id !== null) {
+    if (props.florist.id !=='') {
       return ''
     } else {
       return (
