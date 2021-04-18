@@ -134,11 +134,12 @@ export const login = (loginInput) => {
           localStorage.setItem(ACCESS_TOKEN, response.accessToken)
           localStorage.setItem(REFRESH_TOKEN, response.refreshToken)
           dispatch(setIsLoading(false))
-
+          window.location.href='/products'
           notification.success({
             message: 'Цветочный магазин',
             description: 'Успешный вход'
           })
+
         })
     } catch (error) {
       dispatch(setErrors(error))

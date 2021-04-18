@@ -12,7 +12,7 @@ import {
 
 export const localizedStrings = new LocalizedStrings({
 
-  en: {
+  en_old: {
     logout: 'Logout',
     login: 'Login',
     signUp: 'Register',
@@ -122,7 +122,7 @@ export const localizedStrings = new LocalizedStrings({
     logInWithFacebook: 'Sign in with Facebook'
     ///
   },
-  ru: {
+  en: {
     logout: 'Выйти',
     login: 'Войти',
     signUp: 'Зарегистрироваться',
