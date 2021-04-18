@@ -152,6 +152,7 @@ const FloristForm = (props) => {
       ...validateId(option.key)
     })
   }
+  const isReadOnly = props.florist.id !== ''
 
   const phoneOption = () => {
     if (props.florist.id === '') {
@@ -220,9 +221,7 @@ const FloristForm = (props) => {
     }
   }
 
-  const isEmailReadOnly = props.florist.id !== ''
 
-  console.log('isEmailReadOnly=' + isEmailReadOnly)
 
   return (
 
@@ -301,7 +300,7 @@ const FloristForm = (props) => {
                   name='email'
                   value={email.value}
                   type={email}
-                  disabled={isEmailReadOnly}
+                  disabled={isReadOnly}
                   placeholder='Электронная почта'
                   style={{ fontSize: '16px', width: 200 }}
                 />

@@ -221,26 +221,18 @@ function ReportsDropdownMenu(props) {
         {/*    Презентация компании */}
         {/* </Link> */}
 
-        <Button type='link' href='/users/admin/company-presentation/pdf' target='_top'>
+        <Button type='link' href='/company/presentation/pdf' target='_top'>
           Презентация компании
         </Button>
       </Menu.Item>
       <Menu.Item key='yearSaleReport' className='dropdown-item'>
-        {/* <Link to="/yearSaleReport" target="_self"> */}
-        {/*    Отчет продаж годовой */}
-        {/* </Link> */}
-
-        <Button type='link' href='/users/admin/company-annual-report/pdf' target='_top'>
+        <Button type='link' href='/company/annual-report/pdf' target='_top'>
           Отчет продаж годовой
         </Button>
       </Menu.Item>
       <Menu.Item key='monthSaleReport' className='dropdown-item'>
-        {/* <Link to="/monthSaleReport" target="_self"> */}
-        {/*    Отчет продаж за текущий месяц */}
-        {/* </Link> */}
-
-        <Button type='link' href='/users/admin/company-monthly-report/pdf' target='_top'>
-          Отчет продаж годовой
+        <Button type='link' href='/company/monthly-report/pdf' target='_top'>
+          Отчет продаж за текущий месяц
         </Button>
       </Menu.Item>
     </Menu>
