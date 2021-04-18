@@ -2,8 +2,9 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
   deleteProductRequest,
   getCategoriesRequest,
-  getCountriesRequest, getFloristRequest,
-  getProductLengthsRequest, getProductRequest,
+  getCountriesRequest,
+  getProductLengthsRequest,
+  getProductRequest,
   getProductsByShopIdRequest,
   getProductsRequest,
   saveProductRequest,
@@ -11,7 +12,6 @@ import {
 } from '../../components/util/utilsAPI'
 import { notification } from 'antd'
 import { localizedStrings } from '../../components/util/localization'
-import { setFlorist } from './FloristSliceReducer'
 
 
 export const fetchProductLengths = createAsyncThunk(
