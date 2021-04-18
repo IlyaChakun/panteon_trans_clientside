@@ -468,3 +468,12 @@ export function partialOrderUpdateRequest(orderPartialUpdate) {
     body: JSON.stringify(orderPartialUpdate)
   })
 }
+
+
+export function getMonthlyReportRequest(floristId) {
+  const url = BASE_URL + 'florists/' + floristId + '/monthly-report/pdf'
+  return request({
+    url: url,
+    method: 'GET'
+  })
+}

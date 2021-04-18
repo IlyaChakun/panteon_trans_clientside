@@ -10,12 +10,19 @@ import UserOutlined from '@ant-design/icons/lib/icons/UserOutlined'
 import CaretDownOutlined from '@ant-design/icons/lib/icons/CaretDownOutlined'
 import LoginOutlined from '@ant-design/icons/lib/icons/LoginOutlined'
 import UserAddOutlined from '@ant-design/icons/lib/icons/UserAddOutlined'
-import { isAdmin } from '../../../app/App'
+import { isAdmin, isUserFlorist } from '../../../app/App'
 import ShoppingCartOutlined from '@ant-design/icons/lib/icons/ShoppingCartOutlined'
+import { useSelector } from 'react-redux'
+import { authSelector } from '../../../redux/reducers/AuthSliceReducer'
+import { getMonthlyReportRequest } from '../../util/utilsAPI'
+import { usePDF } from '@react-pdf/renderer'
 
 const Header = Layout.Header
 
 const AppHeader = (props) => {
+
+  const { currentUser } = useSelector(authSelector)
+
   const handleMenuClick = ({ key }) => {
     if (key === 'logout') {
       props.handleLogout()
@@ -30,13 +37,13 @@ const AppHeader = (props) => {
       <Menu.Item key='/cart'>
         <Link
           to={'/cart'}>
-          <ShoppingCartOutlined style={{ fontSize: '20px' }}/>
+          <ShoppingCartOutlined style={{ fontSize: '20px' }} />
         </Link>
       </Menu.Item>,
 
       <Menu.Item key='/profile' className='profile-menu'>
         <ProfileDropdownMenu
-          currentUser={props.currentUser}
+          currentUser={currentUser}
           handleMenuClick={handleMenuClick}
         />
       </Menu.Item>
@@ -47,13 +54,13 @@ const AppHeader = (props) => {
     return [
       <Menu.Item key='/sign-up'>
         <Link to='/sign-up'>
-          <UserAddOutlined style={{ fontSize: '20px' }}/>
+          <UserAddOutlined style={{ fontSize: '20px' }} />
         </Link>
       </Menu.Item>,
 
       <Menu.Item key='/login'>
         <Link to='/login'>
-          <LoginOutlined style={{ fontSize: '20px' }}/>
+          <LoginOutlined style={{ fontSize: '20px' }} />
         </Link>
       </Menu.Item>
     ]
@@ -87,7 +94,7 @@ const AppHeader = (props) => {
 
       <Menu.Item key='#' className='report-menu'>
         <ReportsDropdownMenu
-          currentUser={props.currentUser}
+          currentUser={currentUser}
           handleMenuClick={handleMenuClick}
         />
       </Menu.Item>,
@@ -95,7 +102,32 @@ const AppHeader = (props) => {
       <Menu.Item key='/profile'
                  className='profile-menu'>
         <ProfileDropdownMenu
-          currentUser={props.currentUser}
+          currentUser={currentUser}
+          handleMenuClick={handleMenuClick}
+        />
+      </Menu.Item>
+    ]
+  }
+
+  const makeMenuForFlorist = () => {
+    return [
+      <Menu.Item key='/orders' className=''>
+        <Link to='/orders'>
+          Заказы магазина
+        </Link>
+      </Menu.Item>,
+
+      <Menu.Item key='#' className='report-menu'>
+        <ReportsFloristDropdownMenu
+          currentUser={currentUser}
+          handleMenuClick={handleMenuClick}
+        />
+      </Menu.Item>,
+
+      <Menu.Item key='/profile'
+                 className='profile-menu'>
+        <ProfileDropdownMenu
+          currentUser={currentUser}
           handleMenuClick={handleMenuClick}
         />
       </Menu.Item>
@@ -104,14 +136,18 @@ const AppHeader = (props) => {
 
   let menuItems
 
-  if (props.currentUser) {
+  if (currentUser) {
     menuItems = makeMenuForUser()
   } else {
     menuItems = makeMenuForGuest()
   }
 
-  if (isAdmin(props.currentUser)) {
+  if (isAdmin(currentUser)) {
     menuItems = makeMenuForShopAdmin()
+  }
+
+  if (isUserFlorist(currentUser)) {
+    menuItems = makeMenuForFlorist()
   }
 
   return (
@@ -122,7 +158,7 @@ const AppHeader = (props) => {
                width='50%'
                height='35%'
                className='img-fluid'
-               src='https://atlanticcityflorist.com/wp-content/uploads/2019/10/logoacfstransparentbg.png'/>
+               src='https://atlanticcityflorist.com/wp-content/uploads/2019/10/logoacfstransparentbg.png' />
         </Col>
       </Row>
 
@@ -136,7 +172,7 @@ const AppHeader = (props) => {
 
           <Menu.Item key='/'>
             <Link to='/'>
-              <HomeOutlined style={{ fontSize: '20px' }}/>
+              <HomeOutlined style={{ fontSize: '20px' }} />
             </Link>
           </Menu.Item>
 
@@ -158,9 +194,9 @@ const AppHeader = (props) => {
   )
 }
 
-function ProfileDropdownMenu(props) {
+const ProfileDropdownMenu = (props) => {
   const image = props.currentUser.imageUrl ? (
-    <img src={props.currentUser.imageUrl} alt={props.currentUser.name}/>
+    <img src={props.currentUser.imageUrl} alt={props.currentUser.name} />
   ) : (
     <div className='text-avatar'>
       {/* <span>{props.currentUser.name && props.currentUser.name[0]}</span> */}
@@ -181,7 +217,7 @@ function ProfileDropdownMenu(props) {
           {props.currentUser.name}
         </div>
       </Menu.Item>
-      <Menu.Divider/>
+      <Menu.Divider />
       <Menu.Item key='profile' className='dropdown-item'>
         {localizedStrings.profile}
       </Menu.Item>
@@ -198,14 +234,14 @@ function ProfileDropdownMenu(props) {
       getPopupContainer={() => document.getElementsByClassName('profile-menu')[0]}>
 
       <Button type='link' className='ant-dropdown-link' onClick={event => event.preventDefault()}>
-        <UserOutlined style={{ marginRight: 0, fontSize: '20px' }}/>
-        <CaretDownOutlined/>
+        <UserOutlined style={{ marginRight: 0, fontSize: '20px' }} />
+        <CaretDownOutlined />
       </Button>
     </Dropdown>
   )
 }
 
-function ReportsDropdownMenu(props) {
+const ReportsDropdownMenu = (props) => {
   const dropdownMenu = (
     <Menu onClick={props.handleMenuClick} className='report-dropdown-menu'>
       <Menu.Item key='about'
@@ -215,12 +251,8 @@ function ReportsDropdownMenu(props) {
           Отчеты
         </div>
       </Menu.Item>
-      <Menu.Divider/>
+      <Menu.Divider />
       <Menu.Item key='companyReport' className='dropdown-item'>
-        {/* <Link to="/users/admin/company-presentation/pdf"  target="_blank"> */}
-        {/*    Презентация компании */}
-        {/* </Link> */}
-
         <Button type='link' href='/company/presentation/pdf' target='_top'>
           Презентация компании
         </Button>
@@ -246,7 +278,69 @@ function ReportsDropdownMenu(props) {
 
       <Button type='link' className='ant-dropdown-link' onClick={event => event.preventDefault()}>
         <i className='fa fa-file' aria-hidden='true'></i>
-        <CaretDownOutlined/>
+        <CaretDownOutlined />
+      </Button>
+    </Dropdown>
+  )
+}
+
+const ReportsFloristDropdownMenu = (props) => {
+
+  const [instance, updateInstance] = usePDF({})
+
+  if (instance.loading) return <div>Loading ...</div>
+
+  if (instance.error) return <div>Something went wrong: {'error'}</div>
+
+
+  const getMonthlyReport = (floristId) => {
+    getMonthlyReportRequest(floristId).then(response => {
+      updateInstance({
+        instance: {
+          blob: response
+        }
+      })
+      console.log('send floristMonthReport')
+    })
+  }
+
+  const dropdownMenu = (
+    <Menu onClick={props.handleMenuClick} className='report-dropdown-menu'>
+      <Menu.Item key='about'
+                 className='dropdown-item'
+                 disabled>
+        <div className=''>
+          Отчеты по заказам
+        </div>
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key='yearSaleReport' className='dropdown-item'>
+        <Button type='link' href={`/florists/${props.currentUser.id}/annual-report/pdf`} target='_top'>
+          Отчет продаж годовой
+        </Button>
+      </Menu.Item>
+      <Menu.Item key='monthSaleReport' className='dropdown-item'>
+        <Button type='link'
+                href={`/florists/${props.currentUser.id}/monthly-report/pdf`}
+                target='_top'
+                // download='floristMonthly.pdf'
+                onClick={getMonthlyReport(props.currentUser.id)}
+        >
+          Отчет продаж за текущий месяц
+        </Button>
+      </Menu.Item>
+    </Menu>
+  )
+
+  return (
+    <Dropdown
+      overlay={dropdownMenu}
+      trigger={['click']}
+      getPopupContainer={() => document.getElementsByClassName('report-menu')[0]}>
+
+      <Button type='link' className='ant-dropdown-link' onClick={event => event.preventDefault()}>
+        <i className='fa fa-file' aria-hidden='true'></i>
+        <CaretDownOutlined />
       </Button>
     </Dropdown>
   )
