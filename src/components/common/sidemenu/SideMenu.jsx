@@ -8,7 +8,7 @@ import { fetchCategories, productSelector } from '../../../redux/reducers/Produc
 const { SubMenu } = Menu
 
 // submenu keys of first level
-const rootSubmenuKeys = ['sub1', 'sub2', 'sub3', 'sub4']
+const rootSubmenuKeys = ['sub0', 'sub1', 'sub2', 'sub3']
 
 const SideMenu = (props) => {
   const dispatch = useDispatch()
@@ -16,10 +16,6 @@ const SideMenu = (props) => {
   useEffect(() => {
     dispatch(fetchCategories())
   }, [dispatch])
-
-  // const handleClick = e => {
-  //   console.log('click ', e)
-  // }
 
   const { categories } = useSelector(productSelector)
 
@@ -43,7 +39,7 @@ const SideMenu = (props) => {
     )
     )
 
-  const [openKeys, setOpenKeys] = React.useState(['sub1'])
+  const [openKeys, setOpenKeys] = React.useState(['sub0'])
 
   const onOpenChange = keys => {
     const latestOpenKey = keys.find(key => openKeys.indexOf(key) === -1)
