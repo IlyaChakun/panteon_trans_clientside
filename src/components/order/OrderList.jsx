@@ -49,10 +49,13 @@ const OrderList = (props) => {
       page: page,
       size: size,
       orderStatus: orderStatus,
-      userId: userId
+      userId: userId,
+      userType: userType
     }
 
-    dispatch(getOrders(searchCriteria))
+    console.log('loadListWithOrderStatus = ', JSON.stringify(searchCriteria))
+
+    doGetOrders(searchCriteria)
   }
 
   const loadList = (page, size) => {
@@ -66,6 +69,12 @@ const OrderList = (props) => {
       userId: userId,
       userType: userType
     }
+
+    console.log('LOAD MORE SERACH = ', JSON.stringify(searchCriteria))
+    doGetOrders(searchCriteria)
+  }
+
+  const doGetOrders = (searchCriteria) => {
     dispatch(getOrders(searchCriteria))
   }
 
