@@ -10,6 +10,7 @@ import ChooseFloristModal from './ChooseFloristModal'
 import OrderDetailModal from './OrderDetailModal'
 import CompleteOrderByFloristModal from './CompleteOrderByFloristModal'
 import { authSelector } from '../../redux/reducers/AuthSliceReducer'
+import AddReviewModal from '../company/review/AddReviewModal'
 
 const { Column } = Table
 const { TabPane } = Tabs
@@ -204,13 +205,15 @@ const OrderList = (props) => {
               {orderStatus === 'COMPLETED' ? (
                 <>
                   {isUserClient(currentUser)
-                    ? <Button
-                      type='primary'
-                      size='large'
-                      // onClick={showModal}
-                    >
-                      Оставить отзыв
-                    </Button>
+                    ?
+                    <AddReviewModal/>
+                    // <Button
+                    //   type='primary'
+                    //   size='large'
+                    //   // onClick={showModal}
+                    // >
+                    //   Оставить отзыв
+                    // </Button>
                     : ''
                   }
                 </>

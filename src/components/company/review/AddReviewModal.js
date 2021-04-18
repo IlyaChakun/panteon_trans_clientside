@@ -24,7 +24,7 @@ const layout = {
     span: 15
   }
 }
-
+//TODO переписать в редакс
 class AddReviewModal extends Component {
   state = {
     name: {
@@ -74,7 +74,7 @@ class AddReviewModal extends Component {
       .then(() => {
         notification.success({
           message: 'Цветочный магазин',
-          description: 'Отзыв сохранен! Пасиба большое!'
+          description: 'Отзыв сохранен! Спасибо большое!'
         })
 
         this.props.loadMore()
