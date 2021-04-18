@@ -266,7 +266,7 @@ export const getProduct = (productId) => {
       if (!promise) {
         return
       }
-      promise
+     await promise
         .then(response => {
           console.log('response in product ', response)
           notification.success({

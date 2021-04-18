@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { notification } from 'antd'
-import { localizedStrings } from '../../components/util/localization'
 import {
   addFloristRequest,
   getAllFloristsRequest,
@@ -86,7 +85,7 @@ export const getFlorists = (searchCriteria) => {
       if (!promise) {
         return
       }
-      promise
+     await promise
         .then(response => {
           console.log('all florists', response)
           dispatch(setLoading(true))

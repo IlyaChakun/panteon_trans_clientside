@@ -21,7 +21,7 @@ const OrderDetailModal = (props) => {
   return (
     <div>
       <Button type='primary' size='large' onClick={showModal}>
-        Подбронее
+        Подробнее
       </Button>
 
       <Modal

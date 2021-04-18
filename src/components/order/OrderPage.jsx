@@ -1,27 +1,20 @@
 import React, { useEffect } from 'react'
-import { withRouter } from 'react-router-dom'
 import LoadingIndicator from '../common/util/LoadingIndicator'
 import OrderProduct from './OrderProduct'
 import { Col, List, Row } from 'antd'
 import { orderSelector } from '../../redux/reducers/OrdersSliceReducer'
 import { useDispatch, useSelector } from 'react-redux'
-import { floristsSelector, getFlorist, getFlorists } from '../../redux/reducers/FloristSliceReducer'
-import { getProduct, productSelector } from '../../redux/reducers/ProductsSliceReducer'
+import { floristsSelector, getFlorists } from '../../redux/reducers/FloristSliceReducer'
+import { getProduct, getProducts, productSelector } from '../../redux/reducers/ProductsSliceReducer'
 
 const OrderPage = (props) => {
   const dispatch = useDispatch()
   const { orders } = useSelector(orderSelector)
   const { products } = useSelector(productSelector)
-  const { florists } = useSelector(floristsSelector)
+  const { florists, loading } = useSelector(floristsSelector)
   const order = orders.find(x => x.id === props.orderId)
 
-  useEffect(() => {
-    dispatch(getFlorists())
-    dispatch(getProduct())
-  }, [dispatch])
-
-
-  if (order === null) {
+  if (loading || products === null || order === null) {
     return <LoadingIndicator />
   }
 
@@ -35,15 +28,21 @@ const OrderPage = (props) => {
           <OrderProduct
             key={orderProduct.id}
             quantity={orderProduct.quantity}
-            orderProduct={product}
+            orderProduct={orderProduct}
+            product={product}
           />
         )
       }
     )
 
-  const florist = florists.find(x => x.id === order.orderFloristInfo.floristId)
+  let florist = null
+  if (order.orderFloristInfo.floristId !== null) {
+    florist = florists.find(x => x.id === order.orderFloristInfo.floristId)
+  }
 
+  console.log('floristId', order.orderFloristInfo.floristId)
   console.log('florist', florist)
+
   return (
     <Row justify='center'>
       <Col span={22}>
@@ -55,19 +54,33 @@ const OrderPage = (props) => {
               <p>Общая стоимость заказа: {order.orderPriceInfo.totalAmount} руб.</p>
             </Col>
             <Col span={10}>
-              <p>Комментарий к заказу: {order.comment}</p>
-              <p>Доставка: {order.orderDeliveryInfo.address},
-                этаж: {order.orderDeliveryInfo.floorNumber},
-                подъезд: {order.orderDeliveryInfo.entranceNumber}</p>
               <p>Тип доставки: {order.orderDeliveryInfo.deliveryType.deliveryTypeName}</p>
+              {
+                (order.orderDeliveryInfo.deliveryType.id !== 1) ?
+                  (<p>Доставка: {order.orderDeliveryInfo.address},
+                    этаж: {order.orderDeliveryInfo.floorNumber},
+                    подъезд: {order.orderDeliveryInfo.entranceNumber}</p>)
+                  : ''
+              }
+              <p>Комментарий к заказу: {order.comment}</p>
               <br />
               <p>Флорист ответсвенный за выполнение: {florist.user.name}</p>
-              <p>Опыт флориста: {florist.floristRatingSum}</p>
-              <p>Комментарий флориста: {order.orderFloristInfo.floristComment}</p>
-              <p> Заказ размещен в магазине по адресу: </p>
-              <p> Комментарий: {order.comment}</p>
-              <p> Причина закрытия заказа: {order.closeDescription}</p>
-              <p> Отзыв: {order.orderReview}</p>
+
+              {order.orderFloristInfo.floristComment !== null ?
+                (<p> Комментарий флориста: {order.orderFloristInfo.floristComment}</p>)
+                : ''}
+              {order.orderFloristInfo.floristAppointmentTime !== null ?
+                (<p> Начало работы флориста: {order.orderFloristInfo.floristAppointmentTime}</p>)
+                : ''}
+              {order.orderFloristInfo.floristCompletionTime !== null ?
+                (<p> Окончание работы флориста: {order.orderFloristInfo.floristCompletionTime}</p>)
+                : ''}
+              {order.closeDescription !== null ?
+                (<p> Причина закрытия заказа: {order.closeDescription}</p>)
+                : ''}
+              {order.orderReview !== null ?
+                (<p> Отзыв к заказу: {order.orderReview}</p>)
+                : ''}
             </Col>
           </Row>
         </div>
@@ -93,5 +106,5 @@ const OrderPage = (props) => {
 
 }
 
-export default withRouter(OrderPage)
+export default OrderPage
 

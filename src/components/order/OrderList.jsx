@@ -11,6 +11,8 @@ import OrderDetailModal from './OrderDetailModal'
 import CompleteOrderByFloristModal from './CompleteOrderByFloristModal'
 import { authSelector } from '../../redux/reducers/AuthSliceReducer'
 import AddReviewModal from '../company/review/AddReviewModal'
+import { getFlorists } from '../../redux/reducers/FloristSliceReducer'
+import { fetchCategories, fetchCountries } from '../../redux/reducers/ProductsSliceReducer'
 
 const { Column } = Table
 const { TabPane } = Tabs
@@ -36,6 +38,9 @@ const OrderList = (props) => {
 
   useEffect(() => {
     updateList()
+    dispatch(getFlorists())
+    dispatch(fetchCountries())
+    dispatch(fetchCategories())
   }, [dispatch])
 
   const updateList = () => {
