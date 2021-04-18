@@ -9,12 +9,19 @@ import CloseOrderModal from './CloseOrderModal'
 import ChooseFloristModal from './ChooseFloristModal'
 import OrderDetailModal from './OrderDetailModal'
 import CompleteOrderByFloristModal from './CompleteOrderByFloristModal'
+import { authSelector } from '../../redux/reducers/AuthSliceReducer'
 
 const { Column } = Table
 const { TabPane } = Tabs
 
 const OrderList = (props) => {
+  const { currentUser } = useSelector(authSelector)
+
+  const [userId, setUserId] = useState(currentUser !== null ? currentUser.userType === 'ROLE_ADMIN' ? null : currentUser.id : null)
+  const [userType, setUserType] = useState(currentUser !== null ? currentUser.userType : null)
+
   const dispatch = useDispatch()
+
   const {
     orders,
     loading,
@@ -35,19 +42,29 @@ const OrderList = (props) => {
   }
 
   const loadListWithOrderStatus = (orderStatus) => {
+    console.log('loadListWithOrderStatus')
+    console.log('userId= ', userId)
+
     const searchCriteria = {
       page: page,
       size: size,
-      orderStatus: orderStatus
+      orderStatus: orderStatus,
+      userId: userId
     }
+
     dispatch(getOrders(searchCriteria))
   }
 
   const loadList = (page, size) => {
+    console.log('loadList')
+    console.log('userId= ', userId)
+
     const searchCriteria = {
       page: page,
       size: size,
-      orderStatus: orderStatus
+      orderStatus: orderStatus,
+      userId: userId,
+      userType: userType
     }
     dispatch(getOrders(searchCriteria))
   }
@@ -76,7 +93,7 @@ const OrderList = (props) => {
     loadList(page + 1, size)
   }
 
-  if (loading === true) {
+  if (loading === true || currentUser === null) {
     return <LoadingIndicator/>
   }
 
@@ -169,13 +186,13 @@ const OrderList = (props) => {
               {orderStatus === 'NEW' ? (
                 <>
 
-                  <div className={isAdmin(props.currentUser) ? '' : 'custom-hidden'}>
+                  <div className={isAdmin(currentUser) ? '' : 'custom-hidden'}>
                     <CloseOrderModal
                       orderId={orderId}
-                      button={<Button type='primary' size='large'> Закрыть заказ </Button>}/>
+                      button={<Button type='primary' size='large'> Отменить заказ </Button>}/>
                   </div>
 
-                  {isAdmin(props.currentUser) === false
+                  {isAdmin(currentUser) === true
                     ? <ChooseFloristModal
                       orderId={orderId}
                       updateList={updateList}/>
@@ -186,7 +203,7 @@ const OrderList = (props) => {
 
               {orderStatus === 'COMPLETED' ? (
                 <>
-                  {isUserClient(props.currentUser)
+                  {isUserClient(currentUser)
                     ? <Button
                       type='primary'
                       size='large'
@@ -201,7 +218,7 @@ const OrderList = (props) => {
 
               {orderStatus === 'IN_PROCESS' ? (
                 <>
-                  {isUserFlorist(props.currentUser)
+                  {isUserFlorist(currentUser)
                     ? <CompleteOrderByFloristModal
                       orderId={orderId}
                       button={<Button type='primary' size='large'> Выполнить заказ </Button>}/>

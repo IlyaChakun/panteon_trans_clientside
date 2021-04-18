@@ -85,7 +85,6 @@ const App = (props) => {
 
   const handleLogin = () => {
     dispatch(getCurrentUser())
-    history.push('/profile')
   }
 
   if (isLoading) {
@@ -205,12 +204,18 @@ const App = (props) => {
             currentCompany={currentCompany}
             component={FloristList}/>
 
-          <PrivateAdminRoute
-            path='/orders'
-            isAuthenticated={isAuthenticated}
-            currentUser={currentUser}
-            currentCompany={currentCompany}
-            component={OrderList}/>
+          <Route exact path='/orders'
+            render={(props) =>
+              <OrderList
+                currentUses={currentUser}
+                {...props} />}/>
+
+          {/* <PrivateAdminRoute */}
+          {/*  path='/orders' */}
+          {/*  isAuthenticated={isAuthenticated} */}
+          {/*  currentUser={currentUser} */}
+          {/*  currentCompany={currentCompany} */}
+          {/*  component={OrderList}/> */}
 
           <Route path='/reviews'
             render={(props) =>
@@ -234,6 +239,7 @@ export function isAdmin (currentUser) {
   //   const role = currentUser.roles.find(elem => elem.name === ROLE_ADMIN)
   //   return role === undefined ? false : role.name === ROLE_ADMIN
   // }
+  console.log(JSON.stringify(currentUser))
   if (currentUser !== null &&
     currentUser !== undefined &&
     currentUser.userType !== undefined &&
@@ -241,6 +247,7 @@ export function isAdmin (currentUser) {
     console.log('admin')
     return true
   } else {
+    console.log('NOT ADMIN')
     return false
   }
 }

@@ -12,7 +12,7 @@ const initialState = {
   currentUser: null,
   accessToken: '',
   refreshToken: '',
-  expireDate: '',
+  expireDate: ''
 }
 
 const authSlice = createSlice({
@@ -62,7 +62,7 @@ export const getCurrentUser = () => {
   if (authSelector.accessToken) {
     notification.error({
       message: 'Цветочный магазин',
-      description: 'accessToken is absent'
+      description: 'Токен отсутсвтует'
     })
   }
 
@@ -73,9 +73,9 @@ export const getCurrentUser = () => {
       if (!promise) {
         return
       }
-      promise
+      await promise
         .then(response => {
-          console.log("current user" ,response)
+          console.log('current user', response)
           dispatch(setIsLoading(true))
           dispatch(setCurrentUser(response))
           dispatch(setIsAuthenticated(true))
@@ -86,7 +86,6 @@ export const getCurrentUser = () => {
     }
   }
 }
-
 
 export const updateUserProfile = (updateUserRequest) => {
   return async dispatch => {
@@ -103,7 +102,7 @@ export const updateUserProfile = (updateUserRequest) => {
 
           notification.success({
             message: 'Цветочный магазин',
-            description: localizedStrings.alertSuccessfulUserUpdate,
+            description: localizedStrings.alertSuccessfulUserUpdate
           })
         })
     } catch (error) {
@@ -126,7 +125,7 @@ export const login = (loginInput) => {
       }
       promise
         .then(response => {
-          console.log('response in login dispatcher',response)
+          console.log('response in login dispatcher', response)
           dispatch(setIsLoading(true))
           dispatch(setAccessToken(response.accessToken))
           dispatch(setRefreshToken(response.refreshToken))
@@ -134,12 +133,11 @@ export const login = (loginInput) => {
           localStorage.setItem(ACCESS_TOKEN, response.accessToken)
           localStorage.setItem(REFRESH_TOKEN, response.refreshToken)
           dispatch(setIsLoading(false))
-          window.location.href='/products'
+          window.location.href = '/products'
           notification.success({
             message: 'Цветочный магазин',
             description: 'Успешный вход'
           })
-
         })
     } catch (error) {
       dispatch(setErrors(error))
