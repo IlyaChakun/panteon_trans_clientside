@@ -10,9 +10,7 @@ const { SubMenu } = Menu
 // submenu keys of first level
 const rootSubmenuKeys = ['sub1', 'sub2', 'sub3', 'sub4']
 
-
-const SideMenu = () => {
-
+const SideMenu = (props) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -25,21 +23,25 @@ const SideMenu = () => {
 
   const { categories } = useSelector(productSelector)
 
+  const onCategorySelected = (value) => {
+    console.log('key= ', value.key)
+
+    props.loadListWithCategory(value.key)
+  }
 
   const menuCategories = categories
     .map((category, index) => (
-        <SubMenu key={`sub${index}`} icon={<AppstoreOutlined />} title={category.name}>
-          {category.children === undefined ? '' : (
-            category.children
-              .map(child =>
-                <Menu.Item key={`${child.parentId}-${child.id}`}>
-                  {child.name}
-                </Menu.Item>)
-          )}
-        </SubMenu>
-      )
+      <SubMenu key={`sub${index}`} icon={<AppstoreOutlined/>} title={category.name} >
+        {category.children === undefined ? '' : (
+          category.children
+            .map(child =>
+              <Menu.Item key={child.id} onClick={onCategorySelected}>
+                {child.name}
+              </Menu.Item>)
+        )}
+      </SubMenu>
     )
-
+    )
 
   const [openKeys, setOpenKeys] = React.useState(['sub1'])
 
@@ -55,13 +57,12 @@ const SideMenu = () => {
   return (
 
     <Menu mode='inline'
-          openKeys={openKeys}
-          onOpenChange={onOpenChange}
+      openKeys={openKeys}
+      onOpenChange={onOpenChange}
     >
       {menuCategories}
     </Menu>
   )
-
 }
 
 export default withRouter(SideMenu)

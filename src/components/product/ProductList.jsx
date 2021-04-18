@@ -41,12 +41,18 @@ const ProductList = (props) => {
     dispatch(getProducts(searchCriteria))
   }
 
-  const loadSearchList = (productName, minPrice, maxPrice, sortBy, sortType, checkedBrands) => {
-    loadList(page, size, productName, minPrice, maxPrice, sortBy, sortType, checkedBrands)
+  const loadListWithCategory = (categoryId) => {
+    const searchCriteria = {
+      page: page,
+      size: size,
+
+      categoryId: categoryId
+    }
+    dispatch(getProducts(searchCriteria))
   }
 
   if (loading === true) {
-    return <LoadingIndicator />
+    return <LoadingIndicator/>
   }
 
   const productsMap = products === undefined ? [] : products.map(product =>
@@ -80,8 +86,8 @@ const ProductList = (props) => {
           <Row gutter={16}>
             <Col span={6}>
               <h1>Каталог</h1>
-              <SideMenu />
-              <AddProductModal updateList={updateList} />
+              <SideMenu loadListWithCategory={loadListWithCategory}/>
+              <AddProductModal updateList={updateList}/>
             </Col>
             <Col span={18}>
               <List
