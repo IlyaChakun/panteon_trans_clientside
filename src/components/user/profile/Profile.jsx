@@ -97,11 +97,19 @@ const Profile = (props) => {
                 </Col>
 
                 <Col span={14}>
-
-                  <div>
-                    Вы: {currentUser.userType === 'ROLE_CLIENT' ? 'Клиент'
-                    : currentUser.userType === 'ROLE_FLORIST' ? 'Флорист' : 'Администратор'}
-                  </div>
+                  <Form.Item
+                    className={s.formItem}
+                    label='Ваш статус'
+                  >
+                    <Input
+                      name='userType'
+                      type=''
+                      disabled={true}
+                      size='middle'
+                      value={currentUser.userType === 'ROLE_CLIENT' ? 'Клиент'
+                        : currentUser.userType === 'ROLE_FLORIST' ? 'Флорист' : 'Администратор'}>
+                    </Input>
+                  </Form.Item>
 
                   <Form.Item
                     className={s.formItem}
