@@ -301,28 +301,6 @@ const FloristForm = (props) => {
                 />
               </Form.Item>
 
-              <Form.Item
-                label={'Пароль'}
-                validateStatus={password.validateStatus}
-                hasFeedback
-                onChange={(event) => handlePasswordChange(event)}
-                help={password.errorMsg}
-                rules={[
-                  {
-                    required: true,
-                    message: 'Пожалуйста, введите пароль!'
-                  }
-                ]}
-              >
-                <Input.Password
-                  name='password'
-                  value={password.value}
-                  type={password}
-                  placeholder='пароль'
-                  style={{ fontSize: '16px', width: 200 }}
-                />
-              </Form.Item>
-
               {phoneOption()}
 
               <Form.Item
