@@ -185,7 +185,7 @@ class CompanyForm extends Component {
         isEditing: false
       })
       notification.error({
-        message: localizedStrings.alertAppName,
+        message: 'Цветочный магазин',
         description: 'У вас еще нет компании! А ну ка создайте!'
       })
     })
@@ -246,13 +246,13 @@ class CompanyForm extends Component {
       updateCompanyInfoRequest(this.state.id, companyRequest)
         .then(() => {
           notification.success({
-            message: localizedStrings.alertAppName,
+            message: 'Цветочный магазин',
             description: 'Компания обновлена!'
           })
 
         }).catch(error => {
         notification.error({
-          message: localizedStrings.alertAppName,
+          message: 'Цветочный магазин',
           description: 'Чет пошло не так, провепрьте данные '
         })
       })
@@ -260,13 +260,13 @@ class CompanyForm extends Component {
       saveCompanyRequest(companyRequest)
         .then(() => {
           notification.success({
-            message: localizedStrings.alertAppName,
+            message: 'Цветочный магазин',
             description: 'Компания сохранена!'
           })
 
         }).catch(error => {
         notification.error({
-          message: localizedStrings.alertAppName,
+          message: 'Цветочный магазин',
           description: 'Чет пошло не так. сорян'
         })
       })

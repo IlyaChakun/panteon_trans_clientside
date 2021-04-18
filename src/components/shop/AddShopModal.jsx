@@ -44,7 +44,7 @@ class AddShopModal extends Component {
         saveShopRequest(shopRequest)
             .then(() => {
                 notification.success({
-                    message: localizedStrings.alertAppName,
+                    message: 'Цветочный магазин',
                     description: 'Магазин сохранен!',
                 })
 
@@ -54,7 +54,7 @@ class AddShopModal extends Component {
 
             }).catch(error => {
             notification.error({
-                message: localizedStrings.alertAppName,
+                message: 'Цветочный магазин',
                 description: 'Чет пошло не так. сорян'
             })
         })

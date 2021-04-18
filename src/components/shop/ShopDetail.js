@@ -40,14 +40,14 @@ class ShopDetail extends Component {
 
         updateShopRequest(shopRequest, shopRequest.id).then(() => {
             notification.success({
-                message: localizedStrings.alertAppName,
+                message: 'Цветочный магазин',
                 description: 'Магазин обновлен!',
             })
             this.props.history.push("/company/shops/" + shopRequest.id);
 
         }).catch(error => {
             notification.error({
-                message: localizedStrings.alertAppName,
+                message: 'Цветочный магазин',
                 description: 'Чет пошло не так, провепрьте данные '
             })
         })

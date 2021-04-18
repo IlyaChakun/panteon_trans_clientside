@@ -25,7 +25,7 @@ const CartProduct = ({ cartProduct, updateProductQuantity, deleteProductFromBask
     } else {
       setQuantity(cartProduct.quantity)
       notification.error({
-        message: localizedStrings.alertAppName,
+        message: 'Цветочный магазин',
         description: 'Количество должно быть не менее 0 и не более 99'
       })
     }

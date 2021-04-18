@@ -66,7 +66,7 @@ export const getCart = (userId) => {
       dispatch(setCart(null))
 
       notification.error({
-        message: localizedStrings.alertAppName,
+        message: 'Цветочный магазин',
         description: 'Ваша корзина пуста!'
       })
     }
@@ -89,14 +89,14 @@ export const addToCart = (cartItem) => {
           dispatch(setCart(response))
 
           notification.success({
-            message: localizedStrings.alertAppName,
+            message: 'Цветочный магазин',
             description: 'добавлено в корзину'
           })
         })
     } catch (error) {
       dispatch(setErrors(error))
       notification.error({
-        message: localizedStrings.alertAppName,
+        message: 'Цветочный магазин',
         description: error.errorDescription
       })
     }
@@ -113,7 +113,7 @@ export const updateItemInCart = (cartItem) => {
     } catch (error) {
       dispatch(setErrors(error))
       notification.error({
-        message: localizedStrings.alertAppName,
+        message: 'Цветочный магазин',
         description: 'Не удалось изменить кол-во в корзине!Вы выбрали больше чем доступно!'
       })
     }
@@ -132,7 +132,7 @@ export const deleteItemFromCart = (productCart) => {
         .then(response => {
           console.log('response in delete from cart', response)
           notification.success({
-            message: localizedStrings.alertAppName,
+            message: 'Цветочный магазин',
             description: 'Продукт удален из корзины!'
           })
           dispatch(getCart(productCart.userId))
@@ -140,7 +140,7 @@ export const deleteItemFromCart = (productCart) => {
     } catch (error) {
       dispatch(setErrors(error))
       notification.error({
-        message: localizedStrings.alertAppName,
+        message: 'Цветочный магазин',
         description: 'Не удалось удалить продукт из корзину!'
       })
     }

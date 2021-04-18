@@ -78,7 +78,7 @@ const App = (props) => {
     history.push(redirectTo)
 
     notification[notificationType]({
-      message: localizedStrings.alertAppName,
+      message: 'Цветочный магазин',
       description: description
     })
   }

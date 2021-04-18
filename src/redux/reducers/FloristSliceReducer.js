@@ -110,12 +110,12 @@ export const addFlorist = (floristToAdd) => {
 
       if (promise.status === 400) {
         notification.error({
-          message: localizedStrings.alertAppName,
+          message: 'Цветочный магазин',
           description: promise.error()
         })
       } else {
         notification.success({
-          message: localizedStrings.alertAppName,
+          message: 'Цветочный магазин',
           description: 'Флорист добавлен'
         })
 
@@ -125,7 +125,7 @@ export const addFlorist = (floristToAdd) => {
     } catch (error) {
       dispatch(setErrors(error))
       notification.error({
-        message: localizedStrings.alertAppName,
+        message: 'Цветочный магазин',
         description: error.description
       })
     }
@@ -144,14 +144,14 @@ export const addFlorist = (floristToAdd) => {
     //
     //       if (response.code === 400) {
     //         notification.error({
-    //           message: localizedStrings.alertAppName,
+    //           message: 'Цветочный магазин',
     //           description: response.errorDescription
     //         })
     //       } else {
     //         dispatch(setAddFlorist(response))
     //
     //         notification.success({
-    //           message: localizedStrings.alertAppName,
+    //           message: 'Цветочный магазин',
     //           description: 'Флорист добавлен'
     //         })
     //       }
@@ -159,7 +159,7 @@ export const addFlorist = (floristToAdd) => {
     // } catch (error) {
     //   dispatch(setErrors(error))
     //   notification.error({
-    //     message: localizedStrings.alertAppName,
+    //     message: 'Цветочный магазин',
     //     description: error.description
     //   })
     // }
@@ -182,7 +182,7 @@ export const updateFlorist = (floristId, floristToUpdate) => {
     } catch (error) {
       dispatch(setErrors(error))
       notification.error({
-        message: localizedStrings.alertAppName,
+        message: 'Цветочный магазин',
         description: 'Не удалось изменить florist!'
       })
     }
@@ -201,7 +201,7 @@ export const getFlorist = (floristId) => {
         .then(response => {
           console.log('response in florist ', response)
           notification.success({
-            message: localizedStrings.alertAppName,
+            message: 'Цветочный магазин',
             description: 'Florist найден!'
           })
           dispatch(setFlorist())
@@ -209,7 +209,7 @@ export const getFlorist = (floristId) => {
     } catch (error) {
       dispatch(setErrors(error))
       notification.error({
-        message: localizedStrings.alertAppName,
+        message: 'Цветочный магазин',
         description: 'Не удалось найти флориста!'
       })
     }

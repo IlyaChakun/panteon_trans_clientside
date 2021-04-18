@@ -138,14 +138,14 @@ export const placeOrder = (order) => {
       promise
         .then(response => {
           notification.success({
-            message: localizedStrings.alertAppName,
+            message: 'Цветочный магазин',
             description: 'Заказ принят!'
           })
         })
     } catch (error) {
       dispatch(setErrors(error))
       notification.error({
-        message: localizedStrings.alertAppName,
+        message: 'Цветочный магазин',
         description: 'Не удалось создать заказ!' + error.message
       })
     }
@@ -164,7 +164,7 @@ export const partialOrderUpdate = (orderPartialUpdate) => {
       promise
         .then(() => {
           notification.success({
-            message: localizedStrings.alertAppName,
+            message: 'Цветочный магазин',
             description: 'Операция выполнена успешна!'
           })
           window.location.href = '/'
@@ -174,12 +174,12 @@ export const partialOrderUpdate = (orderPartialUpdate) => {
         this.props.handleLogout('/login', 'error', localizedStrings.alertLoggedOut)
       } else if (error.status === 404) {
         notification.error({
-          message: localizedStrings.alertAppName,
+          message: 'Цветочный магазин',
           description: 'Заказ не найден!'
         })
       } else {
         notification.error({
-          message: localizedStrings.alertAppName,
+          message: 'Цветочный магазин',
           description: error.message || localizedStrings.alertException
         })
       }

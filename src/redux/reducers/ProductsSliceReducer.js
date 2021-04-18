@@ -38,12 +38,12 @@ export const saveProduct = (productRequest) => {
 
     if (response.success === true) {
       notification.success({
-        message: localizedStrings.alertAppName,
+        message: 'Цветочный магазин',
         description: response.message
       })
     } else {
       notification.error({
-        message: localizedStrings.alertAppName,
+        message: 'Цветочный магазин',
         description: response.message
       })
     }
@@ -198,7 +198,7 @@ export const deleteProduct = (productId) => {
       promise
         .then(response => {
           notification.success({
-            message: localizedStrings.alertAppName,
+            message: 'Цветочный магазин',
             description: 'Успешное удаление!'
           })
           window.location.href = '/products'
@@ -214,17 +214,17 @@ export const deleteProduct = (productId) => {
       if (error.status === 401) {
         window.location.href = '/'
         notification.success({
-          message: localizedStrings.alertAppName,
+          message: 'Цветочный магазин',
           description: localizedStrings.alertLoggedOut
         })
       } else if (error.status === 404) {
         notification.error({
-          message: localizedStrings.alertAppName,
+          message: 'Цветочный магазин',
           description: 'Продукт не найден!'
         })
       } else {
         notification.error({
-          message: localizedStrings.alertAppName,
+          message: 'Цветочный магазин',
           description: error.message || localizedStrings.alertException
         })
       }
@@ -244,14 +244,14 @@ export const updateProduct = (productId, product) => {
 
     if (updatedProduct) {
       notification.success({
-        message: localizedStrings.alertAppName,
+        message: 'Цветочный магазин',
         description: 'Успешное обновление!'
       })
       window.location.href = '/products'
       dispatch(setUpdatedProduct(updatedProduct))
     } else {
       notification.success({
-        message: localizedStrings.alertAppName,
+        message: 'Цветочный магазин',
         description: 'Что-то пошло не так при обновлении!'
       })
     }
@@ -270,7 +270,7 @@ export const getProduct = (productId) => {
         .then(response => {
           console.log('response in product ', response)
           notification.success({
-            message: localizedStrings.alertAppName,
+            message: 'Цветочный магазин',
             description: 'product найден!'
           })
           dispatch(setProduct())
@@ -278,7 +278,7 @@ export const getProduct = (productId) => {
     } catch (error) {
       dispatch(setErrors(error))
       notification.error({
-        message: localizedStrings.alertAppName,
+        message: 'Цветочный магазин',
         description: 'Не удалось найти product!'
       })
     }

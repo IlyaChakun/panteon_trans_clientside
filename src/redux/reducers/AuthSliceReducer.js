@@ -61,7 +61,7 @@ export const authSelector = (state) => {
 export const getCurrentUser = () => {
   if (authSelector.accessToken) {
     notification.error({
-      message: localizedStrings.alertAppName,
+      message: 'Цветочный магазин',
       description: 'accessToken is absent'
     })
   }
@@ -102,14 +102,14 @@ export const updateUserProfile = (updateUserRequest) => {
           dispatch(setIsLoading(false))
 
           notification.success({
-            message: localizedStrings.alertAppName,
+            message: 'Цветочный магазин',
             description: localizedStrings.alertSuccessfulUserUpdate,
           })
         })
     } catch (error) {
       dispatch(setErrors(error))
       notification.error({
-        message: localizedStrings.alertAppName,
+        message: 'Цветочный магазин',
         description: error.message || localizedStrings.alertException
       })
     }
@@ -136,15 +136,15 @@ export const login = (loginInput) => {
           dispatch(setIsLoading(false))
 
           notification.success({
-            message: localizedStrings.alertAppName,
-            description: localizedStrings.alertSuccessLogin
+            message: 'Цветочный магазин',
+            description: 'Успешный вход'
           })
         })
     } catch (error) {
       dispatch(setErrors(error))
       notification.error({
-        message: localizedStrings.alertAppName,
-        description: localizedStrings.alertWrongEmailOrPassword
+        message: 'Цветочный магазин',
+        description: 'Неверный Email или пароль'
       })
     }
   }

@@ -73,7 +73,7 @@ class AddReviewModal extends Component {
     saveReviewRequest(reviewRequest)
       .then(() => {
         notification.success({
-          message: localizedStrings.alertAppName,
+          message: 'Цветочный магазин',
           description: 'Отзыв сохранен! Пасиба большое!'
         })
 
@@ -82,7 +82,7 @@ class AddReviewModal extends Component {
         this.handleCancel()
       }).catch(error => {
       notification.error({
-        message: localizedStrings.alertAppName,
+        message: 'Цветочный магазин',
         description: 'Чет пошло не так. сорян'
       })
     })
