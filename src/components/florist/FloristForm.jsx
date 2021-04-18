@@ -51,6 +51,7 @@ const FloristForm = (props) => {
     validateStatus: props.validateStatus
   })
 
+
   const layout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 18 }
@@ -153,7 +154,7 @@ const FloristForm = (props) => {
   }
 
   const phoneOption = () => {
-    if (props.florist.id === null) {
+    if (props.florist.id === '') {
       return ''
     } else {
       return (
@@ -219,6 +220,8 @@ const FloristForm = (props) => {
     }
   }
 
+  const isEmailReadOnly = props.florist.id === ''
+
   return (
 
     <Form {...layout}
@@ -283,6 +286,7 @@ const FloristForm = (props) => {
                 label={'Электронная почта'}
                 validateStatus={email.validateStatus}
                 hasFeedback
+                disabled={isEmailReadOnly}
                 onChange={(event) => handleEmailChange(event)}
                 help={email.errorMsg}
                 rules={[
@@ -296,6 +300,7 @@ const FloristForm = (props) => {
                   name='email'
                   value={email.value}
                   type={email}
+                  disabled={isEmailReadOnly}
                   placeholder='Электронная почта'
                   style={{ fontSize: '16px', width: 200 }}
                 />
