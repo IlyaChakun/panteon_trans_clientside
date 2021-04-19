@@ -6,6 +6,7 @@ import OrdersSliceReducer from './reducers/OrdersSliceReducer'
 import CartsSliceReducer from './reducers/CartsSliceReducer'
 import FloristSliceReducer from './reducers/FloristSliceReducer'
 import ShopsSliceReducer from './reducers/ShopsSliceReducer'
+import ClientSliceReducer from './reducers/ClientSliceReducer'
 
 const middleware = [
     ...getDefaultMiddleware(),
@@ -20,7 +21,8 @@ const store = configureStore({
         cartState: CartsSliceReducer,
         authState: AuthSliceReducer,
         companyState: CompanySliceReducer,
-        floristsState: FloristSliceReducer
+        floristsState: FloristSliceReducer,
+        clientsState: ClientSliceReducer
     },
     middleware
 })

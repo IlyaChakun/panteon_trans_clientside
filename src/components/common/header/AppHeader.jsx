@@ -16,6 +16,7 @@ import { useSelector } from 'react-redux'
 import { authSelector } from '../../../redux/reducers/AuthSliceReducer'
 import { getMonthlyReportRequest } from '../../util/utilsAPI'
 import { usePDF } from '@react-pdf/renderer'
+import { BASE_URL } from '../../../constants'
 
 const Header = Layout.Header
 
@@ -89,6 +90,12 @@ const AppHeader = (props) => {
       <Menu.Item key='/orders' className=''>
         <Link to='/orders'>
           Заказы магазина
+        </Link>
+      </Menu.Item>,
+
+      <Menu.Item key='/clients' className=''>
+        <Link to='/clients'>
+          Клиенты
         </Link>
       </Menu.Item>,
 
@@ -294,14 +301,26 @@ const ReportsFloristDropdownMenu = (props) => {
 
 
   const getMonthlyReport = (floristId) => {
-    getMonthlyReportRequest(floristId).then(response => {
-      updateInstance({
-        instance: {
-          blob: response
-        }
+    getMonthlyReportRequest(floristId)
+      .then(response => {
+        response.blob().then(blob => {
+          const fileURL = URL.createObjectURL(blob);
+          window.open(fileURL);
+          }
+        )
+
+//         //Create a Blob from the PDF Stream
+//         const file = new Blob(
+//           [response],
+//           {type: 'application/pdf'});
+// //Build a URL from the file
+//         const fileURL = URL.createObjectURL(file);
+// //Open the URL on new Window
+//         window.open(fileURL);
       })
-      console.log('send floristMonthReport')
-    })
+      .catch(error => {
+        console.log(error);
+      })
   }
 
   const dropdownMenu = (
@@ -315,16 +334,18 @@ const ReportsFloristDropdownMenu = (props) => {
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key='yearSaleReport' className='dropdown-item'>
-        <Button type='link' href={`/florists/${props.currentUser.id}/annual-report/pdf`} target='_top'>
+        <Button type='link'
+                href={`http://localhost:8080/florists/${props.currentUser.id}/annual-report/pdf`}
+                target='_top'>
           Отчет продаж годовой
         </Button>
       </Menu.Item>
       <Menu.Item key='monthSaleReport' className='dropdown-item'>
-        <Button type='link'
-                href={`/florists/${props.currentUser.id}/monthly-report/pdf`}
-                target='_top'
-                // download='floristMonthly.pdf'
-                onClick={getMonthlyReport(props.currentUser.id)}
+        <Button
+          type='link'
+          // href={`http://localhost:8080/florists/${props.currentUser.id}/monthly-report/pdf`}
+          target='_blank'
+          onClick={() => getMonthlyReport(props.currentUser.id)}
         >
           Отчет продаж за текущий месяц
         </Button>

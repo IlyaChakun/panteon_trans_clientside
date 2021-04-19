@@ -36,6 +36,7 @@ import LoadingIndicator from '../components/common/util/LoadingIndicator'
 import FloristList from '../components/florist/FloristList'
 import OrderList from '../components/order/OrderList'
 import { fetchShops } from '../redux/reducers/ShopsSliceReducer'
+import ClientList from '../components/user/ClientList'
 
 const { Content } = Layout
 
@@ -205,10 +206,12 @@ const App = (props) => {
             component={FloristList}/>
 
           <Route exact path='/orders'
-            render={(props) =>
-              <OrderList
-                currentUses={currentUser}
-                {...props} />}/>
+                 render={(props) =>
+                   <OrderList {...props} />} />
+
+          <Route path='/clients'
+                 render={(props) =>
+                   <ClientList {...props} />} />
 
           {/* <PrivateAdminRoute */}
           {/*  path='/orders' */}

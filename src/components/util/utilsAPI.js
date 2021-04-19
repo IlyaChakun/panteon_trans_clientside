@@ -474,6 +474,19 @@ export function getMonthlyReportRequest(floristId) {
   const url = BASE_URL + 'florists/' + floristId + '/monthly-report/pdf'
   return request({
     url: url,
+    method: 'GET',
+    responseType: 'blob'
+  })
+}
+
+export function getAllClientsRequest(searchCriteria) {
+  const page = 'page=' + Number((searchCriteria === undefined || searchCriteria.page === undefined) ? 1 : searchCriteria.page)
+  const size = '&size=' + Number((searchCriteria === undefined || searchCriteria.size === undefined) ? 10 : searchCriteria.size)
+
+  const url = BASE_URL + 'clients?' + page + size
+
+  return request({
+    url: url,
     method: 'GET'
   })
 }
