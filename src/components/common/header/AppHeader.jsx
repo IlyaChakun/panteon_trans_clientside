@@ -15,6 +15,7 @@ import ShoppingCartOutlined from '@ant-design/icons/lib/icons/ShoppingCartOutlin
 import { useSelector } from 'react-redux'
 import { authSelector } from '../../../redux/reducers/AuthSliceReducer'
 import { getMonthlyReportRequest } from '../../util/utilsAPI'
+import { BASE_URL } from '../../../constants'
 
 const Header = Layout.Header
 
@@ -295,34 +296,6 @@ const ReportsFloristDropdownMenu = (props) => {
   //
   // if (instance.error) return <div>Something went wrong: {'error'}</div>
 
-  const getMonthlyReport = (floristId) => {
-    getMonthlyReportRequest(floristId)
-      .then(response => {
-        console.log("getMonthlyReportRequest gogo")
-
-        console.log(response)
-
-        // Create a Blob from the PDF Stream
-
-
-        const file = new Blob([JSON.stringify(response, null, 2)], {type : 'application/json'});
-
-        // const file = new Blob(
-        //   [response],
-        //   { type: 'application/pdf' })
-        // // Build a URL from the file
-        const fileURL = URL.createObjectURL(file)
-        // Open the URL on new Window
-
-        console.log(fileURL)
-        window.open(fileURL)
-
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  }
-
   const dropdownMenu = (
     <Menu onClick={props.handleMenuClick} className='report-dropdown-menu'>
       {/* <Menu.Item key='about' */}
@@ -343,9 +316,8 @@ const ReportsFloristDropdownMenu = (props) => {
       <Menu.Item key='monthSaleReport' className='dropdown-item'>
         <Button
           // type='link'
-          // href={`http://localhost:8080/florists/${props.currentUser.id}/monthly-report/pdf`}
+           href={`http://localhost:8080/report/florists/${props.currentUser.id}/monthly-report/pdf`}
           target='_blank'
-          onClick={() => getMonthlyReport(props.currentUser.id)}
         >
           Отчет продаж за текущий месяц
         </Button>
