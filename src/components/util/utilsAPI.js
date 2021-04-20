@@ -472,11 +472,40 @@ export function partialOrderUpdateRequest(orderPartialUpdate) {
 
 export function getMonthlyReportRequest(floristId) {
   const url = BASE_URL + 'florists/' + floristId + '/monthly-report/pdf'
-  return request({
-    url: url,
-    method: 'GET',
-    responseType: 'blob'
+  // return request({
+  //   url: url,
+  //   method: 'GET'
+  // })
+
+
+  const response = fetch(url, {
+    method: 'GET', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      'Grant-Type': 'anon_action',
+      'Access-Control-Allow-Origin': 'http://localhost:3000'
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
   })
+  return response // parses JSON response into native JavaScript objects
+
+  // return fetch(url, 'GET')
+  //   .then(response => {
+  //     console.log('request status')
+  //     console.log('response status code= ' + response.status)
+  //
+  //       return response
+  //
+  //   })
+  //   .then(json => {
+  //     console.log('return final json body: ', json)
+  //     return json
+  //   })
 }
 
 export function getAllClientsRequest(searchCriteria) {

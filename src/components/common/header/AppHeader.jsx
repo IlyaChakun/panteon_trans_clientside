@@ -15,13 +15,10 @@ import ShoppingCartOutlined from '@ant-design/icons/lib/icons/ShoppingCartOutlin
 import { useSelector } from 'react-redux'
 import { authSelector } from '../../../redux/reducers/AuthSliceReducer'
 import { getMonthlyReportRequest } from '../../util/utilsAPI'
-import { usePDF } from '@react-pdf/renderer'
-import { BASE_URL } from '../../../constants'
 
 const Header = Layout.Header
 
 const AppHeader = (props) => {
-
   const { currentUser } = useSelector(authSelector)
 
   const handleMenuClick = ({ key }) => {
@@ -38,7 +35,7 @@ const AppHeader = (props) => {
       <Menu.Item key='/cart'>
         <Link
           to={'/cart'}>
-          <ShoppingCartOutlined style={{ fontSize: '20px' }} />
+          <ShoppingCartOutlined style={{ fontSize: '20px' }}/>
         </Link>
       </Menu.Item>,
 
@@ -55,13 +52,13 @@ const AppHeader = (props) => {
     return [
       <Menu.Item key='/sign-up'>
         <Link to='/sign-up'>
-          <UserAddOutlined style={{ fontSize: '20px' }} />
+          <UserAddOutlined style={{ fontSize: '20px' }}/>
         </Link>
       </Menu.Item>,
 
       <Menu.Item key='/login'>
         <Link to='/login'>
-          <LoginOutlined style={{ fontSize: '20px' }} />
+          <LoginOutlined style={{ fontSize: '20px' }}/>
         </Link>
       </Menu.Item>
     ]
@@ -165,7 +162,7 @@ const AppHeader = (props) => {
                width='50%'
                height='35%'
                className='img-fluid'
-               src='https://atlanticcityflorist.com/wp-content/uploads/2019/10/logoacfstransparentbg.png' />
+               src='https://atlanticcityflorist.com/wp-content/uploads/2019/10/logoacfstransparentbg.png'/>
         </Col>
       </Row>
 
@@ -179,7 +176,7 @@ const AppHeader = (props) => {
 
           <Menu.Item key='/'>
             <Link to='/'>
-              <HomeOutlined style={{ fontSize: '20px' }} />
+              <HomeOutlined style={{ fontSize: '20px' }}/>
             </Link>
           </Menu.Item>
 
@@ -203,7 +200,7 @@ const AppHeader = (props) => {
 
 const ProfileDropdownMenu = (props) => {
   const image = props.currentUser.imageUrl ? (
-    <img src={props.currentUser.imageUrl} alt={props.currentUser.name} />
+    <img src={props.currentUser.imageUrl} alt={props.currentUser.name}/>
   ) : (
     <div className='text-avatar'>
       {/* <span>{props.currentUser.name && props.currentUser.name[0]}</span> */}
@@ -224,7 +221,7 @@ const ProfileDropdownMenu = (props) => {
           {props.currentUser.name}
         </div>
       </Menu.Item>
-      <Menu.Divider />
+      <Menu.Divider/>
       <Menu.Item key='profile' className='dropdown-item'>
         {localizedStrings.profile}
       </Menu.Item>
@@ -241,8 +238,8 @@ const ProfileDropdownMenu = (props) => {
       getPopupContainer={() => document.getElementsByClassName('profile-menu')[0]}>
 
       <Button type='link' className='ant-dropdown-link' onClick={event => event.preventDefault()}>
-        <UserOutlined style={{ marginRight: 0, fontSize: '20px' }} />
-        <CaretDownOutlined />
+        <UserOutlined style={{ marginRight: 0, fontSize: '20px' }}/>
+        <CaretDownOutlined/>
       </Button>
     </Dropdown>
   )
@@ -258,7 +255,7 @@ const ReportsDropdownMenu = (props) => {
           Отчеты
         </div>
       </Menu.Item>
-      <Menu.Divider />
+      <Menu.Divider/>
       <Menu.Item key='companyReport' className='dropdown-item'>
         <Button type='link' href='/company/presentation/pdf' target='_top'>
           Презентация компании
@@ -285,64 +282,67 @@ const ReportsDropdownMenu = (props) => {
 
       <Button type='link' className='ant-dropdown-link' onClick={event => event.preventDefault()}>
         <i className='fa fa-file' aria-hidden='true'></i>
-        <CaretDownOutlined />
+        <CaretDownOutlined/>
       </Button>
     </Dropdown>
   )
 }
 
 const ReportsFloristDropdownMenu = (props) => {
-
-  const [instance, updateInstance] = usePDF({})
-
-  if (instance.loading) return <div>Loading ...</div>
-
-  if (instance.error) return <div>Something went wrong: {'error'}</div>
-
+  // const [instance, updateInstance] = usePDF({})
+  //
+  // if (instance.loading) return <div>Loading ...</div>
+  //
+  // if (instance.error) return <div>Something went wrong: {'error'}</div>
 
   const getMonthlyReport = (floristId) => {
     getMonthlyReportRequest(floristId)
       .then(response => {
-        response.blob().then(blob => {
-          const fileURL = URL.createObjectURL(blob);
-          window.open(fileURL);
-          }
-        )
+        console.log("getMonthlyReportRequest gogo")
 
-//         //Create a Blob from the PDF Stream
-//         const file = new Blob(
-//           [response],
-//           {type: 'application/pdf'});
-// //Build a URL from the file
-//         const fileURL = URL.createObjectURL(file);
-// //Open the URL on new Window
-//         window.open(fileURL);
+        console.log(response)
+
+        // Create a Blob from the PDF Stream
+
+
+        const file = new Blob([JSON.stringify(response, null, 2)], {type : 'application/json'});
+
+        // const file = new Blob(
+        //   [response],
+        //   { type: 'application/pdf' })
+        // // Build a URL from the file
+        const fileURL = URL.createObjectURL(file)
+        // Open the URL on new Window
+
+        console.log(fileURL)
+        window.open(fileURL)
+
       })
       .catch(error => {
-        console.log(error);
+        console.log(error)
       })
   }
 
   const dropdownMenu = (
     <Menu onClick={props.handleMenuClick} className='report-dropdown-menu'>
-      <Menu.Item key='about'
-                 className='dropdown-item'
-                 disabled>
-        <div className=''>
-          Отчеты по заказам
-        </div>
-      </Menu.Item>
-      <Menu.Divider />
-      <Menu.Item key='yearSaleReport' className='dropdown-item'>
-        <Button type='link'
-                href={`http://localhost:8080/florists/${props.currentUser.id}/annual-report/pdf`}
-                target='_top'>
-          Отчет продаж годовой
-        </Button>
-      </Menu.Item>
+      {/* <Menu.Item key='about' */}
+      {/*  className='dropdown-item' */}
+      {/*  disabled> */}
+      {/*  <div className=''> */}
+      {/*    Отчеты по заказам */}
+      {/*  </div> */}
+      {/* </Menu.Item> */}
+      {/* <Menu.Divider/> */}
+      {/* <Menu.Item key='yearSaleReport' className='dropdown-item'> */}
+      {/*  <Button type='link' */}
+      {/*    href={`http://localhost:8080/florists/${props.currentUser.id}/annual-report/pdf`} */}
+      {/*    target='_top'> */}
+      {/*    Отчет продаж годовой */}
+      {/*  </Button> */}
+      {/* </Menu.Item> */}
       <Menu.Item key='monthSaleReport' className='dropdown-item'>
         <Button
-          type='link'
+          // type='link'
           // href={`http://localhost:8080/florists/${props.currentUser.id}/monthly-report/pdf`}
           target='_blank'
           onClick={() => getMonthlyReport(props.currentUser.id)}
@@ -361,7 +361,7 @@ const ReportsFloristDropdownMenu = (props) => {
 
       <Button type='link' className='ant-dropdown-link' onClick={event => event.preventDefault()}>
         <i className='fa fa-file' aria-hidden='true'></i>
-        <CaretDownOutlined />
+        <CaretDownOutlined/>
       </Button>
     </Dropdown>
   )
