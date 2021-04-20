@@ -80,7 +80,7 @@ const ChooseFloristModal = (props) => {
   }
 
   if (loading === true) {
-    return <LoadingIndicator/>
+    return <LoadingIndicator />
   }
 
   const dataSource = []
@@ -109,6 +109,7 @@ const ChooseFloristModal = (props) => {
         title='Выбрать флориста'
         visible={visible}
         okButtonProps={{ style: { display: 'none' } }}
+        cancelText='Отменить'
         onCancel={handleCancel}
         centered
         width={1200}
@@ -142,18 +143,18 @@ const ChooseFloristModal = (props) => {
           dataSource={dataSource}
           footer={() => ''}
         >
-          <Column title='Флорист' dataIndex='floristName' key='floristName'/>
-          <Column title='Рейтинг' dataIndex='rating' key='rating'/>
-          <Column title='Опыт(лет)' dataIndex='experience' key='experience'/>
-          <Column title='Заказов выполнено' dataIndex='completedOrdersCount' key='completedOrdersCount'/>
-          <Column title='Активных заказов' dataIndex='activeOrdersCount' key='activeOrdersCount'/>
+          <Column title='Флорист' dataIndex='floristName' key='floristName' />
+          <Column title='Рейтинг' dataIndex='rating' key='rating' />
+          <Column title='Опыт(лет)' dataIndex='experience' key='experience' />
+          <Column title='Заказов выполнено' dataIndex='completedOrdersCount' key='completedOrdersCount' />
+          <Column title='Активных заказов' dataIndex='activeOrdersCount' key='activeOrdersCount' />
           <Column title='Действия' dataIndex='floristId' key='floristId' render={floristId => (
             <Space size='middle'>
               <Button type='primary' size='large' onClick={() => onChooseFlorist(floristId)}>
                 Передать заказ
               </Button>
             </Space>
-          )}/>
+          )} />
         </Table>
       </Modal>
     </>

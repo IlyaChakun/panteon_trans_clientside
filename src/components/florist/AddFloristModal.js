@@ -71,6 +71,7 @@ const AddFloristModal = (props) => {
         title='Добавить флориста'
         visible={visible}
         okButtonProps={{ style: { display: 'none' } }}
+        cancelText='Отменить'
         onCancel={handleCancel}
         centered
         width={1200}

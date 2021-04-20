@@ -24,6 +24,7 @@ const layout = {
     span: 15
   }
 }
+
 //TODO переписать в редакс
 class AddReviewModal extends Component {
   state = {
@@ -101,6 +102,7 @@ class AddReviewModal extends Component {
         <Modal
           title='Оставить отзыв'
           visible={this.state.visible}
+          cancelText='Отменить'
           onCancel={this.handleCancel}
           okButtonProps={{ style: { display: 'none' } }}
         >

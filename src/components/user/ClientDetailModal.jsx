@@ -25,6 +25,8 @@ const ClientDetailModal = (props) => {
         title='Подробно о заказах'
         visible={visible}
         okButtonProps={{ style: { display: 'none' } }}
+        cancelText='Отменить'
+        cancelText='Отменить'
         onCancel={handleCancel}
         centered
         width={1200}

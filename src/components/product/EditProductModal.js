@@ -46,6 +46,7 @@ const EditProductModal = (props) => {
         title='Изменить продукт'
         visible={visible}
         okButtonProps={{ style: { display: 'none' } }}
+        cancelText='Отменить'
         onCancel={handleCancel}
         centered
         width={1200}

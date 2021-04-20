@@ -31,8 +31,8 @@ const AddProductModal = (props) => {
   const handleSubmitButton = (productRequest) => {
     console.log('product request: ' + { ...productRequest })
     dispatch(saveProduct(productRequest))
-        props.updateList()
-        handleCancel()
+    props.updateList()
+    handleCancel()
   }
 
   return (
@@ -48,6 +48,7 @@ const AddProductModal = (props) => {
         title='Добавить продукт'
         visible={visible}
         okButtonProps={{ style: { display: 'none' } }}
+        cancelText='Отменить'
         onCancel={handleCancel}
         centered
         width={1200}

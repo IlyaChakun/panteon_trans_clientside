@@ -60,6 +60,7 @@ const EditFloristModal = (props) => {
         title='Изменить информацию о флористе'
         visible={visible}
         okButtonProps={{ style: { display: 'none' } }}
+        cancelText='Отменить'
         onCancel={handleCancel}
         centered
         width={1200}
