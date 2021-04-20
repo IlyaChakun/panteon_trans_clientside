@@ -117,7 +117,7 @@ const ClientList = (props) => {
         <Space size='middle'>
           <ClientDetailModal
             userId={clientId}
-            userType={userType}
+            userType={'ROLE_CLIENT'}
             currentUser={currentUser}
           />
         </Space>
