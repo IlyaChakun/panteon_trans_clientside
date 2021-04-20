@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Button } from 'antd'
-import { withRouter } from 'react-router-dom'
 import Modal from 'antd/es/modal'
 import OrderPage from './OrderPage'
+import { withRouter } from 'react-router-dom'
 
 
-const OrderDetailModal = (props) => {
+const OrderDetailModal = ({ orderId }) => {
 
   const [visible, setVisible] = useState(false)
 
@@ -14,12 +14,11 @@ const OrderDetailModal = (props) => {
   }
 
   const handleCancel = e => {
-    console.log(e)
     setVisible(false)
   }
 
   return (
-    <div>
+    <>
       <Button type='primary' size='large' onClick={showModal}>
         Подробнее
       </Button>
@@ -33,11 +32,9 @@ const OrderDetailModal = (props) => {
         centered
         width={1200}
       >
-        <OrderPage
-          orderId={props.orderId}
-        />
+        <OrderPage orderId={orderId} />
       </Modal>
-    </div>
+    </>
   )
 }
 

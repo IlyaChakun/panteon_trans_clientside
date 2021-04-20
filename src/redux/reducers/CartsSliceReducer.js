@@ -6,7 +6,6 @@ import {
   updateProductInCartRequest
 } from '../../components/util/utilsAPI'
 import { notification } from 'antd'
-import { localizedStrings } from '../../components/util/localization'
 
 const initialState = {
 

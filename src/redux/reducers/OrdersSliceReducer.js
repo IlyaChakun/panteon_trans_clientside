@@ -13,8 +13,7 @@ const initialState = {
   loading: false,
   errors: '',
 
-  order: {},
-  orderProducts: [],
+  order: null,
   orderLoading: false,
 
   page: 1,
@@ -45,9 +44,6 @@ const orderSlice = createSlice({
     setOrder: (state, action) => {
       state.order = action.payload
     },
-    setOrderProducts: (state, action) => {
-      state.orderProducts = action.payload
-    },
     setTotalPages: (state, action) => {
       state.totalPages = action.payload
     },
@@ -68,7 +64,6 @@ export const {
   setOrders,
   setOrderLoading,
   setOrder,
-  setOrderProducts,
   setTotalPages,
   setTotalElements,
   setPage,
@@ -114,9 +109,7 @@ export const getOrderById = (orderId) => {
       await promise
         .then(response => {
           dispatch(setOrderLoading(true))
-          console.log(response.orderProducts.length)
           dispatch(setOrder(response))
-          dispatch(setOrderProducts(response.orderProducts.slice()))
           dispatch(setOrderLoading(false))
         })
     } catch (error) {

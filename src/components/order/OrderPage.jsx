@@ -1,47 +1,68 @@
 import React, { useEffect } from 'react'
-import LoadingIndicator from '../common/util/LoadingIndicator'
-import OrderProduct from './OrderProduct'
-import { Col, List, Row } from 'antd'
-import { orderSelector } from '../../redux/reducers/OrdersSliceReducer'
+import { Col, Row, Table, Tag } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { floristsSelector, getFlorists } from '../../redux/reducers/FloristSliceReducer'
-import { getProduct, getProducts, productSelector } from '../../redux/reducers/ProductsSliceReducer'
+import { getOrderById, orderSelector } from '../../redux/reducers/OrdersSliceReducer'
+import LoadingIndicator from '../common/util/LoadingIndicator'
+import { withRouter } from 'react-router-dom'
+import { fetchCategories, fetchCountries, productSelector } from '../../redux/reducers/ProductsSliceReducer'
 
-const OrderPage = (props) => {
+const { Column } = Table
+
+const OrderPage = ({ orderId }) => {
+
   const dispatch = useDispatch()
-  const { orders } = useSelector(orderSelector)
-  const { products } = useSelector(productSelector)
-  const { florists, loading } = useSelector(floristsSelector)
-  const order = orders.find(x => x.id === props.orderId)
+  const {
+    order,
+    orderLoading
+  } = useSelector(orderSelector)
 
-  if (loading || products === null || order === null) {
+  const {
+    countries,
+    categories
+  } = useSelector(productSelector)
+
+  useEffect(() => {
+    console.log('inside effect', orderId)
+    dispatch(fetchCategories())
+    dispatch(fetchCountries())
+    dispatch(getOrderById(orderId))
+  }, [orderId])
+
+  if (orderLoading === true || order === null) {
     return <LoadingIndicator />
   }
 
-  const orderProductsDataSource = []
-  let product
-  order.orderProducts
-    .map(orderProduct => {
-        product = dispatch(getProduct(orderProduct.productId))
+  console.log(order)
 
-        orderProductsDataSource.push(
-          <OrderProduct
-            key={orderProduct.id}
-            quantity={orderProduct.quantity}
-            orderProduct={orderProduct}
-            product={product}
-          />
-        )
-      }
-    )
+  const dataSource = []
 
-  let florist = null
-  if (order.orderFloristInfo.floristId !== null) {
-    florist = florists.find(x => x.id === order.orderFloristInfo.floristId)
-  }
+  order.products.map(product => {
+    const quantity = product.quantity
+    const singleProduct = product.product
+    const price = singleProduct.productLengthCost.find(x => x.id === 1).cost
+    dataSource.push({
+      key: singleProduct.id,
+      dateOfCreation: singleProduct.dateOfCreation,
+      description: singleProduct.description,
+      image: singleProduct.image,
+      productLengthCost: singleProduct.productLengthCost,
+      title: singleProduct.title,
+      category: countries.find(x => x.id === singleProduct.categoryId),
+      country: countries.find(x => x.id === singleProduct.countryId),
+      price: price,
+      cost: price * quantity,
+      quantity: quantity
+    })
+  })
 
-  console.log('floristId', order.orderFloristInfo.floristId)
-  console.log('florist', florist)
+
+  // let florist = {}
+  // if (order.orderFloristInfo !==null && order.orderFloristInfo.floristId !== null) {
+  //   florist = florists.find(x => x.id === order.orderFloristInfo.floristId)
+  // }
+
+  // console.log('floristId', order.orderFloristInfo.floristId)
+  // console.log('florist', florist)
 
   return (
     <Row justify='center'>
@@ -51,60 +72,104 @@ const OrderPage = (props) => {
           <Row justify='space'>
             <Col span={10}>
               <p>Статус заказа: {order.orderStatus}</p>
-              <p>Общая стоимость заказа: {order.orderPriceInfo.totalAmount} руб.</p>
+              <p>Дата создания заказа: {order.dateOfCreation}</p>
             </Col>
             <Col span={10}>
-              <p>Тип доставки: {order.orderDeliveryInfo.deliveryType.deliveryTypeName}</p>
-              {
-                (order.orderDeliveryInfo.deliveryType.id !== 1) ?
-                  (<p>Доставка: {order.orderDeliveryInfo.address},
-                    этаж: {order.orderDeliveryInfo.floorNumber},
-                    подъезд: {order.orderDeliveryInfo.entranceNumber}</p>)
-                  : ''
+              {order.orderDeliveryInfo !== null ? (
+                  <>
+                    <p>Тип доставки: {order.orderDeliveryInfo.deliveryType.deliveryTypeName}</p>
+                    {order.orderDeliveryInfo.deliveryType.id !== 1 ?
+                      (<p>Доставка: {order.orderDeliveryInfo.address},
+                          этаж: {order.orderDeliveryInfo.floorNumber},
+                          подъезд: {order.orderDeliveryInfo.entranceNumber}</p>
+                      )
+                      : ''
+                    }
+                  </>
+                )
+                : ''
               }
+
               <p>Комментарий к заказу: {order.comment}</p>
               <br />
-              <p>Флорист ответсвенный за выполнение: {florist.user.name}</p>
+              {/*<p>Флорист ответсвенный за выполнение: {florist.user.name}</p>*/}
+              {order.orderFloristInfo !== null ? (
+                <>
+                  {order.orderFloristInfo.floristComment !== null ?
+                    (<p> Комментарий флориста: {order.orderFloristInfo.floristComment}</p>)
+                    : ''}
+                  {order.orderFloristInfo.floristAppointmentTime !== null ?
+                    (<p> Начало работы флориста: {order.orderFloristInfo.floristAppointmentTime}</p>)
+                    : ''}
+                  {order.orderFloristInfo.floristCompletionTime !== null ?
+                    (<p> Окончание работы флориста: {order.orderFloristInfo.floristCompletionTime}</p>)
+                    : ''}
+                </>
+              ) : ''
+              }
 
-              {order.orderFloristInfo.floristComment !== null ?
-                (<p> Комментарий флориста: {order.orderFloristInfo.floristComment}</p>)
-                : ''}
-              {order.orderFloristInfo.floristAppointmentTime !== null ?
-                (<p> Начало работы флориста: {order.orderFloristInfo.floristAppointmentTime}</p>)
-                : ''}
-              {order.orderFloristInfo.floristCompletionTime !== null ?
-                (<p> Окончание работы флориста: {order.orderFloristInfo.floristCompletionTime}</p>)
-                : ''}
               {order.closeDescription !== null ?
                 (<p> Причина закрытия заказа: {order.closeDescription}</p>)
                 : ''}
               {order.orderReview !== null ?
-                (<p> Отзыв к заказу: {order.orderReview}</p>)
+                (<p> Отзыв к заказу: {order.orderReview.text}</p>)
                 : ''}
             </Col>
           </Row>
         </div>
 
         <h2>Список товаров:</h2>
-        <List
-          grid={{
-            gutter: 8,
-            column: 1
+
+        <Table
+          pagination={{
+
+            // loading: loading,
+            showSizeChanger: true,
+
+            // defaultCurrent: page,
+            // defaultPageSize: size,
+
+            pageSizeOptions: ['100'],
+            position: 'bottom'
+
+            // total: totalElements,
+
+            // showQuickJumper: true,
+            // onShowSizeChange: onSizeChangeHandler,
+            // onChange: onPageChangeHandler,
+
+            // loadMore: loadMore
           }}
 
-          dataSource={orderProductsDataSource}
+          dataSource={dataSource}
+          footer={() => order.orderPriceInfo !== null ? (
+            <p>Общая стоимость заказа: {order.orderPriceInfo.totalAmount} руб.</p>
+          ) :''
+          }
+        >
 
-          renderItem={item => (
-            <List.Item>
-              {item}
-            </List.Item>
-          )}
-        />
+
+          <Column
+            title='Название продукта'
+            dataIndex='title'
+            key='title'
+            render={title => (
+              <Tag color='grey' key={title}>
+                {title}
+              </Tag>
+            )}
+          />
+          <Column title='Описание' dataIndex='description' key='description' />
+          <Column title='Цена' dataIndex='price' key='price' />
+          <Column title='Кол-во' dataIndex='quantity' key='quantity' />
+          <Column title='Сумма' dataIndex='cost' key='cost' />
+        </Table>
+
       </Col>
     </Row>
   )
 
 }
 
-export default OrderPage
+export default withRouter(OrderPage)
 
