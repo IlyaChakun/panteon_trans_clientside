@@ -120,10 +120,7 @@ export const login = (loginInput) => {
     try {
       const promise = loginRequest(loginInput)
 
-      if (!promise) {
-        return
-      }
-      promise
+      await promise
         .then(response => {
           console.log('response in login dispatcher', response)
           dispatch(setIsLoading(true))

@@ -34,7 +34,7 @@ import { authSelector, getCurrentUser, setCurrentUser, setIsAuthenticated } from
 import { getCurrentCompany } from '../redux/reducers/CompanySliceReducer'
 import LoadingIndicator from '../components/common/util/LoadingIndicator'
 import FloristList from '../components/florist/FloristList'
-import OrderList from '../components/order/OrderList'
+import OrderList from '../components/order/ProxyOrderList'
 import { fetchShops } from '../redux/reducers/ShopsSliceReducer'
 import ClientList from '../components/user/ClientList'
 

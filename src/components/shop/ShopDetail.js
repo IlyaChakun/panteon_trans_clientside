@@ -9,7 +9,7 @@ import LoadingIndicator from '../common/util/LoadingIndicator'
 import { SUCCESS } from '../../constants'
 import { localizedStrings } from '../util/localization'
 import { withRouter } from 'react-router-dom'
-import OrderList from '../order/OrderList'
+import OrderList from '../order/ProxyOrderList'
 import ProductList from '../product/ProductList'
 
 const {TabPane} = Tabs;

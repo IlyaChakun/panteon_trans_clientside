@@ -9,7 +9,6 @@ import CloseOrderModal from './CloseOrderModal'
 import ChooseFloristModal from './ChooseFloristModal'
 import OrderDetailModal from './OrderDetailModal'
 import CompleteOrderByFloristModal from './CompleteOrderByFloristModal'
-import { authSelector } from '../../redux/reducers/AuthSliceReducer'
 import AddReviewModal from '../company/review/AddReviewModal'
 import { getFlorists } from '../../redux/reducers/FloristSliceReducer'
 import { fetchCategories, fetchCountries } from '../../redux/reducers/ProductsSliceReducer'
@@ -18,10 +17,10 @@ const { Column } = Table
 const { TabPane } = Tabs
 
 const OrderList = (props) => {
-  const { currentUser } = useSelector(authSelector)
 
-  const [userId, setUserId] = useState(currentUser !== null ? currentUser.userType === 'ROLE_ADMIN' ? null : currentUser.id : null)
-  const [userType, setUserType] = useState(currentUser !== null ? currentUser.userType : null)
+  const [currentUser, setCurrentUser] = useState(props.currentUser)
+  const [userId, setUserId] = useState(props.userId)
+  const [userType, setUserType] = useState(props.userType)
 
   const dispatch = useDispatch()
 
@@ -108,15 +107,9 @@ const OrderList = (props) => {
     loadList(page + 1, size)
   }
 
-  if (loading === true || currentUser === null) {
+  if (loading === true) {
     return <LoadingIndicator/>
   }
-
-  // const rowSelection = {
-  //   onChange: (selectedRowKeys, selectedRows) => {
-  //     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-  //   }
-  // }
 
   const dataSource = []
 

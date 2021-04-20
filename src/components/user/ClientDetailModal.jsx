@@ -4,9 +4,7 @@ import { withRouter } from 'react-router-dom'
 import Modal from 'antd/es/modal'
 import ClientPage from './ClientPage'
 
-
 const ClientDetailModal = (props) => {
-
   const [visible, setVisible] = useState(false)
 
   const showModal = () => {
@@ -32,7 +30,9 @@ const ClientDetailModal = (props) => {
         width={1200}
       >
         <ClientPage
-          clientId={props.clientId}
+          userId={props.userId}
+          userType={props.userType}
+          currentUser={props.currentUser}
         />
       </Modal>
     </div>

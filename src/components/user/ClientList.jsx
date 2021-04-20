@@ -1,16 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { Space, Table, Tag } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { getOrders, setPage, setSize } from '../../redux/reducers/OrdersSliceReducer'
 import LoadingIndicator from '../common/util/LoadingIndicator'
-import { clientsSelector, getClients } from '../../redux/reducers/ClientSliceReducer'
+import { clientsSelector, getClients, setPage, setSize } from '../../redux/reducers/ClientSliceReducer'
 import ClientDetailModal from './ClientDetailModal'
+import { authSelector } from '../../redux/reducers/AuthSliceReducer'
 
 const { Column } = Table
 
 const ClientList = (props) => {
   const dispatch = useDispatch()
+
+  const { currentUser } = useSelector(authSelector)
+  const [userType, setUserType] = useState(currentUser !== null ? currentUser.userType : null)
 
   const {
     clients,
@@ -20,13 +23,7 @@ const ClientList = (props) => {
     totalElements
   } = useSelector(clientsSelector)
 
-  const {
-    orders
-  } = useSelector(clientsSelector)
-
-
   useEffect(() => {
-    dispatch(getOrders())
     updateList()
   }, [dispatch])
 
@@ -46,7 +43,6 @@ const ClientList = (props) => {
     dispatch(getClients(searchCriteria))
   }
 
-
   const onSizeChangeHandler = (page, size) => {
     dispatch(setPage(page))
     dispatch(setSize(size))
@@ -63,25 +59,7 @@ const ClientList = (props) => {
   }
 
   if (loading === true) {
-    return <LoadingIndicator />
-  }
-
-  const getClientOrders = (clientId) => {
-    const clientOrders = []
-    orders.forEach(order => {
-      if (order.clientId === clientId) {
-        clientOrders.push(order)
-      }
-    })
-    return clientOrders
-  }
-
-  const getTotalOrderPayment = (orders) => {
-    let sum = 0
-    orders.forEach(order => {
-      sum += order.orderPriceInfo.totalAmount
-    })
-    return sum
+    return <LoadingIndicator/>
   }
 
   const dataSource = []
@@ -91,7 +69,8 @@ const ClientList = (props) => {
       key: client.id,
       clientUniqueId: client.uniqueId,
       clientName: client.name,
-      clientTotalOrderPayment: getTotalOrderPayment(getClientOrders(client.id)),
+      clientPhone: client.phoneNumber,
+      clientEmail: client.email,
       clientId: client.id
     })
   })
@@ -131,15 +110,18 @@ const ClientList = (props) => {
           </Tag>
         )}
       />
-      <Column title='ФИО' dataIndex='clientName' key='clientName' />
-      <Column title='Сумма всех заказов' dataIndex='clientTotalOrderPayment' key='clientTotalOrderPayment' />
+      <Column title='ФИО' dataIndex='clientName' key='clientName'/>
+      <Column title='Телефон' dataIndex='clientPhone' key='clientPhone'/>
+      <Column title='Почта' dataIndex='clientEmail' key='clientEmail'/>
       <Column title='Действия' dataIndex='clientId' key='clientId' render={clientId => (
         <Space size='middle'>
           <ClientDetailModal
-            clientId={clientId}
+            userId={clientId}
+            userType={userType}
+            currentUser={currentUser}
           />
         </Space>
-      )} />
+      )}/>
     </Table>
   )
 }
