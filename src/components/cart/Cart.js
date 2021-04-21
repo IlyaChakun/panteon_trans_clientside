@@ -58,7 +58,7 @@ const Cart = (props) => {
   useEffect(() => {
     dispatch(fetchShops())
     dispatch(getCart(
-      localStorage.getItem('temporaryClientId') !== undefined ? localStorage.getItem('temporaryClientId')
+      localStorage.getItem('temporaryClientId') !==null  ? localStorage.getItem('temporaryClientId')
         : currentUser.id))
   }, [dispatch])
 
@@ -90,7 +90,7 @@ const Cart = (props) => {
       })
     })
 
-    if (localStorage.getItem('temporaryClientId') !== undefined) {
+    if (localStorage.getItem('temporaryClientId') !== null) {
       const order = {
 
         clientId: localStorage.getItem('temporaryClientId'),
@@ -144,7 +144,7 @@ const Cart = (props) => {
   }
 
   const deleteProductFromCart = (productId, productLengthCostId) => {
-    const clientId = localStorage.getItem('temporaryClientId') !== undefined ? localStorage.getItem('temporaryClientId')
+    const clientId = localStorage.getItem('temporaryClientId') !== null ? localStorage.getItem('temporaryClientId')
       : currentUser.id
 
     const productCart = {
@@ -156,7 +156,7 @@ const Cart = (props) => {
   }
 
   const updateProductQuantity = (productLengthCostId, quantity, productId) => {
-    const clientId = localStorage.getItem('temporaryClientId') !== undefined ? localStorage.getItem('temporaryClientId')
+    const clientId = localStorage.getItem('temporaryClientId') !== null ? localStorage.getItem('temporaryClientId')
       : currentUser.id
 
     const cartItem = {
@@ -264,7 +264,7 @@ const Cart = (props) => {
     setDelivery(e.target.value)
   }
 
-  const forBuyNow = localStorage.getItem('temporaryClientId') !== undefined ? (
+  const forBuyNow = localStorage.getItem('temporaryClientId') !== null ? (
     <>
       <Form.Item
         className={s.formItem}
