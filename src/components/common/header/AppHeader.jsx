@@ -61,7 +61,14 @@ const AppHeader = (props) => {
         <Link to='/login'>
           <LoginOutlined style={{ fontSize: '20px' }}/>
         </Link>
-      </Menu.Item>
+      </Menu.Item>,
+
+      <Menu.Item key='/cart'>
+        <Link
+          to={'/cart'}>
+          <ShoppingCartOutlined style={{ fontSize: '20px' }}/>
+        </Link>
+      </Menu.Item>,
     ]
   }
 

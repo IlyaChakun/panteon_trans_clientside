@@ -266,6 +266,8 @@ export function getProductsRequest(searchCriteria) {
     url += categoryId
   }
 
+  console.log('products url: ', url)
+
   return request({
     url: url,
     method: 'GET'
@@ -419,6 +421,17 @@ export function createOrderRequest(orderRequest) {
     body: JSON.stringify(orderRequest)
   })
 }
+
+export function createBuyNowOrderRequest(orderRequest) {
+  const url = BASE_URL + 'orders/buy-now-orders'
+
+  return request({
+    url: url,
+    method: 'POST',
+    body: JSON.stringify(orderRequest)
+  })
+}
+
 
 export function getAllFloristsRequest(searchCriteria) {
   const page = 'page=' + Number((searchCriteria === undefined || searchCriteria.page === undefined) ? 1 : searchCriteria.page)

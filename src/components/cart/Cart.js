@@ -9,10 +9,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { cartSelector, deleteItemFromCart, getCart, updateItemInCart } from '../../redux/reducers/CartsSliceReducer'
 import { authSelector } from '../../redux/reducers/AuthSliceReducer'
 import { validateEntranceNumber, validateFlourNumber } from './CartValidation'
-import { placeOrder } from '../../redux/reducers/OrdersSliceReducer'
+import { placeBuyNowOrder, placeOrder } from '../../redux/reducers/OrdersSliceReducer'
 import { validateId } from '../product/ProductValidation'
 import LoadingIndicator from '../common/util/LoadingIndicator'
-import { shopSelector } from '../../redux/reducers/ShopsSliceReducer'
+import { fetchShops, shopSelector } from '../../redux/reducers/ShopsSliceReducer'
+import s from '../user/signup/SignUp.module.css'
+import UserOutlined from '@ant-design/icons/lib/icons/UserOutlined'
+import PhoneOutlined from '@ant-design/icons/lib/icons/PhoneOutlined'
+import { localizedStrings } from '../util/localization'
+import MailOutlined from '@ant-design/icons/lib/icons/MailOutlined'
 
 const { TextArea } = Input
 const { Option } = Select
@@ -27,17 +32,18 @@ const layout = {
 }
 
 const Cart = (props) => {
-
   const dispatch = useDispatch()
+
   const { loading, cart } = useSelector(cartSelector)
   const { currentUser } = useSelector(authSelector)
   const { shops } = useSelector(shopSelector)
 
   const [shop, setShop] = useState({
-    id: shops[0].id,
-    value: shops.find(x => x.id === shops[0].id),
-    validateStatus: props.validateStatus
+    // id: shops[0].id,
+    // value: shops.find(x => x.id === shops[0].id),
+    // validateStatus: props.validateStatus
   })
+
   const [comment, setComment] = useState({ value: '', validateStatus: '' })
   const [address, setAddress] = useState({ value: '', validateStatus: '' })
   const [floorNumber, setFloorNumber] = useState({ value: '', validateStatus: '' })
@@ -45,9 +51,15 @@ const Cart = (props) => {
 
   const [delivery, setDelivery] = useState(1)
 
+  const [name, setName] = useState({ value: '', validateStatus: '' })
+  const [email, setEmail] = useState({ value: '', validateStatus: '' })
+  const [phoneNumber, setPhoneNumber] = useState({ value: '', validateStatus: '' })
 
   useEffect(() => {
-    dispatch(getCart(currentUser.id))
+    dispatch(fetchShops())
+    dispatch(getCart(
+      localStorage.getItem('temporaryClientId') !== undefined ? localStorage.getItem('temporaryClientId')
+        : currentUser.id))
   }, [dispatch])
 
   if (cart === null) {
@@ -57,7 +69,6 @@ const Cart = (props) => {
       </>
     )
   }
-
 
   const isFormInvalid = () => {
     return !(
@@ -69,57 +80,90 @@ const Cart = (props) => {
   }
 
   const handleSubmitOrder = () => {
-
     const orderProducts = []
 
     cart.cartItems.forEach(cartItem => {
       orderProducts.push({
-        'productId': cartItem.productId,
-        'quantity': cartItem.quantity,
-        'productLengthCostId': cartItem.productLengthCostId
+        productId: cartItem.productId,
+        quantity: cartItem.quantity,
+        productLengthCostId: cartItem.productLengthCostId
       })
     })
 
-    const order = {
+    if (localStorage.getItem('temporaryClientId') !== undefined) {
+      const order = {
 
-      'clientId': currentUser.id,
-      'orderProducts': orderProducts,
-      'comment': comment.value,
-      'orderPriceInfo': {
-        'totalAmount': cart.totalPrice
-      },
-      'orderDeliveryInfo': {
-        'address': address.value,
-        'floorNumber': floorNumber.value,
-        'entranceNumber': entranceNumber.value,
-        'deliveryType': {
-          'id': delivery
+        clientId: localStorage.getItem('temporaryClientId'),
+        orderProducts: orderProducts,
+        comment: comment.value,
+        orderPriceInfo: {
+          totalAmount: cart.totalPrice
+        },
+        orderDeliveryInfo: {
+          address: address.value,
+          floorNumber: floorNumber.value,
+          entranceNumber: entranceNumber.value,
+          deliveryType: {
+            id: delivery
+          }
+        },
+
+        name: name.value,
+        email: email.value,
+        phoneNumber: phoneNumber.value
+      }
+
+      console.log('order request:', order)
+      console.log('place order with order=', order)
+      dispatch(placeBuyNowOrder(order))
+
+      localStorage.removeItem('temporaryClientId')
+    } else {
+      const order = {
+        clientId: currentUser.id,
+        orderProducts: orderProducts,
+        comment: comment.value,
+        orderPriceInfo: {
+          totalAmount: cart.totalPrice
+        },
+        orderDeliveryInfo: {
+          address: address.value,
+          floorNumber: floorNumber.value,
+          entranceNumber: entranceNumber.value,
+          deliveryType: {
+            id: delivery
+          }
         }
       }
+      console.log('order request:', order)
+      console.log('place order with order=', order)
+      dispatch(placeOrder(order))
     }
 
-    console.log('place order with order=', order)
-    dispatch(placeOrder(order))
     props.history.push('/')
-
-    console.log('order request:', order)
   }
 
   const deleteProductFromCart = (productId, productLengthCostId) => {
+    const clientId = localStorage.getItem('temporaryClientId') !== undefined ? localStorage.getItem('temporaryClientId')
+      : currentUser.id
+
     const productCart = {
-      'clientId': currentUser.id,
-      'productId': productId,
-      'productLengthCostId': productLengthCostId
+      clientId: clientId,
+      productId: productId,
+      productLengthCostId: productLengthCostId
     }
     dispatch(deleteItemFromCart(productCart))
   }
 
   const updateProductQuantity = (productLengthCostId, quantity, productId) => {
+    const clientId = localStorage.getItem('temporaryClientId') !== undefined ? localStorage.getItem('temporaryClientId')
+      : currentUser.id
+
     const cartItem = {
-      'clientId': currentUser.id,
-      'productLengthCostId': productLengthCostId,
-      'productId': productId,
-      'quantity': quantity
+      clientId: clientId,
+      productLengthCostId: productLengthCostId,
+      productId: productId,
+      quantity: quantity
     }
 
     dispatch(updateItemInCart(cartItem))
@@ -128,6 +172,30 @@ const Cart = (props) => {
   const handleTextChange = (event) => {
     const inputValue = event.target.value
     setComment({
+      value: inputValue,
+      ...validateText(inputValue)
+    })
+  }
+
+  const handleNameChange = (event) => {
+    const inputValue = event.target.value
+    setName({
+      value: inputValue,
+      ...validateText(inputValue)
+    })
+  }
+
+  const handlePhoneNumberChange = (event) => {
+    const inputValue = event.target.value
+    setPhoneNumber({
+      value: inputValue,
+      ...validateText(inputValue)
+    })
+  }
+
+  const handleEmailChange = (event) => {
+    const inputValue = event.target.value
+    setEmail({
       value: inputValue,
       ...validateText(inputValue)
     })
@@ -158,12 +226,11 @@ const Cart = (props) => {
     })
   }
 
-
   if (loading) {
-    return <LoadingIndicator />
+    return <LoadingIndicator/>
   }
 
-  let cartProducts = []
+  const cartProducts = []
   console.log('cart', cart)
 
   cart.cartItems.forEach((cartProduct) => {
@@ -196,6 +263,77 @@ const Cart = (props) => {
   const onChangeDelivery = (e) => {
     setDelivery(e.target.value)
   }
+
+  const forBuyNow = localStorage.getItem('temporaryClientId') !== undefined ? (
+    <>
+      <Form.Item
+        className={s.formItem}
+        label={'Ваше имя'}
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            message: 'Пожалуйста, введите имя!'
+          }
+        ]}
+        onChange={(event) => handleNameChange(event)}
+        validateStatus={name.validateStatus}
+        help={name.errorMsg}>
+
+        <Input
+          prefix={<UserOutlined/>}
+          name='name'
+          placeholder={'Имя'}
+          value={name.value}
+          style={{ fontSize: '16px' }}
+          autosize={{ minRows: 3, maxRows: 6 }}/>
+      </Form.Item>
+      <Form.Item
+        className={s.formItem}
+        label={'Телефон'}
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            message: 'Пожалуйста, введите телефон!'
+          }
+        ]}
+        onChange={(event) => handlePhoneNumberChange(event)}
+        validateStatus={phoneNumber.validateStatus}
+        help={phoneNumber.errorMsg}>
+
+        <Input
+          prefix={<PhoneOutlined/>}
+          name='phoneNumber'
+          autoComplete='off'
+          placeholder={'Телефон'}
+          value={phoneNumber.value}
+        />
+      </Form.Item>
+      <Form.Item
+        className={s.formItem}
+        label={'Почта'}
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            message: 'Пожалуйста, введите мыло!'
+          }
+        ]}
+        validateStatus={email.validateStatus}
+        onChange={(event) => handleEmailChange(event)}
+        help={email.errorMsg}>
+        <Input
+          prefix={<MailOutlined/>}
+          name='email'
+          type='email'
+          autoComplete='off'
+          placeholder={localizedStrings.emailField}
+          value={email.value}
+        />
+      </Form.Item>
+    </>
+  ) : ''
 
   const deliveryOptions = () => {
     if (delivery === 1) {
@@ -256,7 +394,7 @@ const Cart = (props) => {
               name='address'
               placeholder={'Адрес'}
               style={{ fontSize: '16px' }}
-              autosize={{ minRows: 3, maxRows: 6 }} />
+              autosize={{ minRows: 3, maxRows: 6 }}/>
           </Form.Item>
 
           <Form.Item
@@ -276,7 +414,7 @@ const Cart = (props) => {
               name='floorNumber'
               placeholder={'Этаж'}
               style={{ fontSize: '16px' }}
-              autosize={{ minRows: 3, maxRows: 6 }} />
+              autosize={{ minRows: 3, maxRows: 6 }}/>
           </Form.Item>
 
           <Form.Item
@@ -296,13 +434,12 @@ const Cart = (props) => {
               name='entranceNumber'
               placeholder={'Подъезд'}
               style={{ fontSize: '16px' }}
-              autosize={{ minRows: 3, maxRows: 6 }} />
+              autosize={{ minRows: 3, maxRows: 6 }}/>
           </Form.Item>
         </>
       )
     }
   }
-
 
   return (
     <div className='pb-5'>
@@ -332,7 +469,7 @@ const Cart = (props) => {
 
           <div className='cart-container-footer'>
             <Form {...layout}
-                  onFinish={handleSubmitOrder}>
+              onFinish={handleSubmitOrder}>
 
               <Form.Item
                 label='Тип доставки'
@@ -343,12 +480,13 @@ const Cart = (props) => {
                 </Radio.Group>
               </Form.Item>
 
+              {forBuyNow}
               {deliveryOptions()}
 
               <Form.Item wrapperCol={{ span: 8, offset: 8 }}>
-                             <span className='quantity-cost-text'>
+                <span className='quantity-cost-text'>
                                 Общая сумма: {cart.totalPrice} руб. за {cart.totalElements} товар(ов)
-                            </span>
+                </span>
               </Form.Item>
 
               <Form.Item wrapperCol={{ span: 8, offset: 8 }}>
@@ -360,9 +498,9 @@ const Cart = (props) => {
                     okText='Да'
                     cancelText='Нет'>
                     <Button type='primary'
-                            htmlType='submit'
-                            size='large'
-                            disabled={!isFormInvalid}
+                      htmlType='submit'
+                      size='large'
+                      disabled={!isFormInvalid}
                     >
                       Оформить заказ
                     </Button>
@@ -375,8 +513,6 @@ const Cart = (props) => {
       </Row>
     </div>
   )
-
 }
-
 
 export default withRouter(Cart)

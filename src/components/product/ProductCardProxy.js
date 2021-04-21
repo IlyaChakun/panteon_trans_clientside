@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import { withRouter } from 'react-router-dom'
 import { isAdmin } from '../../app/App'
 import DeleteOutlined from '@ant-design/icons/lib/icons/DeleteOutlined'
 import { Button } from 'antd'
@@ -10,9 +10,7 @@ import DeleteProductModal from './DeleteProductModal'
 import ProductCard from './ProductCard'
 import { addToCart } from '../../redux/reducers/CartsSliceReducer'
 
-
 const ProductCardProxy = ({ product, history, updateList }) => {
-
   const dispatch = useDispatch()
   const { currentUser } = useSelector(authSelector)
   const [quantity, setQuantity] = useState(1)
@@ -27,50 +25,74 @@ const ProductCardProxy = ({ product, history, updateList }) => {
   }
 
   const addToBasket = () => {
+    let clientId
+    if (currentUser === null) {
+      const min = 1
+      const max = 10000
+      const rand = parseInt((-1 * (min + Math.random() * (max - min))))
+      console.log('rand id= ', rand)
+      clientId = rand
+      localStorage.setItem('temporaryClientId', clientId)
+    } else {
+      clientId = currentUser.id
+    }
     const productToCart = {
-      'clientId': currentUser.id,
-      'productId': product.id,
-      'productLengthCostId': product.productLengthCost.find(x => x.id === lengthId).id,
-      'quantity': quantity
+      clientId: clientId,
+      productId: product.id,
+      productLengthCostId: product.productLengthCost.find(x => x.id === lengthId).id,
+      quantity: quantity
     }
     console.log('productToCart', productToCart)
     dispatch(addToCart(productToCart))
   }
 
   const editAction = (
-    <div className={isAdmin(currentUser) ? '' : 'custom-hidden'}>
-      <EditProductModal
-        productId={product.id}
-        updateList={updateList}
-      />
-    </div>
+    currentUser === null ? ''
+      : <div className={isAdmin(currentUser) ? '' : 'custom-hidden'}>
+        <EditProductModal
+          productId={product.id}
+          updateList={updateList}
+        />
+      </div>
   )
 
   const deleteAction = (
-    <div className={isAdmin(currentUser) ? '' : 'custom-hidden'}>
-      <DeleteProductModal
-        productId={product.id}
-        button={
-          <DeleteOutlined style={{ fontSize: '25px' }} />
-        } />
-    </div>
+    currentUser === null ? ''
+      : <div className={isAdmin(currentUser) ? '' : 'custom-hidden'}>
+        <DeleteProductModal
+          productId={product.id}
+          button={
+            <DeleteOutlined style={{ fontSize: '25px' }}/>
+          }/>
+      </div>
   )
+
+  console.log('proxy product cart ', currentUser, currentUser === null)
 
   const buyAction = (
-    <Button className={isAdmin(currentUser) ? 'custom-hidden' : 'one-click-buy cart-buy'}
-            style={{ color: 'white' }}
-            onClick={() => addToBasket()}
-    >
-      Добавить в корзину
-    </Button>
+    currentUser === null ? ''
+      : <Button
+        className={isAdmin(currentUser) ? 'custom-hidden' : 'one-click-buy cart-buy'}
+        style={{ color: 'white' }}
+        onClick={() => addToBasket()}
+      >
+        Добавить в корзину
+      </Button>
   )
 
+  // const oneClickAction = (
+  //   isAdmin(currentUser) ? ''
+  //     : <BuyInOneClickOrder
+  //     />
+  // )
+
   const oneClickAction = (
-    <Button className={isAdmin(currentUser) ? 'custom-hidden' : 'one-click-buy'}
-            onClick={() => {
-              addToBasket()
-              history.push('/cart')
-            }}
+    <Button
+      className={isAdmin(currentUser) ? 'custom-hidden' : 'one-click-buy'}
+      onClick={() => {
+        addToBasket()
+        history.push('/cart')
+      }}
     >
       Купить в один клик
     </Button>
@@ -90,7 +112,6 @@ const ProductCardProxy = ({ product, history, updateList }) => {
       lengthId={lengthId}
     />
   )
-
 }
 
-export default ProductCardProxy
+export default withRouter(ProductCardProxy)

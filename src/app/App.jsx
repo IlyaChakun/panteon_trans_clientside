@@ -140,10 +140,11 @@ const App = (props) => {
             currentUser={currentUser}
             component={OrderPage}/>
 
-          <PrivateRoute path='/cart'
+          <Route path='/cart'
             isAuthenticated={isAuthenticated}
             currentUser={currentUser}
             component={Cart}
+            currentCompany={currentCompany}
             {...props} />
 
           <Route exact path='/about/documents'
@@ -206,12 +207,12 @@ const App = (props) => {
             component={FloristList}/>
 
           <Route exact path='/orders'
-                 render={(props) =>
-                   <OrderList {...props} />} />
+            render={(props) =>
+              <OrderList {...props} />} />
 
           <Route path='/clients'
-                 render={(props) =>
-                   <ClientList {...props} />} />
+            render={(props) =>
+              <ClientList {...props} />} />
 
           {/* <PrivateAdminRoute */}
           {/*  path='/orders' */}

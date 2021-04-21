@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
+  createBuyNowOrderRequest,
   createOrderRequest,
   getAllOrders,
   getOrderByIdRequest,
@@ -133,6 +134,31 @@ export const placeOrder = (order) => {
           notification.success({
             message: 'Цветочный магазин',
             description: 'Заказ принят!'
+          })
+        })
+    } catch (error) {
+      dispatch(setErrors(error))
+      notification.error({
+        message: 'Цветочный магазин',
+        description: 'Не удалось создать заказ!' + error.message
+      })
+    }
+  }
+}
+
+export const placeBuyNowOrder = (order) => {
+  return async dispatch => {
+    try {
+      const promise = createBuyNowOrderRequest(order)
+
+      if (!promise) {
+        return
+      }
+      promise
+        .then(response => {
+          notification.success({
+            message: 'Цветочный магазин',
+            description: 'Заказ принят! В ближайшее время с Вами свяжется менеджер. На Вашу почту отправлено сообщение о Вашем заказе, а также создана учетная запись. Спасибо.'
           })
         })
     } catch (error) {
