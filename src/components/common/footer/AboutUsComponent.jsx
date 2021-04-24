@@ -10,7 +10,7 @@ class AboutUsComponent extends Component {
           <div className="items">
             <div className="item 0 childs   accordion-close ">
               <div className="title">
-                <a href="/company"> О нас</a>
+                <a href="/cargo"> О нас</a>
               </div>
             </div>
 
@@ -18,7 +18,7 @@ class AboutUsComponent extends Component {
               className="wrap panel-collapse wrap_compact_mobile">
               <div className="item">
                 <div className="title">
-                  <a href="/company">{localizedStrings.aboutCompany}</a>
+                  <a href="/cargo">{localizedStrings.aboutCompany}</a>
                 </div>
               </div>
               <div className="item">

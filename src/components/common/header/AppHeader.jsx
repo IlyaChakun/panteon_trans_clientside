@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
-import { Avatar, Button, Col, Dropdown, Layout, Menu, Row } from 'antd'
+import { Avatar, Button, Dropdown, Layout, Menu } from 'antd'
 import { getAvatarColor } from '../../util/colors'
 import { localizedStrings } from '../../util/localization'
 import './AppHeader.css'
@@ -14,8 +14,6 @@ import { isAdmin, isUserFlorist } from '../../../app/App'
 import ShoppingCartOutlined from '@ant-design/icons/lib/icons/ShoppingCartOutlined'
 import { useSelector } from 'react-redux'
 import { authSelector } from '../../../redux/reducers/AuthSliceReducer'
-import { getMonthlyReportRequest } from '../../util/utilsAPI'
-import { BASE_URL } from '../../../constants'
 
 const Header = Layout.Header
 
@@ -51,6 +49,35 @@ const AppHeader = (props) => {
 
   const makeMenuForGuest = () => {
     return [
+
+      <Menu.Item key='/companies'>
+        <Link
+          to={'/companies'}>
+          Каталог компаний
+        </Link>
+      </Menu.Item>,
+
+      <Menu.Item key='/cargos'>
+        <Link
+          to={'/cargos'}>
+          Грузы
+        </Link>
+      </Menu.Item>,
+
+      <Menu.Item key='/transports'>
+        <Link
+          to={'/transports'}>
+          Транспорт
+        </Link>
+      </Menu.Item>,
+
+      <Menu.Item key='/news'>
+        <Link
+          to={'/news'}>
+          Новости
+        </Link>
+      </Menu.Item>,
+
       <Menu.Item key='/sign-up'>
         <Link to='/sign-up'>
           <UserAddOutlined style={{ fontSize: '20px' }}/>
@@ -61,33 +88,28 @@ const AppHeader = (props) => {
         <Link to='/login'>
           <LoginOutlined style={{ fontSize: '20px' }}/>
         </Link>
-      </Menu.Item>,
+      </Menu.Item>
 
-      <Menu.Item key='/cart'>
-        <Link
-          to={'/cart'}>
-          <ShoppingCartOutlined style={{ fontSize: '20px' }}/>
-        </Link>
-      </Menu.Item>,
+
     ]
   }
 
   const makeMenuForShopAdmin = () => {
     return [
-      <Menu.Item key='/company' className=''>
-        <Link to='/company'>
+      <Menu.Item key='/cargo' className=''>
+        <Link to='/cargo'>
           Компания
         </Link>
       </Menu.Item>,
 
-      <Menu.Item key='/company/shops' className=''>
-        <Link to='/company/shops'>
+      <Menu.Item key='/cargo/shops' className=''>
+        <Link to='/cargo/shops'>
           Магазины
         </Link>
       </Menu.Item>,
 
-      <Menu.Item key='/florists' className=''>
-        <Link to='/florists'>
+      <Menu.Item key='/companies' className=''>
+        <Link to='/companies'>
           Флористы
         </Link>
       </Menu.Item>,
@@ -164,16 +186,6 @@ const AppHeader = (props) => {
 
   return (
     <>
-      <Row justify='center'>
-        <Col span={8}>
-          <img alt='logo'
-               width='50%'
-               height='35%'
-               className='img-fluid'
-               src='https://atlanticcityflorist.com/wp-content/uploads/2019/10/logoacfstransparentbg.png'/>
-        </Col>
-      </Row>
-
       <Header className='mb-5'>
         <div></div>
         <Menu
@@ -188,11 +200,7 @@ const AppHeader = (props) => {
             </Link>
           </Menu.Item>
 
-          <Menu.Item key='/products'>
-            <Link to='/products'>
-              Каталог
-            </Link>
-          </Menu.Item>
+
           <Menu.Item key='/reviews'>
             <Link to='/reviews'>
               Отзывы
@@ -265,17 +273,17 @@ const ReportsDropdownMenu = (props) => {
       </Menu.Item>
       <Menu.Divider/>
       <Menu.Item key='companyReport' className='dropdown-item'>
-        <Button type='link' href='/company/presentation/pdf' target='_top'>
+        <Button type='link' href='/cargo/presentation/pdf' target='_top'>
           Презентация компании
         </Button>
       </Menu.Item>
       <Menu.Item key='yearSaleReport' className='dropdown-item'>
-        <Button type='link' href='/company/annual-report/pdf' target='_top'>
+        <Button type='link' href='/cargo/annual-report/pdf' target='_top'>
           Отчет продаж годовой
         </Button>
       </Menu.Item>
       <Menu.Item key='monthSaleReport' className='dropdown-item'>
-        <Button type='link' href='/company/monthly-report/pdf' target='_top'>
+        <Button type='link' href='/cargo/monthly-report/pdf' target='_top'>
           Отчет продаж за текущий месяц
         </Button>
       </Menu.Item>
@@ -323,7 +331,7 @@ const ReportsFloristDropdownMenu = (props) => {
       <Menu.Item key='monthSaleReport' className='dropdown-item'>
         <Button
           // type='link'
-           href={`http://localhost:8080/report/florists/${props.currentUser.id}/monthly-report/pdf`}
+          href={`http://localhost:8080/report/companies/${props.currentUser.id}/monthly-report/pdf`}
           target='_blank'
         >
           Отчет продаж за текущий месяц

@@ -5,6 +5,7 @@ import { getAllReviewsRequest } from '../../util/utilsAPI'
 import AddReviewModal from './AddReviewModal'
 import './ReviewsBlock.css'
 import { Col, List, Row } from 'antd'
+import { getAllReviews } from '../../../service/ReviewService'
 
 
 class ReviewsList extends Component {
@@ -35,11 +36,21 @@ class ReviewsList extends Component {
             size: size
         };
 
-        const promise = getAllReviewsRequest(searchCriteria);
+        // const promise = getAllReviewsRequest(searchCriteria);
+        const promise = getAllReviews();
+
+        console.log(JSON.stringify(promise))
         if (!promise) {
             return;
         }
-        this.extractPromise(promise);
+
+        this.setState({
+            reviews: promise.objects,
+            totalPages: promise.totalPages,
+            totalElements: promise.totalElements,
+        });
+
+        // this.extractPromise(promise);
     };
 
 
@@ -49,20 +60,20 @@ class ReviewsList extends Component {
             isLoading: true
         });
 
-        promise
-            .then(response => {
+        // promise
+        //     .then(response => {
 
                 this.setState({
-                    reviews: response.objects.slice(),
-                    totalPages: response.totalPages,
-                    totalElements: response.totalElements,
+                    reviews: promise.objects.slice(),
+                    totalPages: promise.totalPages,
+                    totalElements: promise.totalElements,
                 });
 
-            }).catch(() => {
+            // }).catch(() => {
             this.setState({
                 isLoading: false
             });
-        });
+        // });
     };
 
 

@@ -1,23 +1,24 @@
 import React, { useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Col, Divider, List, Row } from 'antd'
+import { Button, Col, Divider, Form, Input, List, Row, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 
 import LoadingIndicator from '../common/util/LoadingIndicator'
-import { companySelector, getFlorists, setPage, setSize } from '../../redux/reducers/CompanySliceReducer'
-import AddFloristModal from './AddFloristModal'
-import FloristCardProxy from './FloristCardProxy'
+import { getNews, newsSelector, setPage, setSize } from '../../redux/reducers/NewsSliceReducer'
+import NewsCard from './NewsCard'
 
-const FloristList = () => {
+const { Option } = Select
+
+const NewsList = () => {
   const dispatch = useDispatch()
 
   const {
-    florists,
+    news,
     loading,
     page,
     size,
     totalElements
-  } = useSelector(companySelector)
+  } = useSelector(newsSelector)
 
   useEffect(() => {
     loadList(page, size)
@@ -32,7 +33,7 @@ const FloristList = () => {
       page: page,
       size: size
     }
-    dispatch(getFlorists(searchCriteria))
+    dispatch(getNews())
   }
 
   const onSizeChangeHandler = (page, size) => {
@@ -51,13 +52,13 @@ const FloristList = () => {
   }
 
   if (loading === true) {
-    return <LoadingIndicator />
+    return <LoadingIndicator/>
   }
 
-  const floristList = florists === undefined ? [] : florists.map(cargo =>
-    <FloristCardProxy
-      key={cargo.id}
-      cargo={cargo}
+  const list = news.map(newNews =>
+    <NewsCard
+      key={newNews.id}
+      news={newNews}
       updateList={updateList}
     />
   )
@@ -67,21 +68,15 @@ const FloristList = () => {
       <Row justify='center'>
         <Col span={22}>
           <Row gutter={16}>
-            <Col span={6}>
-              <h1>Управление</h1>
 
-              <AddFloristModal updateList={updateList} />
-
-            </Col>
-            <Col span={18}>
-              <Divider>Флористы</Divider>
+              <Divider>Новости</Divider>
 
               <List
+
                 grid={{
-                  gutter: 16,
+                  gutter: 150,
                   column: 2
                 }}
-
                 pagination={{
 
                   loading: loading,
@@ -90,7 +85,7 @@ const FloristList = () => {
                   defaultCurrent: page,
                   defaultPageSize: size,
 
-                  pageSizeOptions: ['6', '9', '12'],
+                  pageSizeOptions: ['2', '6', '9', '12'],
                   position: 'bottom',
 
                   total: totalElements,
@@ -102,7 +97,7 @@ const FloristList = () => {
                   loadMore: loadMore
                 }}
 
-                dataSource={floristList}
+                dataSource={list}
 
                 renderItem={item => (
                   <List.Item>
@@ -110,7 +105,7 @@ const FloristList = () => {
                   </List.Item>
                 )}
               />
-            </Col>
+
           </Row>
         </Col>
       </Row>
@@ -118,4 +113,4 @@ const FloristList = () => {
   )
 }
 
-export default withRouter(FloristList)
+export default withRouter(NewsList)

@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import Modal from 'antd/es/modal'
 import { Button, Space, Table } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { floristsSelector, getFlorists } from '../../redux/reducers/FloristSliceReducer'
+import { companySelector } from '../../redux/reducers/CompanySliceReducer'
 import { partialOrderUpdate, setPage, setSize } from '../../redux/reducers/OrdersSliceReducer'
 import LoadingIndicator from '../common/util/LoadingIndicator'
 
@@ -13,7 +13,7 @@ const ChooseFloristModal = (props) => {
   const dispatch = useDispatch()
   const [visible, setVisible] = useState(false)
 
-  const { florists, totalElements, loading, page, size } = useSelector(floristsSelector)
+  const { florists, totalElements, loading, page, size } = useSelector(companySelector)
 
   useEffect(() => {
     updateList()
@@ -28,7 +28,7 @@ const ChooseFloristModal = (props) => {
       page: page,
       size: size
     }
-    dispatch(getFlorists(searchCriteria))
+
   }
 
   const onSizeChangeHandler = (page, size) => {

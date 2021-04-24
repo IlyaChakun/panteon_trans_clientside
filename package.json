@@ -1,5 +1,5 @@
 {
-  "name": "flower-shop",
+  "name": "panteon_trans",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:3000/",

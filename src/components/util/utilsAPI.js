@@ -16,7 +16,7 @@ import {
  * @param options
  * @returns {Promise<Response>}
  */
-const request = (options, grantType) => {
+export const request = (options, grantType) => {
   const headers = new Headers({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': 'http://localhost:3000'
@@ -44,40 +44,40 @@ const request = (options, grantType) => {
   const defaults = { headers: headers }
   options = Object.assign({}, defaults, options)
 
-  return fetch(options.url, options)
-    .then(response => {
-      console.log('request status')
-      console.log('response status code= ' + response.status)
-
-      if (response.status === 401) {
-        console.log('remove all tokens')
-        // сначала пробуем сделать обнолвение через refresh и если опять ошибка то удаляем токены из хранилища
-
-        localStorage.removeItem(ACCESS_TOKEN)
-        localStorage.removeItem(REFRESH_TOKEN)
-
-        // return response.json()
-      }
-
-      if (response.status === 400 || response.status === 409 || response.status === 403 || response.status === 404) { // если совсем пиздец
-        console.log('throw exception: ', response)
-        console.log('throw exception: ', response.json())
-
-        console.log('response.code: ' + response.code)
-        console.log('response.error: ' + response.error)
-        console.log('response.errorDescription: ' + response.errorDescription)
-
-        throw response
-      }
-
-      if (response.status !== 204) { // удаление  // !==
-        return response.json()
-      }
-    })
-    .then(json => {
-      console.log('return final json body: ', json)
-      return json
-    })
+  // return fetch(options.url, options)
+  //   .then(response => {
+  //     console.log('request status')
+  //     console.log('response status code= ' + response.status)
+  //
+  //     if (response.status === 401) {
+  //       console.log('remove all tokens')
+  //       // сначала пробуем сделать обнолвение через refresh и если опять ошибка то удаляем токены из хранилища
+  //
+  //       localStorage.removeItem(ACCESS_TOKEN)
+  //       localStorage.removeItem(REFRESH_TOKEN)
+  //
+  //       // return response.json()
+  //     }
+  //
+  //     if (response.status === 400 || response.status === 409 || response.status === 403 || response.status === 404) { // если совсем пиздец
+  //       console.log('throw exception: ', response)
+  //       console.log('throw exception: ', response.json())
+  //
+  //       console.log('response.code: ' + response.code)
+  //       console.log('response.error: ' + response.error)
+  //       console.log('response.errorDescription: ' + response.errorDescription)
+  //
+  //       throw response
+  //     }
+  //
+  //     if (response.status !== 204) { // удаление  // !==
+  //       return response.json()
+  //     }
+  //   })
+  //   .then(json => {
+  //     console.log('return final json body: ', json)
+  //     return json
+  //   })
 }
 
 export function loginRequest(loginRequest) {

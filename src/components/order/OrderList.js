@@ -9,7 +9,6 @@ import CloseOrderModal from './CloseOrderModal'
 import ChooseFloristModal from './ChooseFloristModal'
 import CompleteOrderByFloristModal from './CompleteOrderByFloristModal'
 import AddReviewModal from '../company/review/AddReviewModal'
-import { getFlorists } from '../../redux/reducers/FloristSliceReducer'
 import { fetchCategories, fetchCountries } from '../../redux/reducers/ProductsSliceReducer'
 import OrderDetailModal from './OrderDetailModal'
 
@@ -37,7 +36,6 @@ const OrderList = (props) => {
 
   useEffect(() => {
     updateList()
-    dispatch(getFlorists())
     dispatch(fetchCountries())
     dispatch(fetchCategories())
   }, [dispatch])
@@ -108,7 +106,7 @@ const OrderList = (props) => {
   }
 
   if (loading === true) {
-    return <LoadingIndicator />
+    return <LoadingIndicator/>
   }
 
   const dataSource = []
@@ -180,10 +178,10 @@ const OrderList = (props) => {
               </Tag>
             )}
           />
-          <Column title='Дата создания' dataIndex='dateOfCreation' key='dateOfCreation' />
-          <Column title='Комментарий' dataIndex='comment' key='comment' />
-          <Column title='Сумма заказа' dataIndex='orderPriceInfo' key='orderPriceInfo' />
-          <Column title='Способ получения' dataIndex='deliveryTypeName' key='deliveryTypeName' />
+          <Column title='Дата создания' dataIndex='dateOfCreation' key='dateOfCreation'/>
+          <Column title='Комментарий' dataIndex='comment' key='comment'/>
+          <Column title='Сумма заказа' dataIndex='orderPriceInfo' key='orderPriceInfo'/>
+          <Column title='Способ получения' dataIndex='deliveryTypeName' key='deliveryTypeName'/>
           <Column title='Действия' dataIndex='orderId' key='orderId' render={orderId => (
             <Space size='middle'>
               {orderStatus === 'NEW' ? (
@@ -192,13 +190,13 @@ const OrderList = (props) => {
                     <div className={isAdmin(currentUser) ? '' : 'custom-hidden'}>
                       <CloseOrderModal
                         orderId={orderId}
-                        button={<Button type='primary' size='large'> Отменить заказ </Button>} />
+                        button={<Button type='primary' size='large'> Отменить заказ </Button>}/>
                     </div>
 
                     {isAdmin(currentUser) === true
                       ? <ChooseFloristModal
                         orderId={orderId}
-                        updateList={updateList} />
+                        updateList={updateList}/>
                       : ''
                     }
                   </>
@@ -208,7 +206,7 @@ const OrderList = (props) => {
 
               {orderStatus === 'COMPLETED' ? (
                   <>
-                    {isUserClient(currentUser) ? <AddReviewModal /> : ''}
+                    {isUserClient(currentUser) ? <AddReviewModal/> : ''}
                   </>
                 )
                 : ''
@@ -219,17 +217,17 @@ const OrderList = (props) => {
                   {isUserFlorist(currentUser)
                     ? <CompleteOrderByFloristModal
                       orderId={orderId}
-                      button={<Button type='primary' size='large'> Выполнить заказ </Button>} />
+                      button={<Button type='primary' size='large'> Выполнить заказ </Button>}/>
                     : ''
                   }
                 </>
               ) : ''
               }
 
-              <OrderDetailModal orderId={orderId} />
+              <OrderDetailModal orderId={orderId}/>
 
             </Space>
-          )} />
+          )}/>
         </Table>
       </div>
 

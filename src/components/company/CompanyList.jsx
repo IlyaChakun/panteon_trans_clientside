@@ -1,18 +1,20 @@
 import React, { useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Col, Divider, List, Row } from 'antd'
+import { Button, Col, Divider, Form, Input, List, Row, Select, Steps } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 
 import LoadingIndicator from '../common/util/LoadingIndicator'
-import { companySelector, getFlorists, setPage, setSize } from '../../redux/reducers/CompanySliceReducer'
-import AddFloristModal from './AddFloristModal'
-import FloristCardProxy from './FloristCardProxy'
+import CompanyCardProxy from './CompanyCardProxy'
+import { companySelector, getCompanies, setPage, setSize } from '../../redux/reducers/CompanySliceReducer'
 
-const FloristList = () => {
+const { Step } = Steps
+const { Option } = Select
+
+const CompanyList = () => {
   const dispatch = useDispatch()
 
   const {
-    florists,
+    companies,
     loading,
     page,
     size,
@@ -32,7 +34,7 @@ const FloristList = () => {
       page: page,
       size: size
     }
-    dispatch(getFlorists(searchCriteria))
+    dispatch(getCompanies(searchCriteria))
   }
 
   const onSizeChangeHandler = (page, size) => {
@@ -51,15 +53,74 @@ const FloristList = () => {
   }
 
   if (loading === true) {
-    return <LoadingIndicator />
+    return <LoadingIndicator/>
   }
 
-  const floristList = florists === undefined ? [] : florists.map(cargo =>
-    <FloristCardProxy
-      key={cargo.id}
-      cargo={cargo}
+  const companyList = companies.map(company =>
+    <CompanyCardProxy
+      key={company.id}
+      company={company}
       updateList={updateList}
     />
+  )
+
+  const ratingOptions = [
+    <Option key={1} value={1}>
+      1
+    </Option>,
+    <Option key={2} value={2}>
+      2
+    </Option>,
+    <Option key={3} value={3}>
+      3
+    </Option>,
+    <Option key={4} value={4}>
+      4
+    </Option>,
+    <Option key={5} value={5}>
+      5
+    </Option>
+  ]
+
+  const search = (
+    <>
+      <Form.Item
+        label={'По названию или УНН:'}
+      >
+        <Input
+          style={{ fontSize: '16px', width: 350 }}
+        />
+      </Form.Item>
+
+      <Form.Item
+        label={'Местоположение:'}
+      >
+        <Input
+          style={{ fontSize: '16px', width: 350 }}
+        />
+      </Form.Item>
+
+      <Form.Item
+        label={'Рейтинг:'}
+      >
+        <Select
+          style={{ fontSize: '16px', width: 450 }}
+        >
+          {ratingOptions}
+        </Select>
+      </Form.Item>
+
+      <Form.Item
+        style={{ marginTop: '50px', width: 250 }}>
+
+        <Button
+          type='primary'
+          htmlType='submit'
+          size='large'>
+          Найти компанию
+        </Button>
+      </Form.Item>
+    </>
   )
 
   return (
@@ -68,19 +129,17 @@ const FloristList = () => {
         <Col span={22}>
           <Row gutter={16}>
             <Col span={6}>
-              <h1>Управление</h1>
+              <h1>Поиск</h1>
 
-              <AddFloristModal updateList={updateList} />
+              <Form>
+                {search}
+              </Form>
 
             </Col>
             <Col span={18}>
-              <Divider>Флористы</Divider>
+              <Divider>Компании</Divider>
 
               <List
-                grid={{
-                  gutter: 16,
-                  column: 2
-                }}
 
                 pagination={{
 
@@ -102,7 +161,7 @@ const FloristList = () => {
                   loadMore: loadMore
                 }}
 
-                dataSource={floristList}
+                dataSource={companyList}
 
                 renderItem={item => (
                   <List.Item>
@@ -118,4 +177,4 @@ const FloristList = () => {
   )
 }
 
-export default withRouter(FloristList)
+export default withRouter(CompanyList)

@@ -7,14 +7,14 @@ import FloristCard from './FloristCard'
 import EditFloristModal from './EditFloristModal'
 
 
-const FloristCardProxy = ({ florist, history, updateList }) => {
+const FloristCardProxy = ({ cargo, history, updateList }) => {
 
   const { currentUser } = useSelector(authSelector)
 
   const editAction = (
     <div className={isAdmin(currentUser) ? '' : 'custom-hidden'}>
       <EditFloristModal
-        floristId={florist.id}
+        floristId={cargo.id}
         updateList={updateList}
       />
     </div>
@@ -22,8 +22,8 @@ const FloristCardProxy = ({ florist, history, updateList }) => {
 
   return (
     <FloristCard
-      key={florist.id}
-      florist={florist}
+      key={cargo.id}
+      cargo={cargo}
       firstAction={editAction}
     />
   )

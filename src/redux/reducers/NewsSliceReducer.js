@@ -1,13 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getAllCompanies } from '../../service/CompanyService'
+import { getAllNews } from '../../service/NewService'
+
 
 const initialState = {
 
   loading: false,
   errors: '',
 
-  companies: [],
-  company: {},
+  news: [],
+  newNews: {},
 
   page: 1,
   size: 2,
@@ -16,8 +17,8 @@ const initialState = {
   totalElements: 0
 
 }
-const companySlice = createSlice({
-  name: 'company',
+const newsSlice = createSlice({
+  name: 'news',
   initialState,
   reducers: {
     setLoading: (state, action) => {
@@ -26,17 +27,17 @@ const companySlice = createSlice({
     setErrors: (state, action) => {
       state.errors = action.payload
     },
-    setCompanies: (state, action) => {
-      state.companies = action.payload
+    setNews: (state, action) => {
+      state.news = action.payload
     },
-    setCompany: (state, action) => {
-      state.company = action.payload
+    setNewNews: (state, action) => {
+      state.newNews = action.payload
     },
-    setAddCompany: (state, action) => {
-      const company = action.payload
-      state.companies = {
-        ...state.companies,
-        company
+    setAddCargo: (state, action) => {
+      const newNews = action.payload
+      state.news = {
+        ...state.news,
+        newNews
       }
     },
 
@@ -57,42 +58,33 @@ const companySlice = createSlice({
 export const {
   setLoading,
   setErrors,
-  setCompanies,
-  setCompany,
+  setNews,
+  setNewNews,
   setTotalPages,
   setTotalElements,
   setPage,
   setSize
-} = companySlice.actions
+} = newsSlice.actions
 
-export default companySlice.reducer
+export default newsSlice.reducer
 
-export const companySelector = (state) => {
-  return state.companyState
+export const newsSelector = (state) => {
+  return state.newsState
 }
 
-export const getCompanies = (searchCriteria) => {
+export const getNews = () => {
   return async dispatch => {
     try {
-      console.log('start getAllCompanies ')
-      const promise = getAllCompanies(searchCriteria)
+      console.log('start getNews ')
+      const promise = getAllNews()
+      console.log(JSON.stringify(promise))
 
       if (!promise) {
         return
       }
-      // await promise
-      // promise
-      //   .then(response => {
-      //     console.log('all florists', response)
-      //     dispatch(setLoading(true))
-      //     dispatch(setCompanies(response.objects))
-      //     dispatch(setTotalPages(response.totalPages))
-      //     dispatch(setTotalElements(response.totalElements))
-      //     dispatch(setLoading(false))
-      //   })
 
       dispatch(setLoading(true))
-      dispatch(setCompanies(promise.objects))
+      dispatch(setNews(promise.objects))
       dispatch(setTotalPages(promise.totalPages))
       dispatch(setTotalElements(promise.totalElements))
       dispatch(setLoading(false))

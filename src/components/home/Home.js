@@ -2,28 +2,43 @@ import React from 'react'
 
 import { withRouter } from 'react-router-dom'
 import ReviewsList from '../company/review/ReviewsList'
-import ShopsBlock from '../shop/ShopsBlock'
-import { Col, Row } from 'antd'
-import ProductList from '../product/ProductList'
+import { Col, Row, Tabs } from 'antd'
+import CompanyList from '../company/CompanyList'
+import TransportList from '../transport/TransportList'
+import CargoList from '../cargo/CargoList'
 
-function Home() {
+const { TabPane } = Tabs
+
+function Home () {
   return (
-      <Row>
-        <Col span={24}>
-          {/*<div className="mb-5">*/}
-          {/*  <CarouselComponent/>*/}
-          {/*</div>*/}
+    <Row>
+      <Col span={24}>
 
-          <ProductList/>
+        <Row justify="center">
+          <Col span={20}>
+            <Tabs defaultActiveKey="1">
+              <TabPane tab="Компании" key="1">
+                <CompanyList/>
+              </TabPane>
+              <TabPane tab="Транспорт" key="2">
+                <TransportList/>
+              </TabPane>
+              <TabPane tab="Грузы" key="3">
+                <CargoList/>
+              </TabPane>
+            </Tabs>
 
-          <Row justify="center">
-            <Col span={20}>
-              <ReviewsList/>
-            </Col>
-          </Row>
-          <ShopsBlock/>
-        </Col>
-      </Row>
+          </Col>
+        </Row>
+
+        <Row justify="center">
+          <Col span={20}>
+            <ReviewsList/>
+          </Col>
+        </Row>
+
+      </Col>
+    </Row>
   )
 }
 

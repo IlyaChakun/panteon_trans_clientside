@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import Modal from 'antd/es/modal'
 import { Button } from 'antd'
 import { useDispatch } from 'react-redux'
-import { addFlorist } from '../../redux/reducers/FloristSliceReducer'
+import { addFlorist } from '../../redux/reducers/CompanySliceReducer'
 import FloristForm from './FloristForm'
 import s from '../user/profile/Profile.module.css'
 
@@ -11,7 +11,7 @@ const AddFloristModal = (props) => {
   const dispatch = useDispatch()
   const [visible, setVisible] = useState(false)
 
-  const florist = {
+  const cargo = {
     id: '',
     user: {
       name: '',
@@ -31,7 +31,7 @@ const AddFloristModal = (props) => {
   }
 
   const handleSubmitButton = (floristRequest) => {
-    console.log('florist request: ' + { ...floristRequest })
+    console.log('cargo request: ' + { ...floristRequest })
 
     const addFloristRequest = {
       userSignUpRequest: {
@@ -78,7 +78,7 @@ const AddFloristModal = (props) => {
       >
 
         <FloristForm
-          florist={florist}
+          cargo={cargo}
           action={'Добавить'}
           validateStatus={''}
           handleSubmitButton={handleSubmitButton}

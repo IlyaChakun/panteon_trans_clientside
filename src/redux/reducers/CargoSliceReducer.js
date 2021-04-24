@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getAllCompanies } from '../../service/CompanyService'
+import { getAllCargos } from '../../service/CargoService'
 
 const initialState = {
 
   loading: false,
   errors: '',
 
-  companies: [],
-  company: {},
+  cargos: [],
+  cargo: {},
 
   page: 1,
   size: 2,
@@ -16,8 +16,8 @@ const initialState = {
   totalElements: 0
 
 }
-const companySlice = createSlice({
-  name: 'company',
+const cargoSlice = createSlice({
+  name: 'cargo',
   initialState,
   reducers: {
     setLoading: (state, action) => {
@@ -26,17 +26,17 @@ const companySlice = createSlice({
     setErrors: (state, action) => {
       state.errors = action.payload
     },
-    setCompanies: (state, action) => {
-      state.companies = action.payload
+    setCargos: (state, action) => {
+      state.cargos = action.payload
     },
-    setCompany: (state, action) => {
-      state.company = action.payload
+    setCargo: (state, action) => {
+      state.cargo = action.payload
     },
-    setAddCompany: (state, action) => {
-      const company = action.payload
-      state.companies = {
-        ...state.companies,
-        company
+    setAddCargo: (state, action) => {
+      const cargo = action.payload
+      state.cargos = {
+        ...state.cargos,
+        cargo
       }
     },
 
@@ -57,25 +57,26 @@ const companySlice = createSlice({
 export const {
   setLoading,
   setErrors,
-  setCompanies,
-  setCompany,
+  setCargos,
+  setCargo,
   setTotalPages,
   setTotalElements,
   setPage,
   setSize
-} = companySlice.actions
+} = cargoSlice.actions
 
-export default companySlice.reducer
+export default cargoSlice.reducer
 
-export const companySelector = (state) => {
-  return state.companyState
+export const cargoSelector = (state) => {
+  return state.cargoState
 }
 
-export const getCompanies = (searchCriteria) => {
+export const getCargos = (searchCriteria) => {
   return async dispatch => {
     try {
-      console.log('start getAllCompanies ')
-      const promise = getAllCompanies(searchCriteria)
+      console.log('start getGoods ')
+      const promise = getAllCargos(searchCriteria)
+      console.log(JSON.stringify(promise))
 
       if (!promise) {
         return
@@ -92,7 +93,7 @@ export const getCompanies = (searchCriteria) => {
       //   })
 
       dispatch(setLoading(true))
-      dispatch(setCompanies(promise.objects))
+      dispatch(setCargos(promise.objects))
       dispatch(setTotalPages(promise.totalPages))
       dispatch(setTotalElements(promise.totalElements))
       dispatch(setLoading(false))

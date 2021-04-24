@@ -7,13 +7,13 @@ import SettingOutlined from '@ant-design/icons/lib/icons/SettingOutlined'
 import { useDispatch, useSelector } from 'react-redux'
 import { SUCCESS } from '../../constants'
 import FloristForm from './FloristForm'
-import { floristsSelector, updateFlorist } from '../../redux/reducers/FloristSliceReducer'
+import { companySelector, updateFlorist } from '../../redux/reducers/CompanySliceReducer'
 
 const EditFloristModal = (props) => {
   const dispatch = useDispatch()
   const [visible, setVisible] = useState(false)
-  const { florists } = useSelector(floristsSelector)
-  const florist = florists.find(x => x.id === props.floristId)
+  const { florists } = useSelector(companySelector)
+  const cargo = florists.find(x => x.id === props.floristId)
 
   const showModal = () => {
     setVisible(true)
@@ -66,7 +66,7 @@ const EditFloristModal = (props) => {
         width={1200}
       >
         <FloristForm
-          florist={florist}
+          cargo={cargo}
           action={'Изменить'}
           validateStatus={SUCCESS}
           handleSubmitButton={handleSubmitButton}

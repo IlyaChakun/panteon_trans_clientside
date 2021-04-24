@@ -72,7 +72,7 @@ class ShopsBlock extends Component {
             <div className="row shops-front">
                 <div className="shops-top-info d-flex flex-row justify-content-between">
                     <h3>Адреса магазинов</h3>
-                    <Link to="/company/shops">ПЕРЕЙТИ В РАЗДЕЛ</Link>
+                    <Link to="/cargo/shops">ПЕРЕЙТИ В РАЗДЕЛ</Link>
                 </div>
 
                 <div className="col-5">

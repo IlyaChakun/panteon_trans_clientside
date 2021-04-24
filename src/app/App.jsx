@@ -12,31 +12,18 @@ import OAuth2RedirectHandler from '../components/user/oauth2/OAuth2RedirectHandl
 import AppFooter from '../components/common/footer/AppFooter'
 import NotFound from '../components/common/error/NotFound'
 import Profile from '../components/user/profile/Profile'
-import SignUp from '../components/user/signup/SignUp'
 import Login from '../components/user/login/Login'
-import Company from '../components/company/Company'
-
-import ShopsList from '../components/shop/ShopsList'
 import Home from '../components/home/Home'
 import ReviewsList from '../components/company/review/ReviewsList'
-import LegalPage from '../components/common/pages/LegalPage'
-import DocumentsPage from '../components/common/pages/DocumentsPage'
-import HelpPage from '../components/common/pages/HelpPage'
-import AboutPage from '../components/common/pages/AboutPage'
-import ShopDetail from '../components/shop/ShopDetail'
-import Cart from '../components/cart/Cart'
-import PrivateAdminRoute from './util/PrivateAdminRoute'
-import OrderPage from '../components/order/OrderPage'
 import BreadCrumbComponent from '../components/common/breadcrumb/BreadCrumbComponent'
-import ProductList from '../components/product/ProductList'
 import { useDispatch, useSelector } from 'react-redux'
 import { authSelector, getCurrentUser, setCurrentUser, setIsAuthenticated } from '../redux/reducers/AuthSliceReducer'
-import { getCurrentCompany } from '../redux/reducers/CompanySliceReducer'
 import LoadingIndicator from '../components/common/util/LoadingIndicator'
-import FloristList from '../components/florist/FloristList'
-import OrderList from '../components/order/ProxyOrderList'
-import { fetchShops } from '../redux/reducers/ShopsSliceReducer'
-import ClientList from '../components/user/ClientList'
+import CompanyList from '../components/company/CompanyList'
+import CargoList from '../components/cargo/CargoList'
+import TransportList from '../components/transport/TransportList'
+import Registration from '../components/user/registration/Registration'
+import NewsList from '../components/news/NewsList'
 
 const { Content } = Layout
 
@@ -57,17 +44,13 @@ const App = (props) => {
     isAuthenticated
   } = useSelector(authSelector)
 
-  const { currentCompany } = useSelector(authSelector)
-
   useEffect(() => {
     dispatch(getCurrentUser())
-    dispatch(getCurrentCompany())
-    dispatch(fetchShops())
   }, [dispatch])
 
   const handleLogout = (redirectTo = '/',
-    notificationType = SUCCESS,
-    description = localizedStrings.alertSuccessLogOut) => {
+                        notificationType = SUCCESS,
+                        description = localizedStrings.alertSuccessLogOut) => {
     localStorage.removeItem(ACCESS_TOKEN)
     localStorage.removeItem(REFRESH_TOKEN)
 
@@ -98,7 +81,8 @@ const App = (props) => {
 
   return (
     <Layout className='app-wrapper'>
-      <AppHeader isAuthenticated={isAuthenticated}
+      <AppHeader
+        isAuthenticated={isAuthenticated}
         currentUser={currentUser}
         handleLogout={handleLogout}
       />
@@ -115,115 +99,62 @@ const App = (props) => {
 
         <Switch>
 
-          <Route exact path='/login'
+          <Route
+            exact path='/login'
             render={(props) =>
-              <Login onLogin={handleLogin}
+              <Login
+                onLogin={handleLogin}
                 {...props} />}/>
 
-          <Route path='/sign-up'
+          <Route
+            path='/sign-up'
             render={(props) =>
-              <SignUp
+              <Registration
                 isAuthenticated={isAuthenticated}
                 {...props} />}/>
 
-          <Route path='/oauth2/redirect'
+          <Route
+            path='/oauth2/redirect'
             render={(props) =>
-              <OAuth2RedirectHandler onLogin={handleLogin}
+              <OAuth2RedirectHandler
+                onLogin={handleLogin}
                 {...props} />}/>
 
-          <PrivateRoute path='/profile'
+          <PrivateRoute
+            path='/profile'
             isAuthenticated={isAuthenticated}
             component={Profile}
             {...props} />
 
-          <Route path='/orders/:id'
-            currentUser={currentUser}
-            component={OrderPage}/>
-
-          <Route path='/cart'
-            isAuthenticated={isAuthenticated}
-            currentUser={currentUser}
-            component={Cart}
-            currentCompany={currentCompany}
-            {...props} />
-
-          <Route exact path='/about/documents'
+          <Route
+            exact path='/companies'
             render={(props) =>
-              <DocumentsPage
+              <CompanyList
                 {...props} />}/>
 
-          <Route path='/company/shops/:id'
+          <Route
+            exact path='/cargos'
             render={(props) =>
-              <ShopDetail
-                currentUser={currentUser}
-                currentCompany={currentCompany}
+              <CargoList
                 {...props} />}/>
 
-          <Route path='/company/shops'
+          <Route
+            exact path='/transports'
             render={(props) =>
-              <ShopsList
-                currentUser={currentUser}
-                currentCompany={currentCompany}
+              <TransportList
                 {...props} />}/>
 
-          <Route path='/company'
-            render={(props) =>
-              <Company
-                currentUser={currentUser}
-                currentCompany={currentCompany}
-                {...props} />}/>
-
-          <Route exact path='/about/legal'
-            render={(props) =>
-              <LegalPage
-                {...props} />}/>
-
-          <Route path='/company/about'
-            render={(props) =>
-              <AboutPage
-                {...props} />}/>
-
-          <PrivateAdminRoute
-            path='/company'
-            isAuthenticated={isAuthenticated}
-            currentUser={currentUser}
-            currentCompany={currentCompany}
-            component={Company}/>
-
-          <Route exact path='/about/help'
-            render={(props) =>
-              <HelpPage
-                {...props} />}/>
-
-          <Route path='/products'
-            render={(props) =>
-              <ProductList {...props} />}/>
-
-          <PrivateAdminRoute
-            path='/florists'
-            isAuthenticated={isAuthenticated}
-            currentUser={currentUser}
-            currentCompany={currentCompany}
-            component={FloristList}/>
-
-          <Route exact path='/orders'
-            render={(props) =>
-              <OrderList {...props} />} />
-
-          <Route path='/clients'
-            render={(props) =>
-              <ClientList {...props} />} />
-
-          {/* <PrivateAdminRoute */}
-          {/*  path='/orders' */}
-          {/*  isAuthenticated={isAuthenticated} */}
-          {/*  currentUser={currentUser} */}
-          {/*  currentCompany={currentCompany} */}
-          {/*  component={OrderList}/> */}
-
-          <Route path='/reviews'
+          <Route
+            path='/reviews'
             render={(props) =>
               <ReviewsList
+                currentUser={currentUser}
+                {...props} />}/>
+
+          <Route
+            path='/news'
+            render={(props) =>
+              <NewsList
                 currentUser={currentUser}
                 {...props} />}/>
 
@@ -238,7 +169,7 @@ const App = (props) => {
   )
 }
 
-export function isAdmin (currentUser) {
+export function isAdmin(currentUser) {
   // if (currentUser !== null && currentUser !== undefined && currentUser.roles !== undefined) {
   //   const role = currentUser.roles.find(elem => elem.name === ROLE_ADMIN)
   //   return role === undefined ? false : role.name === ROLE_ADMIN
@@ -256,7 +187,7 @@ export function isAdmin (currentUser) {
   }
 }
 
-export function isUserClient (currentUser) {
+export function isUserClient(currentUser) {
   // if (currentUser !== null && currentUser !== undefined && currentUser.roles !== undefined) {
   //   const role = currentUser.roles.find(elem => elem.name === ROLE_ADMIN)
   //   return role === undefined ? false : role.name === ROLE_ADMIN
@@ -271,7 +202,7 @@ export function isUserClient (currentUser) {
   }
 }
 
-export function isUserFlorist (currentUser) {
+export function isUserFlorist(currentUser) {
   // if (currentUser !== null && currentUser !== undefined && currentUser.roles !== undefined) {
   //   const role = currentUser.roles.find(elem => elem.name === ROLE_ADMIN)
   //   return role === undefined ? false : role.name === ROLE_ADMIN
@@ -286,7 +217,7 @@ export function isUserFlorist (currentUser) {
   }
 }
 
-export function isUser (currentUser) {
+export function isUser(currentUser) {
   if (currentUser !== null && currentUser !== undefined && currentUser.roles !== undefined) {
     const role = currentUser.roles.find(elem => elem.name === ROLE_USER)
     return role === undefined ? false : role.name === ROLE_USER

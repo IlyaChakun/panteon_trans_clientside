@@ -2,34 +2,11 @@ import React from 'react'
 import { Col, Layout, Row } from 'antd'
 import './AppFooter.css'
 import { Link, withRouter } from 'react-router-dom'
-import LoadingIndicator from '../util/LoadingIndicator'
-import { useSelector } from 'react-redux'
-import { companySelector } from '../../../redux/reducers/CompanySliceReducer'
 
 const Footer = Layout.Footer
 
 const AppFooter = () => {
 
-  const { currentCompany, isLoading } = useSelector(companySelector)
-
-  if (!currentCompany || isLoading) {
-    return <LoadingIndicator />
-  }
-
-  const name = currentCompany.name
-  // const description = currentCompany.description
-  const licenceNumber = currentCompany.licenceNumber
-  const firstPhoneNumber = currentCompany.contacts.firstPhoneNumber
-  const secondPhoneNumber = currentCompany.contacts.secondPhoneNumber
-  const email = currentCompany.contacts.email
-  const city = currentCompany.contacts.city
-  const address = currentCompany.contacts.address
-  const payerAccountNumber = currentCompany.companyLegalAddress.payerAccountNumber
-  const checkingAccount = currentCompany.companyLegalAddress.checkingAccount
-  const bankName = currentCompany.companyLegalAddress.bankInfo.bankName
-  const bankCode = currentCompany.companyLegalAddress.bankInfo.bankCode
-  const postalCode = currentCompany.companyLegalAddress.bankInfo.contacts ? currentCompany.companyLegalAddress.bankInfo.contacts.postalCode : ''
-  const bankAddress = currentCompany.companyLegalAddress.bankInfo.contacts ? currentCompany.companyLegalAddress.bankInfo.contacts.address : ''
 
   return (
     <Footer>
@@ -41,16 +18,10 @@ const AppFooter = () => {
                 <a href='/about/'>О нас</a>
               </div>
               <div className='item'>
-                <Link to='/company/about'>О компании</Link>
+                <Link to='/cargo/about'>О компании</Link>
               </div>
               <div className='item'>
-                <Link to='/about/help'>Как оформить заказ</Link>
-              </div>
-              <div className='item'>
-                <Link to='/company/reviews'>Отзывы</Link>
-              </div>
-              <div className='item'>
-                <Link to='/company/shops'>Магазины</Link>
+                <Link to='/cargo/reviews'>Отзывы</Link>
               </div>
               <div className='item'>
                 <Link to='/about/legal'>Юридическим лицам</Link>
@@ -83,49 +54,16 @@ const AppFooter = () => {
           <Col span={4}>
             <div className='items'>
               <div className='item'>
-                <a href='/about/help/'>Как купить</a>
+                <a href='/about/help/'>Сервисы</a>
               </div>
               <div className='item '>
-                <a href='/about/delivery/'>Доставка</a>
+                <a href='/about/delivery/'>Руководство пользователя</a>
               </div>
               <div className='item'>
-                <a href='/about/payment/'>Оплата</a>
+                <a href='/about/payment/'>Новости</a>
               </div>
               <div className='item'>
-                <a href='/about/warranty/'>Гарантии</a>
-              </div>
-            </div>
-          </Col>
-          <Col span={6}>
-            <div className='contact-block'>
-              <div className='phone mt-4'>
-                <Row justify='center'>
-                  <Col span={12}>
-                    <a rel='nofollow' href='tel:+375291456777'>
-                      {firstPhoneNumber}
-                    </a>
-                  </Col>
-                </Row>
-              </div>
-              <div className='email'>
-                <Row justify='center'>
-                  <Col span={12}>
-                    <a href='mailto:info@donnarosa.by'
-                       target='_blank'
-                       rel='noopener noreferrer'
-                    >
-                      {email}
-                    </a>
-                  </Col>
-
-                </Row>
-              </div>
-              <div className='address '>
-                <Row justify='center'>
-                  <Col span={12}>
-                    {city}, {address}
-                  </Col>
-                </Row>
+                <a href='/about/warranty/'>Тарифные планы</a>
               </div>
             </div>
           </Col>
@@ -165,13 +103,7 @@ const AppFooter = () => {
         <Row justify='center'>
           <Col>
             <div className='copy'>
-              2020 © {name} УНП № {checkingAccount}<br />
-              Интернет-магазин зарегистрирован в торговом реестре 30.12.2019 под
-              номером {licenceNumber}<br />
-              Адрес: {city},{address}, E-mail: {email}, <br />
-              Тел.: {firstPhoneNumber}, Доп. тел.: {secondPhoneNumber}<br />
-              Р/с: {payerAccountNumber} в {bankName},
-              {postalCode}, {bankAddress}, код банка: {bankCode}
+
             </div>
           </Col>
         </Row>
