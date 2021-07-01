@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Button, Form, Input, message, Select, Steps } from 'antd'
-import s from '../profile/Profile.module.css'
 import LockOutlined from '@ant-design/icons/lib/icons/LockOutlined'
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 import {
@@ -9,10 +8,7 @@ import {
   validatePhoneNumber,
   validateUserName
 } from '../../common/validation/ValidationFunctions'
-import { SUCCESS } from '../../../constants'
 import { withRouter } from 'react-router-dom'
-import { validateId } from '../../product/ProductValidation'
-
 const { Step } = Steps
 const { Option } = Select
 
@@ -43,14 +39,6 @@ const Registration = (props) => {
     setCurrent(current - 1)
   }
 
-  const isFormInvalid = () => {
-    return !(
-      firstName.validateStatus === SUCCESS,
-      lastName.validateStatus === SUCCESS,
-      email.validateStatus === SUCCESS
-    )
-  }
-
   const handleSubmit = (values) => {
     console.log('Received values of form:', values)
   }
@@ -64,10 +52,7 @@ const Registration = (props) => {
   }
 
   const onChangeCountrySelect = (input, option) => {
-    setCountry({
-      value: option.value,
-      ...validateId(option.key)
-    })
+
   }
 
   const handleCompanyTitle = (event) => {
@@ -241,7 +226,6 @@ const Registration = (props) => {
 
   </>)
 
-
   const countryOptions = [
     <Option key={1} value={1}>
       Беларусь
@@ -351,22 +335,6 @@ const Registration = (props) => {
           style={{ fontSize: '16px', width: 350 }}
         />
       </Form.Item>
-
-
-      {/*<Form.Item*/}
-      {/*  className={s.formItem}*/}
-      {/*  style={{ marginTop: '50px', width: 250 }}*/}
-      {/*>*/}
-      {/*  <Button*/}
-      {/*    type='primary'*/}
-      {/*    htmlType='submit'*/}
-      {/*    size='large'*/}
-      {/*    className={s.button}*/}
-      {/*    disabled={isFormInvalid()}>*/}
-      {/*    Регистрация*/}
-      {/*  </Button>*/}
-      {/*</Form.Item>*/}
-
     </>
   )
 

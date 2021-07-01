@@ -43,7 +43,7 @@ class Signup extends Component {
 
     if (this.state.password.value !== this.state.confirmedPassword.value) {
       notification.error({
-        message: 'Цветочный магазин',
+        message: 'Test Name',
         description: 'Введенный пароль не совпал с подтверждающим'
       })
     } else {
@@ -61,13 +61,13 @@ class Signup extends Component {
       signUpRequest(signupRequest)
         .then(() => {
           notification.success({
-            message: 'Цветочный магазин',
+            message: 'Test Name',
             description: localizedStrings.alertSuccessRegister
           })
           this.props.history.push('/profile/me')
         }).catch(error => {
         notification.error({
-          message: 'Цветочный магазин',
+          message: 'Test Name',
           description: error.message || localizedStrings.alertException
         })
       })

@@ -40,13 +40,13 @@ class ChangePasswordModal extends React.Component {
     changeUserPassword(changeUserPasswordRequest)
       .then(() => {
         notification.success({
-          message: 'Цветочный магазин',
+          message: 'Test Name',
           description: localizedStrings.alertSuccessfulUserUpdate
         })
         this.props.history.push('/profile/me')
       }).catch(error => {
       notification.error({
-        message: 'Цветочный магазин',
+        message: 'Test Name',
         description: error.message || localizedStrings.alertException
       })
     })

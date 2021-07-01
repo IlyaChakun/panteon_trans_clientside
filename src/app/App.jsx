@@ -49,8 +49,8 @@ const App = (props) => {
   }, [dispatch])
 
   const handleLogout = (redirectTo = '/',
-                        notificationType = SUCCESS,
-                        description = localizedStrings.alertSuccessLogOut) => {
+    notificationType = SUCCESS,
+    description = localizedStrings.alertSuccessLogOut) => {
     localStorage.removeItem(ACCESS_TOKEN)
     localStorage.removeItem(REFRESH_TOKEN)
 
@@ -62,7 +62,7 @@ const App = (props) => {
     history.push(redirectTo)
 
     notification[notificationType]({
-      message: 'Цветочный магазин',
+      message: 'Test Name',
       description: description
     })
   }
@@ -169,7 +169,7 @@ const App = (props) => {
   )
 }
 
-export function isAdmin(currentUser) {
+export function isAdmin (currentUser) {
   // if (currentUser !== null && currentUser !== undefined && currentUser.roles !== undefined) {
   //   const role = currentUser.roles.find(elem => elem.name === ROLE_ADMIN)
   //   return role === undefined ? false : role.name === ROLE_ADMIN
@@ -187,7 +187,7 @@ export function isAdmin(currentUser) {
   }
 }
 
-export function isUserClient(currentUser) {
+export function isUserClient (currentUser) {
   // if (currentUser !== null && currentUser !== undefined && currentUser.roles !== undefined) {
   //   const role = currentUser.roles.find(elem => elem.name === ROLE_ADMIN)
   //   return role === undefined ? false : role.name === ROLE_ADMIN
@@ -202,7 +202,7 @@ export function isUserClient(currentUser) {
   }
 }
 
-export function isUserFlorist(currentUser) {
+export function isUserFlorist (currentUser) {
   // if (currentUser !== null && currentUser !== undefined && currentUser.roles !== undefined) {
   //   const role = currentUser.roles.find(elem => elem.name === ROLE_ADMIN)
   //   return role === undefined ? false : role.name === ROLE_ADMIN
@@ -217,7 +217,7 @@ export function isUserFlorist(currentUser) {
   }
 }
 
-export function isUser(currentUser) {
+export function isUser (currentUser) {
   if (currentUser !== null && currentUser !== undefined && currentUser.roles !== undefined) {
     const role = currentUser.roles.find(elem => elem.name === ROLE_USER)
     return role === undefined ? false : role.name === ROLE_USER

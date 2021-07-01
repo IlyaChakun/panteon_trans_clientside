@@ -8,8 +8,6 @@ import { SUCCESS } from '../../../constants'
 import { validatePhoneNumber, validateUserName } from '../../common/validation/ValidationFunctions'
 import ImageLoader from '../../common/image/ImageLoader'
 import { withRouter } from 'react-router-dom'
-import OrderList from '../../order/ProxyOrderList'
-import LoadingIndicator from '../../common/util/LoadingIndicator'
 import { useDispatch, useSelector } from 'react-redux'
 import { authSelector, updateUserProfile } from '../../../redux/reducers/AuthSliceReducer'
 
@@ -72,20 +70,13 @@ const Profile = (props) => {
     setImageUrl(imageUrl)
   }
 
-  const loadingIndicatorOrReadyOrderListForm = currentUser === null
-    ? (
-      <LoadingIndicator/>
-    ) : (
-      <OrderList currentUser={currentUser}/>
-    )
-
   return (
     <div className='container py-5 px-3 mb-5'>
       <Tabs defaultActiveKey='1'>
         <TabPane tab='Личный кабинет' key='1'>
           <Col span={24}>
             <Form {...layout}
-                  onFinish={handleSubmit} className={s.form}>
+              onFinish={handleSubmit} className={s.form}>
 
               <Row>
 
@@ -193,7 +184,6 @@ const Profile = (props) => {
         </TabPane>
 
         <TabPane tab='Ваши заказы' key='2'>
-          {loadingIndicatorOrReadyOrderListForm}
         </TabPane>
 
       </Tabs>

@@ -14,7 +14,7 @@ class Login extends Component {
   showAlertMessage = () => {
     setTimeout(() => {
       notification.error({
-        message: 'Цветочный магазин',
+        message: 'Test Name',
         description: this.props.location.state.error,
         duration: 5000
       })

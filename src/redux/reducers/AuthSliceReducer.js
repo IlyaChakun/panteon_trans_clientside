@@ -61,7 +61,7 @@ export const authSelector = (state) => {
 export const getCurrentUser = () => {
   if (authSelector.accessToken) {
     notification.error({
-      message: 'Цветочный магазин',
+      message: 'Test Name',
       description: 'Токен отсутсвтует'
     })
   }
@@ -101,14 +101,14 @@ export const updateUserProfile = (updateUserRequest) => {
           dispatch(setIsLoading(false))
 
           notification.success({
-            message: 'Цветочный магазин',
+            message: 'Test Name',
             description: localizedStrings.alertSuccessfulUserUpdate
           })
         })
     } catch (error) {
       dispatch(setErrors(error))
       notification.error({
-        message: 'Цветочный магазин',
+        message: 'Test Name',
         description: error.message || localizedStrings.alertException
       })
     }
@@ -132,14 +132,14 @@ export const login = (loginInput) => {
           dispatch(setIsLoading(false))
           window.location.href = '/products'
           notification.success({
-            message: 'Цветочный магазин',
+            message: 'Test Name',
             description: 'Успешный вход'
           })
         })
     } catch (error) {
       dispatch(setErrors(error))
       notification.error({
-        message: 'Цветочный магазин',
+        message: 'Test Name',
         description: 'Неверный Email или пароль'
       })
     }
