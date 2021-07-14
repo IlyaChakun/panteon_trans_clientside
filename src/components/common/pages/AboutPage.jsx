@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import SideNav from '../nav/SideNav'
+import SideNav from '../SideNav/SideNav'
 
 class AboutPage extends Component {
   render () {

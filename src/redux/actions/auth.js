@@ -8,10 +8,10 @@ import {
     SET_EXPIRE_DATE
 } from "../actions/types";
 
-import { getCurrentUserRequest, loginRequest, updateUserProfileRequest } from '../../components/util/utilsAPI'
+import { getCurrentUserRequest, loginRequest, updateUserProfileRequest } from '../../util/utilsAPI'
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../constants'
 import { notification } from 'antd'
-import { localizedStrings } from '../../components/util/localization'
+import { localizedStrings } from '../../util/localization'
 
 export const setCurrentUser = (user) => (dispatch) => {
     dispatch({
