@@ -9,7 +9,8 @@ import { validatePhoneNumber, validateUserName } from '../../common/validation/V
 import ImageLoader from '../../common/image/ImageLoader'
 import { withRouter } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { authSelector, updateUserProfile } from '../../../redux/reducers/AuthSliceReducer'
+import { authSelector } from '../../../redux/reducers/auth'
+import { updateUserProfile } from 'redux/actions/auth'
 
 const Profile = (props) => {
   const { TabPane } = Tabs

@@ -8,7 +8,7 @@ import s from './Login.module.css'
 import SocialLogin from './SocialLogin'
 import './Login.module.css'
 import { useDispatch } from 'react-redux'
-import { login } from '../../../redux/reducers/AuthSliceReducer'
+import { login } from '../../../redux/actions/auth'
 
 const LoginForm = (props) => {
   const [email, setEmail] = useState('')

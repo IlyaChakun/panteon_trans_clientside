@@ -4,7 +4,7 @@ import { Button, Col, Divider, Form, Input, List, Row, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 
 import LoadingIndicator from '../common/util/LoadingIndicator'
-import { getNews, newsSelector, setPage, setSize } from '../../redux/reducers/NewsSliceReducer'
+import { getNews, setPage, setSize } from '../../redux/actions/news'
 import NewsCard from './NewsCard'
 
 const { Option } = Select
@@ -18,7 +18,7 @@ const NewsList = () => {
     page,
     size,
     totalElements
-  } = useSelector(newsSelector)
+  } = useSelector(state => state.newsState)
 
   useEffect(() => {
     loadList(page, size)

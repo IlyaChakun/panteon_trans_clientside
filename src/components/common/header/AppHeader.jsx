@@ -13,7 +13,7 @@ import UserAddOutlined from '@ant-design/icons/lib/icons/UserAddOutlined'
 import { isAdmin, isUserFlorist } from '../../../app/App'
 import ShoppingCartOutlined from '@ant-design/icons/lib/icons/ShoppingCartOutlined'
 import { useSelector } from 'react-redux'
-import { authSelector } from '../../../redux/reducers/AuthSliceReducer'
+import { authSelector } from '../../../redux/reducers/auth'
 
 const Header = Layout.Header
 

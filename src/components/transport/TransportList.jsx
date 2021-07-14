@@ -4,7 +4,7 @@ import { Button, Col, Divider, Form, Input, List, Row, Select, Steps } from 'ant
 import { useDispatch, useSelector } from 'react-redux'
 
 import LoadingIndicator from '../common/util/LoadingIndicator'
-import { getTransport, setPage, setSize, transportSelector } from '../../redux/reducers/TransportSliceReducer'
+import { getTransport, setPage, setSize } from '../../redux/actions/transport'
 import TransportCardProxy from './TransportCardProxy'
 
 
@@ -20,7 +20,7 @@ const TransportList = () => {
     page,
     size,
     totalElements
-  } = useSelector(transportSelector)
+  } = useSelector(state => state.transportState)
 
   useEffect(() => {
     loadList(page, size)

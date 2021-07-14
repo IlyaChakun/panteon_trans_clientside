@@ -17,7 +17,7 @@ import Home from '../components/home/Home'
 import ReviewsList from '../components/company/review/ReviewsList'
 import BreadCrumbComponent from '../components/common/breadcrumb/BreadCrumbComponent'
 import { useDispatch, useSelector } from 'react-redux'
-import { authSelector, getCurrentUser, setCurrentUser, setIsAuthenticated } from '../redux/reducers/AuthSliceReducer'
+import { getCurrentUser, setCurrentUser, setIsAuthenticated } from '../redux/actions/auth'
 import LoadingIndicator from '../components/common/util/LoadingIndicator'
 import CompanyList from '../components/company/CompanyList'
 import CargoList from '../components/cargo/CargoList'
@@ -42,7 +42,7 @@ const App = (props) => {
     isLoading,
     currentUser,
     isAuthenticated
-  } = useSelector(authSelector)
+  } = useSelector(state => state.authState)
 
   useEffect(() => {
     dispatch(getCurrentUser())
