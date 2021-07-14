@@ -18,13 +18,13 @@ function Home () {
           <Col span={20}>
             <Tabs defaultActiveKey="1">
               <TabPane tab="Компании" key="1">
-                <CompanyList/>
+                <CompanyList />
               </TabPane>
               <TabPane tab="Транспорт" key="2">
-                <TransportList/>
+                <TransportList />
               </TabPane>
               <TabPane tab="Грузы" key="3">
-                <CargoList/>
+                <CargoList />
               </TabPane>
             </Tabs>
 
@@ -33,7 +33,7 @@ function Home () {
 
         <Row justify="center">
           <Col span={20}>
-            <ReviewsList/>
+            <ReviewsList />
           </Col>
         </Row>
 

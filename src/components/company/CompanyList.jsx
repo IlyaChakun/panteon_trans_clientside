@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import LoadingIndicator from '../common/util/LoadingIndicator'
 import CompanyCardProxy from './CompanyCardProxy'
-import { companySelector, getCompanies, setPage, setSize } from '../../redux/reducers/CompanySliceReducer'
+import { getCompanies, setPage, setSize } from '../../redux/actions/company'
 
 const { Step } = Steps
 const { Option } = Select
@@ -19,7 +19,7 @@ const CompanyList = () => {
     page,
     size,
     totalElements
-  } = useSelector(companySelector)
+  } = useSelector(state => state.companyState)
 
   useEffect(() => {
     loadList(page, size)
@@ -85,38 +85,42 @@ const CompanyList = () => {
   const search = (
     <>
       <Form.Item
+        style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}}
         label={'По названию или УНН:'}
       >
         <Input
-          style={{ fontSize: '16px', width: 350 }}
+          style={{ fontSize: '16px', width: '100%'}}
         />
       </Form.Item>
 
       <Form.Item
+        style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}}
         label={'Местоположение:'}
       >
         <Input
-          style={{ fontSize: '16px', width: 350 }}
+          style={{ fontSize: '16px', width: '100%'}}
         />
       </Form.Item>
 
       <Form.Item
+        style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}}
         label={'Рейтинг:'}
       >
         <Select
-          style={{ fontSize: '16px', width: 450 }}
+          style={{ fontSize: '16px', width: '100%'}}
         >
           {ratingOptions}
         </Select>
       </Form.Item>
 
       <Form.Item
-        style={{ marginTop: '50px', width: 250 }}>
+        style={{ marginTop: '50px'}}>
 
         <Button
           type='primary'
           htmlType='submit'
-          size='large'>
+          style={{width: '100%'}}
+        >
           Найти компанию
         </Button>
       </Form.Item>

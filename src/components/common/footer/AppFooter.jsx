@@ -74,7 +74,7 @@ const AppFooter = () => {
           <Col span={24}>
             <div className='social-block'>
               <ul className='list-group list-group-horizontal justify-content-center'>
-                <li class='list-group-item vk'>
+                <li className='list-group-item vk'>
                   <a href='#' target='_blank' rel='nofollow' title='Вконтакте'>
                     <i className='fa fa-vk' aria-hidden='true'></i>
                   </a>

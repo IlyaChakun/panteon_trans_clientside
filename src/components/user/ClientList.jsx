@@ -3,9 +3,9 @@ import { withRouter } from 'react-router-dom'
 import { Space, Table, Tag } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import LoadingIndicator from '../common/util/LoadingIndicator'
-import { clientsSelector, getClients, setPage, setSize } from '../../redux/reducers/ClientSliceReducer'
+import { getClients, setPage, setSize } from '../../redux/reducers/client'
 import ClientDetailModal from './ClientDetailModal'
-import { authSelector } from '../../redux/reducers/AuthSliceReducer'
+import { authSelector } from '../../redux/reducers/auth'
 
 const { Column } = Table
 
@@ -21,7 +21,7 @@ const ClientList = (props) => {
     page,
     size,
     totalElements
-  } = useSelector(clientsSelector)
+  } = useSelector(state => state.clientState)
 
   useEffect(() => {
     updateList()

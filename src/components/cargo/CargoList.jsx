@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import LoadingIndicator from '../common/util/LoadingIndicator'
 import CargoCardProxy from './CargoCardProxy'
-import { cargoSelector, getCargos, setPage, setSize } from '../../redux/reducers/CargoSliceReducer'
+import { getCargos, setPage, setSize } from '../../redux/actions/cargo'
 
 
 const { Step } = Steps
@@ -16,11 +16,11 @@ const CargoList = () => {
 
   const {
     cargos,
-    loading,
+    isLoading,
     page,
     size,
     totalElements
-  } = useSelector(cargoSelector)
+  } = useSelector(state => state.cargoState)
 
   useEffect(() => {
     loadList(page, size)
@@ -53,7 +53,7 @@ const CargoList = () => {
     loadList(page + 1, size)
   }
 
-  if (loading === true) {
+  if (isLoading === true) {
     return <LoadingIndicator/>
   }
 
@@ -165,7 +165,7 @@ const CargoList = () => {
 
                 pagination={{
 
-                  loading: loading,
+                  loading: isLoading,
                   showSizeChanger: true,
 
                   defaultCurrent: page,
