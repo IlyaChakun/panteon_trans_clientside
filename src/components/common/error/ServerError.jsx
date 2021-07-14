@@ -2,7 +2,7 @@ import React from 'react'
 import './errorStyle.css'
 import { Link } from 'react-router-dom'
 import { Button } from 'antd'
-import { localizedStrings } from '../../util/localization'
+import { localizedStrings } from '../../../util/localization'
 
 const ServerError = () => {
   return (

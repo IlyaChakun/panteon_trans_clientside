@@ -8,7 +8,7 @@ import {
     SET_CLIENTS
   } from "../actions/types";
 
-import { getAllClientsRequest } from '../../components/util/utilsAPI'
+import { getAllClientsRequest } from '../../util/utilsAPI'
 
 export const getClients = (searchCriteria) => async (dispatch) => {
       try {

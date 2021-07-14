@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { Avatar, Button, Dropdown, Layout, Menu } from 'antd'
-import { getAvatarColor } from '../../util/colors'
-import { localizedStrings } from '../../util/localization'
+import { getAvatarColor } from '../../../util/colors'
+import { localizedStrings } from '../../../util/localization'
 import './AppHeader.css'
 
 import HomeOutlined from '@ant-design/icons/lib/icons/HomeOutlined'

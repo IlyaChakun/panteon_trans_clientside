@@ -1,0 +1,39 @@
+import React, { Component } from 'react'
+import { notification } from 'antd'
+import { localizedStrings } from '../../../../util/localization'
+import s from './Login.css'
+import LoginForm from '../LoginForm/LoginForm'
+
+class Login extends Component {
+  componentDidMount() {
+    if (this.props.location.state && this.props.location.state.error) {
+      this.showAlertMessage()
+    }
+  }
+
+  showAlertMessage = () => {
+    setTimeout(() => {
+      notification.error({
+        message: 'Test Name',
+        description: this.props.location.state.error,
+        duration: 5000
+      })
+      this.props.history.replace({
+        pathname: this.props.location.pathname,
+        state: {}
+      })
+    }, 100)
+  }
+
+  render() {
+    return (
+      <div className={s.container}>
+        <div className={s.content}>
+          <LoginForm onLogin={this.props.onLogin} />
+        </div>
+      </div>
+    )
+  }
+}
+
+export default Login
