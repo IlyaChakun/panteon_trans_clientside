@@ -21,9 +21,12 @@ export const localizedStrings = new LocalizedStrings({
     loginFormRegisterNow: ' зарегистрируйся сейчас!',
     alreadyRegister: 'Уже зарегистрированы?',
     signUpFromLoginNow: 'Залогиньтесь!',
-    or: 'или',
+    noAccount: 'Нет аккаунта? ',
+    alreadyHaveAccount: 'Уже есть аккаунт? ',
+    restorePassword: 'Восстановить пароль',
     email: 'Электронная почта',
     password: 'Пароль',
+    repeatPassword: 'Повторите пароль',
     emailField: 'Электронная почта',
     editSensor: 'Изменить сенсор',
     addSensor: 'Добавить сенсор',
@@ -186,6 +189,7 @@ export const localizedStrings = new LocalizedStrings({
     alertBadPasswordTooShort: `Пароль очень короткий! (Минимум ${PASSWORD_MIN_LENGTH} символов)`,
     alertBadPasswordTooLong: `Пароль очень длинный (Максимум  ${PASSWORD_MAX_LENGTH} символов)`,
     alertBadConfirmedPasswordNotEqual: ' Подтвержденный пароль не соответсвует паролю',
+    alertPasswordsAreNotequal: 'Пароли не сопадают',
 
     // company////
     alertCompanyBadNameEmpty: 'Название компании не может быть пустым!',

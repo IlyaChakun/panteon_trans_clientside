@@ -1,64 +1,8 @@
-.ant-layout-footer {
-    text-align: center;
-    flex-shrink: 0;
-    color: #999;
-    margin: 0;
-    padding: 60px 0 60px;
-    background: #01060b;
+.item {
+    text-decoration: none;
+    color: #fff;
 }
 
-.footer-top .items .item:nth-child(1) {
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 24px;
-    text-transform: uppercase;
-    letter-spacing: .8px;
-}
-
-.footer-top .items .item a {
-    color: #999;
-}
-
-.ant-layout-footer .subscribe-button .btn {
-    background: #01060b;
-    border-color: #01060b;
-    color: #333;
-}
-
-.ant-layout-footer .info .subscribe-button .btn {
-    position: relative;
-    display: block;
-    padding: 15px 45px 14px 18px;
-    white-space: normal;
-    background: #494949;
-    border-color: #494949;
-    text-align: left;
-    letter-spacing: .8px;
-}
-
-.footer-top .items .item a:hover, .footer-top .items .item a:hover, .footer-top .items .info .email a:hover {
-    color: #ffffff;
-}
-
-.footer-middle .social-block ul {
-    background: #fafafa;
-    border-radius: 0;
-}
-
-.footer-middle .social-block ul li a {
-    display: block;
-    width: 43px;
-    height: 43px;
-    line-height: 43px;
-    border-radius: 3px;
-    border: 1px solid gray;
-}
-
-.footer-middle .social-block ul li a:hover {
-    border: none;
-}
-
-.list-group-horizontal .list-group-item {
-    border: none;
-    background: none;
+.item_wrapper {
+    margin-bottom: 20px;
 }

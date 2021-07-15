@@ -85,7 +85,7 @@ const CompanyList = () => {
   const search = (
     <>
       <Form.Item
-        style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}}
+        style={{width: '100%'}}
         label={'По названию или УНН:'}
       >
         <Input
@@ -94,7 +94,7 @@ const CompanyList = () => {
       </Form.Item>
 
       <Form.Item
-        style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}}
+        style={{width: '100%'}}
         label={'Местоположение:'}
       >
         <Input
@@ -103,7 +103,7 @@ const CompanyList = () => {
       </Form.Item>
 
       <Form.Item
-        style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}}
+        style={{width: '100%'}}
         label={'Рейтинг:'}
       >
         <Select
@@ -114,7 +114,7 @@ const CompanyList = () => {
       </Form.Item>
 
       <Form.Item
-        style={{ marginTop: '50px'}}>
+        style={{width: '100%'}}>
 
         <Button
           type='primary'
@@ -142,26 +142,18 @@ const CompanyList = () => {
             </Col>
             <Col span={18}>
               <Divider>Компании</Divider>
-
               <List
-
                 pagination={{
-
                   loading: loading,
                   showSizeChanger: true,
-
                   defaultCurrent: page,
                   defaultPageSize: size,
-
                   pageSizeOptions: ['6', '9', '12'],
                   position: 'bottom',
-
                   total: totalElements,
-
                   showQuickJumper: true,
                   onShowSizeChange: onSizeChangeHandler,
                   onChange: onPageChangeHandler,
-
                   loadMore: loadMore
                 }}
 
