@@ -25,6 +25,8 @@ import TransportList from '../components/transport/TransportList/TransportList'
 import Registration from '../components/user/registration/Registration/Registration'
 import NewsList from '../components/news/NewsList/NewsList'
 
+import CompanyRegistration from '../components/user/registration/CompanyRegistration/CompanyRegistration'
+
 const { Content } = Layout
 
 notification.config({
@@ -80,7 +82,7 @@ const App = (props) => {
   }
 
   return (
-    <Layout className='app-wrapper'>
+    <Layout>
       <AppHeader
         isAuthenticated={isAuthenticated}
         currentUser={currentUser}
@@ -120,11 +122,11 @@ const App = (props) => {
                 onLogin={handleLogin}
                 {...props} />}/>
 
-          <PrivateRoute
+          {/* <PrivateRoute
             path='/profile'
             isAuthenticated={isAuthenticated}
             component={Profile}
-            {...props} />
+            {...props} /> */}
 
           <Route
             exact path='/companies'
@@ -158,9 +160,10 @@ const App = (props) => {
                 currentUser={currentUser}
                 {...props} />}/>
 
-          <Route path='/' component={Home}/>
+          <Route path='/profile/company' component={CompanyRegistration}/>
 
-          <Route component={NotFound}/>
+
+          <Route path='/' component={Home}/>
 
         </Switch>
       </Content>

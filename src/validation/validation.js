@@ -141,7 +141,7 @@ export function validateCity (city) {
 }
 
 
-export function validatePassword  (password) {
+export function validatePassword (password) {
   if (password.length < PASSWORD_MIN_LENGTH) {
     return {
       validateStatus: ERROR,
@@ -151,6 +151,20 @@ export function validatePassword  (password) {
     return {
       validationStatus: ERROR,
       errorMsg: localizedStrings.alertBadPasswordTooLong
+    }
+  } else {
+    return {
+      validateStatus: SUCCESS,
+      errorMsg: null,
+    }
+  }
+}
+
+export function validatePasswordRepeat (password, passwordRepeat) {
+  if (password !== passwordRepeat) {
+    return {
+      validateStatus: ERROR,
+      errorMsg: localizedStrings.alertPasswordsAreNotequal
     }
   } else {
     return {
