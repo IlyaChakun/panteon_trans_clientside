@@ -131,17 +131,22 @@ const CompanyList = () => {
     <div className='pb-5'>
       <Row justify='center'>
         <Col span={22}>
-          <Row gutter={16}>
+          <Row gutter={16} style={{padding: '30px'}}>
             <Col span={6}>
-              <h1>Поиск</h1>
-
-              <Form>
+              <Form
+                labelCol={{
+                  span: 24,
+                }}
+                wrapperCol={{
+                  span: 24,
+                }}
+                style={{ padding: '20px' }}
+              >
                 {search}
               </Form>
 
             </Col>
             <Col span={18}>
-              <Divider>Компании</Divider>
               <List
                 pagination={{
                   loading: loading,

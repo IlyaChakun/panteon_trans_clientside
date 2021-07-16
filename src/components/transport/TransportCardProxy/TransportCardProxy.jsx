@@ -17,72 +17,52 @@ const TransportCardProxy = ({ transport, history, updateList }) => {
   const randomViewCount = Math.floor(Math.random() * (1000 - 1) + 1)
 
   return (
-    <List.Item.Meta
-      avatar={
-        <>
+    <React.Fragment>
+      <Row gutter={16} style={{ width: '100%' }}>
+        <Col span={4}>
           <strong>
             {transport.countryIndexFrom} - {transport.countryIndexTo}
           </strong>
-        </>
-      }
-      title={
-        <>
-          <Row>
-            <Col span={5}>
-              {transport.from}
-            </Col>
-
-            <Col span={5}>
-              {transport.to}
-            </Col>
-
-            <Col span={3}>
-              <br/>
-              {transport.dimensions}
-            </Col>
-
-            <Col span={5}>
-              {truckBodyTypes}
-            </Col>
-
-            <Col span={5}>
-              {cargoStowageMethod}
-            </Col>
-          </Row>
-          <Divider/>
-        </>
-      }
-      description={
-        <>
-          <strong style={{ color: 'black' }}>
-            <Row>
-
-              <Col span={8}>
-                {transport.payment}
-              </Col>
-
-              <Col span={6}>
-                <span>Контакты:</span>
-                <br/>
-                {transport.contacts.name}
-                <br/>
-                {transport.contacts.phoneNumber}
-              </Col>
-
-            </Row>
-
-          </strong>
-
-          < div style={{ textAlign: 'right' }}>
-            Дата создания: {transport.dateOfCreation}
-            <br/>
-            Просмотров: {randomViewCount}
-          </div>
-
-        </>
-      }
-
-    />
+        </Col>
+        <Col span={4}>
+          { transport.from }
+        </Col>
+        <Col span={4}>
+          { transport.to }
+        </Col>
+        <Col span={4}>
+          { transport.dimensions }
+        </Col>
+        <Col span={4}>
+          {truckBodyTypes}
+        </Col>
+        <Col span={4}>
+          {cargoStowageMethod}
+        </Col>
+      </Row>
+      <Divider />
+      <Row gutter={16} style={{ width: '100%' }}>
+        <Col span={6}>
+          <strong style={{ color: 'black' }}>{transport.payment}</strong>
+        </Col>
+        <Col span={6}>
+          <strong style={{ color: 'black' }}>{transport.payment}</strong>
+        </Col>
+        <Col span={6}>
+          <span>Контакты:</span>
+          <br/>
+          {transport.contacts.name}
+          <br/>
+          {transport.contacts.phoneNumber}
+        </Col>
+        <Col span={6}>
+          <span>Дата создания: {transport.dateOfCreation}</span>
+          <br/>
+          <span>Просмотров: {randomViewCount}</span>
+          <br/>
+        </Col>
+      </Row>
+    </React.Fragment>
   )
 }
 export default TransportCardProxy

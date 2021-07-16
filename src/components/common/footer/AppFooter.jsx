@@ -47,7 +47,7 @@ const AppFooter = () => {
           </div>
         </Col>
 
-        <Col span={8} style={{textDecoration: 'none', color: '#fff'}}>
+        <Col span={8} style={{ textDecoration: 'none', color: '#fff' }}>
           <div className='item_wrapper'>
             <a className='item' href='/about/help/'>Сервисы</a>
           </div>
