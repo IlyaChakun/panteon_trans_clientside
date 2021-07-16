@@ -24,80 +24,57 @@ const CargoCardProxy = ({ cargo, history, updateList }) => {
     )
 
   return (
-    <List.Item.Meta
-      avatar={
-        <>
+    <React.Fragment>
+      <Row gutter={16} style={{ width: '100%' }}>
+        <Col span={4}>
           <strong>
-            {cargo.countryIndexFrom} - {cargo.countryIndexTo}
+            { cargo.countryIndexFrom } - { cargo.countryIndexTo }
           </strong>
           <br/>
-          {cargo.distance}
+          { cargo.distance }
           <br/>
-        </>
-      }
-      title={
-        <>
-          <Row>
-            <Col span={5}>
-              {cargo.from}
-            </Col>
-
-            <Col span={5}>
-              {cargo.to}
-            </Col>
-
-            <Col span={3}>
-              {cargo.cargoType}
-              <br/>
-              {cargo.dimensions}
-            </Col>
-
-            <Col span={5}>
-              {truckBodyTypes}
-            </Col>
-
-            <Col span={5}>
-              {cargoStowageMethod}
-            </Col>
-          </Row>
-          <Divider/>
-        </>
-      }
-      description={
-        <>
-          <strong style={{ color: 'black' }}>
-            <Row>
-
-              <Col span={2}>
-                {priority}
-              </Col>
-
-              <Col span={8}>
-                {cargo.payment}
-              </Col>
-
-              <Col span={6}>
-                <span>Контакты:</span>
-                <br/>
-                {cargo.contacts.name}
-                <br/>
-                {cargo.contacts.phoneNumber}
-              </Col>
-
-            </Row>
-
-          </strong>
-
-          < div style={{ textAlign: 'right' }}>
-            Дата создания: {cargo.dateOfCreation}
-            <br/>
-            Просмотров: {randomViewCount}
-          </div>
-
-        </>
-      }
-
-    />
+        </Col>
+        <Col span={4}>
+          { cargo.from }
+        </Col>
+        <Col span={4}>
+          { cargo.to }
+        </Col>
+        <Col span={4}>
+          { cargo.cargoType }
+          <br/>
+          { cargo.dimensions }
+        </Col>
+        <Col span={4}>
+          {truckBodyTypes}
+        </Col>
+        <Col span={4}>
+          {cargoStowageMethod}
+        </Col>
+      </Row>
+      <Divider />
+      <Row gutter={16} style={{ width: '100%' }}>
+        <Col span={6}>
+          <strong style={{ color: 'black' }}>{priority}</strong>
+        </Col>
+        <Col span={6}>
+          <strong style={{ color: 'black' }}>{cargo.payment}</strong>
+        </Col>
+        <Col span={6}>
+          <span>Контакты:</span>
+          <br/>
+          {cargo.contacts.name}
+          <br/>
+          {cargo.contacts.phoneNumber}
+        </Col>
+        <Col span={6}>
+          <span>Дата создания: {cargo.dateOfCreation}</span>
+          <br/>
+          <span>Просмотров: {randomViewCount}</span>
+          <br/>
+        </Col>
+      </Row>
+    </React.Fragment>
   )
 }
 export default CargoCardProxy

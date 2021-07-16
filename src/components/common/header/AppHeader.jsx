@@ -3,7 +3,6 @@ import { Link, withRouter } from 'react-router-dom'
 import { Avatar, Button, Dropdown, Layout, Menu } from 'antd'
 import { getAvatarColor } from '../../../util/colors'
 import { localizedStrings } from '../../../util/localization'
-import './AppHeader.css'
 
 import HomeOutlined from '@ant-design/icons/lib/icons/HomeOutlined'
 import UserOutlined from '@ant-design/icons/lib/icons/UserOutlined'
@@ -185,8 +184,7 @@ const AppHeader = (props) => {
   }
 
   return (
-    <>
-      <Header className='mb-5'>
+     <Header>
         <div></div>
         <Menu
           theme={'dark'}
@@ -210,7 +208,6 @@ const AppHeader = (props) => {
           {menuItems}
         </Menu>
       </Header>
-    </>
   )
 }
 

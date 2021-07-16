@@ -7,14 +7,13 @@ import { Route, Switch, useHistory, withRouter } from 'react-router-dom'
 
 import { localizedStrings } from '../util/localization'
 import { ACCESS_TOKEN, REFRESH_TOKEN, ROLE_ADMIN, ROLE_USER, SUCCESS, USER_ID } from '../constants'
-import AppHeader from '../components/common/Header/AppHeader'
+import AppHeader from '../components/common/header/AppHeader'
 import OAuth2RedirectHandler from '../components/user/oauth2/OAuth2RedirectHandler'
-import AppFooter from '../components/common/Footer/AppFooter'
-import NotFound from '../components/common/Error/NotFound'
-import Profile from '../components/user/profile/Profile/Profile'
+import AppFooter from '../components/common/footer/AppFooter'
 import Login from '../components/user/login/Login/Login'
 import Home from '../components/home/Home/Home'
 import ReviewsList from '../components/company/review/ReviewsList/ReviewsList'
+import Profile from '../components/user/profile/Profile/Profile'
 import BreadCrumbComponent from '../components/common/Breadcrumb/BreadCrumb'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCurrentUser, setCurrentUser, setIsAuthenticated } from '../redux/actions/auth'
@@ -24,8 +23,6 @@ import CargoList from '../components/cargo/CargoList/CargoList'
 import TransportList from '../components/transport/TransportList/TransportList'
 import Registration from '../components/user/registration/Registration/Registration'
 import NewsList from '../components/news/NewsList/NewsList'
-
-import CompanyRegistration from '../components/user/registration/CompanyRegistration/CompanyRegistration'
 
 const { Content } = Layout
 
@@ -91,13 +88,13 @@ const App = (props) => {
 
       <Content className='app-content'>
 
-        <div className='mb-5'>
-          <Row justify='center'>
-            <Col span={22}>
-              <BreadCrumbComponent properties={props}/>
-            </Col>
-          </Row>
-        </div>
+        {/*<div className='mb-5'>*/}
+        {/*  <Row justify='center'>*/}
+        {/*    <Col span={22}>*/}
+        {/*      <BreadCrumbComponent properties={props}/>*/}
+        {/*    </Col>*/}
+        {/*  </Row>*/}
+        {/*</div>*/}
 
         <Switch>
 
@@ -159,15 +156,14 @@ const App = (props) => {
               <NewsList
                 currentUser={currentUser}
                 {...props} />}/>
-
-          <Route path='/profile/company' component={CompanyRegistration}/>
-
+          <Route path='/profile' component={Profile}/>
+          {/*<Route path='/profile/company' component={CompanyRegistration}/>*/}
 
           <Route path='/' component={Home}/>
 
         </Switch>
       </Content>
-      <AppFooter/>
+      {/*<AppFooter/>*/}
     </Layout>
   )
 }

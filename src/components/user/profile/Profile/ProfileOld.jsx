@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { authSelector } from '../../../../redux/reducers/auth'
 import { updateUserProfile } from 'redux/actions/auth'
 
-const Profile = (props) => {
+const ProfileOld = (props) => {
   const { TabPane } = Tabs
 
   const layout = {
@@ -192,4 +192,4 @@ const Profile = (props) => {
   )
 }
 
-export default withRouter(Profile)
+export default withRouter(ProfileOld)

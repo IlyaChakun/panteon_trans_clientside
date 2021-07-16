@@ -54,7 +54,7 @@ const CargoList = () => {
   }
 
   if (isLoading === true) {
-    return <LoadingIndicator/>
+    return <LoadingIndicator />
   }
 
   const list = cargos.map(cargo =>
@@ -97,25 +97,19 @@ const CargoList = () => {
       <Form.Item
         label={'Место загрузки:'}
       >
-        <Input
-          style={{ fontSize: '16px', width: 450 }}
-        />
+        <Input />
       </Form.Item>
 
       <Form.Item
         label={'Место разгрузки:'}
       >
-        <Input
-          style={{ fontSize: '16px', width: 450 }}
-        />
+        <Input />
       </Form.Item>
 
       <Form.Item
         label={'Тип загрузки:'}
       >
-        <Select
-          style={{ fontSize: '16px', width: 450 }}
-        >
+        <Select style={{ width: '100%' }}>
           {loadTypeOptions}
         </Select>
       </Form.Item>
@@ -123,20 +117,17 @@ const CargoList = () => {
       <Form.Item
         label={'Тип кузова:'}
       >
-        <Select
-          style={{ fontSize: '16px', width: 450 }}
-        >
+        <Select>
           {bodyTypeOptions}
         </Select>
       </Form.Item>
 
-      <Form.Item
-        style={{ marginTop: '50px', width: 250 }}>
-
+      <Form.Item>
         <Button
           type='primary'
           htmlType='submit'
-          size='large'>
+          style={{ width: '100%' }}
+        >
           Найти
         </Button>
       </Form.Item>
@@ -145,57 +136,46 @@ const CargoList = () => {
 
 
   return (
-    <div className='pb-5'>
-      <Row justify='center'>
-        <Col span={22}>
-          <Row gutter={16}>
-            <Col span={6}>
-              <h1>Поиск</h1>
-
-              <Form>
-                {search}
-              </Form>
-
-            </Col>
-            <Col span={18}>
-              <Divider>Грузы</Divider>
-
-              <List
-
-
-                pagination={{
-
-                  loading: isLoading,
-                  showSizeChanger: true,
-
-                  defaultCurrent: page,
-                  defaultPageSize: size,
-
-                  pageSizeOptions: ['2', '6', '9', '12'],
-                  position: 'bottom',
-
-                  total: totalElements,
-
-                  showQuickJumper: true,
-                  onShowSizeChange: onSizeChangeHandler,
-                  onChange: onPageChangeHandler,
-
-                  loadMore: loadMore
-                }}
-
-                dataSource={list}
-
-                renderItem={item => (
-                  <List.Item>
-                    {item}
-                  </List.Item>
-                )}
-              />
-            </Col>
-          </Row>
+    <React.Fragment style={{ boxSizing: 'border-box' }}>
+      <Row gutter={16} style={{ width: '100%', padding: '30px' }}>
+        <Col span={6}>
+          <Form
+            labelCol={{
+              span: 24,
+            }}
+            wrapperCol={{
+              span: 24,
+            }}
+            style={{ padding: '20px' }}
+          >
+            {search}
+          </Form>
+        </Col>
+        <Col span={18} style={{ width: '100%' }}>
+          <List
+            pagination={{
+              loading: isLoading,
+              showSizeChanger: true,
+              defaultCurrent: page,
+              defaultPageSize: size,
+              pageSizeOptions: ['2', '6', '9', '12'],
+              position: 'bottom',
+              total: totalElements,
+              showQuickJumper: true,
+              onShowSizeChange: onSizeChangeHandler,
+              onChange: onPageChangeHandler,
+              loadMore: loadMore
+            }}
+            dataSource={list}
+            renderItem={item => (
+              <List.Item style={{ backgroundColor: '#fff', marginBottom: '25px', flexDirection: 'column', padding: '20px' }}>
+                {item}
+              </List.Item>
+            )}
+          />
         </Col>
       </Row>
-    </div>
+    </React.Fragment>
   )
 }
 
