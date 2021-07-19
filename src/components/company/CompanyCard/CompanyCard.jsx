@@ -22,10 +22,9 @@ const CompanyCard = ({ company }) => {
   return (
     <Card
       hoverable
-      style={{ width: '200%', marginTop: 16 }}
-
+      style={{ marginBottom: '20px' }}
       extra={
-        <>
+        <React.Fragment>
           <Row>
             <Col>
               Дата создания: {company.dateOfCreation}
@@ -36,7 +35,7 @@ const CompanyCard = ({ company }) => {
               Дата регистрации: {company.dateOfRegistration}
             </Col>
           </Row>
-        </>
+        </React.Fragment>
       }
 
       title={
@@ -44,64 +43,58 @@ const CompanyCard = ({ company }) => {
       }
 
       cover={
-        <Row>
-          <Col span={4}>
-            <div>
-              <img
-                style={{ width: '150px', height: '150px', margin: '20px' }}
-                alt={company.title}
-                src={company.title === null ? ''
-                  : company.imageUrl}
-              />
-            </div>
-          </Col>
+        <Row style={{padding: '20px'}}>
           <Col span={6}>
-            <Divider/>
-            <Row>
-              <span>Сайт: {company.siteUrl}</span>
-            </Row>
-            <Divider/>
-            <Row>
-              <span>E-mail: {company.email}</span>
-            </Row>
-            <Divider/>
-            <Row>
-              <span>Тел: {company.phoneNumber}</span>
-            </Row>
-            <Divider/>
+            <img
+              style={{ width: '100%', height: 'fill', objectFit: 'cover' }}
+              alt={company.title}
+              src={company.title === null ? ''
+                : company.imageUrl}
+            />
           </Col>
-          <Col span={8}>
-            <Divider/>
-            <Row>
-              <span>Описание:<br/> {company.description}</span>
-            </Row>
-            <Divider/>
-          </Col>
-          <Col span={6}>
+          <Col span={18} style={{padding: '20px'}}>
             <Row>
               <span>Рейтинг: </span>
-              <Rate disabled value={company.rating.rating_value} defaultValue={2}/>
+              <Rate disabled value={company.rating.rating_value} defaultValue={2} />
             </Row>
-            <Divider/>
-            <Row>
-              <Button type='primary'>
-                Смотреть отзывы
-              </Button>
-            </Row>
-            <Divider/>
-            <Row>
-              <Button type='primary'>
-                Добавить отзыв
-              </Button>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Button type='primary' style={{ width: '100%' }}>
+                  Смотреть отзывы
+                </Button>
+              </Col>
+              <Col span={12}>
+                <Button type='primary' style={{ width: '100%' }}>
+                  Добавить отзыв
+                </Button>
+              </Col>
             </Row>
           </Col>
         </Row>
       }
     >
-
+      <Row gutter={16}>
+        <Col span={8}>
+          <Row>
+            <span>Сайт: {company.siteUrl}</span>
+          </Row>
+          <Divider />
+          <Row>
+            <span>E-mail: {company.email}</span>
+          </Row>
+          <Divider />
+          <Row>
+            <span>Тел: {company.phoneNumber}</span>
+          </Row>
+        </Col>
+        <Col span={16}>
+          <Row>
+            <span>Описание:<br /> {company.description}</span>
+          </Row>
+        </Col>
+      </Row>
       <Meta
         style={{ padding: '5px' }}
-
         title={
           <>
             <Divider/>
@@ -127,21 +120,6 @@ const CompanyCard = ({ company }) => {
             </Row>
             <Divider/>
           </>
-        }
-
-        description={
-
-          <Row>
-            <Col span={24}>
-              <Row>
-
-              </Row>
-              <Row>
-
-              </Row>
-            </Col>
-          </Row>
-
         }
       />
     </Card>

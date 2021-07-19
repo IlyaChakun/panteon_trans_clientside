@@ -10,13 +10,17 @@ import {
   validatePassword,
   validatePasswordRepeat
 } from '../../../../validation/validation'
-import { withRouter, Link} from 'react-router-dom'
+import { withRouter, Link, Redirect } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Registration = (props) => {
 
   const [email, setEmail] = useState({ value: '' })
   const [password, setPassword] = useState({ value: '' })
   const [repeatPassword, setRepeatPassword] = useState({ value: '' })
+
+  const dispatch = useDispatch()
+  const { isAuthenticated } = useSelector(state => state.authState)
 
   const handleSubmit = (values) => {
     console.log('Received values of form:', values)
@@ -44,6 +48,10 @@ const Registration = (props) => {
       value: event.target.value,
       ...validatePasswordRepeat(password.value, event.target.value)
     })
+  }
+
+  if (isAuthenticated) {
+    return <Redirect to="/" />
   }
 
   return (
