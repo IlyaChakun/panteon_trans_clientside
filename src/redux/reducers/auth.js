@@ -5,23 +5,27 @@ import {
   SET_CURRENT_USER,
   SET_ACCESS_TOKEN,
   SET_REFRESH_TOKEN,
-  SET_EXPIRE_DATE
-} from "../actions/types";
+  SET_EXPIRE_DATE, LOGOUT
+} from '../actions/types'
 
 import { notification } from 'antd'
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../constants'
+
+const accessToken = localStorage.getItem(ACCESS_TOKEN)
+const refreshToken = localStorage.getItem(REFRESH_TOKEN)
 
 const initialState = {
   errors: '',
-  isAuthenticated: false,
+  isAuthenticated: !!accessToken,
   isLoading: false,
   currentUser: null,
-  accessToken: '',
-  refreshToken: '',
+  accessToken: accessToken || '',
+  refreshToken: refreshToken || '',
   expireDate: ''
 }
 
 export default function (state = initialState, action) {
-  const { type, payload } = action;
+  const { type, payload } = action
 
   switch (type) {
     case AUTH_SET_ERRORS:
@@ -59,6 +63,16 @@ export default function (state = initialState, action) {
         ...state,
         expireDate: payload
       };
+    case LOGOUT:
+      return {
+        errors: '',
+        isAuthenticated: false,
+        isLoading: false,
+        currentUser: null,
+        accessToken: '',
+        refreshToken: '',
+        expireDate: ''
+      }
     default:
       return state;
   }

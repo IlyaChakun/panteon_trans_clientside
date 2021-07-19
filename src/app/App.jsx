@@ -16,7 +16,7 @@ import ReviewsList from '../components/company/review/ReviewsList/ReviewsList'
 import Profile from '../components/user/profile/Profile/Profile'
 import BreadCrumbComponent from '../components/common/Breadcrumb/BreadCrumb'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCurrentUser, setCurrentUser, setIsAuthenticated } from '../redux/actions/auth'
+import { getCurrentUser, logout, setCurrentUser, setIsAuthenticated } from '../redux/actions/auth'
 import LoadingIndicator from '../components/common/LoadingIndicator/LoadingIndicator'
 import CompanyList from '../components/company/CompanyList/CompanyList'
 import CargoList from '../components/cargo/CargoList/CargoList'
@@ -40,25 +40,20 @@ const App = (props) => {
   const {
     isLoading,
     currentUser,
-    isAuthenticated
+    isAuthenticated,
+    accessToken
   } = useSelector(state => state.authState)
 
   useEffect(() => {
-    dispatch(getCurrentUser())
+    if (accessToken) {
+      dispatch(getCurrentUser(accessToken))
+    }
   }, [dispatch])
 
   const handleLogout = (redirectTo = '/',
     notificationType = SUCCESS,
     description = localizedStrings.alertSuccessLogOut) => {
-    localStorage.removeItem(ACCESS_TOKEN)
-    localStorage.removeItem(REFRESH_TOKEN)
-
-    localStorage.removeItem(USER_ID)
-
-    dispatch(setCurrentUser(null))
-    dispatch(setIsAuthenticated(false))
-
-    history.push(redirectTo)
+    dispatch(logout())
 
     notification[notificationType]({
       message: 'Test Name',

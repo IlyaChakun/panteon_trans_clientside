@@ -128,53 +128,51 @@ const CompanyList = () => {
   )
 
   return (
-    <div className='pb-5'>
-      <Row justify='center'>
-        <Col span={22}>
-          <Row gutter={16} style={{padding: '30px'}}>
-            <Col span={6}>
-              <Form
-                labelCol={{
-                  span: 24,
-                }}
-                wrapperCol={{
-                  span: 24,
-                }}
-                style={{ padding: '20px' }}
-              >
-                {search}
-              </Form>
+    <Row justify='center'>
+      <Col span={22}>
+        <Row gutter={16} style={{ padding: '30px' }}>
+          <Col span={6}>
+            <Form
+              labelCol={{
+                span: 24
+              }}
+              wrapperCol={{
+                span: 24
+              }}
+              style={{ padding: '20px' }}
+            >
+              {search}
+            </Form>
 
-            </Col>
-            <Col span={18}>
-              <List
-                pagination={{
-                  loading: loading,
-                  showSizeChanger: true,
-                  defaultCurrent: page,
-                  defaultPageSize: size,
-                  pageSizeOptions: ['6', '9', '12'],
-                  position: 'bottom',
-                  total: totalElements,
-                  showQuickJumper: true,
-                  onShowSizeChange: onSizeChangeHandler,
-                  onChange: onPageChangeHandler,
-                  loadMore: loadMore
-                }}
+          </Col>
+          <Col span={18}>
+            <List
+              pagination={{
+                loading: loading,
+                showSizeChanger: true,
+                defaultCurrent: page,
+                defaultPageSize: size,
+                pageSizeOptions: ['6', '9', '12'],
+                position: 'bottom',
+                total: totalElements,
+                showQuickJumper: true,
+                onShowSizeChange: onSizeChangeHandler,
+                onChange: onPageChangeHandler,
+                loadMore: loadMore
+              }}
 
-                dataSource={companyList}
+              dataSource={companyList}
 
-                renderItem={item => (
-                  <List.Item>
-                    {item}
-                  </List.Item>
-                )}
-              />
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-    </div>
+              renderItem={item => (
+                <List.Item>
+                  {item}
+                </List.Item>
+              )}
+            />
+          </Col>
+        </Row>
+      </Col>
+    </Row>
   )
 }
 
