@@ -43,34 +43,20 @@ const CompanyCard = ({ company }) => {
       }
 
       cover={
-        <Row style={{padding: '20px'}}>
-          <Col span={6}>
+        <React.Fragment>
+          <Row style={{ padding: '20px' }}>
             <img
               style={{ width: '100%', height: 'fill', objectFit: 'cover' }}
               alt={company.title}
               src={company.title === null ? ''
                 : company.imageUrl}
             />
-          </Col>
-          <Col span={18} style={{padding: '20px'}}>
-            <Row>
-              <span>Рейтинг: </span>
-              <Rate disabled value={company.rating.rating_value} defaultValue={2} />
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Button type='primary' style={{ width: '100%' }}>
-                  Смотреть отзывы
-                </Button>
-              </Col>
-              <Col span={12}>
-                <Button type='primary' style={{ width: '100%' }}>
-                  Добавить отзыв
-                </Button>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+          </Row>
+          <Row style={{ padding: '0 20px' }} align="middle">
+            <span style={{ marginRight: '10px' }}>Рейтинг:</span>
+            <Rate disabled value={company.rating.rating_value} />
+          </Row>
+        </React.Fragment>
       }
     >
       <Row gutter={16}>

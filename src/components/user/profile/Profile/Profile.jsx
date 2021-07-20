@@ -43,7 +43,7 @@ const Profile = (props) => {
           }}
         >
           <Switch>
-            <Route exact path='/profile' render={() => <Redirect to='/profile/company' />}/>
+            <Route exact path='/profile' render={() => <Redirect to='/profile/settings' />}/>
             <Route exact path='/profile/company' component={CompanyRegistration}/>
             <Route exact path='/profile/settings' component={Settings}/>
           </Switch>

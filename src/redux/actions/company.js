@@ -10,16 +10,16 @@ import {
     COMPANY_SET_SIZE
 } from "../actions/types";
 
-import { getAllCompanies } from '../../service/CompanyService'
+import CompanyService from '../../service/CompanyService'
 
 export const getCompanies = (searchCriteria) => async (dispatch) => {
     try {
         console.log('start getAllCompanies ')
-        const promise = getAllCompanies(searchCriteria)
+        const promise = CompanyService.getAllCompanies(searchCriteria)
 
-    if (!promise) {
-        return
-    }
+        if (!promise) {
+            return
+        }
         // await promise
         // promise
         //   .then(response => {
@@ -62,6 +62,17 @@ export const getCompanies = (searchCriteria) => async (dispatch) => {
             payload: error
         })
     }
+}
+
+export const getCompany = (id) => (dispatch) => {
+    return CompanyService.getCompany(id)
+      .then(response => {
+          dispatch({
+              type: SET_COMPANY,
+              payload: response
+          })
+          return Promise.resolve(response)
+      })
 }
 
 export const setPage = (page) => (dispatch) => {
