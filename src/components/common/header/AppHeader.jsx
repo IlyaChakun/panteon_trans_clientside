@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { Avatar, Button, Divider, Dropdown, Layout, Menu, Row, Col } from 'antd'
 import { getAvatarColor } from '../../../util/colors'
@@ -11,12 +11,20 @@ import LoginOutlined from '@ant-design/icons/lib/icons/LoginOutlined'
 import UserAddOutlined from '@ant-design/icons/lib/icons/UserAddOutlined'
 import { isAdmin, isUserFlorist } from '../../../app/App'
 import ShoppingCartOutlined from '@ant-design/icons/lib/icons/ShoppingCartOutlined'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from '../../../redux/actions/auth'
 
 const Header = Layout.Header
 
 const AppHeader = (props) => {
-  const { currentUser } = useSelector(state => state.authState)
+  const dispatch = useDispatch()
+  const { isAuthenticated } = useSelector(state => state.authState)
+
+  const logOut = () => {
+    dispatch(logout())
+  }
+
+  useEffect(() => {}, [props.location.pathname, isAuthenticated])
 
   const dropdownUserMenu = () => {
     return (
@@ -33,7 +41,7 @@ const AppHeader = (props) => {
         </Menu.Item>
         <Menu.Divider/>
         <Menu.Item key='logout' className='dropdown-item'>
-          <Button type='link' className='ant-dropdown-link' onClick={event => event.preventDefault()}>{localizedStrings.logout}</Button>
+          <Button type='link' className='ant-dropdown-link' onClick={event => { event.preventDefault(); logOut() }}>{localizedStrings.logout}</Button>
         </Menu.Item>
       </Menu>
     )
@@ -86,7 +94,7 @@ const AppHeader = (props) => {
             </Menu.Item>
           </Menu>
         </Col>
-        {currentUser ? (
+        {isAuthenticated && (
           <Col>
             <Menu
               theme={'dark'}
@@ -105,7 +113,8 @@ const AppHeader = (props) => {
               </Dropdown>
             </Menu>
           </Col>
-        ) : (
+        )}
+        {!isAuthenticated && (
           <Col>
             <Menu
               theme={'dark'}

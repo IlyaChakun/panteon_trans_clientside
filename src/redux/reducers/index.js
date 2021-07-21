@@ -5,6 +5,7 @@ import client from "./client";
 import company from "./company";
 import transport from "./transport";
 import news from "./news";
+import profile from "./profile";
 
 export default combineReducers({
     authState: auth,
@@ -12,5 +13,6 @@ export default combineReducers({
     companyState: company,
     cargoState: cargo,
     transportState: transport,
-    newsState: news
+    newsState: news,
+    profileState: profile
 });

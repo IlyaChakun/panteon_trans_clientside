@@ -36,7 +36,8 @@ notification.config({
 const App = (props) => {
   const dispatch = useDispatch()
 
-  const history = useHistory()
+  const shouldShowBreadcrumb = (props.location.pathname !== '/login') && (props.location.pathname !== '/sign-up') && (props.location.pathname.split('/')[1] !== 'profile')
+  const shouldShowFooter = (props.location.pathname !== '/login') && (props.location.pathname !== '/sign-up') && (props.location.pathname.split('/')[1] !== 'profile')
 
   const {
     isLoading,
@@ -83,7 +84,7 @@ const App = (props) => {
       />
 
       <Content className='app-content'>
-
+        {/*{shouldShowBreadcrumb && <BreadCrumbComponent/>}*/}
         <Switch>
 
           <Route
@@ -149,7 +150,7 @@ const App = (props) => {
 
         </Switch>
       </Content>
-      {/*<AppFooter/>*/}
+      {shouldShowFooter && <AppFooter/>}
     </Layout>
   )
 }

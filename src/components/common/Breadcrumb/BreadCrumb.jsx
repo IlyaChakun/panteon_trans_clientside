@@ -1,28 +1,17 @@
 import React from 'react'
 import { Breadcrumb } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 function BreadCrumbComponent(props) {
   const breadcrumbNameMap = {
-    '/login': 'Авторизация',
-    '/sign-up': 'Регистрация',
-    '/profile': 'Личный кабинет',
-    '/companies': 'Компании',
-    '/cargos': 'Грузы',
-    '/transports': 'Транспорт',
-    '/news': 'Новости',
-    '/company/shops': 'Магазины компании',
-    '/basket': 'Корзина',
-    '/bouquets': 'Букеты',
-    '/products': 'Товары',
-    '/orders/:id': 'Детальный просмотр заказа',
-    '/florists': 'Флористы',
-    '/orders': 'Заказы'
-    //TODO на детальных заказах не отрабатывает
-    //TODO на детальных магазинах не отрабатывает
+    'companies': 'Компании',
+    'cargos': 'Грузы',
+    'transports': 'Транспорт',
+    'news': 'Новости',
+    'company_id': useSelector(state => state.companyState.companies.company.title) || ''
   }
-
-  const { location } = props.properties
+const location = {}
   const pathSnippets =
     location
       .pathname.split('/')
@@ -46,15 +35,18 @@ function BreadCrumbComponent(props) {
       </Breadcrumb.Item>
     )
   })
-  const breadcrumbItems = [
-    <Breadcrumb.Item key='home'>
-      <Link to='/'>Главная страница</Link>
-    </Breadcrumb.Item>
-  ].concat(extraBreadcrumbItems)
+
+  const breadcrumbItems = props.location.pathname.split('/').map((item, index) => {
+    return item ? (
+      <Breadcrumb.Item key={item}>
+        <Link to={props.location.pathname + `/${item}`}>{breadcrumbNameMap.item}</Link>
+      </Breadcrumb.Item>
+    ) : ''
+  })
 
   return (
     <Breadcrumb>{breadcrumbItems}</Breadcrumb>
   )
 }
 
-export default BreadCrumbComponent
+export default withRouter(BreadCrumbComponent)

@@ -20,16 +20,6 @@ export const getCompanies = (searchCriteria) => async (dispatch) => {
         if (!promise) {
             return
         }
-        // await promise
-        // promise
-        //   .then(response => {
-        //     console.log('all florists', response)
-        //     dispatch(setLoading(true))
-        //     dispatch(setCompanies(response.objects))
-        //     dispatch(setTotalPages(response.totalPages))
-        //     dispatch(setTotalElements(response.totalElements))
-        //     dispatch(setLoading(false))
-        //   })
 
         dispatch({
             type: COMPANY_SET_IS_LOADING,

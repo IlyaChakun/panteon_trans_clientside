@@ -2,17 +2,16 @@ import React from 'react'
 import { Col, Divider, List, Row } from 'antd'
 
 const CargoCardProxy = ({ cargo, history, updateList }) => {
-  console.log('carrrrgo: ', cargo)
   const truckBodyTypes =
     cargo.truckBodyTypes.map(bodyType => (
-      bodyType.truckBodyTypeName + ', '
-    )
+        bodyType.truckBodyTypeName + ', '
+      )
     )
 
   const cargoStowageMethod =
     cargo.cargoStowageMethods.map(method => (
-      method.stowageMethodName + ', '
-    )
+        method.stowageMethodName + ', '
+      )
     )
 
   const randomViewCount = Math.floor(Math.random() * (1000 - 1) + 1)
