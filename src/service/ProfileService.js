@@ -1,10 +1,8 @@
-export function getAllCargos(searchCriteria) {
-
-  return (
-    {
+const cargosData = {
       objects: [
         {
           id: 1,
+          owner: 1,
           countryIndexFrom: 'BY',
           countryIndexTo: 'BY',
 
@@ -47,6 +45,7 @@ export function getAllCargos(searchCriteria) {
         },
         {
           id: 2,
+          owner: 2,
           countryIndexFrom: 'BY',
           countryIndexTo: 'RU',
 
@@ -86,6 +85,7 @@ export function getAllCargos(searchCriteria) {
         },
         {
           id: 3,
+          owner: 1,
           countryIndexFrom: 'AZ',
           countryIndexTo: 'RU',
 
@@ -121,6 +121,110 @@ export function getAllCargos(searchCriteria) {
       ],
       totalPages: 1,
       totalElements: 3
+   }
+
+const transportData = {
+  objects: [
+    {
+      id: 1,
+      owner: 1,
+      countryIndexFrom: 'BY',
+      countryIndexTo: 'BY',
+
+      from: 'Челябинск, Челябинская область',
+      to: 'Челябинская область\n' +
+        'Свердловская область\n' +
+        'Курганская область\n' +
+        'Тюменская область',
+
+
+      dimensions: '2т. 20м3 5.20 м • высота: 1.90 м • ширина: 2.10 м • 1 а/м',
+
+      cargoType: 'Напитки',
+
+      truckBodyTypes: [
+        {
+          truckBodyTypeName: 'Рефрижератор'
+        }
+      ],
+
+      cargoStowageMethods: [
+        {
+          stowageMethodName: 'задняя'
+        },
+        {
+          stowageMethodName: 'Боковая'
+        }
+      ],
+
+      dateOfCreation: '24.04.2021 17:10',
+
+      payment: '20 рос. руб./ км Удобная',
+
+      contacts: {
+        phoneNumber: '+375-29-877-77-75',
+        name: 'Николай'
+      }
+    },
+    {
+      id: 2,
+      owner: 1,
+      countryIndexFrom: 'ES',
+      countryIndexTo: 'RU',
+
+      from: 'Таррагона Сарагоса ,08 Барселона',
+      to: 'Москва, Московская область\n' +
+        'Екатеринбург, Свердловская область\n' +
+        'Ростов-на-Дону, Ростовская область\n' +
+        'Санкт-Петербург, Ленинградская область\n',
+
+      dimensions: '23т. 92м3',
+
+      cargoType: 'Напитки',
+
+      truckBodyTypes: [
+        {
+          truckBodyTypeName: 'Тент'
+        },
+        {
+          truckBodyTypeName: 'Тягач с полуприцепом'
+        }
+      ],
+
+      cargoStowageMethods: [
+        {
+          stowageMethodName: 'задняя'
+        },
+        {
+          stowageMethodName: 'Боковая'
+        }
+      ],
+
+      dateOfCreation: '24.04.2021 17:06',
+
+      payment: 'Договорная',
+
+      contacts: {
+        phoneNumber: '+375-29-425-65-89',
+        name: 'Алёна'
+      }
     }
-  )
+  ],
+  totalPages: 1,
+  totalElements: 2
+}
+
+const getProfileCargos = (userId) => {
+  const cargos = cargosData.objects.filter(item => item.owner == userId)
+  return cargos ? Promise.resolve(cargos) : Promise.reject('error getting profile cargos')
+}
+
+const getProfileTransport = (userId) => {
+  const cargos = transportData.objects.filter(item => item.owner == userId)
+  return cargos ? Promise.resolve(cargos) : Promise.reject('error getting profile cargos')
+}
+
+export default {
+  getProfileCargos,
+  getProfileTransport
 }

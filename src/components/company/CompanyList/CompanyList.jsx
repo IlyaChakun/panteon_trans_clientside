@@ -164,7 +164,7 @@ const CompanyList = () => {
               dataSource={companyList}
 
               renderItem={item => (
-                <List.Item>
+                <List.Item style={{ padding: '0' }}>
                   {item}
                 </List.Item>
               )}

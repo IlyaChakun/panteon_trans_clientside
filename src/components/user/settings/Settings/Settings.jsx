@@ -68,7 +68,7 @@ const Registration = (props) => {
       <Row style={{ height: '60vh' }}>
         <Col xs={{ span: 20 }} sm={{ span: 16 }} md={{ span: 10 }}>
           <Form
-            style={{padding: '25px', backgroundColor: '#fff'}}
+            style={{ padding: '25px', backgroundColor: '#fff' }}
             onFinish={handleSubmit}
           >
             <Form.Item

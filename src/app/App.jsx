@@ -23,6 +23,7 @@ import CargoList from '../components/cargo/CargoList/CargoList'
 import TransportList from '../components/transport/TransportList/TransportList'
 import Registration from '../components/user/registration/Registration/Registration'
 import NewsList from '../components/news/NewsList/NewsList'
+import CompanyProfile from '../components/company/CompanyProfile/CompanyProfile'
 
 const { Content } = Layout
 
@@ -35,7 +36,8 @@ notification.config({
 const App = (props) => {
   const dispatch = useDispatch()
 
-  const history = useHistory()
+  const shouldShowBreadcrumb = (props.location.pathname !== '/login') && (props.location.pathname !== '/sign-up') && (props.location.pathname.split('/')[1] !== 'profile')
+  const shouldShowFooter = (props.location.pathname !== '/login') && (props.location.pathname !== '/sign-up') && (props.location.pathname.split('/')[1] !== 'profile')
 
   const {
     isLoading,
@@ -82,15 +84,7 @@ const App = (props) => {
       />
 
       <Content className='app-content'>
-
-        {/*<div className='mb-5'>*/}
-        {/*  <Row justify='center'>*/}
-        {/*    <Col span={22}>*/}
-        {/*      <BreadCrumbComponent properties={props}/>*/}
-        {/*    </Col>*/}
-        {/*  </Row>*/}
-        {/*</div>*/}
-
+        {/*{shouldShowBreadcrumb && <BreadCrumbComponent/>}*/}
         <Switch>
 
           <Route
@@ -125,7 +119,7 @@ const App = (props) => {
             render={(props) =>
               <CompanyList
                 {...props} />}/>
-
+          <Route exact path='/companies/:id' component={CompanyProfile}/>
           <Route
             exact path='/cargos'
             render={(props) =>
@@ -152,13 +146,11 @@ const App = (props) => {
                 currentUser={currentUser}
                 {...props} />}/>
           <Route path='/profile' component={Profile}/>
-          {/*<Route path='/profile/company' component={CompanyRegistration}/>*/}
-
           <Route path='/' component={Home}/>
 
         </Switch>
       </Content>
-      {/*<AppFooter/>*/}
+      {shouldShowFooter && <AppFooter/>}
     </Layout>
   )
 }

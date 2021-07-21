@@ -10,26 +10,16 @@ import {
     COMPANY_SET_SIZE
 } from "../actions/types";
 
-import { getAllCompanies } from '../../service/CompanyService'
+import CompanyService from '../../service/CompanyService'
 
 export const getCompanies = (searchCriteria) => async (dispatch) => {
     try {
         console.log('start getAllCompanies ')
-        const promise = getAllCompanies(searchCriteria)
+        const promise = CompanyService.getAllCompanies(searchCriteria)
 
-    if (!promise) {
-        return
-    }
-        // await promise
-        // promise
-        //   .then(response => {
-        //     console.log('all florists', response)
-        //     dispatch(setLoading(true))
-        //     dispatch(setCompanies(response.objects))
-        //     dispatch(setTotalPages(response.totalPages))
-        //     dispatch(setTotalElements(response.totalElements))
-        //     dispatch(setLoading(false))
-        //   })
+        if (!promise) {
+            return
+        }
 
         dispatch({
             type: COMPANY_SET_IS_LOADING,
@@ -62,6 +52,17 @@ export const getCompanies = (searchCriteria) => async (dispatch) => {
             payload: error
         })
     }
+}
+
+export const getCompany = (id) => (dispatch) => {
+    return CompanyService.getCompany(id)
+      .then(response => {
+          dispatch({
+              type: SET_COMPANY,
+              payload: response
+          })
+          return Promise.resolve(response)
+      })
 }
 
 export const setPage = (page) => (dispatch) => {
