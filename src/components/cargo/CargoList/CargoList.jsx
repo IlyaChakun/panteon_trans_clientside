@@ -22,6 +22,8 @@ const CargoList = () => {
     totalElements
   } = useSelector(state => state.cargoState)
 
+  const { currentUser } = useSelector(state => state.authState)
+
   useEffect(() => {
     loadList(page, size)
   }, [dispatch, page, size])
@@ -61,6 +63,7 @@ const CargoList = () => {
     <CargoCardProxy
       key={cargo.id}
       cargo={cargo}
+      currentUser={currentUser}
       updateList={updateList}
     />
   )

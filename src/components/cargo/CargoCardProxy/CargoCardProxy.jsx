@@ -1,7 +1,7 @@
 import React from 'react'
-import { Col, Divider, List, Row } from 'antd'
+import { Button, Col, Divider, List, Row } from 'antd'
 
-const CargoCardProxy = ({ cargo, history, updateList }) => {
+const CargoCardProxy = ({ cargo, currentUser, history, updateList }) => {
   console.log('carrrrgo: ', cargo)
   const truckBodyTypes =
     cargo.truckBodyTypes.map(bodyType => (
@@ -73,6 +73,13 @@ const CargoCardProxy = ({ cargo, history, updateList }) => {
           <br/>
           <span>Просмотров: {randomViewCount}</span>
           <br/>
+        </Col>
+      </Row>
+      <Row justify="start" style={{ width: '100%' }}>
+        <Col>
+          {currentUser && (currentUser.id !== cargo.owner) && (
+            <Button type={'primary'}>Написать сообщение</Button>
+          )}
         </Col>
       </Row>
     </React.Fragment>

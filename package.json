@@ -40,6 +40,7 @@
     "prop-types": "latest",
     "react": "^16.13.0",
     "react-app-rewired": "^2.1.5",
+    "react-chat-engine": "^1.10.13",
     "react-dom": "^16.13.0",
     "react-geocode": "^0.2.2",
     "react-google-autocomplete": "latest",

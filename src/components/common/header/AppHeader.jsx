@@ -44,6 +44,11 @@ const AppHeader = (props) => {
             <Link to={'/profile/transports'} style={{ textDecoration: 'none', color: '#000' }}>Мой транспорт</Link>
           </Button>
         </Menu.Item>
+        <Menu.Item key='dialogs' className='dropdown-item'>
+          <Button type='link' className='ant-dropdown-link' onClick={event => event.preventDefault()}>
+            <Link to={'/profile/dialogs'} style={{ textDecoration: 'none', color: '#000' }}>Мои диалоги</Link>
+          </Button>
+        </Menu.Item>
         <Menu.Item key='settings' className='dropdown-item'>
           <Button type='link' className='ant-dropdown-link' onClick={event => event.preventDefault()}>
             <Link to={'/profile/settings'} style={{ textDecoration: 'none', color: '#000' }}>Настройки</Link>
