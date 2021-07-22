@@ -5,6 +5,7 @@ export function getAllCargos(searchCriteria) {
       objects: [
         {
           id: 1,
+          owner: 1,
           countryIndexFrom: 'BY',
           countryIndexTo: 'BY',
 
@@ -47,6 +48,7 @@ export function getAllCargos(searchCriteria) {
         },
         {
           id: 2,
+          owner: 2,
           countryIndexFrom: 'BY',
           countryIndexTo: 'RU',
 
@@ -86,6 +88,7 @@ export function getAllCargos(searchCriteria) {
         },
         {
           id: 3,
+          owner: 1,
           countryIndexFrom: 'AZ',
           countryIndexTo: 'RU',
 

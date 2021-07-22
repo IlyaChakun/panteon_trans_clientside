@@ -4,7 +4,9 @@ const MockData = [
     password: '111111',
     currentUser: {
       id: 1,
-      email: 'unicode256@yandex.by'
+      email: 'unicode256@yandex.by',
+      userName: 'unicode256@yandex.by',
+      userSecret: '111111',
     },
     accessToken: 'qqqqqqqqqqqqq',
     refreshToken: 'wwwwwwwwwwww',
@@ -15,7 +17,9 @@ const MockData = [
     password: '111111',
     currentUser: {
       id: 2,
-      email: 'unicode257@yandex.by'
+      email: 'unicode257@yandex.by',
+      userName: 'unicode257@yandex.by',
+      userSecret: '1111111'
     },
     accessToken: 'qqqqqqqqqqqq1',
     refreshToken: 'wwwwwwwwwww1',
@@ -26,7 +30,9 @@ const MockData = [
     password: '111111',
     currentUser: {
       id: 3,
-      email: 'unicode258@yandex.by'
+      email: 'unicode258@yandex.by',
+      userName: 'unicode258@yandex.by',
+      userSecret: '11111111'
     },
     accessToken: 'qqqqqqqqqqqq2',
     refreshToken: 'wwwwwwwwwww2',
@@ -37,7 +43,9 @@ const MockData = [
     password: '111111',
     currentUser: {
       id: 4,
-      email: 'unicode259@yandex.by'
+      email: 'unicode259@yandex.by',
+      userName: 'unicode259@yandex.by',
+      userSecret: '11111111'
     },
     accessToken: 'qqqqqqqqqqqq3',
     refreshToken: 'wwwwwwwwwww3',
