@@ -1,10 +1,13 @@
 import {
-  PROFILE_SET_CARGOS, PROFILE_SET_TRANSPORT
+  PROFILE_SET_CARGOS,
+  PROFILE_SET_COMPANY,
+  PROFILE_SET_TRANSPORT
 } from '../actions/types'
 
 const initialState = {
   cargos: [],
-  transports: []
+  transports: [],
+  company: {}
 }
 
 export default function (state = initialState, action) {
@@ -15,13 +18,18 @@ export default function (state = initialState, action) {
       return {
         ...state,
         cargos: payload
-      };
+      }
     case PROFILE_SET_TRANSPORT:
       return {
         ...state,
         transports: payload
-      };
+      }
+    case PROFILE_SET_COMPANY:
+      return {
+        ...state,
+        company: payload
+      }
     default:
-      return state;
+      return state
   }
 }

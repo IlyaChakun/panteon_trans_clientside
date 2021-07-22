@@ -16,15 +16,14 @@ const CompanyProfile = (props) => {
   const companies = useSelector(state => state.companyState)
 
   useEffect(() => {
-    dispatch(getCompany(props.match.params.id)).then((data) => {
-
-      console.log('data ', companies)
+    dispatch(getCompany(props.match.params.id)).then(() => {
+      window.scrollTo({ top: 0 })
     })
   }, [])
 
   return (
     <Content style={{ padding: '30px' }}>
-      {Object.keys(companies.company).length !== 0 &&
+      {Object.keys(companies.company).length &&
         <div style={{ padding: '30px', backgroundColor: '#fff' }}>
           <Title>{companies.company.title}</Title>
           <img
@@ -32,7 +31,7 @@ const CompanyProfile = (props) => {
             alt={companies.company.title}
             src={companies.company.title === null ? '' : companies.company.imageUrl}
           />
-          <Row align={"middle"} style={{ marginBottom: '20px' }}>
+          <Row align={'middle'} style={{ marginBottom: '20px' }}>
             <span style={{ marginRight: '10px' }}>Рейтинг:</span>
             {companies.company.rating &&
               <Rate disabled value={companies.company.rating.rating_value} />

@@ -58,7 +58,7 @@ const Login = (props) => {
   }
 
   return (
-    <Row style={{ height: '60vh' }}>
+    <Row style={{ height: 'calc(100vh - 64px)' }} align={'middle'}>
       <Col xs={{ span: 20, offset: 2 }} sm={{ span: 16, offset: 4 }} md={{ span: 10, offset: 7 }}>
         <Form
           style={{ padding: '25px', backgroundColor: '#fff' }}
