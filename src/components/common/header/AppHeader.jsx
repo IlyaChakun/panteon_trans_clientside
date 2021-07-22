@@ -29,14 +29,24 @@ const AppHeader = (props) => {
   const dropdownUserMenu = () => {
     return (
       <Menu className='profile-dropdown-menu'>
-        <Menu.Item key='profile' className='dropdown-item'>
+        <Menu.Item key='company' className='dropdown-item'>
           <Button type='link' className='ant-dropdown-link' onClick={event => event.preventDefault()}>
-            <Link to={'/profile'} style={{ textDecoration: 'none', color: '#000' }}>{localizedStrings.profile}</Link>
+            <Link to={'/profile/company'} style={{ textDecoration: 'none', color: '#000' }}>Моя компания</Link>
           </Button>
         </Menu.Item>
-        <Menu.Item key='profile' className='dropdown-item'>
+        <Menu.Item key='cargos' className='dropdown-item'>
           <Button type='link' className='ant-dropdown-link' onClick={event => event.preventDefault()}>
-            <Link to={'/profile'} style={{ textDecoration: 'none', color: '#000' }}>Настройки</Link>
+            <Link to={'/profile/cargos'} style={{ textDecoration: 'none', color: '#000' }}>Мои грузы</Link>
+          </Button>
+        </Menu.Item>
+        <Menu.Item key='transports' className='dropdown-item'>
+          <Button type='link' className='ant-dropdown-link' onClick={event => event.preventDefault()}>
+            <Link to={'/profile/transports'} style={{ textDecoration: 'none', color: '#000' }}>Мой транспорт</Link>
+          </Button>
+        </Menu.Item>
+        <Menu.Item key='settings' className='dropdown-item'>
+          <Button type='link' className='ant-dropdown-link' onClick={event => event.preventDefault()}>
+            <Link to={'/profile/settings'} style={{ textDecoration: 'none', color: '#000' }}>Настройки</Link>
           </Button>
         </Menu.Item>
         <Menu.Divider/>

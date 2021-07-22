@@ -5,14 +5,14 @@ import {
   validatePassword,
   validatePhoneNumber,
   validateUserName
-} from '../../../validation/validation'
+} from '../../../../../validation/validation'
 import { withRouter, Link } from 'react-router-dom'
-import { localizedStrings } from '../../../util/localization'
+import { localizedStrings } from '../../../../../util/localization'
 
 const { Option } = Select
 const { Title } = Typography
 
-const Registration = (props) => {
+const CompanyRegistration = (props) => {
   const layout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 18 }
@@ -96,7 +96,7 @@ const Registration = (props) => {
   return (
     <React.Fragment>
       <Title level={2} style={{ padding: '0 20px 0 20px' }}>Ваша компания ещё не зарегистрирована. Пожалуйста, пройдите регистрацию</Title>
-      <Row style={{ height: '60vh' }}>
+      <Row>
         <Col xs={{ span: 20 }} sm={{ span: 16 }} md={{ span: 10 }}>
           <Form
             style={{ padding: '25px', backgroundColor: '#fff' }}
@@ -204,4 +204,4 @@ const Registration = (props) => {
   )
 }
 
-export default withRouter(Registration)
+export default withRouter(CompanyRegistration)

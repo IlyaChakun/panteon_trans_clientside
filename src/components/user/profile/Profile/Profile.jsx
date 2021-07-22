@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Layout, Menu, Breadcrumb } from 'antd'
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons'
 import { Route, Switch, withRouter, Redirect, Link } from 'react-router-dom'
-import CompanyRegistration from '../../../company/CompanyRegistration/CompanyRegistration'
+import Company from '../company/Company/Company'
 import Settings from '../../settings/Settings/Settings'
 import Cargos from '../cargos/Cargos/Cargos'
 import { useDispatch, useSelector } from 'react-redux'
@@ -53,7 +53,7 @@ const Profile = (props) => {
         >
           <Switch>
             <Route exact path='/profile' render={() => <Redirect to='/profile/settings' />}/>
-            <Route exact path='/profile/company' component={CompanyRegistration}/>
+            <Route exact path='/profile/company' component={Company}/>
             <Route exact path='/profile/cargos' component={Cargos}/>
             <Route exact path='/profile/transports' component={Transports}/>
             <Route exact path='/profile/settings' component={Settings}/>

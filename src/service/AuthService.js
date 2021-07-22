@@ -1,4 +1,4 @@
-let MockData = [
+const MockData = [
   {
     email: 'unicode256@yandex.by',
     password: '111111',
@@ -14,7 +14,7 @@ let MockData = [
     email: 'unicode257@yandex.by',
     password: '111111',
     currentUser: {
-      id: 1,
+      id: 2,
       email: 'unicode257@yandex.by'
     },
     accessToken: 'qqqqqqqqqqqq1',
@@ -25,7 +25,7 @@ let MockData = [
     email: 'unicode258@yandex.by',
     password: '111111',
     currentUser: {
-      id: 1,
+      id: 3,
       email: 'unicode258@yandex.by'
     },
     accessToken: 'qqqqqqqqqqqq2',
@@ -36,7 +36,7 @@ let MockData = [
     email: 'unicode259@yandex.by',
     password: '111111',
     currentUser: {
-      id: 1,
+      id: 4,
       email: 'unicode259@yandex.by'
     },
     accessToken: 'qqqqqqqqqqqq3',
