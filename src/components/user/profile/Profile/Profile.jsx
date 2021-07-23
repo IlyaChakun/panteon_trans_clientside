@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { Layout, Menu, Breadcrumb } from 'antd'
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons'
+import { Layout, Menu } from 'antd'
 import { Route, Switch, withRouter, Redirect, Link } from 'react-router-dom'
 import Company from '../company/Company/Company'
 import Settings from '../../settings/Settings/Settings'

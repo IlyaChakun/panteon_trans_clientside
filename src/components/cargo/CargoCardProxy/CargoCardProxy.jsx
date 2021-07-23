@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Col, Divider, List, Row } from 'antd'
+import MessageModal from '../MessageModal/MessageModal'
 
 const CargoCardProxy = ({ cargo, currentUser, history, updateList }) => {
   console.log('carrrrgo: ', cargo)
@@ -78,7 +79,7 @@ const CargoCardProxy = ({ cargo, currentUser, history, updateList }) => {
       <Row justify="start" style={{ width: '100%' }}>
         <Col>
           {currentUser && (currentUser.id !== cargo.owner) && (
-            <Button type={'primary'}>Написать сообщение</Button>
+            <MessageModal cargoOwnerId={cargo.owner} title={cargo.contacts.name} currentUser={currentUser} />
           )}
         </Col>
       </Row>

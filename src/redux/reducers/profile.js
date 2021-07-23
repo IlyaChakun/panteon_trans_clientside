@@ -1,4 +1,5 @@
 import {
+  PROFILE_CLEAR,
   PROFILE_SET_CARGOS,
   PROFILE_SET_COMPANY,
   PROFILE_SET_TRANSPORT
@@ -28,6 +29,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         company: payload
+      }
+    case PROFILE_CLEAR:
+      return {
+        cargos: [],
+        transports: [],
+        company: {}
       }
     default:
       return state
