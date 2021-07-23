@@ -24,6 +24,7 @@
     "antd": "^4.9.1",
     "antd-masked-input": "^1.0.1",
     "autoprefixer": "latest",
+    "axios": "^0.21.1",
     "bootstrap": "5.0.0-alpha1",
     "css-loader": "^3.4.2",
     "cssnano": "latest",

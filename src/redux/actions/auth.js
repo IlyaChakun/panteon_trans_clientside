@@ -5,7 +5,8 @@ import {
   SET_CURRENT_USER,
   SET_ACCESS_TOKEN,
   SET_REFRESH_TOKEN,
-  SET_EXPIRE_DATE, LOGOUT
+  SET_EXPIRE_DATE, LOGOUT,
+  PROFILE_CLEAR
 } from '../actions/types'
 
 import { getCurrentUserRequest, loginRequest, updateUserProfileRequest } from '../../util/utilsAPI'
@@ -151,5 +152,8 @@ export const logout = () => (dispatch) => {
   localStorage.removeItem(REFRESH_TOKEN)
   dispatch({
     type: LOGOUT
+  })
+  dispatch({
+    type: PROFILE_CLEAR
   })
 }

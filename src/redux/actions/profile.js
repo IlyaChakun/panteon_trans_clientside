@@ -1,7 +1,7 @@
 import {
   PROFILE_SET_CARGOS,
   PROFILE_SET_TRANSPORT,
-  PROFILE_SET_COMPANY
+  PROFILE_SET_COMPANY, PROFILE_CLEAR
 } from '../actions/types'
 
 import ProfileService from '../../service/ProfileService'
@@ -50,3 +50,7 @@ export const getCompanyProfile = (userId) => (dispatch) => {
       return Promise.reject(error)
     })
 }
+
+export const ClearProfile = () => ({
+  type: PROFILE_CLEAR
+})
