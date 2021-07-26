@@ -82,38 +82,29 @@ const App = (props) => {
         currentUser={currentUser}
         handleLogout={handleLogout}
       />
-
       <Content className='app-content'>
-        {/*{shouldShowBreadcrumb && <BreadCrumbComponent/>}*/}
         <Switch>
-
           <Route
             exact path='/login'
             render={(props) =>
               <Login
                 onLogin={handleLogin}
-                {...props} />}/>
-
+                {...props} />}
+          />
           <Route
             path='/sign-up'
             render={(props) =>
               <Registration
                 isAuthenticated={isAuthenticated}
-                {...props} />}/>
-
+                {...props} />}
+          />
           <Route
             path='/oauth2/redirect'
             render={(props) =>
               <OAuth2RedirectHandler
                 onLogin={handleLogin}
-                {...props} />}/>
-
-          {/* <PrivateRoute
-            path='/profile'
-            isAuthenticated={isAuthenticated}
-            component={Profile}
-            {...props} /> */}
-
+                {...props} />}
+          />
           <Route
             exact path='/companies'
             render={(props) =>
@@ -124,21 +115,21 @@ const App = (props) => {
             exact path='/cargos'
             render={(props) =>
               <CargoList
-                {...props} />}/>
-
+                {...props} />}
+          />
           <Route
             exact path='/transports'
             render={(props) =>
               <TransportList
-                {...props} />}/>
-
+                {...props} />}
+          />
           <Route
             path='/reviews'
             render={(props) =>
               <ReviewsList
                 currentUser={currentUser}
-                {...props} />}/>
-
+                {...props} />}
+          />
           <Route
             path='/news'
             render={(props) =>
@@ -147,7 +138,6 @@ const App = (props) => {
                 {...props} />}/>
           <Route path='/profile' component={Profile}/>
           <Route path='/' component={Home}/>
-
         </Switch>
       </Content>
       {shouldShowFooter && <AppFooter/>}

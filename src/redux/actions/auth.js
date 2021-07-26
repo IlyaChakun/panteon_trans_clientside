@@ -123,17 +123,6 @@ export const login = (email, password) => (dispatch) => {
               type: AUTH_SET_IS_LOADING,
               payload: false
           })
-          // dispatch(true)((label) => (dispatch) => {
-          //   dispatch({
-          //     type: IS_AUTHENTICATED,
-          //     payload: label
-          //   })
-          // })
-          // window.location.href = '/'
-          notification.success({
-              message: 'Test Name',
-              description: 'Успешный вход'
-          })
       })
       .catch((error) => {
         dispatch({

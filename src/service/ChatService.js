@@ -1,4 +1,6 @@
 import axios from 'axios'
+const CHAT_API_URL = 'https://api.chatengine.io'
+const CHAR_PROJECT_ID = '7f101024-0f40-4be8-a1fd-7435d1005b18'
 
 const MockData = [
   {
@@ -61,23 +63,10 @@ const getUserName = (userId) => {
 }
 
 const createDialog = (parameters) => {
-  return axios.post('https://api.chatengine.io/chats/', { title: parameters.title }, { headers: { "Project-ID": '7f101024-0f40-4be8-a1fd-7435d1005b18', "User-Name": parameters.userCreator.userName, "User-Secret": parameters.userCreator.userSecret }})
+  console.log({ usernames: [parameters.userCreator.userName, parameters.userCompanion.userName], title: parameters.title })
+  return axios.put(`${CHAT_API_URL}/chats/`, { usernames: [parameters.userCreator.userName, parameters.userCompanion.userName], title: parameters.title }, { headers: { "Project-ID": CHAR_PROJECT_ID, "User-Name": parameters.userCreator.userName, "User-Secret": parameters.userCreator.userSecret }})
     .then(dialog => {
-      console.log('dialog created', dialog)
-      return axios.post(`https://api.chatengine.io/chats/${dialog.data.id}/people/`, { username: parameters.userCompanion.userName }, { headers: { "Project-ID": '7f101024-0f40-4be8-a1fd-7435d1005b18', "User-Name": parameters.userCreator.userName, "User-Secret": parameters.userCreator.userSecret }} )
-        .then(person => {
-          return axios.post(`https://api.chatengine.io/chats/${dialog.data.id}/messages/`, { text: parameters.message }, { headers: { "Project-ID": '7f101024-0f40-4be8-a1fd-7435d1005b18', "User-Name": parameters.userCreator.userName, "User-Secret": parameters.userCreator.userSecret }})
-            .then(() => {
-              console.log('message sent')
-            })
-          console.log('person added')
-        })
-        .catch((error) => {
-          console.log('error person added: ', error)
-        })
-    })
-    .catch((error) => {
-      console.log('error dialog created: ', error)
+      return axios.post(`${CHAT_API_URL}/chats/${dialog.data.id}/messages/`, { text: parameters.message }, { headers: { "Project-ID": CHAR_PROJECT_ID, "User-Name": parameters.userCreator.userName, "User-Secret": parameters.userCreator.userSecret }})
     })
 }
 

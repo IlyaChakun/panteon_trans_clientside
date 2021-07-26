@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import ReviewCard from '../ReviewCard/ReviewCard'
 import { getAllReviewsRequest } from '../../../../util/utilsAPI'
 import AddReviewModal from '../AddReview/AddReview'
-import './ReviewsList.css'
 import { Col, List, Row } from 'antd'
 import { getAllReviews } from '../../../../service/ReviewService'
 
@@ -11,16 +10,12 @@ import { getAllReviews } from '../../../../service/ReviewService'
 class ReviewsList extends Component {
     state = {
         reviews: [],
-
         page: 1,
         size: 3,
         pagesCount: 0,
-
         searchString: '',
-
         totalPages: 0,
         totalElements: 0,
-
         isLoading: false
     }
 
@@ -80,14 +75,15 @@ class ReviewsList extends Component {
     render() {
         const reviews = this.state.reviews
             .map(review => (
-                    <ReviewCard key={review.id}
-                                review={review}
+                    <ReviewCard
+                      key={review.id}
+                      review={review}
                     />
                 )
             )
 
         return (
-            <div className="review-block">
+            <div>
                 <Row justify="center">
                     <Col span={22}>
                         <Row justify="space-between">
@@ -101,34 +97,25 @@ class ReviewsList extends Component {
                     </Col>
                 </Row>
 
-                <div className="reviews">
+                <div>
                     <List
                         grid={{
                             gutter: 16,
                             column: 3,
                         }}
-
                         pagination={{
-
                             loading: this.state.isLoading,
                             showSizeChanger: true,
-
                             defaultCurrent: Number(this.state.page),
                             defaultPageSize: Number(this.state.size),
-
                             pageSizeOptions: ["3", "6", "9"],
                             position: "bottom",
-
                             total: this.state.totalElements,
-
                             onShowSizeChange: this.onSizeChangeHandler,
                             onChange: this.onPageChangeHandler,
-
                             loadMore: this.loadMore
                         }}
-
                         dataSource={reviews}
-
                         renderItem={item => (
                             <List.Item>
                                 {item}

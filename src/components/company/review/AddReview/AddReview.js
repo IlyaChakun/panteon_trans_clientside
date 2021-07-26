@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Button, Form, Input, Modal, notification, Rate } from 'antd'
-import s from '../../../user/signup/SignUp/SignUp.module.css'
 import { localizedStrings } from '../../../../util/localization'
 import UserOutlined from '@ant-design/icons/lib/icons/UserOutlined'
 import { SUCCESS } from '../../../../constants'
@@ -92,9 +91,9 @@ class AddReviewModal extends Component {
   render() {
     return (
       <div>
-        <Button type='primary'
-                size='large'
-                onClick={this.showModal}
+        <Button
+          type='primary'
+          onClick={this.showModal}
         >
           Оставить отзыв
         </Button>
@@ -107,10 +106,11 @@ class AddReviewModal extends Component {
           okButtonProps={{ style: { display: 'none' } }}
         >
 
-          <Form {...layout}
-                onFinish={this.handleSubmit} className={s.form}>
+          <Form
+            {...layout}
+            onFinish={this.handleSubmit}
+          >
             <Form.Item
-              className={s.formItem}
               label={localizedStrings.name}
               hasFeedback
               rules={[
@@ -130,7 +130,6 @@ class AddReviewModal extends Component {
                 onChange={(event) => this.handleInputChange(event, validateUserName)} />
             </Form.Item>
             <Form.Item
-              className={s.formItem}
               label={'Телефон'}
               hasFeedback
               rules={[
@@ -151,7 +150,6 @@ class AddReviewModal extends Component {
                 onChange={(event) => this.handleInputChange(event, validatePhoneNumber)} />
             </Form.Item>
             <Form.Item
-              className={s.formItem}
               label={localizedStrings.email}
               hasFeedback
               rules={[
@@ -173,7 +171,6 @@ class AddReviewModal extends Component {
                 onChange={(event) => this.handleInputChange(event, validateEmail)} />
             </Form.Item>
             <Form.Item
-              className={s.formItem}
               label={'Ваша оценка'}
             >
               <Rate
@@ -182,7 +179,6 @@ class AddReviewModal extends Component {
                 value={this.state.rating.value} />
             </Form.Item>
             <Form.Item
-              className={s.formItem}
               label={'Текст отзыва:'}
               validateStatus={this.state.text.validateStatus}
               help={this.state.text.errorMsg}>
@@ -201,19 +197,17 @@ class AddReviewModal extends Component {
                 value={this.state.text.value}
                 onChange={(event) => this.handleInputChange(event, validateText)} />
             </Form.Item>
-            <Form.Item className={s.formItem} wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
               <Button
                 type='primary'
                 htmlType='submit'
                 size='large'
-                className={s.button}
-                disabled={this.isFormInvalid()}>
+                disabled={this.isFormInvalid()}
+              >
                 Отправить
               </Button>
             </Form.Item>
           </Form>
-
-
         </Modal>
       </div>
 
