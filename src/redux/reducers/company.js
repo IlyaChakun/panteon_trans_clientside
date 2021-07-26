@@ -7,8 +7,8 @@ import {
   COMPANY_SET_TOTAL_PAGES,
   COMPANY_SET_TOTAL_ELEMENTS,
   COMPANY_SET_PAGE,
-  COMPANY_SET_SIZE
-} from "../actions/types";
+  COMPANY_SET_SIZE, CLEAR_COMPANY
+} from '../actions/types'
 
 const initialState = {
   isLoading: false,
@@ -70,6 +70,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         size: payload
+      };
+    case CLEAR_COMPANY:
+      return {
+        ...state,
+        company: {}
       };
     default:
       return state;

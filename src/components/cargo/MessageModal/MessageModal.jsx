@@ -26,14 +26,29 @@ const MessageModal = ({ cargoOwnerId, title, currentUser }) => {
     setVisible(false)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    setIsLoading(true)
     if (cargoOwnerId) {
-      ChatService.getUserName(cargoOwnerId).then((response) => {
-        console.log({ title: title, userCreator: currentUser, userCompanion: response })
-        ChatService.createDialog({ title: title, userCreator: currentUser, userCompanion: response, message: text }).then(() => {
-          console.log('Super!')
+      try {
+        const user = await ChatService.getUserName(cargoOwnerId)
+        await ChatService.createDialog({
+          title: title,
+          userCreator: currentUser,
+          userCompanion: user,
+          message: text
         })
-      })
+        setIsLoading(false)
+        setVisible(false)
+        notification.success({
+          message: 'Сообщение отправлено'
+        })
+      } catch {
+        setIsLoading(false)
+        notification.error({
+          message: 'Сообщение не отправлено',
+          description: 'При отправке сообщения возникла ошибка'
+        })
+      }
     }
   }
 

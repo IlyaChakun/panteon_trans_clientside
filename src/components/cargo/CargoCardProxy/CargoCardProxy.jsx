@@ -3,17 +3,16 @@ import { Button, Col, Divider, List, Row } from 'antd'
 import MessageModal from '../MessageModal/MessageModal'
 
 const CargoCardProxy = ({ cargo, currentUser, history, updateList }) => {
-  console.log('carrrrgo: ', cargo)
-  const truckBodyTypes =
-    cargo.truckBodyTypes.map(bodyType => (
+
+  const truckBodyTypes = cargo.truckBodyTypes.map(bodyType => (
       bodyType.truckBodyTypeName + ', '
     )
-    )
+  )
 
   const cargoStowageMethod =
     cargo.cargoStowageMethods.map(method => (
-      method.stowageMethodName + ', '
-    )
+        method.stowageMethodName + ', '
+      )
     )
 
   const randomViewCount = Math.floor(Math.random() * (1000 - 1) + 1)
@@ -30,22 +29,22 @@ const CargoCardProxy = ({ cargo, currentUser, history, updateList }) => {
       <Row gutter={16} style={{ width: '100%' }}>
         <Col span={4}>
           <strong>
-            { cargo.countryIndexFrom } - { cargo.countryIndexTo }
+            {cargo.countryIndexFrom} - {cargo.countryIndexTo}
           </strong>
-          <br/>
-          { cargo.distance }
-          <br/>
+          <br />
+          {cargo.distance}
+          <br />
         </Col>
         <Col span={4}>
-          { cargo.from }
+          {cargo.from}
         </Col>
         <Col span={4}>
-          { cargo.to }
+          {cargo.to}
         </Col>
         <Col span={4}>
-          { cargo.cargoType }
-          <br/>
-          { cargo.dimensions }
+          {cargo.cargoType}
+          <br />
+          {cargo.dimensions}
         </Col>
         <Col span={4}>
           {truckBodyTypes}
@@ -64,19 +63,19 @@ const CargoCardProxy = ({ cargo, currentUser, history, updateList }) => {
         </Col>
         <Col span={6}>
           <span>Контакты:</span>
-          <br/>
+          <br />
           {cargo.contacts.name}
-          <br/>
+          <br />
           {cargo.contacts.phoneNumber}
         </Col>
         <Col span={6}>
           <span>Дата создания: {cargo.dateOfCreation}</span>
-          <br/>
+          <br />
           <span>Просмотров: {randomViewCount}</span>
-          <br/>
+          <br />
         </Col>
       </Row>
-      <Row justify="start" style={{ width: '100%' }}>
+      <Row justify='start' style={{ width: '100%' }}>
         <Col>
           {currentUser && (currentUser.id !== cargo.owner) && (
             <MessageModal cargoOwnerId={cargo.owner} title={cargo.contacts.name} currentUser={currentUser} />

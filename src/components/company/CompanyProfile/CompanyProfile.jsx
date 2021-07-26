@@ -3,7 +3,7 @@ import { Layout, Menu, Breadcrumb, Typography, Rate, List, Row, Col, Divider, Ta
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons'
 import { Route, Switch, withRouter, Redirect, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCompany } from '../../../redux/actions/company'
+import { clearCompany, getCompany } from '../../../redux/actions/company'
 
 const { SubMenu } = Menu
 const { Content, Sider } = Layout
@@ -18,6 +18,9 @@ const CompanyProfile = (props) => {
   useEffect(() => {
     dispatch(getCompany(props.match.params.id)).then(() => {
       window.scrollTo({ top: 0 })
+    })
+    return (() => {
+      dispatch(clearCompany())
     })
   }, [])
 

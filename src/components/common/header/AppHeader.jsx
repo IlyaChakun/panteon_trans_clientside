@@ -21,6 +21,7 @@ const AppHeader = (props) => {
   const { isAuthenticated } = useSelector(state => state.authState)
 
   const logOut = () => {
+    console.log('logout')
     dispatch(logout())
   }
 

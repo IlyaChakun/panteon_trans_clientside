@@ -7,8 +7,8 @@ import {
     COMPANY_SET_TOTAL_PAGES,
     COMPANY_SET_TOTAL_ELEMENTS,
     COMPANY_SET_PAGE,
-    COMPANY_SET_SIZE
-} from "../actions/types";
+    COMPANY_SET_SIZE, CLEAR_COMPANY
+} from '../actions/types'
 
 import CompanyService from '../../service/CompanyService'
 
@@ -63,6 +63,12 @@ export const getCompany = (id) => (dispatch) => {
           })
           return Promise.resolve(response)
       })
+}
+
+export const clearCompany = () => (dispatch) => {
+    dispatch({
+        type: CLEAR_COMPANY
+    })
 }
 
 export const setPage = (page) => (dispatch) => {

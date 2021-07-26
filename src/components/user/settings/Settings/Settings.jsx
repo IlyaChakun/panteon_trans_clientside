@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Form, Input, message, Select, Steps, Row, Col, Typography } from 'antd'
+import { Button, Form, Input, Select, Row, Col, Typography, Table, Tag, Space } from 'antd'
 import {
   validateEmail,
   validatePassword, validatePasswordRepeat,
@@ -12,9 +12,11 @@ import UserOutlined from '@ant-design/icons/lib/icons/UserOutlined'
 import LockOutlined from '@ant-design/icons/lib/icons/LockOutlined'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../../../../redux/actions/auth'
+import ChangeModal from '../ChangeModal/ChangeModal'
 
 const { Option } = Select
 const { Title } = Typography
+const { Column, ColumnGroup } = Table;
 
 const Registration = (props) => {
   const [email, setEmail] = useState('')
@@ -22,13 +24,32 @@ const Registration = (props) => {
   const [repeatPassword, setRepeatPassword] = useState({ value: '' })
 
   const dispatch = useDispatch()
-  const auth = useSelector(state => state.authState);
+  const { currentUser } = useSelector(state => state.authState);
 
   useEffect(() => {
     if (props.location.state && props.location.state.error) {
       this.showAlertMessage()
     }
   })
+
+  const authData = (user) => [
+    {
+      key: '1',
+      parameter: user.email,
+      control: {
+        isEmail: true,
+        isPassword: false
+      }
+    },
+    {
+      key: '2',
+      parameter: 'Пароль скрыт',
+      control: {
+        isEmail: false,
+        isPassword: true
+      }
+    },
+  ];
 
   const handleSubmit = () => {
     dispatch(login({ email, password }))
@@ -53,81 +74,19 @@ const Registration = (props) => {
     })
   }
 
-  const countryOptions = [
-    <Option key={1} value={1}>
-      Беларусь
-    </Option>,
-    <Option key={2} value={2}>
-      Россия
-    </Option>
-  ]
-
   return (
     <React.Fragment>
-      <Title level={2} style={{ padding: '0 20px 0 20px' }}>Изменить личные данные</Title>
-      <Row style={{ height: '60vh' }}>
-        <Col xs={{ span: 20 }} sm={{ span: 16 }} md={{ span: 10 }}>
-          <Form
-            style={{ padding: '25px', backgroundColor: '#fff' }}
-            onFinish={handleSubmit}
-          >
-            <Form.Item
-              name='email'
-              rules={[{ required: true, message: localizedStrings.alertBadEmail }]}
-              onChange={handleLoginChange}
-            >
-              <Input prefix={<UserOutlined />}
-                 type={'email'}
-                 name='email'
-                 placeholder={localizedStrings.email}
-              />
-            </Form.Item>
-
-            <Form.Item
-              name='password'
-              rules={[{ required: true, message: localizedStrings.alertBadPassword }]}
-              onChange={handlePasswordChange}
-            >
-              <Input.Password
-                prefix={<LockOutlined />}
-                autoComplete={'current-password'}
-                name='password'
-                type='password'
-                placeholder={localizedStrings.password}
-              />
-            </Form.Item>
-
-            <Form.Item
-              name='password_repeat'
-              rules={[{ required: true, message: localizedStrings.alertBadPassword }]}
-              onChange={handleRepeatPasswordChange}
-              validateStatus={repeatPassword.validateStatus}
-            >
-              <Input.Password
-                prefix={<LockOutlined />}
-                autoComplete={'current-password'}
-                name='password_repeat'
-                type='password'
-                value={repeatPassword.value}
-                placeholder={localizedStrings.repeatPassword}
-              />
-            </Form.Item>
-
-            <Form.Item
-              style={{marginBottom: '0'}}
-            >
-              <Button
-                type='primary'
-                htmlType='submit'
-                className='login-form-button'
-                style={{width: '100%', marginBottom: '16px'}}
-              >
-                Применить
-              </Button>
-            </Form.Item>
-          </Form>
-        </Col>
-      </Row>
+      <Title level={2} style={{ padding: '0 20px 0 20px' }}>Личные данные</Title>
+      {currentUser && (
+        <Table showHeader={false} pagination={false} dataSource={authData(currentUser)}>
+          <Column dataIndex="parameter" key="parameter" />
+          <Column
+            dataIndex="control"
+            key="control"
+            render={(control) => (<ChangeModal isEmail={control.isEmail} isPassword={control.isPassword}/>)}
+          />
+        </Table>
+      )}
     </React.Fragment>
 
   )
