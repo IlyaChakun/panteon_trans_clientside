@@ -128,14 +128,16 @@ const App = (props) => {
             render={(props) =>
               <ReviewsList
                 currentUser={currentUser}
-                {...props} />}
+                {...props}
+              />}
           />
           <Route
             path='/news'
             render={(props) =>
               <NewsList
                 currentUser={currentUser}
-                {...props} />}/>
+                {...props} />}
+              />
           <Route path='/profile' component={Profile}/>
           <Route path='/' component={Home}/>
         </Switch>
