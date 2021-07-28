@@ -84,43 +84,45 @@ class ReviewsList extends Component {
             )
 
         return (
-          <Row justify="center" style={{padding: '30px'}}>
+          <Row justify="center" style={{ padding: '30px' }}>
+            <Col span={20}>
               <Row style={{width: '100%'}}>
-                  <Title level={1}>Отзывы</Title>
+                <Title level={1}>Отзывы</Title>
               </Row>
-              <Row style={{width: '100%', marginBottom: '20px'}}>
-                  <AddReviewModal loadMore={this.loadMore}/>
+              <Row style={{ width: '100%', marginBottom: '20px' }}>
+                <AddReviewModal loadMore={this.loadMore}/>
               </Row>
               <Row>
-                  <List
-                    grid={{
-                        gutter: 16,
-                        column: 3,
-                        xs: 1,
-                        sm: 1,
-                        md: 2,
-                        lg: 3
-                    }}
-                    pagination={{
-                        loading: this.state.isLoading,
-                        showSizeChanger: true,
-                        defaultCurrent: Number(this.state.page),
-                        defaultPageSize: Number(this.state.size),
-                        pageSizeOptions: ["3", "6", "9"],
-                        position: "bottom",
-                        total: this.state.totalElements,
-                        onShowSizeChange: this.onSizeChangeHandler,
-                        onChange: this.onPageChangeHandler,
-                        loadMore: this.loadMore
-                    }}
-                    dataSource={reviews}
-                    renderItem={item => (
-                      <List.Item>
-                          {item}
-                      </List.Item>
-                    )}
-                  />
+                <List
+                  grid={{
+                    gutter: 16,
+                    column: 3,
+                    xs: 1,
+                    sm: 1,
+                    md: 2,
+                    lg: 3
+                  }}
+                  pagination={{
+                    loading: this.state.isLoading,
+                    showSizeChanger: true,
+                    defaultCurrent: Number(this.state.page),
+                    defaultPageSize: Number(this.state.size),
+                    pageSizeOptions: ["3", "6", "9"],
+                    position: "bottom",
+                    total: this.state.totalElements,
+                    onShowSizeChange: this.onSizeChangeHandler,
+                    onChange: this.onPageChangeHandler,
+                    loadMore: this.loadMore
+                  }}
+                  dataSource={reviews}
+                  renderItem={item => (
+                    <List.Item>
+                      {item}
+                    </List.Item>
+                  )}
+                />
               </Row>
+            </Col>
           </Row>
         )
     }

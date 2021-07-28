@@ -4,6 +4,7 @@ import { withRouter, Link } from 'react-router-dom'
 import TransportCardProxy from '../../../../transport/TransportCardProxy/TransportCardProxy'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProfileTransports } from '../../../../../redux/actions/profile'
+import AddFormModal from '../../../modal/AddFormModal/AddFormModal'
 
 const { Option } = Select
 const { Title } = Typography
@@ -25,7 +26,7 @@ const Cargos = (props) => {
 
   return (
     <div>
-      <Button type="primary" style={{marginBottom: '40px'}}>Добавить транспорт</Button>
+      <AddFormModal isTransport={true} style={{ marginBottom: '20px'}}/>
       {transports.length &&
       transports.map((transport) => (
           <React.Fragment>
