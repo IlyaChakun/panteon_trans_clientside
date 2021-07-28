@@ -13,7 +13,6 @@ function Home () {
   return (
     <Row>
       <Col span={24}>
-
         <Row justify="center">
           <Col span={20}>
             <Tabs defaultActiveKey="1">

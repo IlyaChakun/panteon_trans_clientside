@@ -3,9 +3,10 @@ import React, { Component } from 'react'
 import ReviewCard from '../ReviewCard/ReviewCard'
 import { getAllReviewsRequest } from '../../../../util/utilsAPI'
 import AddReviewModal from '../AddReview/AddReview'
-import { Col, List, Row } from 'antd'
+import { Col, List, Row, Typography } from 'antd'
 import { getAllReviews } from '../../../../service/ReviewService'
 
+const { Title } = Typography
 
 class ReviewsList extends Component {
     state = {
@@ -83,47 +84,46 @@ class ReviewsList extends Component {
             )
 
         return (
-            <div>
-                <Row justify="center">
-                    <Col span={22}>
-                        <Row justify="space-between">
-                            <Col span={4}>
-                                <h1>Отзывы</h1>
-                            </Col>
-                            <Col span={4}>
-                                <AddReviewModal loadMore={this.loadMore}/>
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
-
-                <div>
-                    <List
-                        grid={{
-                            gutter: 16,
-                            column: 3,
-                        }}
-                        pagination={{
-                            loading: this.state.isLoading,
-                            showSizeChanger: true,
-                            defaultCurrent: Number(this.state.page),
-                            defaultPageSize: Number(this.state.size),
-                            pageSizeOptions: ["3", "6", "9"],
-                            position: "bottom",
-                            total: this.state.totalElements,
-                            onShowSizeChange: this.onSizeChangeHandler,
-                            onChange: this.onPageChangeHandler,
-                            loadMore: this.loadMore
-                        }}
-                        dataSource={reviews}
-                        renderItem={item => (
-                            <List.Item>
-                                {item}
-                            </List.Item>
-                        )}
-                    />
-                </div>
-            </div>
+          <Row justify="center" style={{ padding: '30px' }}>
+            <Col span={20}>
+              <Row style={{width: '100%'}}>
+                <Title level={1}>Отзывы</Title>
+              </Row>
+              <Row style={{ width: '100%', marginBottom: '20px' }}>
+                <AddReviewModal loadMore={this.loadMore}/>
+              </Row>
+              <Row>
+                <List
+                  grid={{
+                    gutter: 16,
+                    column: 3,
+                    xs: 1,
+                    sm: 1,
+                    md: 2,
+                    lg: 3
+                  }}
+                  pagination={{
+                    loading: this.state.isLoading,
+                    showSizeChanger: true,
+                    defaultCurrent: Number(this.state.page),
+                    defaultPageSize: Number(this.state.size),
+                    pageSizeOptions: ["3", "6", "9"],
+                    position: "bottom",
+                    total: this.state.totalElements,
+                    onShowSizeChange: this.onSizeChangeHandler,
+                    onChange: this.onPageChangeHandler,
+                    loadMore: this.loadMore
+                  }}
+                  dataSource={reviews}
+                  renderItem={item => (
+                    <List.Item>
+                      {item}
+                    </List.Item>
+                  )}
+                />
+              </Row>
+            </Col>
+          </Row>
         )
     }
 

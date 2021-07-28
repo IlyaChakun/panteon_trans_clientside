@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Form, Input, message, Select, Steps, Row, Col, Typography } from 'antd'
+import { Button, Form, Input, Modal, Select, Row, Col, Typography } from 'antd'
 import {
   validateEmail,
   validatePassword,
@@ -12,12 +12,13 @@ import { localizedStrings } from '../../../../../util/localization'
 const { Option } = Select
 const { Title } = Typography
 
-const CompanyRegistration = (props) => {
+const CompanyRegistration = ({ buttonText }) => {
   const layout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 18 }
   }
 
+  const [current, setCurrent] = useState(0)
   const [phoneNumber, setPhoneNumber] = useState('')
   const [additionalPhoneNumber, setAdditionalPhoneNumber] = useState('')
   const [companyTitle, setCompanyTitle] = useState('')
@@ -25,24 +26,21 @@ const CompanyRegistration = (props) => {
   const [type, setType] = useState({})
   const [address, setAddress] = useState('')
   const [country, setCountry] = useState({})
+  const [visible, setVisible] = useState(false)
 
-  const [current, setCurrent] = useState(0)
-
-  const next = () => {
-    setCurrent(current + 1)
+  const showModal = () => {
+    setVisible(true)
   }
 
-  const prev = () => {
-    setCurrent(current - 1)
+  const handleCancel = e => {
+    setVisible(false)
   }
 
   const handleSubmit = (values) => {
     console.log('Received values of form:', values)
   }
 
-  const onChangeCountrySelect = (input, option) => {
-
-  }
+  const onChangeCountrySelect = (input, option) => {}
 
   const handleCompanyTitle = (event) => {
     console.log('handleCompanyTitle event', event.target.value)
@@ -95,110 +93,111 @@ const CompanyRegistration = (props) => {
 
   return (
     <React.Fragment>
-      <Title level={2} style={{ padding: '0 20px 0 20px' }}>Ваша компания ещё не зарегистрирована. Пожалуйста, пройдите регистрацию</Title>
-      <Row>
-        <Col xs={{ span: 20 }} sm={{ span: 16 }} md={{ span: 10 }}>
-          <Form
-            style={{ padding: '25px', backgroundColor: '#fff' }}
-            onFinish={handleSubmit}
-          >
-            <Form.Item
-              name='companyTitle'
-              rules={[{ required: true, message: localizedStrings.alertBadEmail }]}
-              onChange={handleCompanyTitle}
+      <Button
+        type='primary'
+        onClick={showModal}
+      >
+        {buttonText}
+      </Button>
+      <Modal
+        title='Регистрация компании'
+        visible={visible}
+        cancelText='Отменить'
+        okText={'Зарегистрировать'}
+        onOk={handleSubmit}
+        onCancel={handleCancel}
+      >
+        <Row>
+          <Col span={24}>
+            <Form
+              style={{ padding: '25px', backgroundColor: '#fff' }}
+              onFinish={handleSubmit}
             >
-              <Input
-                value={companyTitle}
+              <Form.Item
                 name='companyTitle'
-                placeholder={'Наименование организации'}
-              />
-            </Form.Item>
+                rules={[{ required: true, message: localizedStrings.alertBadEmail }]}
+                onChange={handleCompanyTitle}
+              >
+                <Input
+                  value={companyTitle}
+                  name='companyTitle'
+                  placeholder={'Наименование организации'}
+                />
+              </Form.Item>
 
-            <Form.Item
-              name='UNP'
-              rules={[{ required: true, message: localizedStrings.alertBadPassword }]}
-              onChange={handleUNP}
-            >
-              <Input
+              <Form.Item
                 name='UNP'
-                value={UNP}
-                placeholder={'УНП/ИНН'}
-              />
-            </Form.Item>
-
-            <Form.Item
-              hasFeedback
-            >
-
-              <Select
-                name='country'
-                value={country.id}
-                showSearch
-                placeholder='Страна'
-                onChange={onChangeCountrySelect}
+                rules={[{ required: true, message: localizedStrings.alertBadPassword }]}
+                onChange={handleUNP}
               >
-                {countryOptions}
-              </Select>
-            </Form.Item>
+                <Input
+                  name='UNP'
+                  value={UNP}
+                  placeholder={'УНП/ИНН'}
+                />
+              </Form.Item>
 
-            <Form.Item
-              hasFeedback
-              onChange={(event) => handleAddress(event)}
-              rules={[{
-                required: true,
-                message: 'Пожалуйста, введите Адрес!'
-              }
-              ]}
-            >
-              <Input
-                name='address'
-                value={address}
-                placeholder='Юридический адрес'
-              />
-            </Form.Item>
-
-            <Form.Item
-              hasFeedback
-              onChange={(event) => handlePhoneNumber(event)}
-              rules={[{
-                required: true,
-                message: 'Пожалуйста, введите номер телефона!'
-              }
-              ]}
-            >
-              <Input
-                name='phoneNumber'
-                value={phoneNumber}
-                placeholder='Номер телефона'
-              />
-            </Form.Item>
-
-            <Form.Item
-              hasFeedback
-              onChange={(event) => handleAdditionalPhoneNumber(event)}
-            >
-              <Input
-                name='additionalPhoneNumber'
-                value={additionalPhoneNumber}
-                placeholder='Номер телефона(доп.)'
-              />
-            </Form.Item>
-
-            <Form.Item
-              style={{ marginBottom: '0' }}
-            >
-              <Button
-                type='primary'
-                htmlType='submit'
-                className='login-form-button'
-                style={{ width: '100%', marginBottom: '16px' }}
+              <Form.Item
+                hasFeedback
               >
-                {'Зрегистрировать'}
-              </Button>
-            </Form.Item>
-          </Form>
-        </Col>
-      </Row>
+
+                <Select
+                  name='country'
+                  value={country.id}
+                  showSearch
+                  placeholder='Страна'
+                  onChange={onChangeCountrySelect}
+                >
+                  {countryOptions}
+                </Select>
+              </Form.Item>
+
+              <Form.Item
+                hasFeedback
+                onChange={(event) => handleAddress(event)}
+                rules={[{
+                  required: true,
+                  message: 'Пожалуйста, введите Адрес!'
+                }
+                ]}
+              >
+                <Input
+                  name='address'
+                  value={address}
+                  placeholder='Юридический адрес'
+                />
+              </Form.Item>
+
+              <Form.Item
+                hasFeedback
+                onChange={(event) => handlePhoneNumber(event)}
+                rules={[{
+                  required: true,
+                  message: 'Пожалуйста, введите номер телефона!'
+                }
+                ]}
+              >
+                <Input
+                  name='phoneNumber'
+                  value={phoneNumber}
+                  placeholder='Номер телефона'
+                />
+              </Form.Item>
+
+              <Form.Item
+                hasFeedback
+                onChange={(event) => handleAdditionalPhoneNumber(event)}
+              >
+                <Input
+                  name='additionalPhoneNumber'
+                  value={additionalPhoneNumber}
+                  placeholder='Номер телефона(доп.)'
+                />
+              </Form.Item>
+            </Form>
+          </Col>
+        </Row>
+      </Modal>
     </React.Fragment>
 
   )

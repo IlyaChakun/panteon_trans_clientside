@@ -4,9 +4,7 @@ import { withRouter, Link } from 'react-router-dom'
 import CargoCardProxy from '../../../../cargo/CargoCardProxy/CargoCardProxy'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProfileCargos } from '../../../../../redux/actions/profile'
-
-const { Option } = Select
-const { Title } = Typography
+import AddFormModal from '../../../modal/AddFormModal/AddFormModal'
 
 const Cargos = (props) => {
   const dispatch = useDispatch()
@@ -25,7 +23,7 @@ const Cargos = (props) => {
 
   return (
     <div>
-      <Button type="primary" style={{marginBottom: '40px'}}>Добавить груз</Button>
+      <AddFormModal isCargo={true} style={{ marginBottom: '20px'}} />
       {cargos.length &&
         cargos.map((cargo) => (
           <React.Fragment>

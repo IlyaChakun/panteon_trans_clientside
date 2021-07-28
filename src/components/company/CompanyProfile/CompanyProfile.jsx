@@ -4,6 +4,7 @@ import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/
 import { Route, Switch, withRouter, Redirect, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { clearCompany, getCompany } from '../../../redux/actions/company'
+import AddReviewModal from '../review/AddReview/AddReview'
 
 const { SubMenu } = Menu
 const { Content, Sider } = Layout
@@ -14,6 +15,7 @@ const { Meta } = Card
 const CompanyProfile = (props) => {
   const dispatch = useDispatch()
   const companies = useSelector(state => state.companyState)
+  const { currentUser } = useSelector(state => state.authState)
 
   useEffect(() => {
     dispatch(getCompany(props.match.params.id)).then(() => {
@@ -105,9 +107,7 @@ const CompanyProfile = (props) => {
           </div>
           <div>
             <Title level={3}>Отзывы:</Title>
-            <Button type="primary">
-              Добавить отзыв
-            </Button>
+            <AddReviewModal />
             <List
               itemLayout="horizontal"
               dataSource={companies.company.rating.reviews}

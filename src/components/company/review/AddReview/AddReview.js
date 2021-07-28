@@ -1,9 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import { Button, Form, Input, Modal, notification, Rate } from 'antd'
 import { localizedStrings } from '../../../../util/localization'
 import UserOutlined from '@ant-design/icons/lib/icons/UserOutlined'
-import { SUCCESS } from '../../../../constants'
-import { saveReviewRequest } from '../../../../util/utilsAPI'
 import PhoneOutlined from '@ant-design/icons/lib/icons/PhoneOutlined'
 import MailOutlined from '@ant-design/icons/lib/icons/MailOutlined'
 import MessageOutlined from '@ant-design/icons/lib/icons/MessageOutlined'
@@ -24,91 +22,56 @@ const layout = {
   }
 }
 
-//TODO переписать в редакс
-class AddReviewModal extends Component {
-  state = {
-    name: {
-      value: ''
-    },
-    phoneNumber: {
-      value: ''
-    },
-    email: {
-      value: ''
-    },
-    text: {
-      value: ''
-    },
-    rating: {
-      value: 1
-    },
-    visible: false
+const AddReviewModal = () => {
+  const [name, setName] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [email, setEmail] = useState('')
+  const [text, setText] = useState('')
+  const [rating, setRating] = useState('')
+  const [visible, setVisible] = useState('')
+
+  const showModal = () => {
+    setVisible(true)
   }
 
-  showModal = () => {
-    this.setState({
-      visible: true
-    })
+  const handleCancel = e => {
+    setVisible(false)
   }
 
+  const handleInputChange = (event, validationFun) => {
 
-  handleCancel = e => {
-    console.log(e)
-    this.setState({
-      visible: false
-    })
   }
 
-  handleSubmit = () => {
+  const handleSubmit = () => {
     const reviewRequest = {
-      name: this.state.name.value,
-      email: this.state.email.value,
-      phoneNumber: this.state.phoneNumber.value,
-      text: this.state.text.value,
-      rating: this.state.rating.value
+      name,
+      email,
+      phoneNumber,
+      text,
+      rating
     }
-
-    console.log(reviewRequest)
-
-    saveReviewRequest(reviewRequest)
-      .then(() => {
-        notification.success({
-          message: 'Test Name',
-          description: 'Отзыв сохранен! Спасибо большое!'
-        })
-
-        this.props.loadMore()
-
-        this.handleCancel()
-      }).catch(error => {
-      notification.error({
-        message: 'Test Name',
-        description: 'Чет пошло не так. сорян'
-      })
-    })
   }
 
-  render() {
     return (
       <div>
         <Button
           type='primary'
-          onClick={this.showModal}
+          onClick={showModal}
         >
           Оставить отзыв
         </Button>
 
         <Modal
           title='Оставить отзыв'
-          visible={this.state.visible}
+          visible={visible}
           cancelText='Отменить'
-          onCancel={this.handleCancel}
+          onCancel={handleCancel}
           okButtonProps={{ style: { display: 'none' } }}
         >
 
           <Form
             {...layout}
-            onFinish={this.handleSubmit}
+            onFinish={handleSubmit}
           >
             <Form.Item
               label={localizedStrings.name}
@@ -119,15 +82,12 @@ class AddReviewModal extends Component {
                   message: 'Пожалуйста, введите имя!'
                 }
               ]}
-              validateStatus={this.state.name.validateStatus}
-              help={this.state.name.errorMsg}>
+            >
               <Input
                 prefix={<UserOutlined />}
                 name='name'
                 autoComplete='off'
-                placeholder={localizedStrings.name}
-                value={this.state.name.value}
-                onChange={(event) => this.handleInputChange(event, validateUserName)} />
+              />
             </Form.Item>
             <Form.Item
               label={'Телефон'}
@@ -138,16 +98,14 @@ class AddReviewModal extends Component {
                   message: 'Пожалуйста, введите телефон!'
                 }
               ]}
-              validateStatus={this.state.phoneNumber.validateStatus}
-              help={this.state.phoneNumber.errorMsg}>
+            >
 
               <Input
                 prefix={<PhoneOutlined />}
                 name='phoneNumber'
                 autoComplete='off'
                 placeholder={'Телефон'}
-                value={this.state.phoneNumber.value}
-                onChange={(event) => this.handleInputChange(event, validatePhoneNumber)} />
+              />
             </Form.Item>
             <Form.Item
               label={localizedStrings.email}
@@ -158,30 +116,24 @@ class AddReviewModal extends Component {
                   message: 'Пожалуйста, введите мыло!'
                 }
               ]}
-              validateStatus={this.state.email.validateStatus}
-              help={this.state.email.errorMsg}>
+            >
               <Input
                 prefix={<MailOutlined />}
                 name='email'
                 type='email'
                 autoComplete='off'
-                placeholder={localizedStrings.emailField}
-                value={this.state.email.value}
-                onBlur={this.validateLoginAvailability}
-                onChange={(event) => this.handleInputChange(event, validateEmail)} />
+              />
             </Form.Item>
             <Form.Item
               label={'Ваша оценка'}
             >
               <Rate
                 name='rating'
-                onChange={this.handleRatingChange}
-                value={this.state.rating.value} />
+              />
             </Form.Item>
             <Form.Item
               label={'Текст отзыва:'}
-              validateStatus={this.state.text.validateStatus}
-              help={this.state.text.errorMsg}>
+            >
               <Input.TextArea
                 prefix={<MessageOutlined />}
                 name='text'
@@ -194,15 +146,12 @@ class AddReviewModal extends Component {
                     message: 'Пожалуйста, введите текст отзыва!'
                   }
                 ]}
-                value={this.state.text.value}
-                onChange={(event) => this.handleInputChange(event, validateText)} />
+              />
             </Form.Item>
             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
               <Button
                 type='primary'
                 htmlType='submit'
-                size='large'
-                disabled={this.isFormInvalid()}
               >
                 Отправить
               </Button>
@@ -213,46 +162,6 @@ class AddReviewModal extends Component {
 
     )
   }
-
-
-  isFormInvalid = () => {
-    return !(this.state.name.validateStatus === SUCCESS &&
-      this.state.email.validateStatus === SUCCESS &&
-      this.state.phoneNumber.validateStatus === SUCCESS &&
-      this.state.text.validateStatus === SUCCESS
-    )
-  }
-
-  handleInputChange = (event, validationFun) => {
-    const target = event.target
-    const inputName = target.name
-    const inputValue = target.value
-
-    console.log('inputName: ' + inputName)
-    console.log('inputValue: ' + inputValue)
-
-    this.setState({
-      [inputName]: {
-        value: inputValue,
-        ...validationFun(inputValue)
-      }
-    })
-  }
-
-  handleRatingChange = inputValue => {
-    console.log('handleRatingChange: ' + inputValue)
-
-    this.setState({
-      rating: {
-        value: inputValue,
-        validateStatus: SUCCESS,
-        errorMsg: null
-      }
-    })
-  }
-
-
-}
 
 export default AddReviewModal
 

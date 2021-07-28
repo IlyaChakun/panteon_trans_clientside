@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import LoadingIndicator from '../../common/LoadingIndicator/LoadingIndicator'
 import { getTransport, setPage, setSize } from '../../../redux/actions/transport'
 import TransportCardProxy from '../TransportCardProxy/TransportCardProxy'
+import AddFormModal from '../../user/modal/AddFormModal/AddFormModal'
 
 
 const { Step } = Steps
@@ -21,6 +22,8 @@ const TransportList = () => {
     size,
     totalElements
   } = useSelector(state => state.transportState)
+
+  const { currentUser } = useSelector(state => state.authState)
 
   useEffect(() => {
     loadList(page, size)
@@ -178,6 +181,7 @@ const TransportList = () => {
 
         </Col>
         <Col span={18}>
+          {currentUser && <AddFormModal isTransport={true} style={{ marginBottom: '20px' }}/>}
           <List
             pagination={{
               loading: loading,

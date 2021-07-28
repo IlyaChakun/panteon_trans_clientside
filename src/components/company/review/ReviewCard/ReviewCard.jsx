@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Card, Rate } from 'antd'
-import './ReviewCard.css'
 
 const { Meta } = Card
 
@@ -16,7 +15,6 @@ class ReviewCard extends Component {
 
       <Card
         hoverable
-        style={{ width: 400, height: 250 }}
         title={this.state.review.dateOfCreation}
         extra={
           <Rate
@@ -26,8 +24,8 @@ class ReviewCard extends Component {
         <Meta
           title={<strong>{this.state.review.name}</strong>}
         />
-        <div className="box">
-          <div className="preview-text text-justify">
+        <div>
+          <div>
             {this.state.review.text}
           </div>
         </div>
