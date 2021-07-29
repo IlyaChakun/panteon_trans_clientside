@@ -90,7 +90,7 @@ const CompanyCard = ({ company }) => {
               </Col>
             </Row>
 
-            <Row>
+            <Row onClick={e => e.preventDefault()}>
               <Col span={24}>
 
                 <Table

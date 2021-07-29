@@ -35,3 +35,11 @@ export function getAllReviews() {
     }
   )
 }
+
+const addReview = (reviewData) => {
+
+}
+
+const deleteReview = (id) => {
+
+}

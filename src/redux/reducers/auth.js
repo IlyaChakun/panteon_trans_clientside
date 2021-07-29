@@ -17,7 +17,7 @@ const refreshToken = localStorage.getItem(REFRESH_TOKEN)
 const initialState = {
   errors: '',
   isAuthenticated: !!accessToken,
-  isLoading: false,
+  isLoading: true,
   currentUser: null,
   accessToken: accessToken || '',
   refreshToken: refreshToken || '',

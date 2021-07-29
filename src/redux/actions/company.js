@@ -12,6 +12,12 @@ import {
 
 import CompanyService from '../../service/CompanyService'
 
+function later(delay) {
+    return new Promise(function(resolve) {
+        setTimeout(resolve, delay);
+    });
+}
+
 export const getCompanies = (searchCriteria) => async (dispatch) => {
     try {
         console.log('start getAllCompanies ')
@@ -20,28 +26,29 @@ export const getCompanies = (searchCriteria) => async (dispatch) => {
         if (!promise) {
             return
         }
-
-        dispatch({
-            type: COMPANY_SET_IS_LOADING,
-            payload: false
-        })
-        dispatch({
-            type: SET_COMPANIES,
-            payload: promise.objects
-        })
-        dispatch({
-            type: COMPANY_SET_TOTAL_PAGES,
-            payload: promise.totalPages
-        })
-        dispatch({
-            type: COMPANY_SET_TOTAL_ELEMENTS,
-            payload: promise.totalElements
-        })
-        dispatch({
-            type: COMPANY_SET_IS_LOADING,
-            payload: false
-        })
-
+        // later(2000).then(() => {
+            dispatch({
+                type: COMPANY_SET_IS_LOADING,
+                payload: false
+            })
+            dispatch({
+                type: SET_COMPANIES,
+                payload: promise.objects
+            })
+            dispatch({
+                type: COMPANY_SET_TOTAL_PAGES,
+                payload: promise.totalPages
+            })
+            dispatch({
+                type: COMPANY_SET_TOTAL_ELEMENTS,
+                payload: promise.totalElements
+            })
+            dispatch({
+                type: COMPANY_SET_IS_LOADING,
+                payload: false
+            })
+        //   }
+        // )
     } catch (error) {
         dispatch({
             type: COMPANY_SET_IS_LOADING,

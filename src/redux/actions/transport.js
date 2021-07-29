@@ -12,6 +12,11 @@ import {
   
 import { getAllTransport } from '../../service/TransportService'
 
+function sleep(ms) {
+  ms += new Date().getTime();
+  while (new Date() < ms){}
+}
+
 export const getTransport = (searchCriteria) => async (dispatch) => {
       try {
         console.log('start getTransport ')

@@ -12,7 +12,6 @@ class ReviewCard extends Component {
     console.log('build review card: ' + JSON.stringify(this.state.review))
 
     return (
-
       <Card
         hoverable
         title={this.state.review.dateOfCreation}

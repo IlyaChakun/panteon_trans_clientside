@@ -1,29 +1,29 @@
-import React, { useEffect } from 'react'
-import { withRouter } from 'react-router-dom'
-import { Button, Col, Divider, Form, Input, List, Row, Select, Steps } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Link, withRouter } from 'react-router-dom'
+import { Button, Col, Form, Input, List, Row, Select, Steps } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 
 import LoadingIndicator from '../../common/LoadingIndicator/LoadingIndicator'
 import CompanyCardProxy from '../CompanyCardProxy/CompanyCardProxy'
-import { getCompanies, setPage, setSize } from '../../../redux/actions/company'
+import { getCompanies } from '../../../redux/actions/company'
+import { useQueryParam, NumberParam } from 'use-query-params';
 
-const { Step } = Steps
 const { Option } = Select
 
-const CompanyList = () => {
+const CompanyList = (props) => {
   const dispatch = useDispatch()
+  const [page, setPage] = useQueryParam('page', NumberParam)
+  const [size, setPageSize] = useQueryParam('size', NumberParam)
+  const [allowPagination, setAllowPagination] = useState(props.location.pathname.split('/')[1] === 'companies')
 
   const {
     companies,
-    loading,
-    page,
-    size,
     totalElements
   } = useSelector(state => state.companyState)
 
   useEffect(() => {
     loadList(page, size)
-  }, [dispatch, page, size])
+  }, [page, size])
 
   const updateList = () => {
     loadList(page, size)
@@ -38,22 +38,16 @@ const CompanyList = () => {
   }
 
   const onSizeChangeHandler = (page, size) => {
-    dispatch(setPage(page))
-    dispatch(setSize(size))
-    loadList(page, size)
+    setPageSize(size)
   }
 
   const onPageChangeHandler = (pageNumber) => {
-    dispatch(setPage(pageNumber))
-    loadList(pageNumber, size)
+    window.scrollTo({top: 0});
+    setPage(pageNumber)
   }
 
   const loadMore = () => {
     loadList(page + 1, size)
-  }
-
-  if (loading === true) {
-    return <LoadingIndicator/>
   }
 
   const companyList = companies.map(company =>
@@ -83,7 +77,7 @@ const CompanyList = () => {
   ]
 
   const search = (
-    <>
+    <React.Fragment>
       <Form.Item
         style={{width: '100%'}}
         label={'По названию или УНН:'}
@@ -124,55 +118,60 @@ const CompanyList = () => {
           Найти компанию
         </Button>
       </Form.Item>
-    </>
+    </React.Fragment>
   )
 
   return (
-    <Row justify='center'>
-      <Col span={22}>
-        <Row gutter={16} style={{ padding: '30px' }}>
-          <Col span={6}>
-            <Form
-              labelCol={{
-                span: 24
-              }}
-              wrapperCol={{
-                span: 24
-              }}
-              style={{ padding: '20px' }}
-            >
-              {search}
-            </Form>
-
-          </Col>
-          <Col span={18}>
-            <List
-              pagination={{
-                loading: loading,
-                showSizeChanger: true,
-                defaultCurrent: page,
-                defaultPageSize: size,
-                pageSizeOptions: ['6', '9', '12'],
-                position: 'bottom',
-                total: totalElements,
-                showQuickJumper: true,
-                onShowSizeChange: onSizeChangeHandler,
-                onChange: onPageChangeHandler,
-                loadMore: loadMore
-              }}
-
-              dataSource={companyList}
-
-              renderItem={item => (
-                <List.Item style={{ padding: '0' }}>
-                  {item}
-                </List.Item>
-              )}
-            />
+    <React.Fragment>
+        <Row justify='center'>
+          <Col span={22}>
+            <Row gutter={16} style={{ padding: '30px' }}>
+              <Col span={6}>
+                <Form
+                  labelCol={{
+                    span: 24
+                  }}
+                  wrapperCol={{
+                    span: 24
+                  }}
+                  style={{ padding: '20px' }}
+                >
+                  {search}
+                </Form>
+              </Col>
+              <Col span={18}>
+                {!companies.length ? (
+                  <LoadingIndicator />
+                ) : (
+                  <List
+                    pagination={allowPagination ? {
+                      showSizeChanger: true,
+                      defaultCurrent: page || 1,
+                      defaultPageSize: size || 3,
+                      pageSizeOptions: ['3', '6', '9'],
+                      position: 'bottom',
+                      total: totalElements,
+                      showQuickJumper: true,
+                      onShowSizeChange: onSizeChangeHandler,
+                      onChange: onPageChangeHandler,
+                    } : false}
+                    dataSource={companyList}
+                    renderItem={item => (
+                      <List.Item style={{ padding: '0' }}>
+                        {item}
+                      </List.Item>
+                    )}
+                  />
+                )}
+                {!allowPagination && (
+                  <Link to={'/companies'}><Button style={{ width: '100%' }}>Все компании</Button></Link>
+                )}
+              </Col>
+            </Row>
           </Col>
         </Row>
-      </Col>
-    </Row>
+    </React.Fragment>
+
   )
 }
 

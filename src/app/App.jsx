@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
 import './App.css'
-import PrivateRoute from './util/PrivateRoute'
 
-import { Col, Layout, notification, Row } from 'antd'
-import { Route, Switch, useHistory, withRouter } from 'react-router-dom'
+import { Layout, notification } from 'antd'
+import { Route, Switch, withRouter } from 'react-router-dom'
 
 import { localizedStrings } from '../util/localization'
-import { ACCESS_TOKEN, REFRESH_TOKEN, ROLE_ADMIN, ROLE_USER, SUCCESS, USER_ID } from '../constants'
+import { ACCESS_TOKEN, SUCCESS } from '../constants'
 import AppHeader from '../components/common/header/AppHeader'
 import OAuth2RedirectHandler from '../components/user/oauth2/OAuth2RedirectHandler'
 import AppFooter from '../components/common/footer/AppFooter'
@@ -16,7 +15,7 @@ import ReviewsList from '../components/company/review/ReviewsList/ReviewsList'
 import Profile from '../components/user/profile/Profile/Profile'
 import BreadCrumbComponent from '../components/common/Breadcrumb/BreadCrumb'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCurrentUser, logout, setCurrentUser, setIsAuthenticated } from '../redux/actions/auth'
+import { getCurrentUser, logout } from '../redux/actions/auth'
 import LoadingIndicator from '../components/common/LoadingIndicator/LoadingIndicator'
 import CompanyList from '../components/company/CompanyList/CompanyList'
 import CargoList from '../components/cargo/CargoList/CargoList'
@@ -40,7 +39,6 @@ const App = (props) => {
   const shouldShowFooter = (props.location.pathname !== '/login') && (props.location.pathname !== '/sign-up') && (props.location.pathname.split('/')[1] !== 'profile')
 
   const {
-    isLoading,
     currentUser,
     isAuthenticated,
     accessToken
@@ -67,140 +65,83 @@ const App = (props) => {
     dispatch(getCurrentUser())
   }
 
-  if (isLoading) {
-    return <LoadingIndicator/>
-  }
-
-  if (localStorage.getItem(ACCESS_TOKEN) && currentUser === undefined) {
-    return <LoadingIndicator/>
-  }
-
   return (
     <Layout>
-      <AppHeader
-        isAuthenticated={isAuthenticated}
-        currentUser={currentUser}
-        handleLogout={handleLogout}
-      />
-      <Content className='app-content'>
-        <Switch>
-          <Route
-            exact path='/login'
-            render={(props) =>
-              <Login
-                onLogin={handleLogin}
-                {...props} />}
+      {isAuthenticated && !currentUser ? (
+        <LoadingIndicator />
+      ) : (
+        <React.Fragment>
+          <AppHeader
+            isAuthenticated={isAuthenticated}
+            currentUser={currentUser}
+            handleLogout={handleLogout}
           />
-          <Route
-            path='/sign-up'
-            render={(props) =>
-              <Registration
-                isAuthenticated={isAuthenticated}
-                {...props} />}
-          />
-          <Route
-            path='/oauth2/redirect'
-            render={(props) =>
-              <OAuth2RedirectHandler
-                onLogin={handleLogin}
-                {...props} />}
-          />
-          <Route
-            exact path='/companies'
-            render={(props) =>
-              <CompanyList
-                {...props} />}/>
-          <Route exact path='/companies/:id' component={CompanyProfile}/>
-          <Route
-            exact path='/cargos'
-            render={(props) =>
-              <CargoList
-                {...props} />}
-          />
-          <Route
-            exact path='/transports'
-            render={(props) =>
-              <TransportList
-                {...props} />}
-          />
-          <Route
-            path='/reviews'
-            render={(props) =>
-              <ReviewsList
-                currentUser={currentUser}
-                {...props}
-              />}
-          />
-          <Route
-            path='/news'
-            render={(props) =>
-              <NewsList
-                currentUser={currentUser}
-                {...props} />}
+          <Content className='app-content'>
+            <Switch>
+              <Route
+                exact path='/login'
+                render={(props) =>
+                  <Login
+                    onLogin={handleLogin}
+                    {...props} />}
               />
-          <Route path='/profile' component={Profile}/>
-          <Route path='/' component={Home}/>
-        </Switch>
-      </Content>
+              <Route
+                path='/sign-up'
+                render={(props) =>
+                  <Registration
+                    isAuthenticated={isAuthenticated}
+                    {...props} />}
+              />
+              <Route
+                path='/oauth2/redirect'
+                render={(props) =>
+                  <OAuth2RedirectHandler
+                    onLogin={handleLogin}
+                    {...props} />}
+              />
+              <Route
+                exact path='/companies'
+                render={(props) =>
+                  <CompanyList
+                    {...props} />} />
+              <Route exact path='/companies/:id' component={CompanyProfile} />
+              <Route
+                exact path='/cargos'
+                render={(props) =>
+                  <CargoList
+                    {...props} />}
+              />
+              <Route
+                exact path='/transports'
+                render={(props) =>
+                  <TransportList
+                    {...props} />}
+              />
+              <Route
+                path='/reviews'
+                render={(props) =>
+                  <ReviewsList
+                    currentUser={currentUser}
+                    {...props}
+                  />}
+              />
+              <Route
+                path='/news'
+                render={(props) =>
+                  <NewsList
+                    currentUser={currentUser}
+                    {...props} />}
+              />
+              <Route path='/profile' component={Profile} />
+              <Route path='/' component={Home} />
+            </Switch>
+          </Content>
+        </React.Fragment>
+      )}
+
       {shouldShowFooter && <AppFooter/>}
     </Layout>
   )
-}
-
-export function isAdmin (currentUser) {
-  // if (currentUser !== null && currentUser !== undefined && currentUser.roles !== undefined) {
-  //   const role = currentUser.roles.find(elem => elem.name === ROLE_ADMIN)
-  //   return role === undefined ? false : role.name === ROLE_ADMIN
-  // }
-  console.log(JSON.stringify(currentUser))
-  if (currentUser !== null &&
-    currentUser !== undefined &&
-    currentUser.userType !== undefined &&
-    currentUser.userType === 'ROLE_ADMIN') {
-    console.log('admin')
-    return true
-  } else {
-    console.log('NOT ADMIN')
-    return false
-  }
-}
-
-export function isUserClient (currentUser) {
-  // if (currentUser !== null && currentUser !== undefined && currentUser.roles !== undefined) {
-  //   const role = currentUser.roles.find(elem => elem.name === ROLE_ADMIN)
-  //   return role === undefined ? false : role.name === ROLE_ADMIN
-  // }
-  if (currentUser !== null &&
-    currentUser !== undefined &&
-    currentUser.userType !== undefined &&
-    currentUser.userType === 'ROLE_CLIENT') {
-    return true
-  } else {
-    return false
-  }
-}
-
-export function isUserFlorist (currentUser) {
-  // if (currentUser !== null && currentUser !== undefined && currentUser.roles !== undefined) {
-  //   const role = currentUser.roles.find(elem => elem.name === ROLE_ADMIN)
-  //   return role === undefined ? false : role.name === ROLE_ADMIN
-  // }
-  if (currentUser !== null &&
-    currentUser !== undefined &&
-    currentUser.userType !== undefined &&
-    currentUser.userType === 'ROLE_FLORIST') {
-    return true
-  } else {
-    return false
-  }
-}
-
-export function isUser (currentUser) {
-  if (currentUser !== null && currentUser !== undefined && currentUser.roles !== undefined) {
-    const role = currentUser.roles.find(elem => elem.name === ROLE_USER)
-    return role === undefined ? false : role.name === ROLE_USER
-  }
-  return false
 }
 
 export default withRouter(App)
