@@ -35,7 +35,7 @@ export const getCurrentUser = (accessToken) => (dispatch) => {
             console.log('current user', response)
             dispatch({
                 type: AUTH_SET_IS_LOADING,
-                payload: true
+                payload: false
             })
             dispatch({
                 type: SET_CURRENT_USER,

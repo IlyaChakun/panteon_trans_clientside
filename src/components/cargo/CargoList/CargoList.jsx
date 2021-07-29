@@ -1,25 +1,24 @@
-import React, { useEffect } from 'react'
-import { withRouter } from 'react-router-dom'
-import { Button, Col, Divider, Form, Input, List, Row, Select, Steps } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { withRouter, Link } from 'react-router-dom'
+import { Button, Col, Form, Input, List, Row, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
+import { useQueryParam, NumberParam } from 'use-query-params';
 
 import LoadingIndicator from '../../common/LoadingIndicator/LoadingIndicator'
 import CargoCardProxy from '../CargoCardProxy/CargoCardProxy'
 import { getCargos, setPage, setSize } from '../../../redux/actions/cargo'
 import AddFormModal from '../../user/modal/AddFormModal/AddFormModal'
 
-
-const { Step } = Steps
 const { Option } = Select
 
-const CargoList = () => {
+const CargoList = (props) => {
   const dispatch = useDispatch()
+  const [page, setPage] = useQueryParam('page', NumberParam)
+  const [size, setPageSize] = useQueryParam('size', NumberParam)
+  const [allowPagination, setAllowPagination] = useState(props.location.pathname.split('/')[1] === 'cargos')
 
   const {
     cargos,
-    isLoading,
-    page,
-    size,
     totalElements
   } = useSelector(state => state.cargoState)
 
@@ -27,7 +26,7 @@ const CargoList = () => {
 
   useEffect(() => {
     loadList(page, size)
-  }, [dispatch, page, size])
+  }, [page, size])
 
   const updateList = () => {
     loadList(page, size)
@@ -42,22 +41,16 @@ const CargoList = () => {
   }
 
   const onSizeChangeHandler = (page, size) => {
-    dispatch(setPage(page))
-    dispatch(setSize(size))
-    loadList(page, size)
+    setPageSize(size)
   }
 
   const onPageChangeHandler = (pageNumber) => {
-    dispatch(setPage(pageNumber))
-    loadList(pageNumber, size)
+    window.scrollTo({top: 0});
+    setPage(pageNumber)
   }
 
   const loadMore = () => {
     loadList(page + 1, size)
-  }
-
-  if (isLoading === true) {
-    return <LoadingIndicator />
   }
 
   const list = cargos.map(cargo =>
@@ -157,27 +150,32 @@ const CargoList = () => {
         </Col>
         <Col span={18} style={{ width: '100%' }}>
           {currentUser && <AddFormModal isCargo={true} style={{ marginBottom: '20px' }}/>}
-          <List
-            pagination={{
-              loading: isLoading,
-              showSizeChanger: true,
-              defaultCurrent: page,
-              defaultPageSize: size,
-              pageSizeOptions: ['2', '6', '9', '12'],
-              position: 'bottom',
-              total: totalElements,
-              showQuickJumper: true,
-              onShowSizeChange: onSizeChangeHandler,
-              onChange: onPageChangeHandler,
-              loadMore: loadMore
-            }}
-            dataSource={list}
-            renderItem={item => (
-              <List.Item style={{ backgroundColor: '#fff', marginBottom: '25px', flexDirection: 'column', padding: '20px' }}>
-                {item}
-              </List.Item>
-            )}
-          />
+          {!cargos.length ? (
+            <LoadingIndicator />
+          ) : (
+            <List
+              pagination={allowPagination ? {
+                showSizeChanger: true,
+                defaultCurrent: page || 1,
+                defaultPageSize: size || 6,
+                pageSizeOptions: ['6', '9', '12'],
+                position: 'bottom',
+                total: totalElements,
+                showQuickJumper: true,
+                onShowSizeChange: onSizeChangeHandler,
+                onChange: onPageChangeHandler,
+              } : false}
+              dataSource={list}
+              renderItem={item => (
+                <List.Item style={{ backgroundColor: '#fff', marginBottom: '25px', flexDirection: 'column', padding: '20px' }}>
+                  {item}
+                </List.Item>
+              )}
+            />
+          )}
+          {!allowPagination && (
+            <Link to={'/cargos'}><Button style={{ width: '100%' }}>Все грузы</Button></Link>
+          )}
         </Col>
       </Row>
     </React.Fragment>

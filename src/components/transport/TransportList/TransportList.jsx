@@ -1,25 +1,24 @@
-import React, { useEffect } from 'react'
-import { withRouter } from 'react-router-dom'
-import { Button, Col, Divider, Form, Input, List, Row, Select, Steps } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Link, withRouter } from 'react-router-dom'
+import { Button, Col, Form, Input, List, Row, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
+import { useQueryParam, NumberParam } from 'use-query-params';
 
 import LoadingIndicator from '../../common/LoadingIndicator/LoadingIndicator'
 import { getTransport, setPage, setSize } from '../../../redux/actions/transport'
 import TransportCardProxy from '../TransportCardProxy/TransportCardProxy'
 import AddFormModal from '../../user/modal/AddFormModal/AddFormModal'
 
-
-const { Step } = Steps
 const { Option } = Select
 
-const TransportList = () => {
+const TransportList = (props) => {
   const dispatch = useDispatch()
+  const [page, setPage] = useQueryParam('page', NumberParam)
+  const [size, setPageSize] = useQueryParam('size', NumberParam)
+  const [allowPagination, setAllowPagination] = useState(props.location.pathname.split('/')[1] === 'transports')
 
   const {
     transports,
-    loading,
-    page,
-    size,
     totalElements
   } = useSelector(state => state.transportState)
 
@@ -27,7 +26,7 @@ const TransportList = () => {
 
   useEffect(() => {
     loadList(page, size)
-  }, [dispatch, page, size])
+  }, [page, size])
 
   const updateList = () => {
     loadList(page, size)
@@ -39,25 +38,19 @@ const TransportList = () => {
       size: size
     }
     dispatch(getTransport(searchCriteria))
+
   }
 
   const onSizeChangeHandler = (page, size) => {
-    dispatch(setPage(page))
-    dispatch(setSize(size))
-    loadList(page, size)
+    setPageSize(size)
   }
 
   const onPageChangeHandler = (pageNumber) => {
-    dispatch(setPage(pageNumber))
-    loadList(pageNumber, size)
+    setPage(pageNumber)
   }
 
   const loadMore = () => {
     loadList(page + 1, size)
-  }
-
-  if (loading === true) {
-    return <LoadingIndicator/>
   }
 
   const list = transports.map(transport =>
@@ -182,30 +175,35 @@ const TransportList = () => {
         </Col>
         <Col span={18}>
           {currentUser && <AddFormModal isTransport={true} style={{ marginBottom: '20px' }}/>}
-          <List
-            pagination={{
-              loading: loading,
-              showSizeChanger: true,
-              defaultCurrent: page,
-              defaultPageSize: size,
-              pageSizeOptions: ['2', '6', '9', '12'],
-              position: 'bottom',
-              total: totalElements,
-              showQuickJumper: true,
-              onShowSizeChange: onSizeChangeHandler,
-              onChange: onPageChangeHandler,
-              loadMore: loadMore
-            }}
-            dataSource={list}
-            renderItem={item => (
-              <List.Item style={{ backgroundColor: '#fff', marginBottom: '25px', flexDirection: 'column', padding: '20px' }}>
-                {item}
-              </List.Item>
-            )}
-          />
+          {!transports.length ? (
+            <LoadingIndicator />
+          ) : (
+            <List
+              pagination={allowPagination ? {
+                showSizeChanger: true,
+                defaultCurrent: page || 1,
+                defaultPageSize: size || 6,
+                pageSizeOptions: ['6', '9', '12'],
+                position: 'bottom',
+                total: totalElements,
+                showQuickJumper: true,
+                onShowSizeChange: onSizeChangeHandler,
+                onChange: onPageChangeHandler,
+              } : false}
+              dataSource={list}
+              renderItem={item => (
+                <List.Item style={{ backgroundColor: '#fff', marginBottom: '25px', flexDirection: 'column', padding: '20px' }}>
+                  {item}
+                </List.Item>
+              )}
+            />
+          )}
+          {!allowPagination && (
+            <Link to={'/transports'}><Button style={{ width: '100%' }}>Весь транспорт</Button></Link>
+          )}
         </Col>
       </Row>
-    </React.Fragment>
+  </React.Fragment>
   )
 }
 

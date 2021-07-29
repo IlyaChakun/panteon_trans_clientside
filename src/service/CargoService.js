@@ -120,10 +120,411 @@ export function getAllCargos(searchCriteria) {
             phoneNumber: '+375-29-888-88-88',
             name: 'Ахмед'
           }
+        },
+        {
+          id: 4,
+          owner: 1,
+          countryIndexFrom: 'AZ',
+          countryIndexTo: 'RU',
+
+          from: 'Баку',
+          to: 'Москва, Московская область',
+
+          distance: '2188 км.',
+
+          dimensions: '20т.• 80м3',
+          cargoType: 'тнп',
+
+          truckBodyTypes: [
+            {
+              truckBodyTypeName: 'Тент'
+            }
+          ],
+
+          cargoStowageMethods: [
+            {
+              stowageMethodName: 'задняя'
+            }
+          ],
+
+          dateOfCreation: '24.04.2021  17:08',
+
+          payment: '5 250 Бел. руб. Б/нал. без НДС (2.39BYR/км.)',
+
+          contacts: {
+            phoneNumber: '+375-29-888-88-88',
+            name: 'Ахмед'
+          }
+        },
+        {
+          id: 5,
+          owner: 1,
+          countryIndexFrom: 'AZ',
+          countryIndexTo: 'RU',
+
+          from: 'Баку',
+          to: 'Москва, Московская область',
+
+          distance: '2188 км.',
+
+          dimensions: '20т.• 80м3',
+          cargoType: 'тнп',
+
+          truckBodyTypes: [
+            {
+              truckBodyTypeName: 'Тент'
+            }
+          ],
+
+          cargoStowageMethods: [
+            {
+              stowageMethodName: 'задняя'
+            }
+          ],
+
+          dateOfCreation: '24.04.2021  17:08',
+
+          payment: '5 250 Бел. руб. Б/нал. без НДС (2.39BYR/км.)',
+
+          contacts: {
+            phoneNumber: '+375-29-888-88-88',
+            name: 'Ахмед'
+          }
+        },
+        {
+          id: 6,
+          owner: 1,
+          countryIndexFrom: 'AZ',
+          countryIndexTo: 'RU',
+
+          from: 'Баку',
+          to: 'Москва, Московская область',
+
+          distance: '2188 км.',
+
+          dimensions: '20т.• 80м3',
+          cargoType: 'тнп',
+
+          truckBodyTypes: [
+            {
+              truckBodyTypeName: 'Тент'
+            }
+          ],
+
+          cargoStowageMethods: [
+            {
+              stowageMethodName: 'задняя'
+            }
+          ],
+
+          dateOfCreation: '24.04.2021  17:08',
+
+          payment: '5 250 Бел. руб. Б/нал. без НДС (2.39BYR/км.)',
+
+          contacts: {
+            phoneNumber: '+375-29-888-88-88',
+            name: 'Ахмед'
+          }
+        },
+        {
+          id: 7,
+          owner: 1,
+          countryIndexFrom: 'AZ',
+          countryIndexTo: 'RU',
+
+          from: 'Баку',
+          to: 'Москва, Московская область',
+
+          distance: '2188 км.',
+
+          dimensions: '20т.• 80м3',
+          cargoType: 'тнп',
+
+          truckBodyTypes: [
+            {
+              truckBodyTypeName: 'Тент'
+            }
+          ],
+
+          cargoStowageMethods: [
+            {
+              stowageMethodName: 'задняя'
+            }
+          ],
+
+          dateOfCreation: '24.04.2021  17:08',
+
+          payment: '5 250 Бел. руб. Б/нал. без НДС (2.39BYR/км.)',
+
+          contacts: {
+            phoneNumber: '+375-29-888-88-88',
+            name: 'Ахмед'
+          }
+        },
+        {
+          id: 8,
+          owner: 1,
+          countryIndexFrom: 'AZ',
+          countryIndexTo: 'RU',
+
+          from: 'Баку',
+          to: 'Москва, Московская область',
+
+          distance: '2188 км.',
+
+          dimensions: '20т.• 80м3',
+          cargoType: 'тнп',
+
+          truckBodyTypes: [
+            {
+              truckBodyTypeName: 'Тент'
+            }
+          ],
+
+          cargoStowageMethods: [
+            {
+              stowageMethodName: 'задняя'
+            }
+          ],
+
+          dateOfCreation: '24.04.2021  17:08',
+
+          payment: '5 250 Бел. руб. Б/нал. без НДС (2.39BYR/км.)',
+
+          contacts: {
+            phoneNumber: '+375-29-888-88-88',
+            name: 'Ахмед'
+          }
+        },
+        {
+          id: 9,
+          owner: 1,
+          countryIndexFrom: 'AZ',
+          countryIndexTo: 'RU',
+
+          from: 'Баку',
+          to: 'Москва, Московская область',
+
+          distance: '2188 км.',
+
+          dimensions: '20т.• 80м3',
+          cargoType: 'тнп',
+
+          truckBodyTypes: [
+            {
+              truckBodyTypeName: 'Тент'
+            }
+          ],
+
+          cargoStowageMethods: [
+            {
+              stowageMethodName: 'задняя'
+            }
+          ],
+
+          dateOfCreation: '24.04.2021  17:08',
+
+          payment: '5 250 Бел. руб. Б/нал. без НДС (2.39BYR/км.)',
+
+          contacts: {
+            phoneNumber: '+375-29-888-88-88',
+            name: 'Ахмед'
+          }
+        },
+        {
+          id: 10,
+          owner: 1,
+          countryIndexFrom: 'AZ',
+          countryIndexTo: 'RU',
+
+          from: 'Баку',
+          to: 'Москва, Московская область',
+
+          distance: '2188 км.',
+
+          dimensions: '20т.• 80м3',
+          cargoType: 'тнп',
+
+          truckBodyTypes: [
+            {
+              truckBodyTypeName: 'Тент'
+            }
+          ],
+
+          cargoStowageMethods: [
+            {
+              stowageMethodName: 'задняя'
+            }
+          ],
+
+          dateOfCreation: '24.04.2021  17:08',
+
+          payment: '5 250 Бел. руб. Б/нал. без НДС (2.39BYR/км.)',
+
+          contacts: {
+            phoneNumber: '+375-29-888-88-88',
+            name: 'Ахмед'
+          }
+        },
+        {
+          id: 11,
+          owner: 1,
+          countryIndexFrom: 'AZ',
+          countryIndexTo: 'RU',
+
+          from: 'Баку',
+          to: 'Москва, Московская область',
+
+          distance: '2188 км.',
+
+          dimensions: '20т.• 80м3',
+          cargoType: 'тнп',
+
+          truckBodyTypes: [
+            {
+              truckBodyTypeName: 'Тент'
+            }
+          ],
+
+          cargoStowageMethods: [
+            {
+              stowageMethodName: 'задняя'
+            }
+          ],
+
+          dateOfCreation: '24.04.2021  17:08',
+
+          payment: '5 250 Бел. руб. Б/нал. без НДС (2.39BYR/км.)',
+
+          contacts: {
+            phoneNumber: '+375-29-888-88-88',
+            name: 'Ахмед'
+          }
+        },
+        {
+          id: 12,
+          owner: 1,
+          countryIndexFrom: 'AZ',
+          countryIndexTo: 'RU',
+
+          from: 'Баку',
+          to: 'Москва, Московская область',
+
+          distance: '2188 км.',
+
+          dimensions: '20т.• 80м3',
+          cargoType: 'тнп',
+
+          truckBodyTypes: [
+            {
+              truckBodyTypeName: 'Тент'
+            }
+          ],
+
+          cargoStowageMethods: [
+            {
+              stowageMethodName: 'задняя'
+            }
+          ],
+
+          dateOfCreation: '24.04.2021  17:08',
+
+          payment: '5 250 Бел. руб. Б/нал. без НДС (2.39BYR/км.)',
+
+          contacts: {
+            phoneNumber: '+375-29-888-88-88',
+            name: 'Ахмед'
+          }
+        },
+        {
+          id: 13,
+          owner: 1,
+          countryIndexFrom: 'AZ',
+          countryIndexTo: 'RU',
+
+          from: 'Баку',
+          to: 'Москва, Московская область',
+
+          distance: '2188 км.',
+
+          dimensions: '20т.• 80м3',
+          cargoType: 'тнп',
+
+          truckBodyTypes: [
+            {
+              truckBodyTypeName: 'Тент'
+            }
+          ],
+
+          cargoStowageMethods: [
+            {
+              stowageMethodName: 'задняя'
+            }
+          ],
+
+          dateOfCreation: '24.04.2021  17:08',
+
+          payment: '5 250 Бел. руб. Б/нал. без НДС (2.39BYR/км.)',
+
+          contacts: {
+            phoneNumber: '+375-29-888-88-88',
+            name: 'Ахмед'
+          }
+        },
+        {
+          id: 14,
+          owner: 1,
+          countryIndexFrom: 'AZ',
+          countryIndexTo: 'RU',
+
+          from: 'Баку',
+          to: 'Москва, Московская область',
+
+          distance: '2188 км.',
+
+          dimensions: '20т.• 80м3',
+          cargoType: 'тнп',
+
+          truckBodyTypes: [
+            {
+              truckBodyTypeName: 'Тент'
+            }
+          ],
+
+          cargoStowageMethods: [
+            {
+              stowageMethodName: 'задняя'
+            }
+          ],
+
+          dateOfCreation: '24.04.2021  17:08',
+
+          payment: '5 250 Бел. руб. Б/нал. без НДС (2.39BYR/км.)',
+
+          contacts: {
+            phoneNumber: '+375-29-888-88-88',
+            name: 'Ахмед'
+          }
         }
       ],
       totalPages: 1,
-      totalElements: 3
+      totalElements: 14
     }
   )
+}
+
+const getCargo = (id) => {
+
+}
+
+const addCargo = (cargoData) => {
+
+}
+
+const updateCargo = (cargoData) => {
+
+}
+
+const deleteCargo = (id) => {
+
 }
