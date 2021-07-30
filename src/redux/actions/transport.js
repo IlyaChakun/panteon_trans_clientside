@@ -11,16 +11,12 @@ import {
 } from "../actions/types";
   
 import { getAllTransport } from '../../service/TransportService'
-
-function sleep(ms) {
-  ms += new Date().getTime();
-  while (new Date() < ms){}
-}
+import TransportService from '../../service/TransportService'
 
 export const getTransport = (searchCriteria) => async (dispatch) => {
       try {
         console.log('start getTransport ')
-        const promise = getAllTransport(searchCriteria)
+        const promise = TransportService.getAllTransport(searchCriteria)
         console.log(JSON.stringify(promise))
   
         if (!promise) {
@@ -67,6 +63,12 @@ export const getTransport = (searchCriteria) => async (dispatch) => {
             payload: error
         })
       }
+}
+
+export const addTransport = (transportData) => (dispatch) => {
+  return TransportService.addTransport(transportData).then((data) => {
+    return Promise.resolve(data)
+  })
 }
 
 export const setPage = (page) => (dispatch) => {

@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
 import { Button, Form, Input, Modal, Select, Row, Col, Typography } from 'antd'
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
+import { addTransport } from '../../../../redux/actions/transport'
+import { addCargo } from '../../../../redux/actions/cargo'
+import { useDispatch } from 'react-redux'
+import { registerCompany } from '../../../../redux/actions/company'
 
 const { Option } = Select
 const { Title } = Typography
 
 const AddFormModal = ({isCargo, isTransport, style}) => {
-
+  const dispatch = useDispatch()
   const [countryIndexFrom, setCountryIndexFrom] = useState('')
   const [countryIndexTo, setCountryIndexTo] = useState('')
   const [from, setFrom] = useState('')
@@ -20,6 +24,17 @@ const AddFormModal = ({isCargo, isTransport, style}) => {
   const [priority, setPriority] = useState({})
   const [contacts, setContacts] = useState({})
   const [visible, setVisible] = useState(false)
+
+  const createObjectFromState = () => {
+    return {
+      countryIndexFrom,
+      countryIndexTo,
+      from,
+      to,
+      distance,
+      dimensions
+    }
+  }
 
   const showModal = () => {
     setVisible(true)
@@ -56,8 +71,27 @@ const AddFormModal = ({isCargo, isTransport, style}) => {
     }
   }
 
-  const handleSubmit = (values) => {
-    console.log('Received values of form:', values)
+  const handleSubmit = () => {
+    if (isCargo) {
+      dispatch(addCargo({
+        countryIndexFrom,
+        countryIndexTo,
+        from,
+        to,
+        distance,
+        dimensions
+      })).then((data) => {
+        console.log(data)
+        setVisible(false)
+      })
+    }
+    else {
+      dispatch(addTransport(createObjectFromState())).then((data) => {
+        console.log(data)
+        setVisible(false)
+      })
+    }
+    console.log(createObjectFromState())
   }
 
   return (
@@ -112,7 +146,7 @@ const AddFormModal = ({isCargo, isTransport, style}) => {
               >
                 <Input
                   name='from'
-                  value={countryIndexTo}
+                  value={from}
                   placeholder={'Откуда'}
                 />
               </Form.Item>
@@ -123,7 +157,7 @@ const AddFormModal = ({isCargo, isTransport, style}) => {
               >
                 <Input
                   name='to'
-                  value={countryIndexTo}
+                  value={to}
                   placeholder={'Куда'}
                 />
               </Form.Item>
@@ -134,7 +168,7 @@ const AddFormModal = ({isCargo, isTransport, style}) => {
               >
                 <Input
                   name='distance'
-                  value={countryIndexTo}
+                  value={distance}
                   placeholder={'Дистанция'}
                 />
               </Form.Item>
@@ -145,7 +179,7 @@ const AddFormModal = ({isCargo, isTransport, style}) => {
               >
                 <Input
                   name='dimensions'
-                  value={countryIndexTo}
+                  value={dimensions}
                   placeholder={'Размеры'}
                 />
               </Form.Item>
@@ -166,7 +200,7 @@ const AddFormModal = ({isCargo, isTransport, style}) => {
                   <>
                     {fields.map((field, index) => (
                       <Form.Item
-                        label={index === 0 ? 'Passengers' : ''}
+                        label={index === 0 ? 'Типы кузова' : ''}
                         required={false}
                         key={field.key}
                       >
@@ -184,7 +218,9 @@ const AddFormModal = ({isCargo, isTransport, style}) => {
                         >
                           <Input
                             placeholder="Тип кузова"
-                            style={{ width: '60%' }} />
+                            style={{ width: '60%' }}
+                            onChange={truckBodyTypes[index]}
+                          />
                         </Form.Item>
                         {fields.length > 1 ? (
                           <MinusCircleOutlined

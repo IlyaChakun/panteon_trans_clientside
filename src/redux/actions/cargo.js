@@ -10,12 +10,13 @@ import {
     CARGO_SET_SIZE
 } from "../actions/types";
   
-import { getAllCargos } from '../../service/CargoService'
+import CargoService from '../../service/CargoService'
+import CompanyService from '../../service/CompanyService'
 
 export const getCargos = (searchCriteria) => async (dispatch) => {
       try {
         console.log('start getGoods ')
-        const promise = getAllCargos(searchCriteria)
+        const promise = CargoService.getAllCargos(searchCriteria)
         console.log(JSON.stringify(promise))
   
         if (!promise) {
@@ -53,6 +54,12 @@ export const getCargos = (searchCriteria) => async (dispatch) => {
             payload: error
         })
       }
+}
+
+export const addCargo = (cargoData) => (dispatch) => {
+  return CargoService.addCargo(cargoData).then((data) => {
+    return Promise.resolve(data)
+  })
 }
 
 export const setPage = (page) => (dispatch) => {

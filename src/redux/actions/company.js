@@ -12,12 +12,6 @@ import {
 
 import CompanyService from '../../service/CompanyService'
 
-function later(delay) {
-    return new Promise(function(resolve) {
-        setTimeout(resolve, delay);
-    });
-}
-
 export const getCompanies = (searchCriteria) => async (dispatch) => {
     try {
         console.log('start getAllCompanies ')
@@ -70,6 +64,12 @@ export const getCompany = (id) => (dispatch) => {
           })
           return Promise.resolve(response)
       })
+}
+
+export const registerCompany = (companyData) => (dispatch) => {
+    return CompanyService.registerCompany(companyData).then((data) => {
+        return Promise.resolve(data)
+    })
 }
 
 export const clearCompany = () => (dispatch) => {

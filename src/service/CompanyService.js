@@ -273,9 +273,12 @@ const getCompany = (id) => {
   return company ? Promise.resolve(company) : Promise.reject('error getting company')
 }
 
-const registerCompany = (companyData) => {}
+const registerCompany = (companyData) => {
+  return Promise.resolve(companyData)
+}
 
 export default {
   getAllCompanies,
-  getCompany
+  getCompany,
+  registerCompany
 }

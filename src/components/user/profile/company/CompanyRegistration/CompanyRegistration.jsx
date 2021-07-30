@@ -1,31 +1,22 @@
 import React, { useState } from 'react'
 import { Button, Form, Input, Modal, Select, Row, Col, Typography } from 'antd'
-import {
-  validateEmail,
-  validatePassword,
-  validatePhoneNumber,
-  validateUserName
-} from '../../../../../validation/validation'
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { localizedStrings } from '../../../../../util/localization'
+import { registerCompany } from '../../../../../redux/actions/company'
+import { useDispatch } from 'react-redux'
 
 const { Option } = Select
-const { Title } = Typography
 
 const CompanyRegistration = ({ buttonText }) => {
-  const layout = {
-    labelCol: { span: 6 },
-    wrapperCol: { span: 18 }
-  }
-
-  const [current, setCurrent] = useState(0)
+  const dispatch = useDispatch()
   const [phoneNumber, setPhoneNumber] = useState('')
   const [additionalPhoneNumber, setAdditionalPhoneNumber] = useState('')
   const [companyTitle, setCompanyTitle] = useState('')
   const [UNP, setUNP] = useState('')
+  const [description, setDescription] = useState('')
   const [type, setType] = useState({})
   const [address, setAddress] = useState('')
-  const [country, setCountry] = useState({})
+  const [country, setCountry] = useState('')
   const [visible, setVisible] = useState(false)
 
   const showModal = () => {
@@ -36,50 +27,46 @@ const CompanyRegistration = ({ buttonText }) => {
     setVisible(false)
   }
 
-  const handleSubmit = (values) => {
-    console.log('Received values of form:', values)
+  const createObjectFromState = () => {
+    return {
+      phoneNumber,
+      additionalPhoneNumber,
+      companyTitle,
+      UNP,
+      address,
+      country
+    }
   }
 
-  const onChangeCountrySelect = (input, option) => {}
+  const handleSubmit = () => {
+    dispatch(registerCompany(createObjectFromState())).then((data) => {
+      console.log('registered company: ', data)
+      setVisible(false)
+    })
+  }
+
+  const onChangeCountrySelect = (input, option) => {
+    setCountry(option.value)
+  }
 
   const handleCompanyTitle = (event) => {
-    console.log('handleCompanyTitle event', event.target.value)
-    setCompanyTitle({
-      value: event.target.value,
-      ...validateUserName(event.target.value)
-    })
+    setCompanyTitle(event.target.value)
   }
 
   const handleUNP = (event) => {
-    console.log('handleUNP event', event.target.value)
-    setUNP({
-      value: event.target.value,
-      ...validateUserName(event.target.value)
-    })
+    setUNP(event.target.value)
   }
 
   const handlePhoneNumber = (event) => {
-    console.log('handlePhoneNumber event', event.target.value)
-    setPhoneNumber({
-      value: event.target.value,
-      ...validateUserName(event.target.value)
-    })
+    setPhoneNumber(event.target.value)
   }
 
   const handleAdditionalPhoneNumber = (event) => {
-    console.log('handleAdditionalPhoneNumber event', event.target.value)
-    setAdditionalPhoneNumber({
-      value: event.target.value,
-      ...validateUserName(event.target.value)
-    })
+    setAdditionalPhoneNumber(event.target.value)
   }
 
   const handleAddress = (event) => {
-    console.log('handleAddress', event.target.value)
-    setAddress({
-      value: event.target.value,
-      ...validateUserName(event.target.value)
-    })
+    setAddress(event.target.value)
   }
 
   const countryOptions = [
@@ -127,7 +114,7 @@ const CompanyRegistration = ({ buttonText }) => {
 
               <Form.Item
                 name='UNP'
-                rules={[{ required: true, message: localizedStrings.alertBadPassword }]}
+                rules={[{ required: true }]}
                 onChange={handleUNP}
               >
                 <Input
