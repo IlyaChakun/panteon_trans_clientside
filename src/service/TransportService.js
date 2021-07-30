@@ -1,4 +1,4 @@
-export function getAllTransport(searchCriteria) {
+const getAllTransport = (searchCriteria) => {
   // const page = 'page=' + Number((searchCriteria === undefined || searchCriteria.page === undefined) ? 1 : searchCriteria.page)
   // const size = '&size=' + Number((searchCriteria === undefined || searchCriteria.size === undefined) ? 10 : searchCriteria.size)
   //
@@ -101,7 +101,7 @@ export function getAllTransport(searchCriteria) {
 }
 
 const addTransport = (transportData) => {
-
+  return Promise.resolve(transportData)
 }
 
 const updateTransport = (transportData) => {
@@ -111,3 +111,10 @@ const updateTransport = (transportData) => {
 const deleteTransport = (id) => {
 
 }
+
+const TransportService = {
+  getAllTransport,
+  addTransport
+};
+
+export default TransportService;

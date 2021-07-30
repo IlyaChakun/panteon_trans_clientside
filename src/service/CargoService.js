@@ -1,4 +1,8 @@
-export function getAllCargos(searchCriteria) {
+import axios from 'axios'
+
+const API_URL = 'localhost:8082/companies'
+
+const getAllCargos = (searchCriteria) => {
 
   return (
     {
@@ -518,7 +522,7 @@ const getCargo = (id) => {
 }
 
 const addCargo = (cargoData) => {
-
+  return Promise.resolve(cargoData)
 }
 
 const updateCargo = (cargoData) => {
@@ -528,3 +532,10 @@ const updateCargo = (cargoData) => {
 const deleteCargo = (id) => {
 
 }
+
+const CargoService = {
+  getAllCargos,
+  addCargo
+};
+
+export default CargoService;

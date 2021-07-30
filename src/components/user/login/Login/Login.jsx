@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Component } from 'react'
 import { notification, Row, Col } from 'antd'
 import { localizedStrings } from '../../../../util/localization'
-import s from './Login.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, Redirect, withRouter } from 'react-router-dom'
 import { getCurrentUser, login, setIsAuthenticated } from '../../../../redux/actions/auth'
