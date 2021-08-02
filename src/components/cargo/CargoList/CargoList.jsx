@@ -133,8 +133,7 @@ const CargoList = (props) => {
 
 
   return (
-    <React.Fragment style={{ boxSizing: 'border-box' }}>
-      <Row gutter={16} style={{ width: '100%', padding: '30px' }}>
+      <Row gutter={16} style={{ width: '100%', padding: '30px', minHeight: 'calc(100vh - 60px)' }}>
         <Col span={6}>
           <Form
             labelCol={{
@@ -178,7 +177,6 @@ const CargoList = (props) => {
           )}
         </Col>
       </Row>
-    </React.Fragment>
   )
 }
 

@@ -1,4 +1,4 @@
-export function getAllReviews() {
+const getAllReviews = () => {
   return (
     {
       objects: [
@@ -37,9 +37,20 @@ export function getAllReviews() {
 }
 
 const addReview = (reviewData) => {
+  return Promise.resolve(reviewData)
+}
 
+const addCompanyReview = (reviewData) => {
+  return Promise.resolve(reviewData)
 }
 
 const deleteReview = (id) => {
 
+}
+
+export default {
+  getAllReviews,
+  addReview,
+  addCompanyReview,
+  deleteReview
 }

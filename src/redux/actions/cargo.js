@@ -11,7 +11,6 @@ import {
 } from "../actions/types";
   
 import CargoService from '../../service/CargoService'
-import CompanyService from '../../service/CompanyService'
 
 export const getCargos = (searchCriteria) => async (dispatch) => {
       try {

@@ -26,16 +26,15 @@ const Cargos = (props) => {
       <AddFormModal isCargo={true} style={{ marginBottom: '20px'}} />
       {cargos.length &&
         cargos.map((cargo) => (
-          <React.Fragment>
-            <Row>
-              <CargoCardProxy cargo={cargo}/>
+            <Row style={{ backgroundColor: '#fff', marginBottom: '20px', padding: '15px' }}>
+              <Row>
+                <CargoCardProxy cargo={cargo}/>
+              </Row>
+              <Row>
+                <Button type="primary" ghost style={{marginRight: '10px'}}>Редактировать</Button>
+                <Button danger>Удалить</Button>
+              </Row>
             </Row>
-            <Row>
-              <Button>Редактировать</Button>
-              <Button>Удалить</Button>
-            </Row>
-            <Divider />
-          </React.Fragment>
           )
         )
       }

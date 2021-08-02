@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import { notification, Row, Col } from 'antd'
+import { Row, Col } from 'antd'
 import { localizedStrings } from '../../../../util/localization'
-import { Button, Form, Input, message } from 'antd'
+import { Button, Form, Input } from 'antd'
 import LockOutlined from '@ant-design/icons/lib/icons/LockOutlined'
 import UserOutlined from '@ant-design/icons/lib/icons/UserOutlined'
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 import {
   validateEmail,
   validatePassword,
@@ -66,9 +65,9 @@ const Registration = (props) => {
             rules={[{ required: true, message: localizedStrings.alertBadEmail }]}
             onChange={handleEmailChange}
             validateStatus={email.validateStatus}
+            help={email.errorMsg}
           >
             <Input prefix={<UserOutlined />}
-              // type={'email'}
               value={email.value}
               name='email'
               placeholder={localizedStrings.email}
@@ -80,6 +79,7 @@ const Registration = (props) => {
             rules={[{ required: true, message: localizedStrings.alertBadPassword }]}
             onChange={handlePasswordChange}
             validateStatus={password.validateStatus}
+            help={password.errorMsg}
           >
             <Input.Password
               prefix={<LockOutlined />}
@@ -96,6 +96,7 @@ const Registration = (props) => {
             rules={[{ required: true, message: localizedStrings.alertBadPassword }]}
             onChange={handleRepeatPasswordChange}
             validateStatus={repeatPassword.validateStatus}
+            help={repeatPassword.errorMsg}
           >
             <Input.Password
               prefix={<LockOutlined />}

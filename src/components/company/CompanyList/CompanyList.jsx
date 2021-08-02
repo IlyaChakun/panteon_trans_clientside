@@ -122,56 +122,53 @@ const CompanyList = (props) => {
   )
 
   return (
-    <React.Fragment>
-        <Row justify='center'>
-          <Col span={22}>
-            <Row gutter={16} style={{ padding: '30px' }}>
-              <Col span={6}>
-                <Form
-                  labelCol={{
-                    span: 24
-                  }}
-                  wrapperCol={{
-                    span: 24
-                  }}
-                  style={{ padding: '20px' }}
-                >
-                  {search}
-                </Form>
-              </Col>
-              <Col span={18}>
-                {!companies.length ? (
-                  <LoadingIndicator />
-                ) : (
-                  <List
-                    pagination={allowPagination ? {
-                      showSizeChanger: true,
-                      defaultCurrent: page || 1,
-                      defaultPageSize: size || 3,
-                      pageSizeOptions: ['3', '6', '9'],
-                      position: 'bottom',
-                      total: totalElements,
-                      showQuickJumper: true,
-                      onShowSizeChange: onSizeChangeHandler,
-                      onChange: onPageChangeHandler,
-                    } : false}
-                    dataSource={companyList}
-                    renderItem={item => (
-                      <List.Item style={{ padding: '0' }}>
-                        {item}
-                      </List.Item>
-                    )}
-                  />
-                )}
-                {!allowPagination && (
-                  <Link to={'/companies'}><Button style={{ width: '100%' }}>Все компании</Button></Link>
-                )}
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-    </React.Fragment>
-
+      <Row justify='center' style={{ minHeight: 'calc(100vh - 60px)' }}>
+        <Col span={22}>
+          <Row gutter={16} style={{ padding: '30px' }}>
+            <Col span={6}>
+              <Form
+                labelCol={{
+                  span: 24
+                }}
+                wrapperCol={{
+                  span: 24
+                }}
+                style={{ padding: '20px' }}
+              >
+                {search}
+              </Form>
+            </Col>
+            <Col span={18}>
+              {!companies.length ? (
+                <LoadingIndicator />
+              ) : (
+                <List
+                  pagination={allowPagination ? {
+                    showSizeChanger: true,
+                    defaultCurrent: page || 1,
+                    defaultPageSize: size || 3,
+                    pageSizeOptions: ['3', '6', '9'],
+                    position: 'bottom',
+                    total: totalElements,
+                    showQuickJumper: true,
+                    onShowSizeChange: onSizeChangeHandler,
+                    onChange: onPageChangeHandler,
+                  } : false}
+                  dataSource={companyList}
+                  renderItem={item => (
+                    <List.Item style={{ padding: '0' }}>
+                      {item}
+                    </List.Item>
+                  )}
+                />
+              )}
+              {!allowPagination && (
+                <Link to={'/companies'}><Button style={{ width: '100%' }}>Все компании</Button></Link>
+              )}
+            </Col>
+          </Row>
+        </Col>
+      </Row>
   )
 }
 

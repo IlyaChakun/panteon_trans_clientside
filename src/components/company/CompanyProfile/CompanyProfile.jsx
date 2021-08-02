@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { Layout, Menu, Breadcrumb, Typography, Rate, List, Row, Col, Divider, Table, Card, Button } from 'antd'
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons'
-import { Route, Switch, withRouter, Redirect, Link } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Layout, Typography, Rate, List, Row, Col, Divider, Table, Card } from 'antd'
+import { withRouter, Redirect, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { clearCompany, getCompany } from '../../../redux/actions/company'
-import AddReviewModal from '../review/AddReview/AddReview'
+import AddReviewModal from '../review/AddReview/AddReviewModal'
 
-const { SubMenu } = Menu
-const { Content, Sider } = Layout
+const { Content } = Layout
 const { Title } = Typography
 const { Column } = Table
 const { Meta } = Card
@@ -107,7 +105,7 @@ const CompanyProfile = (props) => {
           </div>
           <div>
             <Title level={3}>Отзывы:</Title>
-            <AddReviewModal />
+            <AddReviewModal isCompany={true} />
             <List
               itemLayout="horizontal"
               dataSource={companies.company.rating.reviews}

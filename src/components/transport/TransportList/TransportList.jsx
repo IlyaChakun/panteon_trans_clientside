@@ -157,53 +157,51 @@ const TransportList = (props) => {
   )
 
   return (
-    <React.Fragment style={{ boxSizing: 'border-box' }}>
-      <Row gutter={16} style={{ width: '100%', padding: '30px' }}>
-        <Col span={6}>
-          <Form
-            labelCol={{
-              span: 24
-            }}
-            wrapperCol={{
-              span: 24
-            }}
-            style={{ padding: '20px' }}
-          >
-            {search}
-          </Form>
+    <Row gutter={16} style={{ width: '100%', padding: '30px', minHeight: 'calc(100vh - 60px)' }}>
+      <Col span={6}>
+        <Form
+          labelCol={{
+            span: 24
+          }}
+          wrapperCol={{
+            span: 24
+          }}
+          style={{ padding: '20px' }}
+        >
+          {search}
+        </Form>
 
-        </Col>
-        <Col span={18}>
-          {currentUser && <AddFormModal isTransport={true} style={{ marginBottom: '20px' }}/>}
-          {!transports.length ? (
-            <LoadingIndicator />
-          ) : (
-            <List
-              pagination={allowPagination ? {
-                showSizeChanger: true,
-                defaultCurrent: page || 1,
-                defaultPageSize: size || 6,
-                pageSizeOptions: ['6', '9', '12'],
-                position: 'bottom',
-                total: totalElements,
-                showQuickJumper: true,
-                onShowSizeChange: onSizeChangeHandler,
-                onChange: onPageChangeHandler,
-              } : false}
-              dataSource={list}
-              renderItem={item => (
-                <List.Item style={{ backgroundColor: '#fff', marginBottom: '25px', flexDirection: 'column', padding: '20px' }}>
-                  {item}
-                </List.Item>
-              )}
-            />
-          )}
-          {!allowPagination && (
-            <Link to={'/transports'}><Button style={{ width: '100%' }}>Весь транспорт</Button></Link>
-          )}
-        </Col>
-      </Row>
-  </React.Fragment>
+      </Col>
+      <Col span={18}>
+        {currentUser && <AddFormModal isTransport={true} style={{ marginBottom: '20px' }}/>}
+        {!transports.length ? (
+          <LoadingIndicator />
+        ) : (
+          <List
+            pagination={allowPagination ? {
+              showSizeChanger: true,
+              defaultCurrent: page || 1,
+              defaultPageSize: size || 6,
+              pageSizeOptions: ['6', '9', '12'],
+              position: 'bottom',
+              total: totalElements,
+              showQuickJumper: true,
+              onShowSizeChange: onSizeChangeHandler,
+              onChange: onPageChangeHandler,
+            } : false}
+            dataSource={list}
+            renderItem={item => (
+              <List.Item style={{ backgroundColor: '#fff', marginBottom: '25px', flexDirection: 'column', padding: '20px' }}>
+                {item}
+              </List.Item>
+            )}
+          />
+        )}
+        {!allowPagination && (
+          <Link to={'/transports'}><Button style={{ width: '100%' }}>Весь транспорт</Button></Link>
+        )}
+      </Col>
+    </Row>
   )
 }
 

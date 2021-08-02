@@ -56,7 +56,7 @@ const Settings = (props) => {
 
   return (
     <React.Fragment>
-      <Title level={2} style={{ padding: '0 20px 0 20px' }}>Личные данные</Title>
+      <Title level={2}>Личные данные</Title>
       {currentUser && (
         <Table showHeader={false} pagination={false} dataSource={authData(currentUser)}>
           <Column dataIndex="parameter" key="parameter" />

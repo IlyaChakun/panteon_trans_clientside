@@ -29,16 +29,15 @@ const Cargos = (props) => {
       <AddFormModal isTransport={true} style={{ marginBottom: '20px'}}/>
       {transports.length &&
       transports.map((transport) => (
-          <React.Fragment>
+          <Row style={{ backgroundColor: '#fff', marginBottom: '20px', padding: '15px' }}>
             <Row>
               <TransportCardProxy transport={transport}/>
             </Row>
             <Row>
-              <Button>Редактировать</Button>
-              <Button>Удалить</Button>
+              <Button type="primary" ghost style={{marginRight: '10px'}}>Редактировать</Button>
+              <Button danger>Удалить</Button>
             </Row>
-            <Divider />
-          </React.Fragment>
+          </Row>
         )
       )
       }
