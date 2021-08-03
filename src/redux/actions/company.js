@@ -12,64 +12,70 @@ import {
 
 import CompanyService from '../../service/CompanyService'
 
-export const getCompanies = (searchCriteria) => async (dispatch) => {
-    try {
-        console.log('start getAllCompanies ')
-        const promise = CompanyService.getAllCompanies(searchCriteria)
-
-        if (!promise) {
-            return
-        }
-        // later(2000).then(() => {
-            dispatch({
-                type: COMPANY_SET_IS_LOADING,
-                payload: false
-            })
-            dispatch({
-                type: SET_COMPANIES,
-                payload: promise.objects
-            })
-            dispatch({
-                type: COMPANY_SET_TOTAL_PAGES,
-                payload: promise.totalPages
-            })
-            dispatch({
-                type: COMPANY_SET_TOTAL_ELEMENTS,
-                payload: promise.totalElements
-            })
-            dispatch({
-                type: COMPANY_SET_IS_LOADING,
-                payload: false
-            })
-        //   }
-        // )
-    } catch (error) {
-        dispatch({
-            type: COMPANY_SET_IS_LOADING,
-            payload: false
-        })
-        dispatch({
-            type: COMPANY_SET_ERRORS,
-            payload: error
-        })
-    }
+export const getCompanies = (searchCriteria) => (dispatch) => {
+    return CompanyService.getAllCompanies(searchCriteria).then(
+      response => {
+          console.log(response.data)
+          dispatch({
+              type: COMPANY_SET_IS_LOADING,
+              payload: false
+          })
+          dispatch({
+              type: SET_COMPANIES,
+              payload: response.data.objects
+          })
+          dispatch({
+              type: COMPANY_SET_TOTAL_PAGES,
+              payload: response.data.totalPages
+          })
+          dispatch({
+              type: COMPANY_SET_TOTAL_ELEMENTS,
+              payload: response.data.totalElements
+          })
+          dispatch({
+              type: COMPANY_SET_IS_LOADING,
+              payload: false
+          })
+          return Promise.resolve(response.data)
+      },
+      error => {
+          dispatch({
+              type: COMPANY_SET_IS_LOADING,
+              payload: false
+          })
+          dispatch({
+              type: COMPANY_SET_ERRORS,
+              payload: error
+          })
+          return Promise.reject(error)
+      }
+    )
 }
 
 export const getCompany = (id) => (dispatch) => {
-    return CompanyService.getCompany(id)
-      .then(response => {
+    return CompanyService.getCompany(id).then(
+      response => {
           dispatch({
               type: SET_COMPANY,
-              payload: response
+              payload: response.data
           })
-          return Promise.resolve(response)
-      })
+          return Promise.resolve(response.data)
+      },
+      error => {
+        return Promise.reject(error)
+      }
+    )
 }
 
 export const registerCompany = (companyData) => (dispatch) => {
-    return CompanyService.registerCompany(companyData).then((data) => {
-        return Promise.resolve(data)
-    })
+    return CompanyService.registerCompany(companyData).then(
+      response => {
+        return Promise.resolve(response.data)
+      },
+      error => {
+        return Promise.reject(error)
+      }
+    )
 }
 
 export const clearCompany = () => (dispatch) => {

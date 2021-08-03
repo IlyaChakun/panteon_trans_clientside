@@ -50,13 +50,15 @@ const CompanyList = (props) => {
     loadList(page + 1, size)
   }
 
-  const companyList = companies.map(company =>
-    <CompanyCardProxy
-      key={company.id}
-      company={company}
-      updateList={updateList}
-    />
-  )
+  const companyList = (companiesData) => {
+    return companiesData.map(company =>
+      <CompanyCardProxy
+        key={company.id}
+        company={company}
+        updateList={updateList}
+      />
+    )
+  }
 
   const ratingOptions = [
     <Option key={1} value={1}>
@@ -154,7 +156,7 @@ const CompanyList = (props) => {
                     onShowSizeChange: onSizeChangeHandler,
                     onChange: onPageChangeHandler,
                   } : false}
-                  dataSource={companyList}
+                  dataSource={companyList(companies)}
                   renderItem={item => (
                     <List.Item style={{ padding: '0' }}>
                       {item}

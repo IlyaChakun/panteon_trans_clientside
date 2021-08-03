@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 const companies = {
   objects: [
     {
@@ -21,7 +23,7 @@ const companies = {
         ]
       },
       owner: {
-        id: 1
+        id: 8
       },
       truckPark: [
         {
@@ -264,17 +266,20 @@ const companies = {
   totalElements: 6
 }
 
+const API_URL = 'http://localhost:8082/companies'
+
 const getAllCompanies = (searchCriteria) => {
-  return companies
+  return axios.get(API_URL)
 }
 
 const getCompany = (id) => {
-  const company = companies.objects.find(item => item.id == id)
-  return company ? Promise.resolve(company) : Promise.reject('error getting company')
+  return axios.get(`${API_URL}/${id}`)
+  // const company = companies.objects.find(item => item.id == id)
+  // return company ? Promise.resolve(company) : Promise.reject('error getting company')
 }
 
 const registerCompany = (companyData) => {
-  return Promise.resolve(companyData)
+  return axios.post(API_URL, companyData)
 }
 
 export default {

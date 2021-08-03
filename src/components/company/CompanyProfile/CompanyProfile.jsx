@@ -16,9 +16,13 @@ const CompanyProfile = (props) => {
   const { currentUser } = useSelector(state => state.authState)
 
   useEffect(() => {
-    dispatch(getCompany(props.match.params.id)).then(() => {
-      window.scrollTo({ top: 0 })
-    })
+    dispatch(getCompany(props.match.params.id))
+      .then(() => {
+        window.scrollTo({ top: 0 })
+      })
+      .catch(error => {
+        console.log('err: ', error)
+      })
     return (() => {
       dispatch(clearCompany())
     })
@@ -42,7 +46,7 @@ const CompanyProfile = (props) => {
           </Row>
           <div style={{ marginBottom: '40px' }}>
             <Row>
-              <span>Дата создания: {companies.company.dateOfCreation}</span>
+              <span>Дата создания: {companies.company.foundationDate}</span>
             </Row>
             <Row style={{ marginBottom: '20px' }}>
               <span>Дата регистрации: {companies.company.dateOfRegistration}</span>
@@ -52,7 +56,7 @@ const CompanyProfile = (props) => {
             <Row gutter={16}>
               <Col span={8}>
                 <Row>
-                  <span>Сайт: {companies.company.siteUrl}</span>
+                  <span>Сайт: {companies.company.site}</span>
                 </Row>
                 <Divider />
                 <Row>
@@ -60,7 +64,7 @@ const CompanyProfile = (props) => {
                 </Row>
                 <Divider />
                 <Row>
-                  <span>Тел: {companies.company.phoneNumber}</span>
+                  <span>Тел: {companies.company.phoneNumbers[0]}</span>
                 </Row>
               </Col>
               <Col span={16}>
@@ -81,21 +85,21 @@ const CompanyProfile = (props) => {
                   </Row>
                   <Row>
                     <Col span={24}>
-                      <Table
-                        dataSource={companies.company.truckPark.map(truck => {
-                          return {
-                            key: truck.id,
-                            cargoStowageMethod: truck.cargoStowageMethod,
-                            truckBodyType: truck.truckBodyType,
-                            dimensions: truck.dimensions
-                          }
-                        })}
-                        footer={() => ''}
-                      >
-                        <Column title='Способ погрузки' dataIndex='cargoStowageMethod' key='cargoStowageMethod'/>
-                        <Column title='Тип кузова' dataIndex='truckBodyType' key='truckBodyType'/>
-                        <Column title='Размеры' dataIndex='dimensions' key='dimensions'/>
-                      </Table>
+                      {/*<Table*/}
+                      {/*  dataSource={companies.company.truckPark.map(truck => {*/}
+                      {/*    return {*/}
+                      {/*      key: truck.id,*/}
+                      {/*      cargoStowageMethod: truck.cargoStowageMethod,*/}
+                      {/*      truckBodyType: truck.truckBodyType,*/}
+                      {/*      dimensions: truck.dimensions*/}
+                      {/*    }*/}
+                      {/*  })}*/}
+                      {/*  footer={() => ''}*/}
+                      {/*>*/}
+                      {/*  <Column title='Способ погрузки' dataIndex='cargoStowageMethod' key='cargoStowageMethod'/>*/}
+                      {/*  <Column title='Тип кузова' dataIndex='truckBodyType' key='truckBodyType'/>*/}
+                      {/*  <Column title='Размеры' dataIndex='dimensions' key='dimensions'/>*/}
+                      {/*</Table>*/}
                     </Col>
                   </Row>
                   <Divider/>
@@ -106,18 +110,18 @@ const CompanyProfile = (props) => {
           <div>
             <Title level={3}>Отзывы:</Title>
             <AddReviewModal isCompany={true} />
-            <List
-              itemLayout="horizontal"
-              dataSource={companies.company.rating.reviews}
-              renderItem={item => (
-                <List.Item>
-                  <List.Item.Meta
-                    title={item.name}
-                    description={item.text}
-                  />
-                </List.Item>
-              )}
-            />
+            {/*<List*/}
+            {/*  itemLayout="horizontal"*/}
+            {/*  dataSource={companies.company.rating.reviews}*/}
+            {/*  renderItem={item => (*/}
+            {/*    <List.Item>*/}
+            {/*      <List.Item.Meta*/}
+            {/*        title={item.name}*/}
+            {/*        description={item.text}*/}
+            {/*      />*/}
+            {/*    </List.Item>*/}
+            {/*  )}*/}
+            {/*/>*/}
           </div>
         </div>
       }
