@@ -164,7 +164,7 @@ export function validatePasswordRepeat (password, passwordRepeat) {
   if (password !== passwordRepeat) {
     return {
       validateStatus: ERROR,
-      errorMsg: localizedStrings.alertPasswordsAreNotequal
+      errorMsg: 'Пароли не совпадают'
     }
   } else {
     return {

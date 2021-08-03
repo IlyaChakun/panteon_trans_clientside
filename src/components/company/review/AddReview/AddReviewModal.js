@@ -1,17 +1,12 @@
-import React, { Component, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Form, Input, Modal, notification, Rate } from 'antd'
 import { localizedStrings } from '../../../../util/localization'
 import UserOutlined from '@ant-design/icons/lib/icons/UserOutlined'
 import PhoneOutlined from '@ant-design/icons/lib/icons/PhoneOutlined'
 import MailOutlined from '@ant-design/icons/lib/icons/MailOutlined'
 import MessageOutlined from '@ant-design/icons/lib/icons/MessageOutlined'
-import {
-  validateEmail,
-  validatePhoneNumber,
-  validateText,
-  validateUserName
-} from '../../../../validation/validation'
-
+import { useDispatch } from 'react-redux'
+import { addReview, addCompanyReview } from '../../../../redux/actions/review'
 
 const layout = {
   labelCol: {
@@ -22,13 +17,15 @@ const layout = {
   }
 }
 
-const AddReviewModal = () => {
+const AddReviewModal = ({ isCompany }) => {
+  const dispatch = useDispatch()
+
   const [name, setName] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
   const [email, setEmail] = useState('')
   const [text, setText] = useState('')
   const [rating, setRating] = useState('')
-  const [visible, setVisible] = useState('')
+  const [visible, setVisible] = useState(false)
 
   const showModal = () => {
     setVisible(true)
@@ -38,19 +35,41 @@ const AddReviewModal = () => {
     setVisible(false)
   }
 
-  const handleInputChange = (event, validationFun) => {
-
-  }
-
-  const handleSubmit = () => {
-    const reviewRequest = {
+  const createObjectFromState = () => {
+    return {
       name,
-      email,
       phoneNumber,
+      email,
       text,
       rating
     }
   }
+
+  const handleChangeInput = e => {
+    switch (e.target.name) {
+      case 'name':
+        return setName(e.target.value)
+      case 'phoneNumber':
+        return setPhoneNumber(e.target.value)
+      case 'email':
+        return setEmail(e.target.value)
+      case 'text':
+        return setText(e.target.value)
+    }
+  }
+
+    const handleSubmit = () => {
+      if (isCompany) {
+        dispatch(addCompanyReview(createObjectFromState())).then((data) => {
+          console.log('sent company review data: ', data)
+        })
+      }
+      else {
+        dispatch(addReview(createObjectFromState())).then((data) => {
+          console.log('sent data: ', data)
+        })
+      }
+    }
 
     return (
       <div>
@@ -60,18 +79,17 @@ const AddReviewModal = () => {
         >
           Оставить отзыв
         </Button>
-
         <Modal
           title='Оставить отзыв'
           visible={visible}
           cancelText='Отменить'
           onCancel={handleCancel}
-          okButtonProps={{ style: { display: 'none' } }}
+          okText='Оставить отзыв'
+          onOk={handleSubmit}
         >
 
           <Form
             {...layout}
-            onFinish={handleSubmit}
           >
             <Form.Item
               label={localizedStrings.name}
@@ -82,11 +100,13 @@ const AddReviewModal = () => {
                   message: 'Пожалуйста, введите имя!'
                 }
               ]}
+              onChange={handleChangeInput}
             >
               <Input
                 prefix={<UserOutlined />}
                 name='name'
                 autoComplete='off'
+                value={name}
               />
             </Form.Item>
             <Form.Item
@@ -98,6 +118,7 @@ const AddReviewModal = () => {
                   message: 'Пожалуйста, введите телефон!'
                 }
               ]}
+              onChange={handleChangeInput}
             >
 
               <Input
@@ -105,6 +126,7 @@ const AddReviewModal = () => {
                 name='phoneNumber'
                 autoComplete='off'
                 placeholder={'Телефон'}
+                value={phoneNumber}
               />
             </Form.Item>
             <Form.Item
@@ -116,19 +138,24 @@ const AddReviewModal = () => {
                   message: 'Пожалуйста, введите мыло!'
                 }
               ]}
+              onChange={handleChangeInput}
             >
               <Input
                 prefix={<MailOutlined />}
                 name='email'
                 type='email'
                 autoComplete='off'
+                value={email}
               />
             </Form.Item>
             <Form.Item
               label={'Ваша оценка'}
+              name='rating'
             >
               <Rate
                 name='rating'
+                onChange={value => setRating(value)}
+                value={rating}
               />
             </Form.Item>
             <Form.Item
@@ -146,15 +173,9 @@ const AddReviewModal = () => {
                     message: 'Пожалуйста, введите текст отзыва!'
                   }
                 ]}
+                value={text}
+                onChange={handleChangeInput}
               />
-            </Form.Item>
-            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-              <Button
-                type='primary'
-                htmlType='submit'
-              >
-                Отправить
-              </Button>
             </Form.Item>
           </Form>
         </Modal>
@@ -164,5 +185,3 @@ const AddReviewModal = () => {
   }
 
 export default AddReviewModal
-
-

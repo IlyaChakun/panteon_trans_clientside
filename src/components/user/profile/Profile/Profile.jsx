@@ -45,10 +45,8 @@ const Profile = (props) => {
         <Content
           className="site-layout-background"
           style={{
-            padding: 24,
             margin: 0,
             minHeight: 280,
-            backgroundColor: '#fff',
             overflow: 'auto'
           }}
         >
