@@ -13,52 +13,51 @@ import {
 import CargoService from '../../service/CargoService'
 
 export const getCargos = (searchCriteria) => async (dispatch) => {
-      try {
-        console.log('start getGoods ')
-        const promise = CargoService.getAllCargos(searchCriteria)
-        console.log(JSON.stringify(promise))
-  
-        if (!promise) {
-          return
-        }
-  
-        dispatch({
-            type: CARGO_SET_IS_LOADING,
-            payload: true
-        })
-        dispatch({
-            type: SET_CARGOS,
-            payload: promise.objects
-        })
-        dispatch({
-            type: CARGO_SET_TOTAL_PAGES,
-            payload: promise.totalPages
-        })
-        dispatch({
-            type: CARGO_SET_TOTAL_ELEMENTS,
-            payload: promise.totalElements
-        })
-        dispatch({
-            type: CARGO_SET_IS_LOADING,
-            payload: false
-        })
-  
-      } catch (error) {
-        dispatch({
-            type: CARGO_SET_IS_LOADING,
-            payload: false
-        })
-        dispatch({
-            type: CARGO_SET_ERRORS,
-            payload: error
-        })
-      }
+  return CargoService.getAllCargos(searchCriteria).then(
+    response => {
+      dispatch({
+        type: CARGO_SET_IS_LOADING,
+        payload: true
+      })
+      dispatch({
+        type: SET_CARGOS,
+        payload: response.data.objects
+      })
+      dispatch({
+        type: CARGO_SET_TOTAL_PAGES,
+        payload: response.data.totalPages
+      })
+      dispatch({
+        type: CARGO_SET_TOTAL_ELEMENTS,
+        payload: response.data.totalElements
+      })
+      dispatch({
+        type: CARGO_SET_IS_LOADING,
+        payload: false
+      })
+    },
+    error => {
+      dispatch({
+        type: CARGO_SET_IS_LOADING,
+        payload: false
+      })
+      dispatch({
+        type: CARGO_SET_ERRORS,
+        payload: error
+      })
+    }
+  )
 }
 
 export const addCargo = (cargoData) => (dispatch) => {
-  return CargoService.addCargo(cargoData).then((data) => {
-    return Promise.resolve(data)
-  })
+  return CargoService.addCargo(cargoData).then(
+    data => {
+      return Promise.resolve(data)
+    },
+    error => {
+      return Promise.reject(error)
+    }
+  )
 }
 
 export const setPage = (page) => (dispatch) => {

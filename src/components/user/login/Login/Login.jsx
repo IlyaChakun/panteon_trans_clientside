@@ -38,20 +38,6 @@ const Login = (props) => {
     setPassword(value)
   }
 
-  const showAlertMessage = () => {
-    setTimeout(() => {
-      notification.error({
-        message: 'Test Name',
-        description: props.location.state.error,
-        duration: 5000
-      })
-      this.props.history.replace({
-        pathname: props.location.pathname,
-        state: {}
-      })
-    }, 100)
-  }
-
   if (auth.isAuthenticated) {
     return <Redirect to="/" />
   }

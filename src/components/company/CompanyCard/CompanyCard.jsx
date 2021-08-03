@@ -8,16 +8,14 @@ const { Meta } = Card
 const CompanyCard = ({ company }) => {
   const dataSource = []
 
-  console.log(JSON.stringify(company))
-
-  company.truckPark.map(truck => {
-    dataSource.push({
-      key: truck.id,
-      cargoStowageMethod: truck.cargoStowageMethod,
-      truckBodyType: truck.truckBodyType,
-      dimensions: truck.dimensions
-    })
-  })
+  // company.truckPark.map(truck => {
+  //   dataSource.push({
+  //     key: truck.id,
+  //     cargoStowageMethod: truck.cargoStowageMethod,
+  //     truckBodyType: truck.truckBodyType,
+  //     dimensions: truck.dimensions
+  //   })
+  // })
 
   return (
     <Card
@@ -27,12 +25,12 @@ const CompanyCard = ({ company }) => {
         <React.Fragment>
           <Row>
             <Col>
-              Дата создания: {company.dateOfCreation}
+              Дата создания: {company.foundationDate}
             </Col>
           </Row>
           <Row>
             <Col>
-              Дата регистрации: {company.dateOfRegistration}
+              {/*Дата регистрации: {company.dateOfRegistration}*/}
             </Col>
           </Row>
         </React.Fragment>
@@ -42,27 +40,27 @@ const CompanyCard = ({ company }) => {
         <span>{company.title}</span>
       }
 
-      cover={
-        <React.Fragment>
-          <Row style={{ padding: '20px' }}>
-            <img
-              style={{ width: '100%', height: 'fill', objectFit: 'cover' }}
-              alt={company.title}
-              src={company.title === null ? ''
-                : company.imageUrl}
-            />
-          </Row>
-          <Row style={{ padding: '0 20px' }} align="middle">
-            <span style={{ marginRight: '10px' }}>Рейтинг:</span>
-            <Rate disabled value={company.rating.rating_value} />
-          </Row>
-        </React.Fragment>
-      }
+      // cover={
+      //   <React.Fragment>
+      //     <Row style={{ padding: '20px' }}>
+      //       <img
+      //         style={{ width: '100%', height: 'fill', objectFit: 'cover' }}
+      //         alt={company.title}
+      //         src={company.title === null ? ''
+      //           : company.imageUrl}
+      //       />
+      //     </Row>
+      //     <Row style={{ padding: '0 20px' }} align="middle">
+      //       <span style={{ marginRight: '10px' }}>Рейтинг:</span>
+      //       <Rate disabled value={company.rating.rating_value} />
+      //     </Row>
+      //   </React.Fragment>
+      // }
     >
       <Row gutter={16}>
         <Col span={8}>
           <Row>
-            <span>Сайт: {company.siteUrl}</span>
+            <span>Сайт: {company.site}</span>
           </Row>
           <Divider />
           <Row>
@@ -70,7 +68,7 @@ const CompanyCard = ({ company }) => {
           </Row>
           <Divider />
           <Row>
-            <span>Тел: {company.phoneNumber}</span>
+            <span>Тел: {company.phoneNumbers[0]}</span>
           </Row>
         </Col>
         <Col span={16}>
@@ -93,14 +91,14 @@ const CompanyCard = ({ company }) => {
             <Row onClick={e => e.preventDefault()}>
               <Col span={24}>
 
-                <Table
-                  dataSource={dataSource}
-                  footer={() => ''}
-                >
-                  <Column title='Способ погрузки' dataIndex='cargoStowageMethod' key='cargoStowageMethod'/>
-                  <Column title='Тип кузова' dataIndex='truckBodyType' key='truckBodyType'/>
-                  <Column title='Размеры' dataIndex='dimensions' key='dimensions'/>
-                </Table>
+                {/*<Table*/}
+                {/*  dataSource={dataSource}*/}
+                {/*  footer={() => ''}*/}
+                {/*>*/}
+                {/*  <Column title='Способ погрузки' dataIndex='cargoStowageMethod' key='cargoStowageMethod'/>*/}
+                {/*  <Column title='Тип кузова' dataIndex='truckBodyType' key='truckBodyType'/>*/}
+                {/*  <Column title='Размеры' dataIndex='dimensions' key='dimensions'/>*/}
+                {/*</Table>*/}
 
               </Col>
             </Row>

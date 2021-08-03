@@ -63,7 +63,6 @@ const getUserName = (userId) => {
 }
 
 const createDialog = (parameters) => {
-  console.log({ usernames: [parameters.userCreator.userName, parameters.userCompanion.userName], title: parameters.title })
   return axios.put(`${CHAT_API_URL}/chats/`, { usernames: [parameters.userCreator.userName, parameters.userCompanion.userName], title: parameters.title }, { headers: { "Project-ID": CHAR_PROJECT_ID, "User-Name": parameters.userCreator.userName, "User-Secret": parameters.userCreator.userSecret }})
     .then(dialog => {
       return axios.post(`${CHAT_API_URL}/chats/${dialog.data.id}/messages/`, { text: parameters.message }, { headers: { "Project-ID": CHAR_PROJECT_ID, "User-Name": parameters.userCreator.userName, "User-Secret": parameters.userCreator.userSecret }})

@@ -2,7 +2,7 @@ const cargosData = {
       objects: [
         {
           id: 1,
-          owner: 1,
+          owner: 8,
           countryIndexFrom: 'BY',
           countryIndexTo: 'BY',
 
@@ -85,7 +85,7 @@ const cargosData = {
         },
         {
           id: 3,
-          owner: 1,
+          owner: 8,
           countryIndexFrom: 'AZ',
           countryIndexTo: 'RU',
 
@@ -127,7 +127,7 @@ const transportData = {
   objects: [
     {
       id: 1,
-      owner: 1,
+      owner: 8,
       countryIndexFrom: 'BY',
       countryIndexTo: 'BY',
 
@@ -168,7 +168,7 @@ const transportData = {
     },
     {
       id: 2,
-      owner: 1,
+      owner: 8,
       countryIndexFrom: 'ES',
       countryIndexTo: 'RU',
 

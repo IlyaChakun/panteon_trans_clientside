@@ -3,7 +3,7 @@ const MockData = [
     email: 'unicode256@yandex.by',
     password: '111111',
     currentUser: {
-      id: 1,
+      id: 8,
       email: 'unicode256@yandex.by',
       userName: 'unicode256@yandex.by',
       userSecret: '111111',
@@ -16,7 +16,7 @@ const MockData = [
     email: 'unicode257@yandex.by',
     password: '111111',
     currentUser: {
-      id: 2,
+      id: 9,
       email: 'unicode257@yandex.by',
       userName: 'unicode257@yandex.by',
       userSecret: '1111111'
