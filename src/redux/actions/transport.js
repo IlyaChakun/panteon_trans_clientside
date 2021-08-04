@@ -10,7 +10,6 @@ import {
     TRANSPORT_SET_SIZE,
 } from "../actions/types";
   
-import { getAllTransport } from '../../service/TransportService'
 import TransportService from '../../service/TransportService'
 
 export const getTransport = (searchCriteria) => async (dispatch) => {
@@ -68,6 +67,18 @@ export const getTransport = (searchCriteria) => async (dispatch) => {
 export const addTransport = (transportData) => (dispatch) => {
   return TransportService.addTransport(transportData).then((data) => {
     return Promise.resolve(data)
+  })
+}
+
+export const updateTransport = (transportData) => (dispatch) => {
+  return TransportService.updateTransport(transportData).then((data) => {
+    return Promise.resolve(transportData)
+  })
+}
+
+export const deleteTransport = (id) => (dispatch) => {
+  return TransportService.deleteTransport(id).then((data) => {
+    return Promise.resolve(id)
   })
 }
 

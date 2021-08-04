@@ -5,6 +5,8 @@ import CargoCardProxy from '../../../../cargo/CargoCardProxy/CargoCardProxy'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProfileCargos } from '../../../../../redux/actions/profile'
 import AddFormModal from '../../../modal/AddFormModal/AddFormModal'
+import EditFormModal from '../../../modal/EditFormModal/EditFormModal'
+import DeleteFormModal from '../../../modal/DeleteFormModal/DeleteFormModal'
 
 const Cargos = (props) => {
   const dispatch = useDispatch()
@@ -31,8 +33,8 @@ const Cargos = (props) => {
                 <CargoCardProxy cargo={cargo}/>
               </Row>
               <Row>
-                <Button type="primary" ghost style={{marginRight: '10px'}}>Редактировать</Button>
-                <Button danger>Удалить</Button>
+                <EditFormModal style={{marginRight: '10px'}} cargo={cargo} isCargo={true} />
+                <DeleteFormModal cargo={cargo} isCargo={true}/>
               </Row>
             </Row>
           )
