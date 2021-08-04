@@ -304,6 +304,7 @@ const companies = {
   totalElements: 2
 }
 
+//не предусмотрено фунционалом rest api (все три фукнции)
 const getProfileCargos = (userId) => {
   const cargos = cargosData.objects.filter(item => item.owner == userId)
   return cargos ? Promise.resolve(cargos) : Promise.reject('error getting profile cargos')
@@ -311,12 +312,12 @@ const getProfileCargos = (userId) => {
 
 const getProfileTransport = (userId) => {
   const cargos = transportData.objects.filter(item => item.owner == userId)
-  return cargos ? Promise.resolve(cargos) : Promise.reject('error getting profile cargos')
+  return cargos ? Promise.resolve(cargos) : Promise.reject('error getting profile transport')
 }
 
 const getCompanyProfile = (userId) => {
   const company = companies.objects.find(item => item.owner.id == userId)
-  return company ? Promise.resolve(company) : Promise.reject('error getting profile cargos')
+  return company ? Promise.resolve(company) : Promise.reject('error getting profile company')
 }
 
 export default {

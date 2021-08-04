@@ -60,6 +60,17 @@ export const addCargo = (cargoData) => (dispatch) => {
   )
 }
 
+export const deleteCargo = (cargoData) => (dispatch) => {
+  return CargoService.deleteCargo(cargoData).then(
+    data => {
+      return Promise.resolve(data)
+    },
+    error => {
+      return Promise.reject(error)
+    }
+  )
+}
+
 export const setPage = (page) => (dispatch) => {
     dispatch({
         type: CARGO_SET_PAGE,

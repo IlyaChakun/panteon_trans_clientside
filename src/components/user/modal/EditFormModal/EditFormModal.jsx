@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { Button, Form, Input, Modal, Select, Row, Col, notification } from 'antd'
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { addCargo } from '../../../../redux/actions/cargo'
 import { useDispatch, useSelector } from 'react-redux'
-import { addTransport } from '../../../../redux/actions/transport'
+import { updateTransport } from '../../../../redux/actions/transport'
 
-const AddFormModal = ({isCargo, isTransport, style}) => {
+const EditFormModal = ({isCargo, isTransport, style, transport, cargo}) => {
   const dispatch = useDispatch()
   const { currentUser } = useSelector(state => state.authState)
 
@@ -17,13 +18,15 @@ const AddFormModal = ({isCargo, isTransport, style}) => {
   const [from, setFrom] = useState('')
   const [to, setTo] = useState('')
 
-  const [weight, setWeight] = useState('')
-  const [volume, setVolume] = useState('')
-  const [length, setLength] = useState('')
-  const [height, setHeight] = useState('')
-  const [description, setDescription] = useState('')
+  const [weight, setWeight] = useState(cargo ? cargo.weight : '')
+  const [volume, setVolume] = useState(cargo ? cargo.volume : '')
+  const [length, setLength] = useState(cargo ? cargo.length : '')
+  const [height, setHeight] = useState(cargo ? cargo.height : '')
+  const [description, setDescription] = useState(cargo ? cargo.description : '')
 
   const [visible, setVisible] = useState(false)
+
+  console.log('cargo: ', cargo)
 
   const createTransportFromState = () => {
     return {
@@ -95,15 +98,15 @@ const AddFormModal = ({isCargo, isTransport, style}) => {
         .catch(error => {
           setLoading(false)
           notification.error({
-            message: 'Не удалось добавить груз',
-            description: 'При добавлении груза возникла ошибка'
+            message: 'Не удалось обновить груз',
+            description: 'При обновлении груза возникла ошибка'
           })
           console.log('error: ', error)
         })
 
     }
     else {
-      dispatch(addTransport(createTransportFromState())).then((data) => {
+      dispatch(updateTransport(createTransportFromState())).then((data) => {
         console.log(data)
         setVisible(false)
       })
@@ -116,14 +119,15 @@ const AddFormModal = ({isCargo, isTransport, style}) => {
         type='primary'
         onClick={showModal}
         style={style}
+        ghost
       >
-        {isCargo ? 'Добавить груз' : 'Добавить транспорт'}
+        {'Редактировать'}
       </Button>
       <Modal
-        title={isCargo ? 'Добавить груз' : 'Добавить транспорт'}
+        title={isCargo ? 'Редактирование груза' : 'Добавление транспорта'}
         visible={visible}
         cancelText='Отменить'
-        okText={'Добавить'}
+        okText={'Изменить'}
         onOk={handleSubmit}
         onCancel={handleCancel}
         confirmLoading={isLoading}
@@ -325,7 +329,6 @@ const AddFormModal = ({isCargo, isTransport, style}) => {
                 {/*</Form.List>*/}
               </Form>
             )}
-
           </Col>
         </Row>
       </Modal>
@@ -334,4 +337,4 @@ const AddFormModal = ({isCargo, isTransport, style}) => {
   )
 }
 
-export default AddFormModal
+export default EditFormModal

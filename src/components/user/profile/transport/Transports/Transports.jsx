@@ -5,9 +5,8 @@ import TransportCardProxy from '../../../../transport/TransportCardProxy/Transpo
 import { useDispatch, useSelector } from 'react-redux'
 import { getProfileTransports } from '../../../../../redux/actions/profile'
 import AddFormModal from '../../../modal/AddFormModal/AddFormModal'
-
-const { Option } = Select
-const { Title } = Typography
+import EditFormModal from '../../../modal/EditFormModal/EditFormModal'
+import DeleteFormModal from '../../../modal/DeleteFormModal/DeleteFormModal'
 
 const Cargos = (props) => {
   const dispatch = useDispatch()
@@ -34,8 +33,8 @@ const Cargos = (props) => {
               <TransportCardProxy transport={transport}/>
             </Row>
             <Row>
-              <Button type="primary" ghost style={{marginRight: '10px'}}>Редактировать</Button>
-              <Button danger>Удалить</Button>
+              <EditFormModal style={{marginRight: '10px'}} transport={transport} isTransport={true} />
+              <DeleteFormModal transport={transport} isTransport={true} />
             </Row>
           </Row>
         )

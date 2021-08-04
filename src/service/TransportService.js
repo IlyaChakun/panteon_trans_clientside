@@ -95,18 +95,20 @@ const getAllTransport = (searchCriteria) => {
 const addTransport = (transportData) => {
   return Promise.resolve(transportData)
 }
-
+//здесь должен быть patch или put запрос
 const updateTransport = (transportData) => {
-
+  return Promise.resolve(transportData)
 }
-
+//здесь должен быть delete запрос
 const deleteTransport = (id) => {
-
+  return Promise.resolve(id)
 }
 
 const TransportService = {
   getAllTransport,
-  addTransport
+  addTransport,
+  updateTransport,
+  deleteTransport
 };
 
 export default TransportService;
