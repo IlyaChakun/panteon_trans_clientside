@@ -12,67 +12,49 @@ import {
   
 import TransportService from '../../service/TransportService'
 
-export const getTransport = (searchCriteria) => async (dispatch) => {
-      try {
-        console.log('start getTransport ')
-        const promise = TransportService.getAllTransport(searchCriteria)
-        console.log(JSON.stringify(promise))
-  
-        if (!promise) {
-          return
-        }
-        // await promise
-        // promise
-        //   .then(response => {
-        //     console.log('all florists', response)
-        //     dispatch(setLoading(true))
-        //     dispatch(setCompanies(response.objects))
-        //     dispatch(setTotalPages(response.totalPages))
-        //     dispatch(setTotalElements(response.totalElements))
-        //     dispatch(setLoading(false))
-        //   })
-        dispatch({
-            type: TRANSPORT_SET_IS_LOADING,
-            payload: true
-        })
-        dispatch({
-            type: SET_TRANSPORTS,
-            payload: promise.objects
-        })
-        dispatch({
-            type: TRANSPORT_SET_TOTAL_PAGES,
-            payload: promise.totalPages
-        })
-        dispatch({
-            type: TRANSPORT_SET_TOTAL_ELEMENTS,
-            payload: promise.totalElements
-        })
-        dispatch({
-            type: TRANSPORT_SET_IS_LOADING,
-            payload: false
-        })
-
-      } catch (error) {
-        dispatch({
-            type: TRANSPORT_SET_IS_LOADING,
-            payload: false
-        })
-        dispatch({
-            type: TRANSPORT_SET_ERRORS,
-            payload: error
-        })
-      }
+export const getTransport = (transportData) => (dispatch) => {
+  return TransportService.getAllTransport(transportData)
+    .then((response) => {
+      dispatch({
+        type: TRANSPORT_SET_IS_LOADING,
+        payload: true
+      })
+      dispatch({
+        type: SET_TRANSPORTS,
+        payload: response.data.objects
+      })
+      dispatch({
+        type: TRANSPORT_SET_TOTAL_PAGES,
+        payload: response.data.totalPages
+      })
+      dispatch({
+        type: TRANSPORT_SET_TOTAL_ELEMENTS,
+        payload: response.data.totalElements
+      })
+      dispatch({
+        type: TRANSPORT_SET_IS_LOADING,
+        payload: false
+      })
+      return Promise.resolve(response.data)
+    })
+    .catch(error => {
+      return Promise.reject(error)
+    })
 }
 
 export const addTransport = (transportData) => (dispatch) => {
   return TransportService.addTransport(transportData).then((data) => {
+    dispatch({
+      type: ADD_TRANSPORT,
+      payload: transportData
+    })
     return Promise.resolve(data)
   })
 }
 
-export const updateTransport = (transportData) => (dispatch) => {
-  return TransportService.updateTransport(transportData).then((data) => {
-    return Promise.resolve(transportData)
+export const updateTransport = (id, patchData) => (dispatch) => {
+  return TransportService.updateTransport(id, patchData).then((data) => {
+    return Promise.resolve(data)
   })
 }
 

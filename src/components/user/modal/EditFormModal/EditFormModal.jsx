@@ -30,35 +30,12 @@ const EditFormModal = ({isCargo, isTransport, style, transport, cargo}) => {
 
   const createTransportFromState = () => {
     return {
-      truckBodyTypeId: 0,
-      carrierCompanyId: 0,
-      cargoStowageMethodIds: [],
-      TruckDimensions: {
-        carryingCapacity: carryingCapacity,
-        dimensions: {
-          volume: volumeTransport,
-          length: lengthTransport,
-          height: heightTransport
-        }
-      },
-      loadingPayload: {
-        address: {
-          countryId: 0,
-          cityId: 0,
-          address: from,
-          apartment: 0
-        },
-        loadingDate: '2020-01-01'
-      },
-      unloadingPayload: {
-        address: {
-          countryId: 0,
-          cityId: 0,
-          address: to,
-          apartment: 0
-        },
-        unloadingDate: '2020-01-01'
-      }
+      // patch: [
+      //   {
+      //     op: "replace",
+      //     path:
+      //   }
+      // ]
     }
   }
 

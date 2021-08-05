@@ -56,6 +56,7 @@ const CompanyRegistration = ({ buttonText }) => {
 
   const handleSubmit = () => {
     setLoading(true)
+    console.log('data: ', createObjectFromState())
     dispatch(registerCompany(createObjectFromState()))
       .then((data) => {
         console.log('success: ', data)

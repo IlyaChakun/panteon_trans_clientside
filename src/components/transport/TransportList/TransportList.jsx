@@ -8,6 +8,8 @@ import LoadingIndicator from '../../common/LoadingIndicator/LoadingIndicator'
 import { getTransport, setPage, setSize } from '../../../redux/actions/transport'
 import TransportCardProxy from '../TransportCardProxy/TransportCardProxy'
 import AddFormModal from '../../user/modal/AddFormModal/AddFormModal'
+import DeleteFormModal from '../../user/modal/DeleteFormModal/DeleteFormModal'
+import EditFormModal from '../../user/modal/EditFormModal/EditFormModal'
 
 const { Option } = Select
 
@@ -37,7 +39,12 @@ const TransportList = (props) => {
       page: page,
       size: size
     }
-    dispatch(getTransport(searchCriteria))
+    dispatch(getTransport(searchCriteria)).then((data) => {
+      console.log('transports: ', data)
+    })
+      .catch(error => {
+        console.log('err: ', error)
+      })
 
   }
 
@@ -53,13 +60,19 @@ const TransportList = (props) => {
     loadList(page + 1, size)
   }
 
-  const list = transports.map(transport =>
-    <TransportCardProxy
-      key={transport.id}
-      transport={transport}
-      updateList={updateList}
-    />
-  )
+  const transportList = (transportsData) => {
+    return transportsData.map(transport =>
+      <React.Fragment>
+        <TransportCardProxy
+          key={transport.id}
+          transport={transport}
+          updateList={updateList}
+        />
+        <EditFormModal style={{marginRight: '10px'}} transport={transport} isTransport={true} />
+        <DeleteFormModal transport={transport} isTransport={true} />
+      </React.Fragment>
+    )
+  }
 
   const bodyTypeOptions = [
     <Option key={1} value={1}>
@@ -189,7 +202,7 @@ const TransportList = (props) => {
               onShowSizeChange: onSizeChangeHandler,
               onChange: onPageChangeHandler,
             } : false}
-            dataSource={list}
+            dataSource={transportList(transports)}
             renderItem={item => (
               <List.Item style={{ backgroundColor: '#fff', marginBottom: '25px', flexDirection: 'column', padding: '20px' }}>
                 {item}

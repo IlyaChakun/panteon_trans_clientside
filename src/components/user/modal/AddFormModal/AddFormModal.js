@@ -43,7 +43,7 @@ const AddFormModal = ({isCargo, isTransport, style}) => {
           countryId: 0,
           cityId: 0,
           address: from,
-          apartment: 0
+          apartment: 2
         },
         loadingDate: '2020-01-01'
       },
@@ -52,7 +52,7 @@ const AddFormModal = ({isCargo, isTransport, style}) => {
           countryId: 0,
           cityId: 0,
           address: to,
-          apartment: 0
+          apartment: 3
         },
         unloadingDate: '2020-01-01'
       }
@@ -104,9 +104,12 @@ const AddFormModal = ({isCargo, isTransport, style}) => {
     }
     else {
       dispatch(addTransport(createTransportFromState())).then((data) => {
-        console.log(data)
+        console.log('success: ', data)
         setVisible(false)
       })
+        .catch(error => {
+          console.log('error: ', error)
+        })
     }
   }
 
