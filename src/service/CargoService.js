@@ -521,7 +521,7 @@ const getAllCargos = (searchCriteria) => {
     regionId: 0,
     cityId: 0
   }
-  return axios.get(API_URL) //у вас выборка для грузов работает только когда есть body в get запросе (это плохо и параметры поиска через body делать не стоит), axios не разрешает отсылать get запросы с body
+  return axios.get(API_URL) //у вас выборка для грузов работает только когда есть body в get запросе (это плохо и параметры поиска через body делать не стоит), в axios не предусмотрен body в get запросах
 }
 
 const getCargo = (id) => {
@@ -535,8 +535,9 @@ const addCargo = (cargoData) => {
 //реализация не представляется возможной из-за 1) не рабочий get 2) нельзя запросить карго по юзер айди
 
 //здесь должен быть patch или put запрос
-const updateCargo = (cargoData) => {
-  return Promise.resolve(cargoData)
+const updateCargo = (id, patchData) => {
+  return axios.patch(`${API_URL}/${id}`, patchData)
+  // return Promise.resolve(patchData)
 }
 
 //здесь должен быть delete запрос

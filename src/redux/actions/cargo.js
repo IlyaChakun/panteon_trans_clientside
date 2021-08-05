@@ -52,6 +52,10 @@ export const getCargos = (searchCriteria) => async (dispatch) => {
 export const addCargo = (cargoData) => (dispatch) => {
   return CargoService.addCargo(cargoData).then(
     data => {
+      dispatch({
+        type: ADD_CARGO,
+        payload: cargoData
+      })
       return Promise.resolve(data)
     },
     error => {
