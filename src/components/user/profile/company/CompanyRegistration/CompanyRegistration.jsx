@@ -143,7 +143,6 @@ const CompanyRegistration = ({ buttonText }) => {
           <Col span={24}>
             <Form
               style={{ padding: '25px', backgroundColor: '#fff' }}
-              onFinish={handleSubmit}
             >
               <Form.Item
                 name='title'

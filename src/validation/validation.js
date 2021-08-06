@@ -9,6 +9,11 @@ import {
 } from '../constants'
 import { localizedStrings } from '../util/localization'
 
+const checkEmail = (email) => {
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
+
 export function validateUserName (name) {
   if (name.length < NAME_MIN_LENGTH) {
     return {
@@ -40,6 +45,13 @@ export function validateEmail (email) {
     return {
       validateStatus: ERROR,
       errorMsg: localizedStrings.alertBadLoginTooLong
+    }
+  }
+
+  if (!checkEmail(email)) {
+    return {
+      validateStatus: ERROR,
+      errorMsg: 'Некорректный E-Mail'
     }
   }
 

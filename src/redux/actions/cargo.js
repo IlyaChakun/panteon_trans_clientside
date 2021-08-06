@@ -11,6 +11,7 @@ import {
 } from "../actions/types";
   
 import CargoService from '../../service/CargoService'
+import TransportService from '../../service/TransportService'
 
 export const getCargos = (searchCriteria) => async (dispatch) => {
   return CargoService.getAllCargos(searchCriteria).then(
@@ -47,6 +48,16 @@ export const getCargos = (searchCriteria) => async (dispatch) => {
       })
     }
   )
+}
+
+export const updateCargo = (id, patchData) => (dispatch) => {
+  return CargoService.updateCargo(id, patchData)
+    .then((data) => {
+      return Promise.resolve(data)
+    })
+    .catch(error => {
+      return Promise.reject(error)
+    })
 }
 
 export const addCargo = (cargoData) => (dispatch) => {

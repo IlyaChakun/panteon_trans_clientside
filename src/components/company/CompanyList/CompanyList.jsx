@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import LoadingIndicator from '../../common/LoadingIndicator/LoadingIndicator'
 import CompanyCardProxy from '../CompanyCardProxy/CompanyCardProxy'
 import { getCompanies } from '../../../redux/actions/company'
-import { useQueryParam, NumberParam } from 'use-query-params';
+import { useQueryParam, NumberParam, StringParam } from 'use-query-params'
 
 const { Option } = Select
 
@@ -14,6 +14,11 @@ const CompanyList = (props) => {
   const dispatch = useDispatch()
   const [page, setPage] = useQueryParam('page', NumberParam)
   const [size, setPageSize] = useQueryParam('size', NumberParam)
+
+  const [unpParam, setUnpParam] = useQueryParam('unp', StringParam)
+  const [locationParam, setLocationParam] = useQueryParam('location', StringParam)
+  const [ratingParam, setRatingParam] = useQueryParam('rating', StringParam)
+
   const [allowPagination, setAllowPagination] = useState(props.location.pathname.split('/')[1] === 'companies')
 
   const {
@@ -23,7 +28,7 @@ const CompanyList = (props) => {
 
   useEffect(() => {
     loadList(page, size)
-  }, [page, size])
+  }, [page, size, unpParam, locationParam, ratingParam])
 
   const updateList = () => {
     loadList(page, size)
@@ -48,6 +53,10 @@ const CompanyList = (props) => {
 
   const loadMore = () => {
     loadList(page + 1, size)
+  }
+
+  const handleSearch = () => {
+    //тут будут сеттеры url параметров, которые вызовут перерисовку интерфейса, а следовательно компании будут запрошены заново и уже с параметрами поиска
   }
 
   const companyList = (companiesData) => {
@@ -136,6 +145,7 @@ const CompanyList = (props) => {
                   span: 24
                 }}
                 style={{ padding: '20px' }}
+                onFinish={handleSearch}
               >
                 {search}
               </Form>

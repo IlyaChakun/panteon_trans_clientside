@@ -30,7 +30,7 @@ const AddFormModal = ({isCargo, isTransport, style}) => {
       truckBodyTypeId: 0,
       carrierCompanyId: 0,
       cargoStowageMethodIds: [],
-      TruckDimensions: {
+      truckDimensions: {
         carryingCapacity: carryingCapacity,
         dimensions: {
           volume: volumeTransport,

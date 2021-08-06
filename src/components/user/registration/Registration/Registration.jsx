@@ -112,7 +112,7 @@ const Registration = (props) => {
             style={{marginBottom: '0'}}
           >
             <Button 
-              type='primary' 
+              type='primary'
               htmlType='submit'
               className='login-form-button'
               style={{width: '100%', marginBottom: '16px'}}
