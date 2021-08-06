@@ -536,8 +536,8 @@ const addCargo = (cargoData) => {
 
 //здесь должен быть patch или put запрос
 const updateCargo = (id, patchData) => {
-  return axios.patch(`${API_URL}/${id}`, patchData)
-  // return Promise.resolve(patchData)
+  // return axios.patch(`${API_URL}/${id}`, patchData)
+  return Promise.resolve(patchData)
 }
 
 //здесь должен быть delete запрос

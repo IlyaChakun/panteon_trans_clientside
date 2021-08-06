@@ -53,9 +53,13 @@ export const addTransport = (transportData) => (dispatch) => {
 }
 
 export const updateTransport = (id, patchData) => (dispatch) => {
-  return TransportService.updateTransport(id, patchData).then((data) => {
-    return Promise.resolve(data)
-  })
+  return TransportService.updateTransport(id, patchData)
+    .then((data) => {
+      return Promise.resolve(data)
+    })
+    .catch(error => {
+      return Promise.reject(error)
+    })
 }
 
 export const deleteTransport = (id) => (dispatch) => {

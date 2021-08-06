@@ -29,6 +29,7 @@
     "css-loader": "^3.4.2",
     "cssnano": "latest",
     "customize-cra": "^0.9.1",
+    "fast-json-patch": "^3.0.0-1",
     "focus-trap-react": "^8.1.1",
     "install": "^0.13.0",
     "less": "^3.11.1",
