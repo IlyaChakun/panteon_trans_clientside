@@ -1,28 +1,20 @@
 import {
-    NEWS_SET_IS_LOADING,
-    NEWS_SET_ERRORS,
-    SET_NEWS,
-    SET_NEW,
-    ADD_NEW,
-    NEWS_SET_TOTAL_PAGES,
-    NEWS_SET_TOTAL_ELEMENTS,
-    NEWS_SET_PAGE,
-    NEWS_SET_SIZE,
-} from "../actions/types";
-
-import { getAllNews } from '../../service/NewService'
+  NEWS_SET_IS_LOADING,
+  NEWS_SET_ERRORS,
+  SET_NEWS,
+  SET_NEW,
+  ADD_NEW,
+  NEWS_SET_TOTAL_PAGES,
+  NEWS_SET_TOTAL_ELEMENTS,
+  NEWS_SET_PAGE,
+  NEWS_SET_SIZE, CARGO_SET_IS_LOADING, SET_CARGOS, CARGO_SET_TOTAL_PAGES, CARGO_SET_TOTAL_ELEMENTS
+} from '../actions/types'
+import NewService from '../../service/NewService'
 
 export const getNews = () => {
     return async dispatch => {
       try {
-        console.log('start getNews ')
-        const promise = getAllNews()
-        console.log(JSON.stringify(promise))
-  
-        if (!promise) {
-          return
-        }
-  
+        const promise = {}
         dispatch({
             type: NEWS_SET_IS_LOADING,
             payload: true
@@ -55,6 +47,46 @@ export const getNews = () => {
         })
       }
     }
+}
+
+export const addArticle = (file, articleData) => (dispatch) => {
+  return NewService.addArticle(file, articleData).then(
+    (data) => {
+      console.log('data sent succesfully')
+      return Promise.resolve()
+    },
+    (error) => {
+      console.log('err in create action: ', error)
+      return Promise.reject()
+    }
+  )
+}
+
+export const getArticles = (searchParams) => (dispatch) => {
+  return NewService.getArticles(searchParams)
+    .then(
+      (response) => {
+        dispatch({
+          type: SET_NEWS,
+          payload: response.data.articles
+        })
+        dispatch({
+          type: NEWS_SET_TOTAL_PAGES,
+          payload: response.data.totalPages
+        })
+        dispatch({
+          type: NEWS_SET_TOTAL_ELEMENTS,
+          payload: response.data.totalItems
+        })
+
+        console.log('data got succesfully')
+        return Promise.resolve()
+      },
+      (error) => {
+        console.log('err in get all action: ', error)
+        return Promise.reject()
+      }
+    )
 }
 
 export const setPage = (page) => (dispatch) => {
