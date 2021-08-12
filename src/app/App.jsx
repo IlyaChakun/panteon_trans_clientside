@@ -21,7 +21,7 @@ import CompanyList from '../components/company/CompanyList/CompanyList'
 import CargoList from '../components/cargo/CargoList/CargoList'
 import TransportList from '../components/transport/TransportList/TransportList'
 import Registration from '../components/user/registration/Registration/Registration'
-import NewsList from '../components/news/NewsList/NewsList'
+import News from '../components/news/News/News'
 import CompanyProfile from '../components/company/CompanyProfile/CompanyProfile'
 
 const { Content } = Layout
@@ -127,10 +127,7 @@ const App = (props) => {
               />
               <Route
                 path='/news'
-                render={(props) =>
-                  <NewsList
-                    currentUser={currentUser}
-                    {...props} />}
+                component={News}
               />
               <Route path='/profile' component={Profile} />
               <Route path='/' component={Home} />

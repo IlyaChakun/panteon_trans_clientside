@@ -11,7 +11,6 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  isLoading: false,
   errors: '',
   news: [],
   newNews: {},
@@ -26,52 +25,47 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case NEWS_SET_IS_LOADING:
-      return {
-        ...state,
-        isLoading: payload
-      };
     case NEWS_SET_ERRORS:
       return {
         ...state,
         errors: payload
-      };
+      }
     case SET_NEWS:
       return {
         ...state,
         news: payload
-      };
+      }
     case SET_NEW:
       return {
         ...state,
         newNews: payload
-      };
+      }
     case ADD_NEW:
       return {
         ...state,
         news: [...state.news, payload]
-      };
+      }
     case NEWS_SET_TOTAL_PAGES:
       return {
         ...state,
         totalPages: payload
-      };
+      }
     case NEWS_SET_TOTAL_ELEMENTS:
       return {
         ...state,
         totalElements: payload
-      };
+      }
     case NEWS_SET_PAGE:
       return {
         ...state,
         page: payload
-      };
+      }
     case NEWS_SET_SIZE:
       return {
         ...state,
         size: payload
-      };
+      }
     default:
-      return state;
+      return state
   }
 }
