@@ -7,13 +7,13 @@ import {
   NEWS_SET_TOTAL_PAGES,
   NEWS_SET_TOTAL_ELEMENTS,
   NEWS_SET_PAGE,
-  NEWS_SET_SIZE,
-} from "../actions/types";
+  NEWS_SET_SIZE, CLEAR_COMPANY
+} from '../actions/types'
 
 const initialState = {
   errors: '',
   news: [],
-  newNews: {},
+  article: {},
   page: 1,
   size: 2,
   pagesCount: 0,
@@ -38,7 +38,7 @@ export default function (state = initialState, action) {
     case SET_NEW:
       return {
         ...state,
-        newNews: payload
+        article: payload
       }
     case ADD_NEW:
       return {
@@ -64,6 +64,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         size: payload
+      }
+    case CLEAR_COMPANY:
+      return {
+        ...state,
+        article: {}
       }
     default:
       return state

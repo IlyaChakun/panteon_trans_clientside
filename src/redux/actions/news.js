@@ -3,11 +3,11 @@ import {
   NEWS_SET_ERRORS,
   SET_NEWS,
   SET_NEW,
-  ADD_NEW,
   NEWS_SET_TOTAL_PAGES,
   NEWS_SET_TOTAL_ELEMENTS,
   NEWS_SET_PAGE,
-  NEWS_SET_SIZE, CARGO_SET_IS_LOADING, SET_CARGOS, CARGO_SET_TOTAL_PAGES, CARGO_SET_TOTAL_ELEMENTS
+  NEWS_SET_SIZE,
+  CLEAR_ARTICLE
 } from '../actions/types'
 import NewService from '../../service/NewService'
 
@@ -79,14 +79,44 @@ export const getArticles = (searchParams) => (dispatch) => {
           payload: response.data.totalItems
         })
 
-        console.log('data got succesfully')
         return Promise.resolve()
       },
       (error) => {
-        console.log('err in get all action: ', error)
-        return Promise.reject()
+        return Promise.reject(error)
       }
     )
+}
+
+export const getArticle = (id) => (dispatch) => {
+  return NewService.getArticle(id).then(
+    response => {
+      dispatch({
+        type: SET_NEW,
+        payload: response.data
+      })
+      return Promise.resolve(response.data)
+    },
+    error => {
+      return Promise.reject(error)
+    }
+  )
+}
+
+export const clearArticle = () => (dispatch) => {
+  dispatch({
+    type: CLEAR_ARTICLE
+  })
+}
+
+export const deleteArticle = (id) => (dispatch) => {
+  return NewService.deleteArticle(id).then(
+    response => {
+      return Promise.resolve()
+    },
+    error => {
+      return Promise.reject(error)
+    }
+  )
 }
 
 export const setPage = (page) => (dispatch) => {

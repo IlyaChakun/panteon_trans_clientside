@@ -5,7 +5,7 @@ import { Button, Form, Input } from 'antd'
 import { withRouter, Link, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Upload, message } from 'antd'
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
+import { PlusOutlined } from '@ant-design/icons'
 import { addArticle } from '../../../redux/actions/news'
 
 const NewsForm = (props) => {
@@ -14,6 +14,8 @@ const NewsForm = (props) => {
   const [description, setDescription] = useState({ value: '' })
   const [content, setContent] = useState({ value: {} })
   const [image, setImage] = useState()
+
+  const [loading, setLoading] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -36,13 +38,21 @@ const NewsForm = (props) => {
 
   const handleSubmit = () => {
     if (validateFields()) {
+      setLoading(true)
       dispatch(addArticle(image, {
         title: title.value,
         description: description.value,
         content: JSON.stringify(content.value)
       }))
         .then(() => {
+          setLoading(false)
           props.history.push('/news')
+        })
+        .catch(error => {
+          setLoading(false)
+          notification.error({
+            message: 'Ошибка отправки данных',
+          })
         })
     }
   }
@@ -73,7 +83,6 @@ const NewsForm = (props) => {
   }
 
   const handleImageChange = (info) => {
-    console.log(info.file)
     setImage(info.file)
   }
 
@@ -150,6 +159,7 @@ const NewsForm = (props) => {
               type='primary'
               htmlType='submit'
               style={{width: '100%', marginBottom: '16px'}}
+              loading={loading}
             >
               {'Запостить'}
             </Button>
