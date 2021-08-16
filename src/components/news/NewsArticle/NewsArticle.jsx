@@ -46,7 +46,7 @@ const NewsArticle = (props) => {
       {Object.keys(article).length && (
         <React.Fragment>
           <div style={{ marginBottom: '20px' }}>
-            <Button type="primary" style={{ marginRight: '16px' }} ><Link to={'/news/add'} style={{ textDecoration: 'none' }}>Редактировать</Link></Button>
+            <Button type="primary" style={{ marginRight: '16px' }} ><Link to={`/news/${props.match.params.id}/edit`} style={{ textDecoration: 'none' }}>Редактировать</Link></Button>
             <Button type="primary" danger onClick={handleDelete} loading={loading}>Удалить</Button>
           </div>
           <Row>

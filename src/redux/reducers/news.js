@@ -7,7 +7,8 @@ import {
   NEWS_SET_TOTAL_PAGES,
   NEWS_SET_TOTAL_ELEMENTS,
   NEWS_SET_PAGE,
-  NEWS_SET_SIZE, CLEAR_COMPANY
+  NEWS_SET_SIZE,
+  CLEAR_ARTICLE
 } from '../actions/types'
 
 const initialState = {
@@ -65,7 +66,7 @@ export default function (state = initialState, action) {
         ...state,
         size: payload
       }
-    case CLEAR_COMPANY:
+    case CLEAR_ARTICLE:
       return {
         ...state,
         article: {}

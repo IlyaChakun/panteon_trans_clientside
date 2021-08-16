@@ -5,7 +5,7 @@ import UserOutlined from '@ant-design/icons/lib/icons/UserOutlined'
 import PhoneOutlined from '@ant-design/icons/lib/icons/PhoneOutlined'
 import MailOutlined from '@ant-design/icons/lib/icons/MailOutlined'
 import MessageOutlined from '@ant-design/icons/lib/icons/MessageOutlined'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addReview, addCompanyReview } from '../../../../redux/actions/review'
 
 const layout = {
@@ -17,7 +17,7 @@ const layout = {
   }
 }
 
-const AddReviewModal = ({ isCompany }) => {
+const AddReviewModal = ({ isCompany, currentUser, id }) => {
   const dispatch = useDispatch()
 
   const [name, setName] = useState('')
@@ -37,10 +37,11 @@ const AddReviewModal = ({ isCompany }) => {
 
   const createObjectFromState = () => {
     return {
+      userId: currentUser.id,
       name,
       phoneNumber,
       email,
-      text,
+      reviewMessage: text,
       rating
     }
   }
@@ -60,9 +61,12 @@ const AddReviewModal = ({ isCompany }) => {
 
     const handleSubmit = () => {
       if (isCompany) {
-        dispatch(addCompanyReview(createObjectFromState())).then((data) => {
+        dispatch(addCompanyReview(id, createObjectFromState())).then((data) => {
           console.log('sent company review data: ', data)
         })
+          .catch(error => {
+            console.log('review err: ', error)
+          })
       }
       else {
         dispatch(addReview(createObjectFromState())).then((data) => {

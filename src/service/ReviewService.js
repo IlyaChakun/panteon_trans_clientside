@@ -1,3 +1,7 @@
+import axios from 'axios'
+
+const API_URL = 'http://config.panteontrans.be/api/transport-exchange-service/companies'
+
 const getAllReviews = () => {
   return (
     {
@@ -40,8 +44,20 @@ const addReview = (reviewData) => {
   return Promise.resolve(reviewData)
 }
 
-const addCompanyReview = (reviewData) => {
-  return Promise.resolve(reviewData)
+const addCompanyReview = (id, reviewData) => {
+  const formData = new FormData()
+
+  Object.keys(reviewData).forEach(function(key) {
+    console.log(this[key])
+    formData.append(key, this[key])
+    console.log('formData: ', this[key])
+  }, reviewData)
+  // return Promise.resolve(reviewData)
+  return axios.post(`${API_URL}/${id}/reviews`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
 }
 
 const deleteReview = (id) => {

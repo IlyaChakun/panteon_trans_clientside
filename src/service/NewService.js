@@ -1,5 +1,5 @@
 import axios from 'axios'
-const API_URL = 'http://localhost:5000/api/news-service/news'
+const API_URL = 'http://config.panteontrans.be/api/news-service/news'
 
 const getArticles = (searchParams) => {
   let urlWithParams = ''
@@ -34,9 +34,26 @@ const addArticle = (file, articleData) => {
     console.log('formData: ', this[key])
   }, articleData)
 
-  console.log('formData: ', formData)
-
   return axios.post(API_URL, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
+
+const editArticle = (id, editData) => {
+  const formData = new FormData()
+
+  Object.keys(editData).forEach(function(key) {
+    if (key === 'image') {
+      formData.append('files', this[key])
+    }
+    else {
+      formData.append(key, this[key])
+    }
+  }, editData)
+
+  return axios.patch(`${API_URL}/${id}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
@@ -51,5 +68,6 @@ export default {
   getArticles,
   getArticle,
   addArticle,
+  editArticle,
   deleteArticle
 }

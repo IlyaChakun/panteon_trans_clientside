@@ -58,10 +58,15 @@ export const addReview = (reviewData) => (dispatch) => {
   })
 }
 
-export const addCompanyReview = (reviewData) => (dispatch) => {
-  return ReviewService.addCompanyReview(reviewData).then((data) => {
-    return Promise.resolve(data)
-  })
+export const addCompanyReview = (id, reviewData) => (dispatch) => {
+  return ReviewService.addCompanyReview(id, reviewData).then(
+    data => {
+      return Promise.resolve(data)
+    },
+    error => {
+      return Promise.reject(error)
+    }
+  )
 }
 
 export const setPage = (page) => (dispatch) => {

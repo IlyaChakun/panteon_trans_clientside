@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Layout, Typography, Rate, List, Row, Col, Divider, Table, Card } from 'antd'
 import { withRouter, Redirect, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearCompany, getCompany } from '../../../redux/actions/company'
+import { clearCompany, getCompany, getReviews } from '../../../redux/actions/company'
 import AddReviewModal from '../review/AddReview/AddReviewModal'
 
 const { Content } = Layout
@@ -19,6 +19,13 @@ const CompanyProfile = (props) => {
     dispatch(getCompany(props.match.params.id))
       .then(() => {
         window.scrollTo({ top: 0 })
+        dispatch(getReviews(props.match.params.id))
+          .then(() => {
+            console.log('success reviews')
+          })
+          .catch(error => {
+            console.log('err reviews: ', error)
+          })
       })
       .catch(error => {
         console.log('err: ', error)
@@ -109,19 +116,22 @@ const CompanyProfile = (props) => {
           </div>
           <div>
             <Title level={3}>Отзывы:</Title>
-            <AddReviewModal isCompany={true} />
-            {/*<List*/}
-            {/*  itemLayout="horizontal"*/}
-            {/*  dataSource={companies.company.rating.reviews}*/}
-            {/*  renderItem={item => (*/}
-            {/*    <List.Item>*/}
-            {/*      <List.Item.Meta*/}
-            {/*        title={item.name}*/}
-            {/*        description={item.text}*/}
-            {/*      />*/}
-            {/*    </List.Item>*/}
-            {/*  )}*/}
-            {/*/>*/}
+            <AddReviewModal id={props.match.params.id} currentUser={currentUser} {...props} isCompany={true} />
+            {currentUser && Object.keys(companies.company).length && companies.company.reviews && (
+              <List
+                itemLayout="horizontal"
+                dataSource={companies.company.reviews}
+                renderItem={item => (
+                  <List.Item>
+                    <List.Item.Meta
+                      title={item.userId}
+                      description={item.reviewMessage}
+                    />
+                  </List.Item>
+                )}
+              />
+            )}
+
           </div>
         </div>
       }

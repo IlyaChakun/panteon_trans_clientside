@@ -102,6 +102,17 @@ export const getArticle = (id) => (dispatch) => {
   )
 }
 
+export const editArticle = (id, editData) => (dispatch) => {
+  return NewService.editArticle(id, editData).then(
+    response => {
+      return Promise.resolve()
+    },
+    error => {
+      return Promise.reject(error)
+    }
+  )
+}
+
 export const clearArticle = () => (dispatch) => {
   dispatch({
     type: CLEAR_ARTICLE

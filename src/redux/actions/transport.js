@@ -43,13 +43,18 @@ export const getTransport = (transportData) => (dispatch) => {
 }
 
 export const addTransport = (transportData) => (dispatch) => {
-  return TransportService.addTransport(transportData).then((data) => {
-    dispatch({
-      type: ADD_TRANSPORT,
-      payload: transportData
-    })
-    return Promise.resolve(data)
-  })
+  return TransportService.addTransport(transportData).then(
+    response => {
+      dispatch({
+        type: ADD_TRANSPORT,
+        payload: response.data
+      })
+      return Promise.resolve(response)
+    },
+    error => {
+      return Promise.reject(error)
+    }
+  )
 }
 
 export const updateTransport = (id, patchData) => (dispatch) => {

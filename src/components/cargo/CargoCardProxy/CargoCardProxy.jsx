@@ -4,17 +4,6 @@ import MessageModal from '../MessageModal/MessageModal'
 
 const CargoCardProxy = ({ cargo, currentUser, history, updateList }) => {
 
-  const truckBodyTypes = cargo.truckBodyTypes.map(bodyType => (
-      bodyType.truckBodyTypeName + ', '
-    )
-  )
-
-  const cargoStowageMethod =
-    cargo.cargoStowageMethods.map(method => (
-        method.stowageMethodName + ', '
-      )
-    )
-
   const randomViewCount = Math.floor(Math.random() * (1000 - 1) + 1)
 
   const priority = cargo.priority === undefined ? ('')
@@ -46,12 +35,12 @@ const CargoCardProxy = ({ cargo, currentUser, history, updateList }) => {
           <br />
           {cargo.dimensions}
         </Col>
-        <Col span={4}>
-          {truckBodyTypes}
-        </Col>
-        <Col span={4}>
-          {cargoStowageMethod}
-        </Col>
+        {/*<Col span={4}>*/}
+        {/*  {truckBodyTypes}*/}
+        {/*</Col>*/}
+        {/*<Col span={4}>*/}
+        {/*  {cargoStowageMethod}*/}
+        {/*</Col>*/}
       </Row>
       <Divider />
       <Row gutter={16} style={{ width: '100%' }}>

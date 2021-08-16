@@ -62,12 +62,12 @@ export const updateCargo = (id, patchData) => (dispatch) => {
 
 export const addCargo = (cargoData) => (dispatch) => {
   return CargoService.addCargo(cargoData).then(
-    data => {
+    response => {
       dispatch({
         type: ADD_CARGO,
-        payload: cargoData
+        payload: response.data
       })
-      return Promise.resolve(data)
+      return Promise.resolve(response)
     },
     error => {
       return Promise.reject(error)
