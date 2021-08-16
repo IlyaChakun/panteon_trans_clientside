@@ -1,5 +1,5 @@
 import axios from 'axios'
-const API_URL = 'http://localhost:8082/trucks'
+const API_URL = 'http://config.panteontrans.be/api/transport-exchange-service/trucks'
 
 const getAllTransport = (searchCriteria) => {
 

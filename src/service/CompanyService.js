@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+const API_URL = 'http://config.panteontrans.be/api/transport-exchange-service/companies'
+
 const companies = {
   objects: [
     {
@@ -266,7 +268,7 @@ const companies = {
   totalElements: 6
 }
 
-const API_URL = 'http://localhost:8082/companies'
+// const API_URL = 'http://localhost:8082/companies'
 
 const getAllCompanies = (searchCriteria) => {
   return axios.get(API_URL)
@@ -282,8 +284,13 @@ const registerCompany = (companyData) => {
   return axios.post(API_URL, companyData)
 }
 
+const getReviews = (id) => {
+  return axios.get(`${API_URL}/${id}/reviews`)
+}
+
 export default {
   getAllCompanies,
   getCompany,
+  getReviews,
   registerCompany
 }

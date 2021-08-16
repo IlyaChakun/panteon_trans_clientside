@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:8082/cargo'
+const API_URL = 'http://config.panteontrans.be/api/transport-exchange-service/cargo'
 
 const getAllCargos = (searchCriteria) => {
 
@@ -516,11 +516,6 @@ const getAllCargos = (searchCriteria) => {
   //   }
   // )
 
-  const body = {
-    countryId: 1,
-    regionId: 0,
-    cityId: 0
-  }
   return axios.get(API_URL) //у вас выборка для грузов работает только когда есть body в get запросе (это плохо и параметры поиска через body делать не стоит), в axios не предусмотрен body в get запросах
 }
 

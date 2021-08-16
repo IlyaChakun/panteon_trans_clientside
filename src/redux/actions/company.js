@@ -1,13 +1,13 @@
 import {
-    COMPANY_SET_IS_LOADING,
-    COMPANY_SET_ERRORS,
-    SET_COMPANIES,
-    SET_COMPANY,
-    ADD_COMPANY,
-    COMPANY_SET_TOTAL_PAGES,
-    COMPANY_SET_TOTAL_ELEMENTS,
-    COMPANY_SET_PAGE,
-    COMPANY_SET_SIZE, CLEAR_COMPANY
+  COMPANY_SET_IS_LOADING,
+  COMPANY_SET_ERRORS,
+  SET_COMPANIES,
+  SET_COMPANY,
+  ADD_COMPANY,
+  COMPANY_SET_TOTAL_PAGES,
+  COMPANY_SET_TOTAL_ELEMENTS,
+  COMPANY_SET_PAGE,
+  COMPANY_SET_SIZE, CLEAR_COMPANY, COMPANY_GET_REVIEWS
 } from '../actions/types'
 
 import CompanyService from '../../service/CompanyService'
@@ -76,6 +76,21 @@ export const registerCompany = (companyData) => (dispatch) => {
         return Promise.reject(error)
       }
     )
+}
+
+export const getReviews = (id) => (dispatch) => {
+  return CompanyService.getReviews(id).then(
+    response => {
+      dispatch({
+        type: COMPANY_GET_REVIEWS,
+        payload: response.data.objects
+      })
+      return Promise.resolve(response.data)
+    },
+    error => {
+      return Promise.reject(error)
+    }
+  )
 }
 
 export const clearCompany = () => (dispatch) => {

@@ -25,17 +25,25 @@ const AddFormModal = ({isCargo, isTransport, style}) => {
 
   const [visible, setVisible] = useState(false)
 
-  const createTransportFromState = () => {
+  const createCargoFromState = () => {
     return {
-      truckBodyTypeId: 0,
-      carrierCompanyId: 0,
-      cargoStowageMethodIds: [],
-      truckDimensions: {
-        carryingCapacity: carryingCapacity,
+      cargoTypeId: 1,
+      userId: currentUser.id,
+      description,
+      cargoStowageMethodIds: [
+        1,
+        2
+      ],
+      truckBodyTypeIds: [
+        1,
+        2
+      ],
+      cargoDimensions: {
+        weight,
         dimensions: {
-          volume: volumeTransport,
-          length: lengthTransport,
-          height: heightTransport
+          volume: volume,
+          length: length,
+          height: height
         }
       },
       loadingPayload: {
@@ -59,19 +67,41 @@ const AddFormModal = ({isCargo, isTransport, style}) => {
     }
   }
 
-  const createCargoFromState = () => {
+  const createTransportFromState = () => {
     return {
-      cargoTypeId: 0,
-      description,
-      cargoDimensions: {
-        weight,
+
+      truckBodyTypeId: 1,
+      carrierCompanyId: 8,
+      truckDimensions: {
+        carryingCapacity,
         dimensions: {
-          volume,
-          length,
-          height
+          volume: volumeTransport,
+          length: lengthTransport,
+          height: heightTransport
         }
       },
-      customerCompanyId: currentUser.id
+      cargoStowageMethodIds: [
+        1,
+        2
+      ],
+      loadingPayload: {
+        address: {
+          countryId: 0,
+          cityId: 0,
+          address: from,
+          apartment: 2
+        },
+        loadingDate: '2020-01-01'
+      },
+      unloadingPayload: {
+        address: {
+          countryId: 0,
+          cityId: 0,
+          address: to,
+          apartment: 3
+        },
+        unloadingDate: '2020-01-01'
+      }
     }
   }
 
@@ -84,6 +114,7 @@ const AddFormModal = ({isCargo, isTransport, style}) => {
   }
 
   const handleSubmit = () => {
+    console.log(createCargoFromState())
     if (isCargo) {
       setLoading(true)
       dispatch(addCargo(createCargoFromState()))
@@ -191,6 +222,28 @@ const AddFormModal = ({isCargo, isTransport, style}) => {
                     name='height'
                     value={height}
                     placeholder={'Высота'}
+                  />
+                </Form.Item>
+                <Form.Item
+                  name='from'
+                  rules={[{ required: true }]}
+                  onChange={event => setFrom(event.target.value)}
+                >
+                  <Input
+                    name='from'
+                    value={from}
+                    placeholder={'Откуда'}
+                  />
+                </Form.Item>
+                <Form.Item
+                  name='to'
+                  rules={[{ required: true }]}
+                  onChange={event => setTo(event.target.value)}
+                >
+                  <Input
+                    name='to'
+                    value={to}
+                    placeholder={'Куда'}
                   />
                 </Form.Item>
               </Form>
