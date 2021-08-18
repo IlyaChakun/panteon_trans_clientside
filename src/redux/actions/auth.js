@@ -99,7 +99,7 @@ export const updateUserProfile = (updateUserRequest) => async (dispatch) => {
 export const login = (email, password) => (dispatch) => {
   return AuthService.login(email, password)
       .then(response => {
-          dispatch(getCurrentUser(response.accessToken));
+          dispatch(getCurrentUser(response.accessToken))
           console.log('response in login dispatcher', response)
           localStorage.setItem(ACCESS_TOKEN, response.accessToken)
           localStorage.setItem(REFRESH_TOKEN, response.refreshToken)
@@ -134,6 +134,17 @@ export const login = (email, password) => (dispatch) => {
           description: 'Неверный Email или пароль'
         })
       })
+}
+
+export const registration = (regData) => (dispatch) => {
+    return AuthService.registration(regData).then(
+        response => {
+            return Promise.resolve(response.data)
+        },
+        error => {
+            return Promise.reject(error)
+        }
+    )
 }
 
 export const logout = () => (dispatch) => {

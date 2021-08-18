@@ -42,7 +42,7 @@ const MessageModal = ({ cargoOwnerId, title, currentUser }) => {
         notification.success({
           message: 'Сообщение отправлено'
         })
-      } catch {
+      } catch (e) {
         setIsLoading(false)
         notification.error({
           message: 'Сообщение не отправлено',

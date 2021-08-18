@@ -26,6 +26,7 @@ const AddReviewModal = ({ isCompany, currentUser, id }) => {
   const [text, setText] = useState('')
   const [rating, setRating] = useState('')
   const [visible, setVisible] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const showModal = () => {
     setVisible(true)
@@ -60,11 +61,18 @@ const AddReviewModal = ({ isCompany, currentUser, id }) => {
   }
 
     const handleSubmit = () => {
+      setLoading(true)
       if (isCompany) {
         dispatch(addCompanyReview(id, createObjectFromState())).then((data) => {
+          setLoading(false)
+          setVisible(false)
           console.log('sent company review data: ', data)
         })
           .catch(error => {
+            setLoading(false)
+            notification.error({
+              message: 'Ошибка отправки данных',
+            })
             console.log('review err: ', error)
           })
       }
@@ -89,6 +97,7 @@ const AddReviewModal = ({ isCompany, currentUser, id }) => {
           cancelText='Отменить'
           onCancel={handleCancel}
           okText='Оставить отзыв'
+          confirmLoading={loading}
           onOk={handleSubmit}
         >
 

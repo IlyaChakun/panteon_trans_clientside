@@ -2,17 +2,17 @@ import React from 'react'
 import { Col, Divider, List, Row } from 'antd'
 
 const CargoCardProxy = ({ cargo, history, updateList }) => {
-  const truckBodyTypes =
-    cargo.truckBodyTypes.map(bodyType => (
-        bodyType.truckBodyTypeName + ', '
-      )
-    )
-
-  const cargoStowageMethod =
-    cargo.cargoStowageMethods.map(method => (
-        method.stowageMethodName + ', '
-      )
-    )
+  // const truckBodyTypes =
+  //   cargo.truckBodyTypes.map(bodyType => (
+  //       bodyType.truckBodyTypeName + ', '
+  //     )
+  //   )
+  //
+  // const cargoStowageMethod =
+  //   cargo.cargoStowageMethods.map(method => (
+  //       method.stowageMethodName + ', '
+  //     )
+  //   )
 
   const randomViewCount = Math.floor(Math.random() * (1000 - 1) + 1)
 
@@ -28,29 +28,29 @@ const CargoCardProxy = ({ cargo, history, updateList }) => {
       <Row gutter={16} style={{ width: '100%' }}>
         <Col span={4}>
           <strong>
-            { cargo.countryIndexFrom } - { cargo.countryIndexTo }
+            { cargo.loadingPayload.address.countryId } - { cargo.unloadingPayload.address.countryId }
           </strong>
           <br/>
           { cargo.distance }
           <br/>
         </Col>
         <Col span={4}>
-          { cargo.from }
+          { cargo.loadingPayload.address.countryId }
         </Col>
         <Col span={4}>
-          { cargo.to }
+          { cargo.unloadingPayload.address.countryId }
         </Col>
-        <Col span={4}>
-          { cargo.cargoType }
-          <br/>
-          { cargo.dimensions }
-        </Col>
-        <Col span={4}>
-          {truckBodyTypes}
-        </Col>
-        <Col span={4}>
-          {cargoStowageMethod}
-        </Col>
+        {/*<Col span={4}>*/}
+        {/*  { cargo.cargoType }*/}
+        {/*  <br/>*/}
+        {/*  { cargo.dimensions }*/}
+        {/*</Col>*/}
+        {/*<Col span={4}>*/}
+        {/*  {truckBodyTypes}*/}
+        {/*</Col>*/}
+        {/*<Col span={4}>*/}
+        {/*  {cargoStowageMethod}*/}
+        {/*</Col>*/}
       </Row>
       <Divider />
       <Row gutter={16} style={{ width: '100%' }}>

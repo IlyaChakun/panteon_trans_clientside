@@ -18,23 +18,26 @@ const CargoCardProxy = ({ cargo, currentUser, history, updateList }) => {
       <Row gutter={16} style={{ width: '100%' }}>
         <Col span={4}>
           <strong>
-            {cargo.countryIndexFrom} - {cargo.countryIndexTo}
+            { cargo.loadingPayload.address.countryId } - { cargo.unloadingPayload.address.countryId }
           </strong>
           <br />
           {cargo.distance}
           <br />
         </Col>
         <Col span={4}>
-          {cargo.from}
+          Из: { cargo.loadingPayload.address.address }
         </Col>
         <Col span={4}>
-          {cargo.to}
+          В: { cargo.unloadingPayload.address.address }
         </Col>
         <Col span={4}>
-          {cargo.cargoType}
-          <br />
-          {cargo.dimensions}
+          Описание: { cargo.description }
         </Col>
+        {/*<Col span={4}>*/}
+        {/*  {cargo.cargoType}*/}
+        {/*  <br />*/}
+        {/*  {cargo.dimensions}*/}
+        {/*</Col>*/}
         {/*<Col span={4}>*/}
         {/*  {truckBodyTypes}*/}
         {/*</Col>*/}
@@ -45,18 +48,18 @@ const CargoCardProxy = ({ cargo, currentUser, history, updateList }) => {
       <Divider />
       <Row gutter={16} style={{ width: '100%' }}>
         <Col span={6}>
-          <strong style={{ color: 'black' }}>{priority}</strong>
+          <strong style={{ color: 'black' }}>{cargo.status}</strong>
         </Col>
-        <Col span={6}>
-          <strong style={{ color: 'black' }}>{cargo.payment}</strong>
-        </Col>
-        <Col span={6}>
-          <span>Контакты:</span>
-          <br />
-          {cargo.contacts.name}
-          <br />
-          {cargo.contacts.phoneNumber}
-        </Col>
+        {/*<Col span={6}>*/}
+        {/*  <strong style={{ color: 'black' }}>{cargo.payment}</strong>*/}
+        {/*</Col>*/}
+        {/*<Col span={6}>*/}
+        {/*  <span>Контакты:</span>*/}
+        {/*  <br />*/}
+        {/*  {cargo.contacts.name}*/}
+        {/*  <br />*/}
+        {/*  {cargo.contacts.phoneNumber}*/}
+        {/*</Col>*/}
         <Col span={6}>
           <span>Дата создания: {cargo.dateOfCreation}</span>
           <br />
@@ -67,7 +70,7 @@ const CargoCardProxy = ({ cargo, currentUser, history, updateList }) => {
       <Row justify='start' style={{ width: '100%' }}>
         <Col>
           {currentUser && (currentUser.id !== cargo.owner) && (
-            <MessageModal cargoOwnerId={cargo.owner} title={cargo.contacts.name} currentUser={currentUser} />
+            <MessageModal cargoOwnerId={cargo.userId} currentUser={currentUser} />
           )}
         </Col>
       </Row>

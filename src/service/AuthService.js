@@ -1,3 +1,5 @@
+import axios from "axios"
+
 const MockData = [
   {
     email: 'unicode256@yandex.by',
@@ -53,18 +55,7 @@ const MockData = [
   }
 ]
 
-// const register = (name, phone, email, password) => {
-//   console.log('reg data: ', [name, phone, email, password]);
-//   return axios.post(API_URL + "signup", {
-//     name,
-//     phone,
-//     email,
-//     password,
-//   }).then((response) => {
-//     console.log('reg res: ', response);
-//     return response.data;
-//   });
-// };
+const API_URL = 'http://config.panteontrans.be/api/account-service'
 
 const login = (email, password) => {
   let user = MockData.find(item => (item.email === email && item.password === password))
@@ -76,8 +67,16 @@ const getCurrentUser = (accessToken) => {
   return user ? Promise.resolve(user) : Promise.reject('error getting data')
 }
 
+const registration = (regData) => {
+  return axios.post(`${API_URL}/accounts`, {
+    email: regData.email,
+    password: regData.password,
+    role: 'user'
+  })
+}
+
 export default {
-  // register,
   login,
+  registration,
   getCurrentUser
 }

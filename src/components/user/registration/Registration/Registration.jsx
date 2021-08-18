@@ -11,6 +11,7 @@ import {
 } from '../../../../validation/validation'
 import { withRouter, Link, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import {registration} from "../../../../redux/actions/auth";
 
 const Registration = (props) => {
 
@@ -22,6 +23,13 @@ const Registration = (props) => {
   const { isAuthenticated } = useSelector(state => state.authState)
 
   const handleSubmit = (values) => {
+    dispatch(registration(values))
+        .then((data) => {
+          console.log('got data:', data)
+        })
+        .catch(error => {
+          console.log('error:', error)
+        })
     console.log('Received values of form:', values)
   }
 

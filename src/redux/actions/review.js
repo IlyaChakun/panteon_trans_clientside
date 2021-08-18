@@ -6,7 +6,7 @@ import {
   REVIEW_SET_SIZE,
   CLEAR_REVIEWS,
   REVIEW_SET_IS_LOADING,
-  REVIEW_SET_ERRORS
+  REVIEW_SET_ERRORS, ADD_COMPANY_REVIEW
 } from '../actions/types'
 
 import ReviewService from '../../service/ReviewService'
@@ -60,8 +60,12 @@ export const addReview = (reviewData) => (dispatch) => {
 
 export const addCompanyReview = (id, reviewData) => (dispatch) => {
   return ReviewService.addCompanyReview(id, reviewData).then(
-    data => {
-      return Promise.resolve(data)
+    response => {
+      dispatch({
+        type: ADD_COMPANY_REVIEW,
+        payload: response.data
+      })
+      return Promise.resolve(response)
     },
     error => {
       return Promise.reject(error)

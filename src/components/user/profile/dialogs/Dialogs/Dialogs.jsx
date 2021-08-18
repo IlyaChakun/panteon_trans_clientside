@@ -2,7 +2,6 @@ import React from 'react'
 import { ChatEngine } from 'react-chat-engine'
 import { withRouter } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import ChatFeed from '../ChatFeed/ChatFeed'
 
 const Dialogs = () => {
   const { currentUser } = useSelector(state => state.authState)
