@@ -7,7 +7,7 @@ import {
   REVIEW_SET_SIZE,
   CLEAR_REVIEWS,
   REVIEW_SET_IS_LOADING,
-  REVIEW_SET_ERRORS
+  REVIEW_SET_ERRORS, ADD_COMPANY_REVIEW
 } from '../actions/types'
 
 const initialState = {

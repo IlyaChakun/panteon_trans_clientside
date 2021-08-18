@@ -102,8 +102,8 @@ const addTransport = (transportData) => {
 }
 //здесь должен быть patch или put запрос
 const updateTransport = (id, patchData) => {
-  // return axios.patch(`${API_URL}/${id}`, patchData)
-  return Promise.resolve(patchData)
+  return axios.patch(`${API_URL}/${id}`, patchData)
+  // return Promise.resolve(patchData)
 }
 //здесь должен быть delete запрос
 const deleteTransport = (id) => {

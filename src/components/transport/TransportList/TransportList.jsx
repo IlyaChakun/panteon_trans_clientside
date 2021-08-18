@@ -68,8 +68,10 @@ const TransportList = (props) => {
           transport={transport}
           updateList={updateList}
         />
-        <EditFormModal style={{marginRight: '10px'}} transport={transport} isTransport={true} />
-        <DeleteFormModal transport={transport} isTransport={true} />
+        <Row style={{ width: '100%' }}>
+          <EditFormModal style={{marginRight: '10px'}} transport={transport} isTransport={true} />
+          <DeleteFormModal transport={transport} isTransport={true} />
+        </Row>
       </React.Fragment>
     )
   }
@@ -119,7 +121,7 @@ const TransportList = (props) => {
   ]
 
   const search = (
-    <>
+    <React.Fragment>
       <Form.Item
         label={'Место загрузки:'}
       >
@@ -166,7 +168,7 @@ const TransportList = (props) => {
           Найти
         </Button>
       </Form.Item>
-    </>
+    </React.Fragment>
   )
 
   return (

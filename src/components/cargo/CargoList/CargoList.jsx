@@ -90,7 +90,7 @@ const CargoList = (props) => {
   ]
 
   const search = (
-    <>
+    <React.Fragment>
       <Form.Item
         label={'Место загрузки:'}
       >
@@ -128,7 +128,7 @@ const CargoList = (props) => {
           Найти
         </Button>
       </Form.Item>
-    </>
+    </React.Fragment>
   )
 
 

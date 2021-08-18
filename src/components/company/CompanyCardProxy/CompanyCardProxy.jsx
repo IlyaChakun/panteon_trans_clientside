@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 const CompanyCardProxy = ({ company, history, updateList }) => {
   return (
-    <Link to={`/companies/${company.companyId}`} style={{ textDecoration: 'none' }}>
+    <Link to={`/companies/${company.companyId}`} style={{ textDecoration: 'none', width: '100%'}}>
       <CompanyCard
         key={company.companyId}
         company={company}

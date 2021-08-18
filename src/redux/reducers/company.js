@@ -8,7 +8,7 @@ import {
   COMPANY_SET_TOTAL_ELEMENTS,
   COMPANY_SET_PAGE,
   COMPANY_SET_SIZE,
-  CLEAR_COMPANY, COMPANY_GET_REVIEWS
+  CLEAR_COMPANY, COMPANY_GET_REVIEWS, ADD_COMPANY_REVIEW
 } from '../actions/types'
 
 const initialState = {
@@ -51,6 +51,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         company: { ...state.company, reviews: payload }
+      };
+    case ADD_COMPANY_REVIEW:
+      return {
+        ...state,
+        company: { ...state.company, reviews: [ ...state.company.reviews, payload ] }
       };
     case ADD_COMPANY:
       return {

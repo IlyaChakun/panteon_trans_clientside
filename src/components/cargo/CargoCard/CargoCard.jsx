@@ -27,7 +27,7 @@ const CargoCard = ({ cargo }) => {
       style={{ width: '100%' }}
 
       extra={
-        <>
+        <React.Fragment>
           <Row>
             <Col>
               Дата создания: {cargo.dateOfCreation}
@@ -36,7 +36,7 @@ const CargoCard = ({ cargo }) => {
           <Row>
 
           </Row>
-        </>
+        </React.Fragment>
       }
 
       title={
@@ -91,7 +91,7 @@ const CargoCard = ({ cargo }) => {
         style={{ padding: '5px' }}
 
         title={
-          <>
+          <React.Fragment>
             <Divider/>
             <Row>
               <Col span={24}>
@@ -105,7 +105,7 @@ const CargoCard = ({ cargo }) => {
               </Col>
             </Row>
             <Divider/>
-          </>
+          </React.Fragment>
         }
 
         description={
