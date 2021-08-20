@@ -1,18 +1,21 @@
 import React, { useState } from 'react'
 import { Row, Col, notification } from 'antd'
-import { Button, Form, Input } from 'antd'
+import { Button, Form, Input, Space, Typography } from 'antd'
 
 import { withRouter, Link, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Upload, message } from 'antd'
-import { PlusOutlined } from '@ant-design/icons'
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { addArticle } from '../../../redux/actions/news'
+import ParagrapsForm from '../ParagrapsForm/ParagrapsForm'
+
+const { Title } = Typography
 
 const NewsForm = (props) => {
 
   const [title, setTitle] = useState({ value: '' })
   const [description, setDescription] = useState({ value: '' })
-  const [content, setContent] = useState({ value: {} })
+  // const [content, setContent] = useState({ value: {} })
   const [image, setImage] = useState()
 
   const [loading, setLoading] = useState(false)
@@ -20,13 +23,6 @@ const NewsForm = (props) => {
   const dispatch = useDispatch()
 
   const validateFields = () => {
-    if(!content.value){
-      notification.error({
-        message: 'Ожидался формат JSON',
-        description: 'Содержимое должно быть JSON объектом'
-      })
-      return false
-    }
     if (!image) {
       notification.error({
         message: 'Вы не добавили изображение',
@@ -36,13 +32,16 @@ const NewsForm = (props) => {
     return true
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (values) => {
+    const { title, description, sections } = values
+    const content = { sections }
+
     if (validateFields()) {
       setLoading(true)
       dispatch(addArticle(image, {
-        title: title.value,
-        description: description.value,
-        content: JSON.stringify(content.value)
+        title: title,
+        description: description,
+        content: JSON.stringify(content)
       }))
         .then(() => {
           setLoading(false)
@@ -69,25 +68,12 @@ const NewsForm = (props) => {
     })
   }
 
-  const handleContentChange = (event) => {
-    const value = event.target.value
-    try {
-      setContent({
-        value: JSON.parse(value)
-      })
-    } catch (e) {
-      setContent({
-        value: null
-      })
-    }
-  }
-
   const handleImageChange = (info) => {
     setImage(info.file)
   }
 
   return (
-    <Row style={{ height: 'calc(100vh - 64px)' }} align={'middle'}>
+    <Row style={{ minHeight: 'calc(100vh - 64px)' }} align={'middle'}>
       <Col xs={{ span: 20, offset: 2 }} sm={{ span: 16, offset: 4 }} md={{ span: 10, offset: 7 }}>
         <Form
           style={{ padding: '25px', backgroundColor: '#fff' }}
@@ -117,17 +103,37 @@ const NewsForm = (props) => {
             />
           </Form.Item>
 
-          <Form.Item
-            name='content'
-            rules={[{ required: true, message: 'Введите содержимое' }]}
-            onChange={handleContentChange}
-          >
-            <Input.TextArea
-              name='content'
-              value={content.value}
-              placeholder={'Содержимое (JSON)'}
-            />
-          </Form.Item>
+          <Form.List name="sections">
+            {(fields, { add, remove }) => (
+              <React.Fragment>
+                <Title level={5}>Содержимое</Title>
+                {fields.map(({ key, name, fieldKey, ...restField }) => (
+                  <Row key={key} align="middle">
+                    <Col span={20}>
+                      <Form.Item
+                        {...restField}
+                        name={[name, 'header']}
+                        fieldKey={[fieldKey, 'header']}
+                        rules={[{ required: true, message: 'Missing header' }]}
+                      >
+                        <Input placeholder="Заголовок" />
+                      </Form.Item>
+
+                      <ParagrapsForm fieldKey={name} />
+                    </Col>
+                    <Col span={4} style={{display: 'flex', justifyContent: 'center'}}>
+                      <MinusCircleOutlined onClick={() => remove(name)} />
+                    </Col>
+                  </Row>
+                ))}
+                <Form.Item>
+                  <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                    Добавить секцию
+                  </Button>
+                </Form.Item>
+              </React.Fragment>
+            )}
+          </Form.List>
 
           <Form.Item>
             <Upload

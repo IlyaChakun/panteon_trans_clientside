@@ -1,5 +1,5 @@
 import axios from 'axios'
-const API_URL = 'http://config.panteontrans.be/api/news-service/news'
+const API_URL = 'http://localhost:5000/api/news-service/news'
 
 const getArticles = (searchParams) => {
   let urlWithParams = ''
