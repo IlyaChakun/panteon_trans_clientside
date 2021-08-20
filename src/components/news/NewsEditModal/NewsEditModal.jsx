@@ -1,18 +1,23 @@
 import React, { useState } from 'react'
-import { Row, Col, notification, Form, Input } from 'antd'
+import { Row, Col, notification, Form, Input, Typography } from 'antd'
 import { Button, Modal } from 'antd'
 
 import { withRouter, Link, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Upload, message } from 'antd'
-import { PlusOutlined } from '@ant-design/icons'
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { addArticle, editArticle } from '../../../redux/actions/news'
+import ParagrapsForm from '../ParagrapsForm/ParagrapsForm'
+
+const { Title } = Typography
 
 const NewsEditModal = (props) => {
 
+  const [form] = Form.useForm()
+
   const [title, setTitle] = useState({ value: '' })
   const [description, setDescription] = useState({ value: '' })
-  const [content, setContent] = useState({ value: '' })
+
   const [image, setImage] = useState()
   const [visible, setVisible] = useState(false)
   const [confirmLoading, setConfirmLoading] = useState(false)
@@ -28,18 +33,7 @@ const NewsEditModal = (props) => {
   }
 
   const validateFields = () => {
-    if(props.content) {
-      try {
-        JSON.parse(content.value)
-      }
-      catch (e) {
-        notification.error({
-          message: 'Ожидался формат JSON',
-          description: 'Содержимое должно быть JSON объектом'
-        })
-        return false
-      }
-    }
+
     if (props.image && !image) {
       notification.error({
         message: 'Вы не добавили изображение',
@@ -49,7 +43,7 @@ const NewsEditModal = (props) => {
     return true
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (values) => {
     if (validateFields()) {
       setConfirmLoading(true)
       let editData = {}
@@ -59,8 +53,12 @@ const NewsEditModal = (props) => {
       if (description.value) {
         editData.description = description.value
       }
-      if (content.value) {
-        editData.content = JSON.stringify(JSON.parse(content.value))
+      if (values.sections) {
+        const content = {
+          image: '',
+          sections: values.sections
+        }
+        editData.content = JSON.stringify(content)
       }
       if (image) {
         editData.image = image
@@ -95,13 +93,6 @@ const NewsEditModal = (props) => {
     })
   }
 
-  const handleContentChange = (event) => {
-    setContent({
-      value: event.target.value
-    })
-
-  }
-
   const handleImageChange = (info) => {
     setImage(info.file)
   }
@@ -122,11 +113,20 @@ const NewsEditModal = (props) => {
           props.image ? 'Замена изображения' : ''
         }
         visible={visible}
-        onOk={handleSubmit}
+        onOk={() => {
+          form
+            .validateFields()
+            .then((values) => {
+              handleSubmit(values)
+            })
+            .catch((info) => {
+              console.log('Validate Failed:', info);
+            })
+        }}
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
       >
-        <Form>
+        <Form form={form}>
           {props.image && (
             <Form.Item
               hasFeedback
@@ -159,7 +159,7 @@ const NewsEditModal = (props) => {
               </Upload>
             </Form.Item>
           )}
-          {((props.image && props.content) || props.title || props.description) && (
+          {(props.title || props.description) && (
             <Form.Item
               hasFeedback
               rules={[
@@ -170,26 +170,58 @@ const NewsEditModal = (props) => {
               ]}
               onChange={
                 props.title ? handleTitleChange :
-                  props.description ? handleDescriptionChange :
-                    props.content ? handleContentChange : ''
+                  props.description ? handleDescriptionChange : ''
               }
             >
               <Input.TextArea
                 name={
                   props.title ? 'title' :
-                    props.description ? 'description' :
-                      props.content ? 'content' : ''
+                    props.description ? 'description' : ''
                 }
                 autoComplete='off'
                 placeholder={'Новые данные'}
                 value={
                   props.title ? title.value :
-                    props.description ? description.value :
-                      props.content ? content.value : ''
+                    props.description ? description.value : ''
                 }
 
               />
             </Form.Item>
+          )}
+          {props.image && props.content && (
+            <React.Fragment>
+              <Form.List name="sections">
+                {(fields, { add, remove }) => (
+                  <React.Fragment>
+                    <Title level={5}>Содержимое</Title>
+                    {fields.map(({ key, name, fieldKey, ...restField }) => (
+                      <Row key={key} align="middle">
+                        <Col span={20}>
+                          <Form.Item
+                            {...restField}
+                            name={[name, 'header']}
+                            fieldKey={[fieldKey, 'header']}
+                            rules={[{ required: true, message: 'Missing header' }]}
+                          >
+                            <Input placeholder="Заголовок" />
+                          </Form.Item>
+
+                          <ParagrapsForm fieldKey={name} />
+                        </Col>
+                        <Col span={4} style={{display: 'flex', justifyContent: 'center'}}>
+                          <MinusCircleOutlined onClick={() => remove(name)} />
+                        </Col>
+                      </Row>
+                    ))}
+                    <Form.Item>
+                      <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                        Добавить секцию
+                      </Button>
+                    </Form.Item>
+                  </React.Fragment>
+                )}
+              </Form.List>
+            </React.Fragment>
           )}
         </Form>
       </Modal>
