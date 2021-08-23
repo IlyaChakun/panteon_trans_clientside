@@ -7,7 +7,7 @@ import { useQueryParam, NumberParam } from 'use-query-params';
 import LoadingIndicator from '../../common/LoadingIndicator/LoadingIndicator'
 import CargoCardProxy from '../CargoCardProxy/CargoCardProxy'
 import { getCargos, setPage, setSize } from '../../../redux/actions/cargo'
-import AddFormModal from '../../user/modal/AddFormModal/AddFormModal'
+import AddForm from '../../user/modal/AddForm/AddForm'
 
 const { Option } = Select
 
@@ -133,8 +133,9 @@ const CargoList = (props) => {
 
 
   return (
-      <Row gutter={16} style={{ width: '100%', padding: '30px', minHeight: 'calc(100vh - 60px)' }}>
-        <Col span={6}>
+    <div>
+      <Row style={{ width: '100%', padding: '30px' }}>
+        <Col span={6} style={{ backgroundColor: '#fff' }}>
           <Form
             labelCol={{
               span: 24,
@@ -147,8 +148,13 @@ const CargoList = (props) => {
             {search}
           </Form>
         </Col>
+        <Col span={18} style={{ backgroundColor: '#9e9e9e' }}>
+
+        </Col>
+      </Row>
+      <Row style={{ width: '100%', padding: '0 30px' }}>
         <Col span={18} style={{ width: '100%' }}>
-          {currentUser && <AddFormModal isCargo={true} style={{ marginBottom: '20px' }}/>}
+          {currentUser && <Button type={'primary'}><Link style={{ textDecoration: 'none' }} to={'/cargos/add'}>Добавить груз</Link></Button>}
           {!cargos.length ? (
             <LoadingIndicator />
           ) : (
@@ -177,6 +183,8 @@ const CargoList = (props) => {
           )}
         </Col>
       </Row>
+    </div>
+
   )
 }
 

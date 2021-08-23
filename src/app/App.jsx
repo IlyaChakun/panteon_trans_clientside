@@ -23,6 +23,7 @@ import TransportList from '../components/transport/TransportList/TransportList'
 import Registration from '../components/user/registration/Registration/Registration'
 import News from '../components/news/News/News'
 import CompanyProfile from '../components/company/CompanyProfile/CompanyProfile'
+import AddForm from '../components/user/modal/AddForm/AddForm'
 
 const { Content } = Layout
 
@@ -112,10 +113,22 @@ const App = (props) => {
                     {...props} />}
               />
               <Route
+                exact path='/cargos/add'
+                render={(props) =>
+                  <AddForm
+                    {...props} isCargo={true} />}
+              />
+              <Route
                 exact path='/transports'
                 render={(props) =>
                   <TransportList
                     {...props} />}
+              />
+              <Route
+                exact path='/transports/add'
+                render={(props) =>
+                  <AddForm
+                    {...props} isTransport={true} />}
               />
               <Route
                 path='/reviews'

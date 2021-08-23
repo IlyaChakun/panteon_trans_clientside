@@ -4,7 +4,7 @@ import { withRouter, Link } from 'react-router-dom'
 import CargoCardProxy from '../../../../cargo/CargoCardProxy/CargoCardProxy'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProfileCargos } from '../../../../../redux/actions/profile'
-import AddFormModal from '../../../modal/AddFormModal/AddFormModal'
+import AddFormModal from '../../../modal/AddForm/AddForm'
 import EditFormModal from '../../../modal/EditFormModal/EditFormModal'
 import DeleteFormModal from '../../../modal/DeleteFormModal/DeleteFormModal'
 
