@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { Button, Col, Form, Input, List, Row, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { useQueryParam, NumberParam } from 'use-query-params';
+import { useQueryParam, NumberParam } from 'use-query-params'
+// import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 
 import LoadingIndicator from '../../common/LoadingIndicator/LoadingIndicator'
 import { getTransport, setPage, setSize } from '../../../redux/actions/transport'
 import TransportCardProxy from '../TransportCardProxy/TransportCardProxy'
-import AddFormModal from '../../user/modal/AddFormModal/AddFormModal'
+import AddForm from '../../user/modal/AddForm/AddForm'
 import DeleteFormModal from '../../user/modal/DeleteFormModal/DeleteFormModal'
 import EditFormModal from '../../user/modal/EditFormModal/EditFormModal'
 
@@ -172,51 +173,69 @@ const TransportList = (props) => {
   )
 
   return (
-    <Row gutter={16} style={{ width: '100%', padding: '30px', minHeight: 'calc(100vh - 60px)' }}>
-      <Col span={6}>
-        <Form
-          labelCol={{
-            span: 24
-          }}
-          wrapperCol={{
-            span: 24
-          }}
-          style={{ padding: '20px' }}
-        >
-          {search}
-        </Form>
 
-      </Col>
-      <Col span={18}>
-        {currentUser && <AddFormModal isTransport={true} style={{ marginBottom: '20px' }}/>}
-        {!transports.length ? (
-          <LoadingIndicator />
-        ) : (
-          <List
-            pagination={allowPagination ? {
-              showSizeChanger: true,
-              defaultCurrent: page || 1,
-              defaultPageSize: size || 6,
-              pageSizeOptions: ['6', '9', '12'],
-              position: 'bottom',
-              total: totalElements,
-              showQuickJumper: true,
-              onShowSizeChange: onSizeChangeHandler,
-              onChange: onPageChangeHandler,
-            } : false}
-            dataSource={transportList(transports)}
-            renderItem={item => (
-              <List.Item style={{ backgroundColor: '#fff', marginBottom: '25px', flexDirection: 'column', padding: '20px' }}>
-                {item}
-              </List.Item>
-            )}
-          />
-        )}
-        {!allowPagination && (
-          <Link to={'/transports'}><Button style={{ width: '100%' }}>Весь транспорт</Button></Link>
-        )}
-      </Col>
-    </Row>
+    <div>
+      <Row style={{ width: '100%', padding: '30px' }}>
+        <Col span={6} style={{ backgroundColor: '#fff' }}>
+          <Form
+            labelCol={{
+              span: 24
+            }}
+            wrapperCol={{
+              span: 24
+            }}
+            style={{ padding: '20px' }}
+          >
+            {search}
+          </Form>
+        </Col>
+        <Col span={18} style={{ backgroundColor: '#9e9e9e' }}>
+          {/*<MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>*/}
+          {/*  <TileLayer*/}
+          {/*    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'*/}
+          {/*    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"*/}
+          {/*  />*/}
+          {/*  <Marker position={[51.505, -0.09]}>*/}
+          {/*    <Popup>*/}
+          {/*      A pretty CSS3 popup. <br /> Easily customizable.*/}
+          {/*    </Popup>*/}
+          {/*  </Marker>*/}
+          {/*</MapContainer>*/}
+        </Col>
+      </Row>
+      <Row style={{ width: '100%', padding: '0 30px' }}>
+        <Col span={24}>
+          {currentUser && <Button type={'primary'}><Link style={{ textDecoration: 'none' }} to={'/transports/add'}>Добавить транспорт</Link></Button>}
+          {!transports.length ? (
+            <LoadingIndicator />
+          ) : (
+            <List
+              pagination={allowPagination ? {
+                showSizeChanger: true,
+                defaultCurrent: page || 1,
+                defaultPageSize: size || 6,
+                pageSizeOptions: ['6', '9', '12'],
+                position: 'bottom',
+                total: totalElements,
+                showQuickJumper: true,
+                onShowSizeChange: onSizeChangeHandler,
+                onChange: onPageChangeHandler,
+              } : false}
+              dataSource={transportList(transports)}
+              renderItem={item => (
+                <List.Item style={{ backgroundColor: '#fff', marginBottom: '25px', flexDirection: 'column', padding: '20px' }}>
+                  {item}
+                </List.Item>
+              )}
+            />
+          )}
+          {!allowPagination && (
+            <Link to={'/transports'}><Button style={{ width: '100%' }}>Весь транспорт</Button></Link>
+          )}
+        </Col>
+      </Row>
+    </div>
+
   )
 }
 

@@ -4,7 +4,7 @@ import { withRouter, Link } from 'react-router-dom'
 import CargoCardProxy from '../../../../cargo/CargoCardProxy/CargoCardProxy'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProfileCargos } from '../../../../../redux/actions/profile'
-import AddFormModal from '../../../modal/AddFormModal/AddFormModal'
+import AddFormModal from '../../../modal/AddForm/AddForm'
 import EditFormModal from '../../../modal/EditFormModal/EditFormModal'
 import DeleteFormModal from '../../../modal/DeleteFormModal/DeleteFormModal'
 
@@ -25,7 +25,6 @@ const Cargos = (props) => {
 
   return (
     <div>
-      <AddFormModal isCargo={true} style={{ marginBottom: '20px'}} />
       {cargos.length &&
         cargos.map((cargo) => (
             <Row style={{ backgroundColor: '#fff', marginBottom: '20px', padding: '15px' }}>
@@ -33,7 +32,7 @@ const Cargos = (props) => {
                 <CargoCardProxy cargo={cargo}/>
               </Row>
               <Row>
-                <EditFormModal style={{marginRight: '10px'}} cargo={cargo} isCargo={true} />
+                <EditFormModal style={{ marginRight: '10px' }} cargo={cargo} isCargo={true} />
                 <DeleteFormModal cargo={cargo} isCargo={true}/>
               </Row>
             </Row>
