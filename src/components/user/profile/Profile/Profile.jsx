@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../../../redux/actions/auth'
 import Transports from '../transport/Transports/Transports'
 import Dialogs from '../dialogs/Dialogs/Dialogs'
+import Orders from '../orders/Orders/Orders'
 
 const { SubMenu } = Menu
 const { Content, Sider } = Layout
@@ -34,14 +35,15 @@ const Profile = (props) => {
           style={{ height: '100%', borderRight: 0, textTransform: 'uppercase', fontWeight: 500, paddingTop: '10%' }}
         >
           <Menu.Item key="/profile/company"><Link style={{ textDecoration: 'none' }} to={'/profile/company'}>моя компания</Link></Menu.Item>
+          <Menu.Item key="/profile/orders"><Link style={{ textDecoration: 'none' }} to={'/profile/orders'}>заказы</Link></Menu.Item>
           <Menu.Item key="/profile/cargos"><Link style={{ textDecoration: 'none' }} to={'/profile/cargos'}>мои грузы</Link></Menu.Item>
           <Menu.Item key="/profile/transports"><Link style={{ textDecoration: 'none' }} to={'/profile/transports'}>мой транспорт</Link></Menu.Item>
           <Menu.Item key="/profile/dialogs"><Link style={{ textDecoration: 'none' }} to={'/profile/dialogs'}>мои диалоги</Link></Menu.Item>
-          <Menu.Item key="/profile/settings"><Link style={{ textDecoration: 'none' }} to={'/profile/settings'}>мои настройки</Link></Menu.Item>
+          <Menu.Item key="/profile/settings"><Link style={{ textDecoration: 'none' }} to={'/profile/settings'}>мой профиль</Link></Menu.Item>
           <Menu.Item key="5" onClick={logOut}>выйти</Menu.Item>
         </Menu>
       </Sider>
-      <Layout style={{ padding: '24px' }}>
+      <Layout>
         <Content
           className="site-layout-background"
           style={{
@@ -53,6 +55,7 @@ const Profile = (props) => {
           <Switch>
             <Route exact path='/profile' render={() => <Redirect to='/profile/settings' />}/>
             <Route exact path='/profile/company' component={Company}/>
+            <Route exact path='/profile/orders' component={Orders}/>
             <Route exact path='/profile/cargos' component={Cargos}/>
             <Route exact path='/profile/transports' component={Transports}/>
             <Route exact path='/profile/dialogs' component={Dialogs}/>

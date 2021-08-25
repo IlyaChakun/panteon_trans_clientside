@@ -1,9 +1,17 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Button, Form, Input, Modal, Select, Row, Col, notification } from 'antd'
+import { Button, Form, Input, Modal, Select, Row, Col, notification, Typography, DatePicker } from 'antd'
 import { addCargo } from '../../../../redux/actions/cargo'
 import { useDispatch, useSelector } from 'react-redux'
 import { addTransport } from '../../../../redux/actions/transport'
+
+const { Title } = Typography
+const { Option } = Select
+const { TextArea } = Input
+
+const titleStyles = {
+  marginBottom: '32px'
+}
 
 const AddForm = ({isCargo, isTransport, style}) => {
   const dispatch = useDispatch()
@@ -11,373 +19,564 @@ const AddForm = ({isCargo, isTransport, style}) => {
 
   const [isLoading, setLoading] = useState(false)
 
-  const [carryingCapacity, setCarryingCapacity] = useState('')
-  const [volumeTransport, setVolumeTransport] = useState('')
-  const [lengthTransport, setLengthTransport] = useState('')
-  const [heightTransport, setHeightTransport] = useState('')
-  const [from, setFrom] = useState('')
-  const [to, setTo] = useState('')
+  // const [carryingCapacity, setCarryingCapacity] = useState('')
+  // const [volumeTransport, setVolumeTransport] = useState('')
+  // const [lengthTransport, setLengthTransport] = useState('')
+  // const [heightTransport, setHeightTransport] = useState('')
+  // const [from, setFrom] = useState('')
+  // const [to, setTo] = useState('')
+  //
+  // const [weight, setWeight] = useState('')
+  // const [volume, setVolume] = useState('')
+  // const [length, setLength] = useState('')
+  // const [height, setHeight] = useState('')
+  // const [description, setDescription] = useState('')
 
-  const [weight, setWeight] = useState('')
-  const [volume, setVolume] = useState('')
-  const [length, setLength] = useState('')
-  const [height, setHeight] = useState('')
-  const [description, setDescription] = useState('')
+  // const createCargoFromState = () => {
+  //   return {
+  //     cargoTypeId: 1,
+  //     userId: currentUser.id,
+  //     description,
+  //     cargoStowageMethodIds: [
+  //       1,
+  //       2
+  //     ],
+  //     truckBodyTypeIds: [
+  //       1,
+  //       2
+  //     ],
+  //     cargoDimensions: {
+  //       weight,
+  //       dimensions: {
+  //         volume: volume,
+  //         length: length,
+  //         height: height
+  //       }
+  //     },
+  //     loadingPayload: {
+  //       address: {
+  //         countryId: 0,
+  //         cityId: 0,
+  //         address: from,
+  //         apartment: 2
+  //       },
+  //       loadingDate: '2020-01-01'
+  //     },
+  //     unloadingPayload: {
+  //       address: {
+  //         countryId: 0,
+  //         cityId: 0,
+  //         address: to,
+  //         apartment: 3
+  //       },
+  //       unloadingDate: '2020-01-01'
+  //     }
+  //   }
+  // }
 
-  const [visible, setVisible] = useState(false)
+  // const createTransportFromState = () => {
+  //   return {
+  //
+  //     truckBodyTypeId: 1,
+  //     carrierCompanyId: 8,
+  //     truckDimensions: {
+  //       carryingCapacity,
+  //       dimensions: {
+  //         volume: volumeTransport,
+  //         length: lengthTransport,
+  //         height: heightTransport
+  //       }
+  //     },
+  //     cargoStowageMethodIds: [
+  //       1,
+  //       2
+  //     ],
+  //     loadingPayload: {
+  //       address: {
+  //         countryId: 0,
+  //         cityId: 0,
+  //         address: from,
+  //         apartment: 2
+  //       },
+  //       loadingDate: '2020-01-01'
+  //     },
+  //     unloadingPayload: {
+  //       address: {
+  //         countryId: 0,
+  //         cityId: 0,
+  //         address: to,
+  //         apartment: 3
+  //       },
+  //       unloadingDate: '2020-01-01'
+  //     }
+  //   }
+  // }
 
-  const createCargoFromState = () => {
-    return {
-      cargoTypeId: 1,
-      userId: currentUser.id,
-      description,
-      cargoStowageMethodIds: [
-        1,
-        2
-      ],
-      truckBodyTypeIds: [
-        1,
-        2
-      ],
-      cargoDimensions: {
-        weight,
-        dimensions: {
-          volume: volume,
-          length: length,
-          height: height
-        }
-      },
-      loadingPayload: {
-        address: {
-          countryId: 0,
-          cityId: 0,
-          address: from,
-          apartment: 2
-        },
-        loadingDate: '2020-01-01'
-      },
-      unloadingPayload: {
-        address: {
-          countryId: 0,
-          cityId: 0,
-          address: to,
-          apartment: 3
-        },
-        unloadingDate: '2020-01-01'
-      }
-    }
+  const handleSubmit = (values) => {
+    console.log(values)
+    // if (isCargo) {
+    //   setLoading(true)
+    //   dispatch(addCargo(createCargoFromState()))
+    //     .then((data) => {
+    //       console.log('success: ', data)
+    //       setLoading(false)
+    //     })
+    //     .catch(error => {
+    //       setLoading(false)
+    //       notification.error({
+    //         message: 'Не удалось добавить груз',
+    //         description: 'При добавлении груза возникла ошибка'
+    //       })
+    //       console.log('error: ', error)
+    //     })
+
+    // }
+    // else {
+    //   dispatch(addTransport(createTransportFromState())).then((data) => {
+    //     console.log('success: ', data)
+    //   })
+    //     .catch(error => {
+    //       console.log('error: ', error)
+    //     })
+    // }
   }
 
-  const createTransportFromState = () => {
-    return {
+  const loadingPayloadFields = [
+    <Form.Item
+      name='country'
+      rules={[{ required: true }]}
+      label={'Страна:'}
+    >
+      <Input
+        name='country'
+        placeholder={'Укажите страну'}
+      />
+    </Form.Item>,
+    <Form.Item
+      name='city'
+      rules={[{ required: true }]}
+      label={'Город:'}
+    >
+      <Input
+        name='city'
+        placeholder={'Укажите город'}
+      />
+    </Form.Item>,
+    <Form.Item
+      name='address'
+      rules={[{ required: true }]}
+      label={'Адрес:'}
+    >
+      <Input
+        name='address'
+        placeholder={'Укажите адрес'}
+      />
+    </Form.Item>,
+    <Form.Item
+      name='date'
+      rules={[{ required: true }]}
+      label={'Дата:'}
+    >
+      <DatePicker
+        style={{ width: '100%' }}
+        placeholder={'Укажите дату'}
+      />
+    </Form.Item>
+  ]
 
-      truckBodyTypeId: 1,
-      carrierCompanyId: 8,
-      truckDimensions: {
-        carryingCapacity,
-        dimensions: {
-          volume: volumeTransport,
-          length: lengthTransport,
-          height: heightTransport
-        }
-      },
-      cargoStowageMethodIds: [
-        1,
-        2
-      ],
-      loadingPayload: {
-        address: {
-          countryId: 0,
-          cityId: 0,
-          address: from,
-          apartment: 2
-        },
-        loadingDate: '2020-01-01'
-      },
-      unloadingPayload: {
-        address: {
-          countryId: 0,
-          cityId: 0,
-          address: to,
-          apartment: 3
-        },
-        unloadingDate: '2020-01-01'
-      }
-    }
-  }
-
-  const handleSubmit = () => {
-    console.log(createCargoFromState())
-    if (isCargo) {
-      setLoading(true)
-      dispatch(addCargo(createCargoFromState()))
-        .then((data) => {
-          console.log('success: ', data)
-          setLoading(false)
-        })
-        .catch(error => {
-          setLoading(false)
-          notification.error({
-            message: 'Не удалось добавить груз',
-            description: 'При добавлении груза возникла ошибка'
-          })
-          console.log('error: ', error)
-        })
-
-    }
-    else {
-      dispatch(addTransport(createTransportFromState())).then((data) => {
-        console.log('success: ', data)
-      })
-        .catch(error => {
-          console.log('error: ', error)
-        })
-    }
-  }
+  const loadingPayloadFieldsTrans = (isRequired) => [
+    <Form.Item
+      name='country'
+      rules={[{ required: isRequired }]}
+      label={'Страна:'}
+    >
+      <Input
+        name='country'
+        placeholder={'Укажите страну'}
+      />
+    </Form.Item>,
+    <Form.Item
+      name='city'
+      rules={[{ required: isRequired }]}
+      label={'Город:'}
+    >
+      <Input
+        name='city'
+        placeholder={'Укажите город'}
+      />
+    </Form.Item>,
+    <Form.Item
+      name='address'
+      rules={[{ required: isRequired }]}
+      label={'Адрес:'}
+    >
+      <Input
+        name='address'
+        placeholder={'Радиус'}
+      />
+    </Form.Item>,
+    <Form.Item
+      name='date'
+      rules={[{ required: isRequired }]}
+      label={'Дата:'}
+    >
+      <DatePicker
+        style={{ width: '100%' }}
+        placeholder={'Укажите дату'}
+      />
+    </Form.Item>
+  ]
 
   return (
     <React.Fragment>
-      <Row style={{ height: 'calc(100vh - 64px)' }} align={'middle'} justify={'center'} >
-        <Col span={16}>
           {isCargo && (
             <Form
-              style={{ padding: '25px', backgroundColor: '#fff' }}
+              layout="vertical"
               onFinish={handleSubmit}
             >
-              <Form.Item
-                name='description'
-                rules={[{ required: true }]}
-                onChange={event => setDescription(event.target.value)}
-              >
-                <Input
-                  value={description}
-                  name='description'
-                  placeholder={'Описание'}
-                />
-              </Form.Item>
-              <Form.Item
-                name='weight'
-                rules={[{ required: true }]}
-                onChange={event => setWeight(event.target.value)}
-              >
-                <Input
-                  name='weight'
-                  value={weight}
-                  placeholder={'Вес'}
-                />
-              </Form.Item>
-              <Form.Item
-                name='volume'
-                rules={[{ required: true }]}
-                onChange={event => setVolume(event.target.value)}
-              >
-                <Input
-                  name='volume'
-                  value={volume}
-                  placeholder={'Объём'}
-                />
-              </Form.Item>
-              <Form.Item
-                name='length'
-                rules={[{ required: true }]}
-                onChange={event => setLength(event.target.value)}
-              >
-                <Input
-                  name='length'
-                  value={length}
-                  placeholder={'Длина'}
-                />
-              </Form.Item>
-              <Form.Item
-                name='height'
-                rules={[{ required: true }]}
-                onChange={event => setHeight(event.target.value)}
-              >
-                <Input
-                  name='height'
-                  value={height}
-                  placeholder={'Высота'}
-                />
-              </Form.Item>
-              <Form.Item
-                name='from'
-                rules={[{ required: true }]}
-                onChange={event => setFrom(event.target.value)}
-              >
-                <Input
-                  name='from'
-                  value={from}
-                  placeholder={'Откуда'}
-                />
-              </Form.Item>
-              <Form.Item
-                name='to'
-                rules={[{ required: true }]}
-                onChange={event => setTo(event.target.value)}
-              >
-                <Input
-                  name='to'
-                  value={to}
-                  placeholder={'Куда'}
-                />
-              </Form.Item>
-              <Form.Item>
-                <Button
-                  type='primary'
-                  style={style}
-                  htmlType={'submit'}
-                >
-                  {'Добавить груз'}
-                </Button>
-              </Form.Item>
+              <Row style={{ marginBottom: '16px'}}>
+                <Col span={8} style={{ paddingRight: '16px' }}>
+                  <Row gutter={16}>
+                    <Col span={12}>
+                      <Title level={5} style={titleStyles}>Загрузка</Title>
+                      <Form.List name={'loadingPayload'}>
+                        {() => (
+                          <React.Fragment>
+                            {loadingPayloadFields.map(item => item)}
+                          </React.Fragment>
+                        )}
+                      </Form.List>
+                    </Col>
+                    <Col span={12}>
+                      <Title level={5} style={titleStyles}>Разгрузка</Title>
+                      <Form.List name={'unloadingPayload'}>
+                        {() => (
+                          <React.Fragment>
+                            {loadingPayloadFields.map(item => item)}
+                          </React.Fragment>
+                        )}
+                      </Form.List>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col span={16} style={{ backgroundColor: '#9e9e9e' }}>
+
+                </Col>
+              </Row>
+              <Row gutter={16} align="bottom">
+                <Col span={24}>
+                  <Title level={5} style={titleStyles}>Дополнительно</Title>
+                </Col>
+                <Col span={10}>
+                  <Row gutter={16}>
+                    <Col span={12}>
+                      <Form.Item
+                        name='address'
+                        rules={[{ required: true }]}
+                        label={'Наименование:'}
+                      >
+                        <Input
+                          name='address'
+                          placeholder={'Укажите наименование'}
+                        />
+                      </Form.Item>
+                      <Form.Item
+                        name='address'
+                        rules={[{ required: true }]}
+                        label={'Вес:'}
+                      >
+                        <Input
+                          name='address'
+                          placeholder={'Укажите вес'}
+                        />
+                      </Form.Item>
+                      <Form.Item
+                        name='address'
+                        rules={[{ required: true }]}
+                        label={'Объём:'}
+                      >
+                        <Input
+                          name='address'
+                          placeholder={'Укажите объём'}
+                        />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item
+                        name='address'
+                        rules={[{ required: true }]}
+                        label={'Тип груза:'}
+                      >
+                        <Select defaultValue="Тип1">
+                          <Option value="Тип1">Тип1</Option>
+                          <Option value="Тип2">Тип2</Option>
+                        </Select>
+                      </Form.Item>
+                      <Form.Item
+                        name='address'
+                        rules={[{ required: true }]}
+                        label={'Способ погрузки:'}
+                      >
+                        <Select defaultValue="Способ1">
+                          <Option value="Способ1">Способ1</Option>
+                          <Option value="Способ2">Способ2</Option>
+                        </Select>
+                      </Form.Item>
+                      <Form.Item
+                        name='address'
+                        rules={[{ required: true }]}
+                        label={'Тип машины:'}
+                      >
+                        <Select defaultValue="Машина1">
+                          <Option value="Машина1">Машина1</Option>
+                          <Option value="Машина2">Машина2</Option>
+                        </Select>
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col span={10}>
+                  <Row gutter={16}>
+                    <Col span={12}>
+                      <Form.Item
+                        name='address'
+                        rules={[{ required: true }]}
+                        label={'Температурный Режим:'}
+                      >
+                        <Input.Group compact>
+                          <Input style={{ width: '50%' }} placeholder="От" />
+                          <Input
+                            style={{ width: '50%' }}
+                            placeholder="До"
+                          />
+                        </Input.Group>
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item
+                        name='address'
+                        rules={[{ required: true }]}
+                        label={'Стоимость:'}
+                      >
+                        <Input.Group compact>
+                          <Input
+                            style={{ width: '70%' }}
+                            placeholder={'Укажите стоимость'}
+                          />
+                          <Select defaultValue="BYN" style={{ width: '30%' }}>
+                            <Option value="BYN">BYN</Option>
+                            <Option value="USD">USD</Option>
+                          </Select>
+                        </Input.Group>
+                      </Form.Item>
+                    </Col>
+                    <Col span={24}>
+                      <Form.Item
+                        name='address'
+                        rules={[{ required: true }]}
+                        label={'Описание:'}
+                      >
+                        <TextArea
+                          rows={4}
+                          placeholder={'Добавьте описание'}
+                        />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col span={4}>
+                  <Form.Item>
+                    <Button
+                      type={'primary'}
+                      htmlType={'submit'}
+                      style={{ width: '100%' }}
+                    >
+                      Разместить заявку
+                    </Button>
+                  </Form.Item>
+                </Col>
+              </Row>
             </Form>
           )}
           {isTransport && (
             <Form
-              style={{ padding: '25px', backgroundColor: '#fff' }}
+              layout="vertical"
               onFinish={handleSubmit}
             >
-              <Form.Item
-                name='carryingCapacity'
-                rules={[{ required: true }]}
-                onChange={event => setCarryingCapacity(event.target.value)}
-              >
-                <Input
-                  value={carryingCapacity}
-                  name='carryingCapacity'
-                  placeholder={'Грузоподъёмность'}
-                />
-              </Form.Item>
-              <Form.Item
-                name='volumeTransport'
-                rules={[{ required: true }]}
-                onChange={event => setVolumeTransport(event.target.value)}
-              >
-                <Input
-                  name='volumeTransport'
-                  value={volumeTransport}
-                  placeholder={'Объём транспорта'}
-                />
-              </Form.Item>
-              <Form.Item
-                name='lengthTransport'
-                rules={[{ required: true }]}
-                onChange={event => setLengthTransport(event.target.value)}
-              >
-                <Input
-                  name='lengthTransport'
-                  value={lengthTransport}
-                  placeholder={'Длина транспорта'}
-                />
-              </Form.Item>
-              <Form.Item
-                name='heightTransport'
-                rules={[{ required: true }]}
-                onChange={event => setHeightTransport(event.target.value)}
-              >
-                <Input
-                  name='heightTransport'
-                  value={heightTransport}
-                  placeholder={'Высота транспорта'}
-                />
-              </Form.Item>
-              <Form.Item
-                name='from'
-                rules={[{ required: true }]}
-                onChange={event => setFrom(event.target.value)}
-              >
-                <Input
-                  name='from'
-                  value={from}
-                  placeholder={'Откуда'}
-                />
-              </Form.Item>
-              <Form.Item
-                name='to'
-                rules={[{ required: true }]}
-                onChange={event => setTo(event.target.value)}
-              >
-                <Input
-                  name='to'
-                  value={to}
-                  placeholder={'Куда'}
-                />
-              </Form.Item>
-              <Form.Item>
-                <Button
-                  type='primary'
-                  style={style}
-                  htmlType={'submit'}
-                >
-                  {'Добавить транспорт'}
-                </Button>
-              </Form.Item>
-              {/*<Form.List*/}
-              {/*  name="truckBodyTypes"*/}
-              {/*  rules={[*/}
-              {/*    {*/}
-              {/*      validator: async (_, names) => {*/}
-              {/*        if (!names || names.length < 1) {*/}
-              {/*          return Promise.reject(new Error('Не менее 1 типа кузова'));*/}
-              {/*        }*/}
-              {/*      },*/}
-              {/*    },*/}
-              {/*  ]}*/}
-              {/*>*/}
-              {/*  {(fields, { add, remove }, { errors }) => (*/}
-              {/*    <>*/}
-              {/*      {fields.map((field, index) => (*/}
-              {/*        <Form.Item*/}
-              {/*          label={index === 0 ? 'Типы кузова' : ''}*/}
-              {/*          required={false}*/}
-              {/*          key={field.key}*/}
-              {/*        >*/}
-              {/*          <Form.Item*/}
-              {/*            {...field}*/}
-              {/*            validateTrigger={['onChange', 'onBlur']}*/}
-              {/*            rules={[*/}
-              {/*              {*/}
-              {/*                required: true,*/}
-              {/*                whitespace: true,*/}
-              {/*                message: "Введите тип кузова",*/}
-              {/*              },*/}
-              {/*            ]}*/}
-              {/*            noStyle*/}
-              {/*          >*/}
-              {/*            <Input*/}
-              {/*              placeholder="Тип кузова"*/}
-              {/*              style={{ width: '60%' }}*/}
-              {/*              onChange={truckBodyTypes[index]}*/}
-              {/*            />*/}
-              {/*          </Form.Item>*/}
-              {/*          {fields.length > 1 ? (*/}
-              {/*            <MinusCircleOutlined*/}
-              {/*              className="dynamic-delete-button"*/}
-              {/*              onClick={() => remove(field.name)}*/}
-              {/*            />*/}
-              {/*          ) : null}*/}
-              {/*        </Form.Item>*/}
-              {/*      ))}*/}
-              {/*      <Form.Item>*/}
-              {/*        <Button*/}
-              {/*          type="dashed"*/}
-              {/*          onClick={() => add()}*/}
-              {/*          style={{ width: '60%' }}*/}
-              {/*          icon={<PlusOutlined />}*/}
-              {/*        >*/}
-              {/*          Добавить тип кузова*/}
-              {/*        </Button>*/}
-              {/*        <Form.ErrorList errors={errors} />*/}
-              {/*      </Form.Item>*/}
-              {/*    </>*/}
-              {/*  )}*/}
-              {/*</Form.List>*/}
+              <Row style={{ marginBottom: '16px'}}>
+                <Col span={8} style={{ paddingRight: '16px' }}>
+                  <Row gutter={16}>
+                    <Col span={12}>
+                      <Title level={5} style={titleStyles}>Загрузка</Title>
+                      <Form.List name={'loadingPayload'}>
+                        {() => (
+                          <React.Fragment>
+                            {loadingPayloadFieldsTrans(true).map(item => item)}
+                          </React.Fragment>
+                        )}
+                      </Form.List>
+                    </Col>
+                    <Col span={12}>
+                      <Title level={5} style={titleStyles}>Разгрузка</Title>
+                      <Form.List name={'unloadingPayload'}>
+                        {() => (
+                          <React.Fragment>
+                            {loadingPayloadFieldsTrans(false).map(item => item)}
+                          </React.Fragment>
+                        )}
+                      </Form.List>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col span={16} style={{ backgroundColor: '#9e9e9e' }}>
+
+                </Col>
+              </Row>
+              <Row gutter={16} align="bottom">
+                <Col span={24}>
+                  <Title level={5} style={titleStyles}>Дополнительно</Title>
+                </Col>
+                <Col span={10}>
+                  <Row gutter={16}>
+                    <Col span={12}>
+                      <Form.Item
+                        name='address'
+                        rules={[{ required: true }]}
+                        label={'Наименование:'}
+                      >
+                        <Input
+                          name='address'
+                          placeholder={'Укажите наименование'}
+                        />
+                      </Form.Item>
+                      <Form.Item
+                        name='address'
+                        rules={[{ required: true }]}
+                        label={'Вес:'}
+                      >
+                        <Input
+                          name='address'
+                          placeholder={'Укажите вес'}
+                        />
+                      </Form.Item>
+                      <Form.Item
+                        name='address'
+                        rules={[{ required: true }]}
+                        label={'Объём:'}
+                      >
+                        <Input
+                          name='address'
+                          placeholder={'Укажите объём'}
+                        />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item
+                        name='address'
+                        rules={[{ required: true }]}
+                        label={'Тип груза:'}
+                      >
+                        <Select defaultValue="Тип1">
+                          <Option value="Тип1">Тип1</Option>
+                          <Option value="Тип2">Тип2</Option>
+                        </Select>
+                      </Form.Item>
+                      <Form.Item
+                        name='address'
+                        rules={[{ required: true }]}
+                        label={'Способ погрузки:'}
+                      >
+                        <Select defaultValue="Способ1">
+                          <Option value="Способ1">Способ1</Option>
+                          <Option value="Способ2">Способ2</Option>
+                        </Select>
+                      </Form.Item>
+                      <Form.Item
+                        name='address'
+                        rules={[{ required: true }]}
+                        label={'Тип машины:'}
+                      >
+                        <Select defaultValue="Машина1">
+                          <Option value="Машина1">Машина1</Option>
+                          <Option value="Машина2">Машина2</Option>
+                        </Select>
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col span={10}>
+                  <Row gutter={16}>
+                    <Col span={12}>
+                      <Form.Item
+                        name='address'
+                        rules={[{ required: true }]}
+                        label={'Температурный Режим:'}
+                      >
+                        <Input.Group compact>
+                          <Input style={{ width: '50%' }} placeholder="От" />
+                          <Input
+                            style={{ width: '50%' }}
+                            placeholder="До"
+                          />
+                        </Input.Group>
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item
+                        name='address'
+                        rules={[{ required: true }]}
+                        label={'Стоимость:'}
+                      >
+                        <Input.Group compact>
+                          <Input
+                            style={{ width: '70%' }}
+                            placeholder={'Укажите стоимость'}
+                          />
+                          <Select defaultValue="BYN" style={{ width: '30%' }}>
+                            <Option value="BYN">BYN</Option>
+                            <Option value="USD">USD</Option>
+                          </Select>
+                        </Input.Group>
+                      </Form.Item>
+                    </Col>
+                    <Col span={24}>
+                      <Form.Item
+                        name='address'
+                        label={'Тип оплаты:'}
+                      >
+                        <Select defaultValue="Оплата1">
+                          <Option value="Оплата1">Оплата1</Option>
+                          <Option value="Оплата2">Оплата2</Option>
+                        </Select>
+                      </Form.Item>
+                    </Col>
+                    <Col span={24}>
+                      <Form.Item
+                        name='address'
+                        label={'Описание:'}
+                      >
+                        <TextArea
+                          rows={2}
+                          placeholder={'Добавьте описание'}
+                        />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col span={4}>
+                  <Form.Item>
+                    <Button
+                      type={'primary'}
+                      htmlType={'submit'}
+                      style={{ width: '100%' }}
+                    >
+                      Разместить
+                    </Button>
+                  </Form.Item>
+                </Col>
+              </Row>
             </Form>
           )}
-
-        </Col>
-      </Row>
-
     </React.Fragment>
 
   )

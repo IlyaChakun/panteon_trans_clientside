@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Typography, Table } from 'antd'
+import { Typography, Table, Row, Col } from 'antd'
 import {
   validateEmail,
   validatePassword, validatePasswordRepeat,
@@ -55,7 +55,8 @@ const Settings = (props) => {
   }
 
   return (
-    <React.Fragment>
+    <Row style={{ height: 'calc(100vh - 64px)', padding: '20px' }} >
+      <Col span={24} style={{ backgroundColor: '#fff', padding: '16px 32px' }} >
       <Title level={2}>Личные данные</Title>
       {currentUser && (
         <Table showHeader={false} pagination={false} dataSource={authData(currentUser)}>
@@ -68,8 +69,8 @@ const Settings = (props) => {
           />
         </Table>
       )}
-    </React.Fragment>
-
+      </Col>
+    </Row>
   )
 }
 

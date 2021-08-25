@@ -65,7 +65,7 @@
     "react-google-autocomplete": "latest",
     "react-google-maps": "^9.4.5",
     "react-hot-loader": "^4.12.19",
-    "react-leaflet": "^3.2.1",
+    "react-leaflet": "^2.8.0",
     "react-localization": "^1.0.15",
     "react-redux": "7.2.0",
     "react-responsive-carousel": "^3.2.10",

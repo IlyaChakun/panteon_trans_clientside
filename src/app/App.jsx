@@ -24,6 +24,8 @@ import Registration from '../components/user/registration/Registration/Registrat
 import News from '../components/news/News/News'
 import CompanyProfile from '../components/company/CompanyProfile/CompanyProfile'
 import AddForm from '../components/user/modal/AddForm/AddForm'
+import AddTransport from '../components/transport/AddTransport/AddTransport'
+import AddCargo from '../components/cargo/AddCargo/AddCargo'
 
 const { Content } = Layout
 
@@ -114,9 +116,7 @@ const App = (props) => {
               />
               <Route
                 exact path='/cargos/add'
-                render={(props) =>
-                  <AddForm
-                    {...props} isCargo={true} />}
+                component={AddCargo}
               />
               <Route
                 exact path='/transports'
@@ -126,9 +126,7 @@ const App = (props) => {
               />
               <Route
                 exact path='/transports/add'
-                render={(props) =>
-                  <AddForm
-                    {...props} isTransport={true} />}
+                component={AddTransport}
               />
               <Route
                 path='/reviews'

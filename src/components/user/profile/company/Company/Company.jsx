@@ -57,12 +57,10 @@ const Company = (props) => {
                 />
               </Table>
             )}
-            <CompanyRegistration buttonText={'Перерегистрировать компанию'} />
           </React.Fragment>
       ) : (
         <React.Fragment>
-          <Title level={2}>Ваша компания ещё не зарегистрирована. Пожалуйста, пройдите регистрацию</Title>
-          <CompanyRegistration buttonText={'Пройти регистрацию'} />
+          <CompanyRegistration />
         </React.Fragment>
       )}
     </React.Fragment>
