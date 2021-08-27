@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Form, Input, message, Select, Steps, Row, Col, Typography, Divider } from 'antd'
+import {Button, Form, Input, message, Select, Steps, Row, Col, Typography, Divider, Tabs} from 'antd'
 import { withRouter, Link } from 'react-router-dom'
 import CargoCardProxy from '../../../../cargo/CargoCardProxy/CargoCardProxy'
 import { useDispatch, useSelector } from 'react-redux'
@@ -7,6 +7,7 @@ import { getProfileCargos } from '../../../../../redux/actions/profile'
 import AddFormModal from '../../../modal/AddForm/AddForm'
 import EditFormModal from '../../../modal/EditFormModal/EditFormModal'
 import DeleteFormModal from '../../../modal/DeleteFormModal/DeleteFormModal'
+import TransportCardProxy from "../../../../transport/TransportCardProxy/TransportCardProxy";
 
 const Cargos = (props) => {
   const dispatch = useDispatch()
@@ -24,9 +25,11 @@ const Cargos = (props) => {
   }, [currentUser])
 
   return (
-    <div>
-      {cargos.length &&
-        cargos.map((cargo) => (
+      <Row style={{ height: 'calc(100vh - 64px)', padding: '20px' }} >
+        <Col span={24} style={{ backgroundColor: '#fff', padding: '16px 32px' }} >
+          <Button type={"primary"}><Link style={{ textDecoration: 'none' }} to={'/cargos/add'}>Создать заявку</Link></Button>
+          {cargos.length &&
+          cargos.map((cargo) => (
             <Row style={{ backgroundColor: '#fff', marginBottom: '20px', padding: '15px' }}>
               <Row>
                 <CargoCardProxy cargo={cargo}/>
@@ -36,10 +39,11 @@ const Cargos = (props) => {
                 <DeleteFormModal cargo={cargo} isCargo={true}/>
               </Row>
             </Row>
+            )
           )
-        )
-      }
-    </div>
+          }
+        </Col>
+      </Row>
   )
 }
 

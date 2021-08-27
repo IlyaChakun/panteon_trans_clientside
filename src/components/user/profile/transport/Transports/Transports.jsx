@@ -27,27 +27,27 @@ const Cargos = (props) => {
   return (
     <Row style={{ height: 'calc(100vh - 64px)', padding: '20px' }} >
       <Col span={24} style={{ backgroundColor: '#fff', padding: '16px 32px' }} >
-      <Tabs defaultActiveKey="1" centered>
-        <TabPane tab="Мой автопарк" key="1">
-          Content of Tab Pane 1
-        </TabPane>
-        <TabPane tab="Водители" key="2">
-          Content of Tab Pane 2
-        </TabPane>
-      </Tabs>
-      {transports.length &&
-      transports.map((transport) => (
-          <Row style={{ backgroundColor: '#fff', marginBottom: '20px', padding: '15px' }}>
-            <Row>
-              <TransportCardProxy transport={transport}/>
-            </Row>
-            <Row>
-              <EditFormModal style={{marginRight: '10px'}} transport={transport} isTransport={true} />
-              <DeleteFormModal transport={transport} isTransport={true} />
-            </Row>
-          </Row>
-        )
-      )}
+        <Tabs defaultActiveKey="1" centered>
+          <TabPane tab="Мой автопарк" key="1">
+            <Button type={"primary"}><Link style={{ textDecoration: 'none' }} to={'/transports/add'}>Добавить транспорт</Link></Button>
+            {transports.length &&
+            transports.map((transport) => (
+                    <Row style={{ backgroundColor: '#fff', marginBottom: '20px', padding: '15px' }}>
+                      <Row>
+                        <TransportCardProxy transport={transport}/>
+                      </Row>
+                      <Row>
+                        <EditFormModal style={{marginRight: '10px'}} transport={transport} isTransport={true} />
+                        <DeleteFormModal transport={transport} isTransport={true} />
+                      </Row>
+                    </Row>
+                )
+            )}
+          </TabPane>
+          <TabPane tab="Водители" key="2">
+            Content of Tab Pane 2
+          </TabPane>
+        </Tabs>
       </Col>
     </Row>
   )

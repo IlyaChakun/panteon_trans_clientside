@@ -4,6 +4,18 @@ import { Button, Form, Input, Modal, Select, Row, Col, notification, Typography,
 import { addCargo } from '../../../../redux/actions/cargo'
 import { useDispatch, useSelector } from 'react-redux'
 import { addTransport } from '../../../../redux/actions/transport'
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import L from 'leaflet'
+import 'leaflet/dist/leaflet.css'
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+
+let DefaultIcon = L.icon({
+  iconUrl: icon,
+  shadowUrl: iconShadow
+})
+
+L.Marker.prototype.options.icon = DefaultIcon
 
 const { Title } = Typography
 const { Option } = Select
@@ -259,11 +271,21 @@ const AddForm = ({isCargo, isTransport, style}) => {
                     </Col>
                   </Row>
                 </Col>
-                <Col span={16} style={{ backgroundColor: '#9e9e9e' }}>
-
+                <Col span={16}>
+                  <MapContainer style={{ width: '100%', height: '100%' }} center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+                    <TileLayer
+                        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <Marker position={[51.505, -0.09]}>
+                      <Popup>
+                        A pretty CSS3 popup. <br /> Easily customizable.
+                      </Popup>
+                    </Marker>
+                  </MapContainer>
                 </Col>
               </Row>
-              <Row gutter={16} align="bottom">
+              <Row gutter={16}>
                 <Col span={24}>
                   <Title level={5} style={titleStyles}>Дополнительно</Title>
                 </Col>
@@ -428,11 +450,21 @@ const AddForm = ({isCargo, isTransport, style}) => {
                     </Col>
                   </Row>
                 </Col>
-                <Col span={16} style={{ backgroundColor: '#9e9e9e' }}>
-
+                <Col span={16}>
+                  <MapContainer style={{ width: '100%', height: '100%' }} center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+                    <TileLayer
+                        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <Marker position={[51.505, -0.09]}>
+                      <Popup>
+                        A pretty CSS3 popup. <br /> Easily customizable.
+                      </Popup>
+                    </Marker>
+                  </MapContainer>
                 </Col>
               </Row>
-              <Row gutter={16} align="bottom">
+              <Row gutter={16}>
                 <Col span={24}>
                   <Title level={5} style={titleStyles}>Дополнительно</Title>
                 </Col>

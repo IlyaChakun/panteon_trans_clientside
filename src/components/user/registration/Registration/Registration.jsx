@@ -67,52 +67,82 @@ const Registration = (props) => {
         <Form
           style={{ padding: '25px', backgroundColor: '#fff' }}
           onFinish={handleSubmit}
+          layout={"vertical"}
         >
           <Form.Item
             name='email'
+            label={'E-mail:'}
             rules={[{ required: true, message: localizedStrings.alertBadEmail }]}
             onChange={handleEmailChange}
             validateStatus={email.validateStatus}
             help={email.errorMsg}
           >
-            <Input prefix={<UserOutlined />}
+            <Input
               value={email.value}
               name='email'
-              placeholder={localizedStrings.email}
+              placeholder={'Ваш E-mail'}
+            />
+          </Form.Item>
+          <Form.Item
+              name='firstName'
+              label={'Имя:'}
+              rules={[{ required: true, message: localizedStrings.alertBadEmail }]}
+              onChange={handleEmailChange}
+              validateStatus={email.validateStatus}
+              help={email.errorMsg}
+          >
+            <Input
+               value={email.value}
+               name='firstName'
+               placeholder={'Ваше имя'}
+            />
+          </Form.Item>
+          <Form.Item
+              name='lastName'
+              label={'Фамилия:'}
+              rules={[{ required: true, message: localizedStrings.alertBadEmail }]}
+              onChange={handleEmailChange}
+              validateStatus={email.validateStatus}
+              help={email.errorMsg}
+          >
+            <Input
+               value={email.value}
+               name='lastName'
+               placeholder={'Ваша фамилия'}
             />
           </Form.Item>
 
           <Form.Item
             name='password'
+            label={'Пароль:'}
             rules={[{ required: true, message: localizedStrings.alertBadPassword }]}
             onChange={handlePasswordChange}
             validateStatus={password.validateStatus}
             help={password.errorMsg}
           >
             <Input.Password
-              prefix={<LockOutlined />}
               autoComplete={'current-password'}
               name='password'
               type='password'
               value={password.value}
-              placeholder={localizedStrings.password} 
+              placeholder={'Придумайте пароль'}
             />
           </Form.Item>
 
           <Form.Item
             name='password_repeat'
+            label={'Повторите пароль:'}
             rules={[{ required: true, message: localizedStrings.alertBadPassword }]}
             onChange={handleRepeatPasswordChange}
             validateStatus={repeatPassword.validateStatus}
             help={repeatPassword.errorMsg}
           >
             <Input.Password
-              prefix={<LockOutlined />}
               autoComplete={'current-password'}
               name='password_repeat'
               type='password'
               value={repeatPassword.value}
-              placeholder={localizedStrings.repeatPassword} 
+              placeholder={'Повторите пароль:'}
             />
           </Form.Item>
 

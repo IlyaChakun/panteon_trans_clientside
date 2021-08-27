@@ -34,7 +34,7 @@ const AppHeader = (props) => {
         </Menu.Item>
         <Menu.Item {...props} key='cargos' className='dropdown-item'>
           <Button type='link' className='ant-dropdown-link' onClick={event => event.preventDefault()}>
-            <Link to={'/profile/cargos'} style={{ textDecoration: 'none', color: '#000' }}>Мои грузы</Link>
+            <Link to={'/profile/cargos'} style={{ textDecoration: 'none', color: '#000' }}>Мои заявки</Link>
           </Button>
         </Menu.Item>
         <Menu.Item {...props} key='transports' className='dropdown-item'>
@@ -89,7 +89,7 @@ const AppHeader = (props) => {
             <Menu.Item {...props} key='/cargos'>
               <Link
                 to={'/cargos'} style={{ textDecoration: 'none' }}>
-                Грузы
+                Заявки
               </Link>
             </Menu.Item>
 
