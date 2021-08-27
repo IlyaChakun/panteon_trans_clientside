@@ -125,151 +125,169 @@ const CompanyRegistration = ({ buttonText }) => {
 
   return (
     <Row style={{ height: 'calc(100vh - 64px)', padding: '20px' }} align={'top'} justify={'start'}>
-      <Col span={10} style={{ backgroundColor: '#fff', padding: '16px 32px' }} >
+      <Col span={18} style={{ backgroundColor: '#fff', padding: '16px 32px' }} >
         <Title style={{ marginBottom: '20px' }} level={4}>Регистрация Вашей компании</Title>
         <Form
           layout="vertical"
         >
-          <Form.Item
-            name='title'
-            label={'Наименование организации'}
-            rules={[{ required: true, message: localizedStrings.alertBadEmail }]}
-            onChange={handleCompanyTitle}
-          >
-            <Input
-              value={title}
-              name='title'
-              placeholder={'Наименование организации'}
-            />
-          </Form.Item>
+          <Row gutter={32}>
+            <Col span={12}>
+              <Form.Item
+                  name='title'
+                  label={'Наименование организации'}
+                  rules={[{ required: true, message: localizedStrings.alertBadEmail }]}
+                  onChange={handleCompanyTitle}
+              >
+                <Input
+                    value={title}
+                    name='title'
+                    placeholder={'Наименование организации'}
+                />
+              </Form.Item>
 
-          <Form.Item
-            name='unp'
-            label={'УНП/ИНН'}
-            rules={[{ required: true }]}
-            onChange={handleUNP}
-          >
-            <Input
-              name='unp'
-              value={unp}
-              placeholder={'УНП/ИНН'}
-            />
-          </Form.Item>
-          <Form.Item
-            name='email'
-            label={'E-mail'}
-            rules={[{ required: true }]}
-            onChange={event => setEmail(event.target.value)}
-          >
-            <Input
-              name='email'
-              value={email}
-              placeholder={'E-mail'}
-            />
-          </Form.Item>
-          <Form.Item
-            name='site'
-            label={'Сайт'}
-            rules={[{ required: true }]}
-            onChange={event => setSite(event.target.value)}
-          >
-            <Input
-              name='site'
-              value={site}
-              placeholder={'Сайт'}
-            />
-          </Form.Item>
-          <Form.Item
-            name='description'
-            label={'Описание'}
-            rules={[{ required: true }]}
-            onChange={event => setDescription(event.target.value)}
-          >
-            <Input
-              name='description'
-              value={description}
-              placeholder={'Описание'}
-            />
-          </Form.Item>
-          <Form.Item
-            name='foundationDate'
-            label={'Дата основания'}
-            rules={[{ required: true }]}
-            onChange={event => setDate(event.target.value)}
-          >
-            <Input
-              name='foundationDate'
-              value={foundationDate}
-              placeholder={'Дата основания'}
-            />
-          </Form.Item>
-          <Form.Item
-            label={'Страна'}
-            rules={[{ required: true }]}
-          >
+              <Form.Item
+                  name='unp'
+                  label={'УНП/ИНН'}
+                  rules={[{ required: true }]}
+                  onChange={handleUNP}
+              >
+                <Input
+                    name='unp'
+                    value={unp}
+                    placeholder={'УНП/ИНН'}
+                />
+              </Form.Item>
+              <Form.Item
+                  name='email'
+                  label={'E-mail'}
+                  rules={[{ required: true }]}
+                  onChange={event => setEmail(event.target.value)}
+              >
+                <Input
+                    name='email'
+                    value={email}
+                    placeholder={'E-mail'}
+                />
+              </Form.Item>
+              <Form.Item
+                  name='site'
+                  label={'Сайт'}
+                  rules={[{ required: true }]}
+                  onChange={event => setSite(event.target.value)}
+              >
+                <Input
+                    name='site'
+                    value={site}
+                    placeholder={'Сайт'}
+                />
+              </Form.Item>
+              <Form.Item
+                  name='description'
+                  label={'Описание'}
+                  rules={[{ required: true }]}
+                  onChange={event => setDescription(event.target.value)}
+              >
+                <Input
+                    name='description'
+                    value={description}
+                    placeholder={'Описание'}
+                />
+              </Form.Item>
+              <Form.Item
+                  name='foundationDate'
+                  label={'Дата основания'}
+                  rules={[{ required: true }]}
+                  onChange={event => setDate(event.target.value)}
+              >
+                <Input
+                    name='foundationDate'
+                    value={foundationDate}
+                    placeholder={'Дата основания'}
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                  name='address'
+                  label={'Страна: '}
+                  rules={[{ required: true }]}
+              >
+                <Select
+                    name='country'
+                    value={country}
+                    showSearch
+                    placeholder='Страна'
+                >
+                  {countryOptions}
+                </Select>
+              </Form.Item>
+              <Form.Item
+                  name='address'
+                  label={'Город: '}
+                  rules={[{ required: true }]}
+              >
+                <Select
+                    name='city'
+                    value={country}
+                    showSearch
+                    placeholder='Город'
+                >
+                  {countryOptions}
+                </Select>
+              </Form.Item>
+              <Form.Item
+                  name='businessType'
+                  label={'Тип компании: '}
+                  rules={[{ required: true }]}
+              >
+                <Select
+                    name='businessType'
+                    value={country}
+                    showSearch
+                    placeholder='Тип компании'
+                >
+                  {typesOptions}
+                </Select>
+              </Form.Item>
 
-            <Select
-              name='country'
-              value={country}
-              showSearch
-              placeholder='Страна'
-              onChange={onChangeCountrySelect}
-            >
-              {countryOptions}
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label={'Тип компании'}
-            rules={[{ required: true }]}
-          >
+              <Form.Item
+                  name='address'
+                  label={'Юр. адрес'}
+                  rules={[{ required: true }]}
+              >
+                <Input
+                    name='address'
+                    value={site}
+                    placeholder={'Юр. адрес'}
+                />
+              </Form.Item>
 
-            <Select
-              name='businessType'
-              value={businessType}
-              showSearch
-              placeholder='Тип компании'
-              onChange={onChangeTypeSelect}
-            >
-              {typesOptions}
-            </Select>
-          </Form.Item>
+              <Form.Item
+                  name='address'
+                  label={'Номер телефона: '}
+                  rules={[{ required: true }]}
+              >
+                <Input
+                    name='phone'
+                    value={site}
+                    placeholder={'Номер телефона: '}
+                />
+              </Form.Item>
 
-          <Form.Item
-            name='address'
-            label={'Юр. адрес'}
-            rules={[{ required: true }]}
-          >
-            <Input
-              name='address'
-              value={site}
-              placeholder={'Юр. адрес'}
-            />
-          </Form.Item>
+              <Form.Item
+                  label={'Номер телефона (доп.)'}
+                  onChange={(event) => handleAdditionalPhoneNumber(event)}
+              >
+                <Input
+                    name='additionalPhoneNumber'
+                    value={additionalPhoneNumber}
+                    placeholder='Номер телефона (доп.)'
+                />
+              </Form.Item>
+            </Col>
+          </Row>
 
-          <Form.Item
-            label={'Номер телефона'}
-            rules={[{
-              required: true,
-              message: 'Пожалуйста, введите номер телефона!'
-            }
-            ]}
-          >
-            <Input
-              name='phoneNumber'
-              placeholder='Номер телефона'
-            />
-          </Form.Item>
 
-          <Form.Item
-            label={'Номер телефона (доп.)'}
-            onChange={(event) => handleAdditionalPhoneNumber(event)}
-          >
-            <Input
-              name='additionalPhoneNumber'
-              value={additionalPhoneNumber}
-              placeholder='Номер телефона (доп.)'
-            />
-          </Form.Item>
           <Form.Item>
             <Button type={'primary'}>Зарегистрировать</Button>
           </Form.Item>

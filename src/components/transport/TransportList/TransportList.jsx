@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom'
 import { Button, Col, Form, Input, List, Row, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { useQueryParam, NumberParam } from 'use-query-params'
-// import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 
 import LoadingIndicator from '../../common/LoadingIndicator/LoadingIndicator'
 import { getTransport, setPage, setSize } from '../../../redux/actions/transport'
@@ -11,6 +11,17 @@ import TransportCardProxy from '../TransportCardProxy/TransportCardProxy'
 import AddForm from '../../user/modal/AddForm/AddForm'
 import DeleteFormModal from '../../user/modal/DeleteFormModal/DeleteFormModal'
 import EditFormModal from '../../user/modal/EditFormModal/EditFormModal'
+import L from 'leaflet'
+import 'leaflet/dist/leaflet.css'
+import icon from 'leaflet/dist/images/marker-icon.png'
+import iconShadow from 'leaflet/dist/images/marker-shadow.png'
+
+let DefaultIcon = L.icon({
+  iconUrl: icon,
+  shadowUrl: iconShadow
+})
+
+L.Marker.prototype.options.icon = DefaultIcon
 
 const { Option } = Select
 
@@ -189,18 +200,18 @@ const TransportList = (props) => {
             {search}
           </Form>
         </Col>
-        <Col span={18} style={{ backgroundColor: '#9e9e9e' }}>
-          {/*<MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>*/}
-          {/*  <TileLayer*/}
-          {/*    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'*/}
-          {/*    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"*/}
-          {/*  />*/}
-          {/*  <Marker position={[51.505, -0.09]}>*/}
-          {/*    <Popup>*/}
-          {/*      A pretty CSS3 popup. <br /> Easily customizable.*/}
-          {/*    </Popup>*/}
-          {/*  </Marker>*/}
-          {/*</MapContainer>*/}
+        <Col span={18} >
+          <MapContainer style={{ width: '100%', height: '100%' }} center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+            <TileLayer
+                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker position={[51.505, -0.09]}>
+              <Popup>
+                A pretty CSS3 popup. <br /> Easily customizable.
+              </Popup>
+            </Marker>
+          </MapContainer>
         </Col>
       </Row>
       <Row style={{ width: '100%', padding: '0 30px' }}>

@@ -26,6 +26,7 @@ import CompanyProfile from '../components/company/CompanyProfile/CompanyProfile'
 import AddForm from '../components/user/modal/AddForm/AddForm'
 import AddTransport from '../components/transport/AddTransport/AddTransport'
 import AddCargo from '../components/cargo/AddCargo/AddCargo'
+import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet";
 
 const { Content } = Layout
 

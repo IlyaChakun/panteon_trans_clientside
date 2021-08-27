@@ -111,5 +111,12 @@ module.exports = {
         }),
         new webpack.LoaderOptionsPlugin({options: {postcss: [precss, autoprefixer]}}),
 
-    ]
+    ],
+    devServer: {
+        historyApiFallback: true,
+        open: true,
+        compress: true,
+        hot: true,
+        port: 3000
+    }
 };

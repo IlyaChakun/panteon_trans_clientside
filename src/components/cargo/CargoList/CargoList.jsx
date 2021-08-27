@@ -8,7 +8,18 @@ import LoadingIndicator from '../../common/LoadingIndicator/LoadingIndicator'
 import CargoCardProxy from '../CargoCardProxy/CargoCardProxy'
 import { getCargos, setPage, setSize } from '../../../redux/actions/cargo'
 import AddForm from '../../user/modal/AddForm/AddForm'
+import L from "leaflet"
+import 'leaflet/dist/leaflet.css'
+import icon from 'leaflet/dist/images/marker-icon.png'
+import iconShadow from 'leaflet/dist/images/marker-shadow.png'
+import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet";
 
+let DefaultIcon = L.icon({
+  iconUrl: icon,
+  shadowUrl: iconShadow
+})
+
+L.Marker.prototype.options.icon = DefaultIcon
 const { Option } = Select
 
 const CargoList = (props) => {
@@ -149,12 +160,22 @@ const CargoList = (props) => {
           </Form>
         </Col>
         <Col span={18} style={{ backgroundColor: '#9e9e9e' }}>
-
+          <MapContainer style={{ width: '100%', height: '100%' }} center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+            <TileLayer
+                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker position={[51.505, -0.09]}>
+              <Popup>
+                A pretty CSS3 popup. <br /> Easily customizable.
+              </Popup>
+            </Marker>
+          </MapContainer>
         </Col>
       </Row>
       <Row style={{ width: '100%', padding: '0 30px' }}>
         <Col span={18} style={{ width: '100%' }}>
-          {currentUser && <Button type={'primary'}><Link style={{ textDecoration: 'none' }} to={'/cargos/add'}>Добавить груз</Link></Button>}
+          {currentUser && <Button type={'primary'}><Link style={{ textDecoration: 'none' }} to={'/cargos/add'}>Создать заявку</Link></Button>}
           {!cargos.length ? (
             <LoadingIndicator />
           ) : (
