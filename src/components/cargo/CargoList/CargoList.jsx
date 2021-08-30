@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { withRouter, Link } from 'react-router-dom'
-import { Button, Col, Form, Input, List, Row, Select } from 'antd'
+import { Button, Col, Form, Input, List, Row, Select, Typography } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { useQueryParam, NumberParam } from 'use-query-params';
 
@@ -12,7 +12,9 @@ import L from "leaflet"
 import 'leaflet/dist/leaflet.css'
 import icon from 'leaflet/dist/images/marker-icon.png'
 import iconShadow from 'leaflet/dist/images/marker-shadow.png'
-import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet";
+import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet"
+
+const { Title } = Typography
 
 let DefaultIcon = L.icon({
   iconUrl: icon,
@@ -146,7 +148,8 @@ const CargoList = (props) => {
   return (
     <div>
       <Row style={{ width: '100%', padding: '30px' }}>
-        <Col span={6} style={{ backgroundColor: '#fff' }}>
+        <Col span={6} style={{ backgroundColor: '#fff', padding: '20px' }}>
+          <Title level={4}>Поиск заявок</Title>
           <Form
             labelCol={{
               span: 24,
@@ -154,7 +157,6 @@ const CargoList = (props) => {
             wrapperCol={{
               span: 24,
             }}
-            style={{ padding: '20px' }}
           >
             {search}
           </Form>
