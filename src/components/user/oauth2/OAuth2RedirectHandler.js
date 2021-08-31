@@ -24,13 +24,13 @@ class OAuth2RedirectHandler extends Component {
         }
     }
 
-    redirectToLogin = error => <Redirect to={{
+    redirectToLogin(error) { return <Redirect to={{
         pathname: '/',
         state: {
             from: this.props.location,
             error: error
         }
-    }}/>;
+    }}/>};
 
     // setTokenAndRedirect = token => {
     //     localStorage.setItem(ACCESS_TOKEN, token)
@@ -42,7 +42,7 @@ class OAuth2RedirectHandler extends Component {
     //     }}/>
     // }
 
-    setTokenAndRedirect(accessToken, refreshToken) {
+    setTokenAndRedirect(accessToken, refreshToken){
         localStorage.setItem(ACCESS_TOKEN, accessToken);
         localStorage.setItem(REFRESH_TOKEN, refreshToken);
 
@@ -51,7 +51,7 @@ class OAuth2RedirectHandler extends Component {
             pathname: '/sensors',
             state: {from: this.props.location}
         }}/>
-    }
+    };
 
 }
 

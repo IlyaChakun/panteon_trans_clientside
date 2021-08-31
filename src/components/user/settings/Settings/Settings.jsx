@@ -33,17 +33,41 @@ const Settings = (props) => {
       parameter: user.email,
       control: {
         isEmail: true,
-        isPassword: false
+        isName: false,
+        isSurname: false,
+        isLastname: false
       }
     },
     {
       key: '2',
-      parameter: 'Пароль скрыт',
+      parameter: 'Имя',
       control: {
         isEmail: false,
-        isPassword: true
+        isName: true,
+        isSurname: false,
+        isLastname: false
       }
     },
+    {
+      key: '3',
+      parameter: 'Фамилия',
+      control: {
+        isEmail: false,
+        isName: false,
+        isSurname: true,
+        isLastname: false
+      }
+    },
+    {
+      key: '4',
+      parameter: 'Отчество',
+      control: {
+        isEmail: false,
+        isName: false,
+        isSurname: false,
+        isLastname: true
+      }
+    }
   ];
 
   const handleRepeatPasswordChange = (event) => {
@@ -59,15 +83,30 @@ const Settings = (props) => {
       <Col span={24} style={{ backgroundColor: '#fff', padding: '16px 32px' }} >
       <Title level={2}>Личные данные</Title>
       {currentUser && (
-        <Table showHeader={false} pagination={false} dataSource={authData(currentUser)}>
-          <Column dataIndex="parameter" key="parameter" />
-          <Column
-            align={'right'}
-            dataIndex="control"
-            key="control"
-            render={(control) => (<ChangeModal isEmail={control.isEmail} isPassword={control.isPassword}/>)}
-          />
-        </Table>
+        <React.Fragment>
+          <Table
+              showHeader={false}
+              pagination={false}
+              dataSource={authData(currentUser)}
+              style={{ marginBottom: '25px' }}
+          >
+            <Column dataIndex="parameter" key="parameter" />
+            <Column
+                align={'right'}
+                dataIndex="control"
+                key="control"
+                render={(control) => (<ChangeModal
+                    isEmail={control.isEmail}
+                    isName={control.isName}
+                    isSurname={control.isSurname}
+                    isLastname={control.isLastname}
+                />)}
+            />
+          </Table>
+          <ChangeModal isPassword={true} >
+            Изменить пароль
+          </ChangeModal>
+        </React.Fragment>
       )}
       </Col>
     </Row>

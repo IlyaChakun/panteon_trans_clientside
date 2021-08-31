@@ -29,27 +29,27 @@ const AppHeader = (props) => {
       <Menu className='profile-dropdown-menu' {...props}>
         <Menu.Item {...props} key='company' className='dropdown-item' >
           <Button type='link' className='ant-dropdown-link' onClick={event => event.preventDefault()}>
-            <Link to={'/profile/company'} style={{ textDecoration: 'none', color: '#000' }}>Моя компания</Link>
+            <Link to={'/profile/company'} style={{ textDecoration: 'none', color: '#000' }}>Компания</Link>
           </Button>
         </Menu.Item>
         <Menu.Item {...props} key='cargos' className='dropdown-item'>
           <Button type='link' className='ant-dropdown-link' onClick={event => event.preventDefault()}>
-            <Link to={'/profile/cargos'} style={{ textDecoration: 'none', color: '#000' }}>Мои заявки</Link>
+            <Link to={'/profile/cargos'} style={{ textDecoration: 'none', color: '#000' }}>Заявки</Link>
           </Button>
         </Menu.Item>
         <Menu.Item {...props} key='transports' className='dropdown-item'>
           <Button type='link' className='ant-dropdown-link' onClick={event => event.preventDefault()}>
-            <Link to={'/profile/transports'} style={{ textDecoration: 'none', color: '#000' }}>Мой транспорт</Link>
+            <Link to={'/profile/transports'} style={{ textDecoration: 'none', color: '#000' }}>Транспорт</Link>
           </Button>
         </Menu.Item>
         <Menu.Item {...props} key='dialogs' className='dropdown-item'>
           <Button type='link' className='ant-dropdown-link' onClick={event => event.preventDefault()}>
-            <Link to={'/profile/dialogs'} style={{ textDecoration: 'none', color: '#000' }}>Мои диалоги</Link>
+            <Link to={'/profile/dialogs'} style={{ textDecoration: 'none', color: '#000' }}>Диалоги</Link>
           </Button>
         </Menu.Item>
         <Menu.Item {...props} key='settings' className='dropdown-item'>
           <Button type='link' className='ant-dropdown-link' onClick={event => event.preventDefault()}>
-            <Link to={'/profile/settings'} style={{ textDecoration: 'none', color: '#000' }}>Настройки</Link>
+            <Link to={'/profile/settings'} style={{ textDecoration: 'none', color: '#000' }}>Профиль</Link>
           </Button>
         </Menu.Item>
         <Menu.Divider/>

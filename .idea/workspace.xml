@@ -4,17 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f192d2f1-ed20-49ce-b365-80d1538368ef" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/transport/AddDriver/AddDriver.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/user/profile/transport/Drivers/Drivers.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/user/profile/transport/Trucks/Trucks.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="f192d2f1-ed20-49ce-b365-80d1538368ef" name="Default Changelist" comment="add transport routing">
+      <change afterPath="$PROJECT_DIR$/.eslintrc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/cargo/CargoList/CargoList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cargo/CargoList/CargoList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/transport/TransportList/TransportList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/transport/TransportList/TransportList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/user/profile/Profile/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/profile/Profile/Profile.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/user/profile/transport/Transports/Transports.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/profile/transport/Transports/Transports.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/header/AppHeader.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/header/AppHeader.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/oauth2/OAuth2RedirectHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/oauth2/OAuth2RedirectHandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/profile/company/Company/Company.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/profile/company/Company/Company.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/settings/ChangeModal/ChangeModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/settings/ChangeModal/ChangeModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/settings/Settings/Settings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/settings/Settings/Settings.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/wp/webpack.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +22,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="rebuild_project" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -42,7 +47,14 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.JavaScript" />
     <property name="ts.external.directory.path" value="D:\panteon_trans_clientside\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -54,8 +66,17 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1630306083719</updated>
-      <workItem from="1630306086173" duration="11014000" />
+      <workItem from="1630306086173" duration="11077000" />
+      <workItem from="1630392356869" duration="17006000" />
     </task>
+    <task id="LOCAL-00001" summary="add transport routing">
+      <created>1630335775031</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1630335775031</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -71,5 +92,10 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add transport routing" />
+    <option name="LAST_COMMIT_MESSAGE" value="add transport routing" />
   </component>
 </project>
