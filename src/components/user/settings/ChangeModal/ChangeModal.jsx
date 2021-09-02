@@ -50,7 +50,7 @@ const ChangeModal = (props) => {
     }
 
     return (
-        <div>
+        <React.Fragment>
             <Button
                 type={props.isPassword ? 'primary' : 'link'}
                 onClick={showModal}
@@ -145,7 +145,7 @@ const ChangeModal = (props) => {
                     )}
                 </Form>
             </Modal>
-        </div>
+        </React.Fragment>
 
     )
 }

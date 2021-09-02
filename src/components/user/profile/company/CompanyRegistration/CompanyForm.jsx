@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useMemo, useState} from 'react'
 import { Button, Form, Input, Modal, Select, Row, Col, Typography, notification } from 'antd'
 import { withRouter } from 'react-router-dom'
 import { localizedStrings } from '../../../../../util/localization'
@@ -8,9 +8,14 @@ import { useDispatch, useSelector } from 'react-redux'
 const { Option } = Select
 const { Title } = Typography
 
-const CompanyRegistration = ({ buttonText }) => {
+const CompanyForm = (props) => {
   const dispatch = useDispatch()
   const { currentUser } = useSelector(state => state.authState)
+
+  const [formTitle, setFormTitle] = useState('')
+  const [buttonText, setButtonText] = useState('')
+  const [isDisabled, setIsDisabled] = useState(false)
+  const [isEditMode, setIsEditMode] = useState(false)
 
   const [isLoading, setLoading] = useState(false)
   const [phoneNumber, setPhoneNumber] = useState('')
@@ -27,13 +32,17 @@ const CompanyRegistration = ({ buttonText }) => {
 
   const [visible, setVisible] = useState(false)
 
-  const showModal = () => {
-    setVisible(true)
-  }
-
-  const handleCancel = e => {
-    setVisible(false)
-  }
+  useMemo(() => {
+    if(props.registration){
+      setFormTitle('Регистрация Вашей компании')
+      setButtonText('Зарегистрировать')
+    }
+    if(props.edit){
+      setFormTitle('Ваша компания')
+      setButtonText('Применить')
+      setIsDisabled(true)
+    }
+  }, [props])
 
   const createObjectFromState = () => {
     return {
@@ -74,14 +83,6 @@ const CompanyRegistration = ({ buttonText }) => {
       })
   }
 
-  const onChangeCountrySelect = (input, option) => {
-    setCountry(option.value)
-  }
-
-  const onChangeTypeSelect = (input, option) => {
-    setType(option.value)
-  }
-
   const handleCompanyTitle = (event) => {
     setTitle(event.target.value)
   }
@@ -90,16 +91,19 @@ const CompanyRegistration = ({ buttonText }) => {
     setUnp(event.target.value)
   }
 
-  const handlePhoneNumber = (event) => {
-    setPhoneNumber(event.target.value)
-  }
-
   const handleAdditionalPhoneNumber = (event) => {
     setAdditionalPhoneNumber(event.target.value)
   }
 
-  const handleAddress = (event) => {
-    setAddress(event.target.value)
+  const toggleEditMode = () => {
+    if (isEditMode) {
+      setIsEditMode(false)
+      setIsDisabled(true)
+    }
+    else {
+      setIsEditMode(true)
+      setIsDisabled(false)
+    }
   }
 
   const countryOptions = [
@@ -124,9 +128,10 @@ const CompanyRegistration = ({ buttonText }) => {
   ]
 
   return (
-    <Row style={{ height: 'calc(100vh - 64px)', padding: '20px' }} align={'top'} justify={'start'}>
-      <Col span={18} style={{ backgroundColor: '#fff', padding: '16px 32px' }} >
-        <Title style={{ marginBottom: '20px' }} level={4}>Регистрация Вашей компании</Title>
+    <React.Fragment>
+        <Title style={{ marginBottom: '20px' }} level={4}>
+          {formTitle}
+        </Title>
         <Form
           layout="vertical"
         >
@@ -141,6 +146,7 @@ const CompanyRegistration = ({ buttonText }) => {
                 <Input
                     value={title}
                     name='title'
+                    disabled={isDisabled}
                     placeholder={'Наименование организации'}
                 />
               </Form.Item>
@@ -155,6 +161,7 @@ const CompanyRegistration = ({ buttonText }) => {
                     name='unp'
                     value={unp}
                     placeholder={'УНП/ИНН'}
+                    disabled={isDisabled}
                 />
               </Form.Item>
               <Form.Item
@@ -166,7 +173,8 @@ const CompanyRegistration = ({ buttonText }) => {
                 <Input
                     name='email'
                     value={email}
-                    placeholder={'E-mail'}
+                    placeholder={'E-Mail'}
+                    disabled={isDisabled}
                 />
               </Form.Item>
               <Form.Item
@@ -179,6 +187,7 @@ const CompanyRegistration = ({ buttonText }) => {
                     name='site'
                     value={site}
                     placeholder={'Сайт'}
+                    disabled={isDisabled}
                 />
               </Form.Item>
               <Form.Item
@@ -191,6 +200,7 @@ const CompanyRegistration = ({ buttonText }) => {
                     name='description'
                     value={description}
                     placeholder={'Описание'}
+                    disabled={isDisabled}
                 />
               </Form.Item>
               <Form.Item
@@ -203,6 +213,7 @@ const CompanyRegistration = ({ buttonText }) => {
                     name='foundationDate'
                     value={foundationDate}
                     placeholder={'Дата основания'}
+                    disabled={isDisabled}
                 />
               </Form.Item>
             </Col>
@@ -217,6 +228,7 @@ const CompanyRegistration = ({ buttonText }) => {
                     value={country}
                     showSearch
                     placeholder='Страна'
+                    disabled={isDisabled}
                 >
                   {countryOptions}
                 </Select>
@@ -231,6 +243,7 @@ const CompanyRegistration = ({ buttonText }) => {
                     value={country}
                     showSearch
                     placeholder='Город'
+                    disabled={isDisabled}
                 >
                   {countryOptions}
                 </Select>
@@ -245,6 +258,7 @@ const CompanyRegistration = ({ buttonText }) => {
                     value={country}
                     showSearch
                     placeholder='Тип компании'
+                    disabled={isDisabled}
                 >
                   {typesOptions}
                 </Select>
@@ -259,6 +273,7 @@ const CompanyRegistration = ({ buttonText }) => {
                     name='address'
                     value={site}
                     placeholder={'Юр. адрес'}
+                    disabled={isDisabled}
                 />
               </Form.Item>
 
@@ -271,6 +286,7 @@ const CompanyRegistration = ({ buttonText }) => {
                     name='phone'
                     value={site}
                     placeholder={'Номер телефона: '}
+                    disabled={isDisabled}
                 />
               </Form.Item>
 
@@ -282,19 +298,38 @@ const CompanyRegistration = ({ buttonText }) => {
                     name='additionalPhoneNumber'
                     value={additionalPhoneNumber}
                     placeholder='Номер телефона (доп.)'
+                    disabled={isDisabled}
                 />
               </Form.Item>
             </Col>
           </Row>
 
-
           <Form.Item>
-            <Button type={'primary'}>Зарегистрировать</Button>
+            {props.registration && (
+                <Button type={'primary'}>Зарегистрировать</Button>
+            )}
+            {props.edit && (
+                <React.Fragment>
+                  {isEditMode ? (
+                      <React.Fragment>
+                        <Button
+                          onClick={toggleEditMode}
+                          type={'primary'}
+                          style={{ marginRight: '16px' }}
+                        >
+                          Применить
+                        </Button>
+                        <Button onClick={toggleEditMode}>Отмена</Button>
+                      </React.Fragment>
+                  ) : (
+                      <Button onClick={toggleEditMode} type={'primary'}>Редактировать</Button>
+                  )}
+                </React.Fragment>
+            )}
           </Form.Item>
         </Form>
-        </Col>
-      </Row>
+    </React.Fragment>
   )
 }
 
-export default withRouter(CompanyRegistration)
+export default withRouter(CompanyForm)

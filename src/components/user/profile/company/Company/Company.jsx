@@ -3,7 +3,7 @@ import {Table, Typography, Row, Col, Divider} from 'antd'
 import { withRouter } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCompanyProfile } from '../../../../../redux/actions/profile'
-import CompanyRegistration from '../CompanyRegistration/CompanyRegistration'
+import CompanyForm from '../CompanyRegistration/CompanyForm'
 import ChangeModal from '../../../settings/ChangeModal/ChangeModal'
 import {DivIcon} from "leaflet/dist/leaflet-src.esm";
 
@@ -53,69 +53,13 @@ const Company = (props) => {
     }
   }, [currentUser])
   return (
-      <Row style={{ height: 'calc(100vh - 64px)', padding: '20px' }}>
-        <Col span={24} style={{ backgroundColor: '#fff', padding: '16px 32px' }} >
+      <Row style={{ height: 'calc(100vh - 64px)', padding: '20px' }} align={"top"} justify={"start"}>
+        <Col span={18} style={{ backgroundColor: '#fff', padding: '16px 32px' }} >
           {Object.keys(company).length ? (
-              <React.Fragment>
-                <Title level={2} style={{ marginBottom: '30px' }}>Ваша компания: </Title>
-
-                <Row>
-                  <Col span={24}>
-                    <Row justify={'space-between'} align={'middle'}>
-                      <Col
-                        style={{ display: 'flex', flexDirection: 'column' }}
-                      >
-                        <Text style={labelStyles}>УНП</Text>
-                        <Text>{company.unp}</Text>
-                      </Col>
-                      <Col>
-                        <ChangeModal/>
-                      </Col>
-                    </Row>
-                  </Col>
-                  <Divider style={dividerStyles}/>
-                  <Col span={24}>
-                    <Row justify={"space-between"} align={'middle'}>
-                      <Col
-                        style={{ display: 'flex', flexDirection: 'column' }}
-                      >
-                        <Text style={labelStyles}>Название</Text>
-                        <Text>{company.title}</Text>
-                      </Col>
-                      <Col>
-                        <ChangeModal/>
-                      </Col>
-                    </Row>
-                  </Col>
-                  <Divider style={dividerStyles}/>
-                  <Col span={24}>
-                    <Row justify={"space-between"} align={'middle'}>
-                      <Col
-                        style={{ display: 'flex', flexDirection: 'column' }}
-                      >
-                        <Text style={labelStyles}>Контактный номер</Text>
-                        <Text>{company.phoneNumber}</Text>
-                      </Col>
-                      <Col>
-                        <ChangeModal/>
-                      </Col>
-                    </Row>
-                  </Col>
-                  <Divider style={dividerStyles}/>
-                </Row>
-                {/*{currentUser && (*/}
-                {/*  <Table style={{ marginBottom: '20px' }} showHeader={false} pagination={false} dataSource={companyData(company)}>*/}
-                {/*    <Column dataIndex="parameter" key="parameter" />*/}
-                {/*    <Column*/}
-                {/*      dataIndex="value"*/}
-                {/*      key="value"*/}
-                {/*    />*/}
-                {/*  </Table>*/}
-                {/*)}*/}
-              </React.Fragment>
+              <CompanyForm edit={true}/>
           ) : (
             <React.Fragment>
-              <CompanyRegistration />
+              <CompanyForm registration={true}/>
             </React.Fragment>
           )}
         </Col>
