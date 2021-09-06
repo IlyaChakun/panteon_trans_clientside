@@ -1,80 +1,52 @@
 import React from 'react'
-import { Button, Col, Divider, List, Row } from 'antd'
+import { Col, Row, Typography } from 'antd'
 import MessageModal from '../MessageModal/MessageModal'
 
-const CargoCardProxy = ({ cargo, currentUser, history, updateList }) => {
+const { Text, Title } = Typography
 
-  const randomViewCount = Math.floor(Math.random() * (1000 - 1) + 1)
+const colStyle = {
+  display: 'flex',
+  flexDirection: 'column'
+}
 
-  const priority = cargo.priority === undefined ? ('')
-    : (
-      <span style={{ color: cargo.priority.color }}>
-        {cargo.priority.title}
-      </span>
-    )
+const cardStyle = {
+  padding: '20px 30px 30px 30px',
+  width: '100%'
+}
+
+const lastColTextStyle = {
+  textAlign: 'right'
+}
+
+const textStyle = {
+  marginBottom: '14px'
+}
+
+const CargoCardProxy = ({ cargo, currentUser }) => {
 
   return (
-    <React.Fragment>
-      <Row gutter={16} style={{ width: '100%' }}>
-        <Col span={4}>
-          <strong>
-            { cargo.loadingPayload.address.countryId } - { cargo.unloadingPayload.address.countryId }
-          </strong>
-          <br />
-          {cargo.distance}
-          <br />
-        </Col>
-        <Col span={4}>
-          Из: { cargo.loadingPayload.address.address }
-        </Col>
-        <Col span={4}>
-          В: { cargo.unloadingPayload.address.address }
-        </Col>
-        <Col span={4}>
-          Описание: { cargo.description }
-        </Col>
-        {/*<Col span={4}>*/}
-        {/*  {cargo.cargoType}*/}
-        {/*  <br />*/}
-        {/*  {cargo.dimensions}*/}
-        {/*</Col>*/}
-        {/*<Col span={4}>*/}
-        {/*  {truckBodyTypes}*/}
-        {/*</Col>*/}
-        {/*<Col span={4}>*/}
-        {/*  {cargoStowageMethod}*/}
-        {/*</Col>*/}
-      </Row>
-      <Divider />
-      <Row gutter={16} style={{ width: '100%' }}>
-        <Col span={6}>
-          <strong style={{ color: 'black' }}>{cargo.status}</strong>
-        </Col>
-        {/*<Col span={6}>*/}
-        {/*  <strong style={{ color: 'black' }}>{cargo.payment}</strong>*/}
-        {/*</Col>*/}
-        {/*<Col span={6}>*/}
-        {/*  <span>Контакты:</span>*/}
-        {/*  <br />*/}
-        {/*  {cargo.contacts.name}*/}
-        {/*  <br />*/}
-        {/*  {cargo.contacts.phoneNumber}*/}
-        {/*</Col>*/}
-        <Col span={6}>
-          <span>Дата создания: {cargo.dateOfCreation}</span>
-          <br />
-          <span>Просмотров: {randomViewCount}</span>
-          <br />
-        </Col>
-      </Row>
-      <Row justify='start' style={{ width: '100%' }}>
-        <Col>
-          {currentUser && (currentUser.id !== cargo.owner) && (
-            <MessageModal cargoOwnerId={cargo.userId} currentUser={currentUser} />
-          )}
-        </Col>
-      </Row>
-    </React.Fragment>
+    <Row style={cardStyle}>
+      <Col span={8} style={colStyle}>
+        <Title level={5} style={textStyle}>{cargo.countryIndexFrom} - {cargo.countryIndexTo}</Title>
+        <Text style={textStyle}>{cargo.date}</Text>
+        <Text style={textStyle}>{cargo.time}</Text>
+      </Col>
+      <Col span={8} style={colStyle}>
+        <Text style={textStyle}>{cargo.addressFrom} &mdash; {cargo.addressTo}</Text>
+        <Text style={textStyle}>Транспорт: {cargo.transportType}</Text>
+        <Text style={textStyle}>{cargo.description}</Text>
+      </Col>
+      <Col span={8} style={{...colStyle}}>
+        <Text style={{...lastColTextStyle, ...textStyle}}>{cargo.distance} км</Text>
+        <Text style={{...lastColTextStyle, ...textStyle, color: '#40a9ff'}} strong>{cargo.cost} USD</Text>
+        <Text style={{...lastColTextStyle, ...textStyle, color: '#40a9ff'}} strong>{cargo.payment}</Text>
+      </Col>
+      {currentUser && (
+          <Col span={24} style={{ paddingTop: '10px' }}>
+            <MessageModal currentUser={currentUser} />
+          </Col>
+      )}
+    </Row>
   )
 }
 export default CargoCardProxy

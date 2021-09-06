@@ -41,10 +41,6 @@ const CargoList = (props) => {
     loadList(page, size)
   }, [page, size])
 
-  const updateList = () => {
-    loadList(page, size)
-  }
-
   const loadList = (page, size) => {
     const searchCriteria = {
       page: page,
@@ -62,18 +58,15 @@ const CargoList = (props) => {
     setPage(pageNumber)
   }
 
-  const loadMore = () => {
-    loadList(page + 1, size)
+  const cargosList = (cargosData) => {
+    return cargosData.map(cargo =>
+        <CargoCardProxy
+            key={cargo.id}
+            cargo={cargo}
+            currentUser={currentUser}
+        />
+    )
   }
-
-  const list = cargos.map(cargo =>
-    <CargoCardProxy
-      key={cargo.id}
-      cargo={cargo}
-      currentUser={currentUser}
-      updateList={updateList}
-    />
-  )
 
   const bodyTypeOptions = [
     <Option key={1} value={1}>
@@ -146,68 +139,69 @@ const CargoList = (props) => {
 
 
   return (
-    <div>
-      <Row style={{ width: '100%', padding: '30px' }}>
-        <Col span={6} style={{ backgroundColor: '#fff', padding: '20px' }}>
-          <Title level={4}>Поиск заявок</Title>
-          <Form
-            labelCol={{
-              span: 24,
-            }}
-            wrapperCol={{
-              span: 24,
-            }}
-          >
-            {search}
-          </Form>
-        </Col>
-        <Col span={18} style={{ backgroundColor: '#9e9e9e' }}>
-          <MapContainer style={{ width: '100%', height: '100%' }} center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
-            <TileLayer
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <Marker position={[51.505, -0.09]}>
-              <Popup>
-                A pretty CSS3 popup. <br /> Easily customizable.
-              </Popup>
-            </Marker>
-          </MapContainer>
-        </Col>
-      </Row>
-      <Row style={{ width: '100%', padding: '0 30px' }}>
-        <Col span={18} style={{ width: '100%' }}>
-          {currentUser && <Button type={'primary'}><Link style={{ textDecoration: 'none' }} to={'/cargos/add'}>Создать заявку</Link></Button>}
-          {!cargos.length ? (
-            <LoadingIndicator />
-          ) : (
-            <List
-              pagination={allowPagination ? {
-                showSizeChanger: true,
-                defaultCurrent: page || 1,
-                defaultPageSize: size || 6,
-                pageSizeOptions: ['6', '9', '12'],
-                position: 'bottom',
-                total: totalElements,
-                showQuickJumper: true,
-                onShowSizeChange: onSizeChangeHandler,
-                onChange: onPageChangeHandler,
-              } : false}
-              dataSource={list}
-              renderItem={item => (
-                <List.Item style={{ backgroundColor: '#fff', marginBottom: '25px', flexDirection: 'column', padding: '20px' }}>
-                  {item}
-                </List.Item>
-              )}
-            />
-          )}
-          {!allowPagination && (
-            <Link to={'/cargos'}><Button style={{ width: '100%' }}>Все грузы</Button></Link>
-          )}
-        </Col>
-      </Row>
-    </div>
-
+    <Row justify="center">
+      <Col md={24} lg={18}>
+        <Row style={{ width: '100%', padding: '30px' }}>
+          <Col span={6} style={{ backgroundColor: '#fff', padding: '20px' }}>
+            <Title level={4}>Поиск заявок</Title>
+            <Form
+              labelCol={{
+                span: 24,
+              }}
+              wrapperCol={{
+                span: 24,
+              }}
+            >
+              {search}
+            </Form>
+          </Col>
+          <Col span={18} style={{ backgroundColor: '#9e9e9e' }}>
+            <MapContainer style={{ width: '100%', height: '100%' }} center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+              <TileLayer
+                  attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              <Marker position={[51.505, -0.09]}>
+                <Popup>
+                  A pretty CSS3 popup. <br /> Easily customizable.
+                </Popup>
+              </Marker>
+            </MapContainer>
+          </Col>
+        </Row>
+        <Row style={{ width: '100%', padding: '0 30px' }}>
+          <Col span={24} style={{ width: '100%' }}>
+            {/*{currentUser && <Button type={'primary'}><Link style={{ textDecoration: 'none' }} to={'/cargos/add'}>Создать заявку</Link></Button>}*/}
+            {!cargos.length ? (
+              <LoadingIndicator />
+            ) : (
+              <List
+                pagination={allowPagination ? {
+                  showSizeChanger: true,
+                  defaultCurrent: page || 1,
+                  defaultPageSize: size || 6,
+                  pageSizeOptions: ['6', '9', '12'],
+                  position: 'bottom',
+                  total: totalElements,
+                  showQuickJumper: true,
+                  onShowSizeChange: onSizeChangeHandler,
+                  onChange: onPageChangeHandler,
+                } : false}
+                dataSource={cargosList(cargos)}
+                renderItem={item => (
+                  <List.Item style={{ backgroundColor: '#fff', padding: 0, marginBottom: '26px' }}>
+                    {item}
+                  </List.Item>
+                )}
+              />
+            )}
+            {!allowPagination && (
+              <Link to={'/cargos'}><Button style={{ width: '100%' }}>Все грузы</Button></Link>
+            )}
+          </Col>
+        </Row>
+      </Col>
+    </Row>
   )
 }
 

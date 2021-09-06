@@ -17,7 +17,8 @@ const getAllCargos = (searchCriteria) => {
           time: '11:11',
           description: 'тнп, 21 т, 83 м3, верхняя загрузка, верхняя выгрузка',
           cost: 1200,
-          payment: 'наличные, на выгрузке'
+          payment: 'наличные, на выгрузке',
+          distance: 1103
         },
         {
           countryIndexFrom: 'RU',
@@ -29,7 +30,8 @@ const getAllCargos = (searchCriteria) => {
           time: '11:11',
           description: 'тнп, 21 т, 83 м3, верхняя загрузка, верхняя выгрузка',
           cost: 1200,
-          payment: 'наличные, на выгрузке'
+          payment: 'наличные, на выгрузке',
+          distance: 1103
         },
         {
           countryIndexFrom: 'RU',
@@ -41,7 +43,8 @@ const getAllCargos = (searchCriteria) => {
           time: '11:11',
           description: 'тнп, 21 т, 83 м3, верхняя загрузка, верхняя выгрузка',
           cost: 1200,
-          payment: 'наличные, на выгрузке'
+          payment: 'наличные, на выгрузке',
+          distance: 1103
         },
         {
           countryIndexFrom: 'RU',
@@ -53,7 +56,8 @@ const getAllCargos = (searchCriteria) => {
           time: '11:11',
           description: 'тнп, 21 т, 83 м3, верхняя загрузка, верхняя выгрузка',
           cost: 1200,
-          payment: 'наличные, на выгрузке'
+          payment: 'наличные, на выгрузке',
+          distance: 1103
         },
         {
           countryIndexFrom: 'RU',
@@ -65,12 +69,13 @@ const getAllCargos = (searchCriteria) => {
           time: '11:11',
           description: 'тнп, 21 т, 83 м3, верхняя загрузка, верхняя выгрузка',
           cost: 1200,
-          payment: 'наличные, на выгрузке'
+          payment: 'наличные, на выгрузке',
+          distance: 1103
         }
       ]
     },
     totalPages: 1,
-    totalElements: 14
+    totalElements: 5
   }
   return Promise.resolve(cargos)
 }

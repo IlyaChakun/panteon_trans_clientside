@@ -22,48 +22,48 @@ const EditFormModal = ({isCargo, isTransport, style, transport, cargo}) => {
   const [visible, setVisible] = useState(false)
 
   const transportData = (transport) => [
-    {
-      key: '1',
-      parameter: `Грузоподъёмность: ${transport.truckDimensions.carryingCapacity}`,
-      control: {
-        carryingCapacity: true
-      }
-    },
-    {
-      key: '2',
-      parameter: `Объём: ${transport.truckDimensions.dimensions.volume}`,
-      control: {
-        volume: true
-      }
-    },
-    {
-      key: '3',
-      parameter: `Длина: ${transport.truckDimensions.dimensions.length}`,
-      control: {
-        length: true
-      }
-    },
-    {
-      key: '4',
-      parameter: `Высота: ${transport.truckDimensions.dimensions.height}`,
-      control: {
-        height: true
-      }
-    },
-    {
-      key: '5',
-      parameter: `Откуда: ${transport.loadingPayload.address.address}`,
-      control: {
-        addressFrom: true
-      }
-    },
-    {
-      key: '6',
-      parameter: `Куда: ${transport.unloadingPayload.address.address}`,
-      control: {
-        addressTo: true
-      }
-    },
+    // {
+    //   key: '1',
+    //   parameter: `Грузоподъёмность: ${transport.truckDimensions.carryingCapacity}`,
+    //   control: {
+    //     carryingCapacity: true
+    //   }
+    // },
+    // {
+    //   key: '2',
+    //   parameter: `Объём: ${transport.truckDimensions.dimensions.volume}`,
+    //   control: {
+    //     volume: true
+    //   }
+    // },
+    // {
+    //   key: '3',
+    //   parameter: `Длина: ${transport.truckDimensions.dimensions.length}`,
+    //   control: {
+    //     length: true
+    //   }
+    // },
+    // {
+    //   key: '4',
+    //   parameter: `Высота: ${transport.truckDimensions.dimensions.height}`,
+    //   control: {
+    //     height: true
+    //   }
+    // },
+    // {
+    //   key: '5',
+    //   parameter: `Откуда: ${transport.loadingPayload.address.address}`,
+    //   control: {
+    //     addressFrom: true
+    //   }
+    // },
+    // {
+    //   key: '6',
+    //   parameter: `Куда: ${transport.unloadingPayload.address.address}`,
+    //   control: {
+    //     addressTo: true
+    //   }
+    // },
   ];
 
   const createTransportFromState = () => {

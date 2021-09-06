@@ -3,97 +3,186 @@ const API_URL = 'http://config.panteontrans.be/api/transport-exchange-service/tr
 
 const getAllTransport = (searchCriteria) => {
 
-    // return (
-    //   {
-    //     objects: [
-    //       {
-    //         id: 1,
-    //         countryIndexFrom: 'BY',
-    //         countryIndexTo: 'BY',
-    //
-    //         from: 'Челябинск, Челябинская область',
-    //         to: 'Челябинская область\n' +
-    //           'Свердловская область\n' +
-    //           'Курганская область\n' +
-    //           'Тюменская область',
-    //
-    //
-    //         dimensions: '2т. 20м3 5.20 м • высота: 1.90 м • ширина: 2.10 м • 1 а/м',
-    //
-    //         cargoType: 'Напитки',
-    //
-    //         truckBodyTypes: [
-    //           {
-    //             truckBodyTypeName: 'Рефрижератор'
-    //           }
-    //         ],
-    //
-    //         cargoStowageMethods: [
-    //           {
-    //             stowageMethodName: 'задняя'
-    //           },
-    //           {
-    //             stowageMethodName: 'Боковая'
-    //           }
-    //         ],
-    //
-    //         dateOfCreation: '24.04.2021 17:10',
-    //
-    //         payment: '20 рос. руб./ км Удобная',
-    //
-    //         contacts: {
-    //           phoneNumber: '+375-29-877-77-75',
-    //           name: 'Николай'
-    //         }
-    //       },
-    //       {
-    //         id: 2,
-    //         countryIndexFrom: 'ES',
-    //         countryIndexTo: 'RU',
-    //
-    //         from: 'Таррагона Сарагоса ,08 Барселона',
-    //         to: 'Москва, Московская область\n' +
-    //           'Екатеринбург, Свердловская область\n' +
-    //           'Ростов-на-Дону, Ростовская область\n' +
-    //           'Санкт-Петербург, Ленинградская область\n',
-    //
-    //         dimensions: '23т. 92м3',
-    //
-    //         cargoType: 'Напитки',
-    //
-    //         truckBodyTypes: [
-    //           {
-    //             truckBodyTypeName: 'Тент'
-    //           },
-    //           {
-    //             truckBodyTypeName: 'Тягач с полуприцепом'
-    //           }
-    //         ],
-    //
-    //         cargoStowageMethods: [
-    //           {
-    //             stowageMethodName: 'задняя'
-    //           },
-    //           {
-    //             stowageMethodName: 'Боковая'
-    //           }
-    //         ],
-    //
-    //         dateOfCreation: '24.04.2021 17:06',
-    //
-    //         payment: 'Договорная',
-    //
-    //         contacts: {
-    //           phoneNumber: '+375-29-425-65-89',
-    //           name: 'Алёна'
-    //         }
-    //       }
-    //     ],
-    //     totalPages: 1,
-    //     totalElements: 2
-    //   }
-    // )
-  return axios.get(API_URL)
+  const transports = {
+    data: {
+      objects: [
+        {
+          ownerId: 1,
+          countryIndexFrom: 'RU',
+          countryIndexTo: 'BY',
+          addressesFrom: [
+            {
+              address: 'Москва (Московская обл.)',
+            },
+            {
+              address: 'Москва (Московская обл.)',
+            },
+            {
+              address: 'Москва (Московская обл.)',
+            },
+            {
+              address: 'Москва (Московская обл.)',
+            }
+          ],
+          addressesTo: [
+            {
+              address: 'Минск (Минск обл.)',
+            },
+            {
+              address: 'Минск (Минск обл.)',
+            }
+          ],
+          transportType: 'тент',
+          date: '19.10.2020',
+          time: '11:11',
+          description: 'тнп, 21 т, 83 м3, верхняя загрузка, верхняя выгрузка',
+          cost: 1200,
+          payment: 'наличные, на выгрузке',
+          distance: 1103
+        },
+        {
+          ownerId: 2,
+          countryIndexFrom: 'RU',
+          countryIndexTo: 'BY',
+          addressesFrom: [
+            {
+              address: 'Москва (Московская обл.)',
+            },
+            {
+              address: 'Москва (Московская обл.)',
+            },
+            {
+              address: 'Москва (Московская обл.)',
+            },
+            {
+              address: 'Москва (Московская обл.)',
+            }
+          ],
+          addressesTo: [
+            {
+              address: 'Минск (Минск обл.)',
+            },
+            {
+              address: 'Минск (Минск обл.)',
+            }
+          ],
+          transportType: 'рефрижератор',
+          date: '19.10.2020',
+          time: '11:11',
+          description: 'тнп, 21 т, 83 м3, верхняя загрузка, верхняя выгрузка',
+          cost: 1200,
+          payment: 'наличные, на выгрузке',
+          distance: 1103
+        },
+        {
+          ownerId: 3,
+          countryIndexFrom: 'RU',
+          countryIndexTo: 'BY',
+          addressesFrom: [
+            {
+              address: 'Москва (Московская обл.)',
+            },
+            {
+              address: 'Москва (Московская обл.)',
+            },
+            {
+              address: 'Москва (Московская обл.)',
+            },
+            {
+              address: 'Москва (Московская обл.)',
+            }
+          ],
+          addressesTo: [
+            {
+              address: 'Минск (Минск обл.)',
+            },
+            {
+              address: 'Минск (Минск обл.)',
+            }
+          ],
+          transportType: 'рефрижератор',
+          date: '19.10.2020',
+          time: '11:11',
+          description: 'тнп, 21 т, 83 м3, верхняя загрузка, верхняя выгрузка',
+          cost: 1200,
+          payment: 'наличные, на выгрузке',
+          distance: 1103
+        },
+        {
+          ownerId: 4,
+          countryIndexFrom: 'RU',
+          countryIndexTo: 'BY',
+          addressesFrom: [
+            {
+              address: 'Москва (Московская обл.)',
+            },
+            {
+              address: 'Москва (Московская обл.)',
+            },
+            {
+              address: 'Москва (Московская обл.)',
+            },
+            {
+              address: 'Москва (Московская обл.)',
+            }
+          ],
+          addressesTo: [
+            {
+              address: 'Минск (Минск обл.)',
+            },
+            {
+              address: 'Минск (Минск обл.)',
+            }
+          ],
+          transportType: 'рефрижератор',
+          date: '19.10.2020',
+          time: '11:11',
+          description: 'тнп, 21 т, 83 м3, верхняя загрузка, верхняя выгрузка',
+          cost: 1200,
+          payment: 'наличные, на выгрузке',
+          distance: 1103
+        },
+        {
+          ownerId: 5,
+          countryIndexFrom: 'RU',
+          countryIndexTo: 'BY',
+          addressesFrom: [
+            {
+              address: 'Москва (Московская обл.)',
+            },
+            {
+              address: 'Москва (Московская обл.)',
+            },
+            {
+              address: 'Москва (Московская обл.)',
+            },
+            {
+              address: 'Москва (Московская обл.)',
+            }
+          ],
+          addressesTo: [
+            {
+              address: 'Минск (Минск обл.)',
+            },
+            {
+              address: 'Минск (Минск обл.)',
+            }
+          ],
+          transportType: 'рефрижератор',
+          date: '19.10.2020',
+          time: '11:11',
+          description: 'тнп, 21 т, 83 м3, верхняя загрузка, верхняя выгрузка',
+          cost: 1200,
+          payment: 'наличные, на выгрузке',
+          distance: 1103
+        }
+      ]
+    },
+    totalPages: 1,
+    totalElements: 5
+  }
+  return Promise.resolve(transports)
+  // return axios.get(API_URL)
 }
 
 const addTransport = (transportData) => {
