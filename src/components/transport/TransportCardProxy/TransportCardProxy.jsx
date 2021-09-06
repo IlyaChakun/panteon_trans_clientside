@@ -1,71 +1,75 @@
 import React from 'react'
-import { Col, Divider, List, Row } from 'antd'
+import { Col, Row, Typography } from 'antd'
+import EditFormModal from "../../user/modal/EditFormModal/EditFormModal";
+import DeleteFormModal from "../../user/modal/DeleteFormModal/DeleteFormModal";
+import transport from "../../../redux/reducers/transport";
 
-const TransportCardProxy = ({ transport }) => {
-  // const truckBodyTypes =
-  //   transport.truckBodyTypes.map(bodyType => (
-  //     bodyType.truckBodyTypeName + ', '
-  //   )
-  //   )
-  //
-  // const cargoStowageMethod =
-  //   transport.cargoStowageMethods.map(method => (
-  //     method.stowageMethodName + ', '
-  //   )
-  //   )
+const { Text, Title } = Typography
 
-  const randomViewCount = Math.floor(Math.random() * (1000 - 1) + 1)
+const colStyle = {
+  display: 'flex',
+  flexDirection: 'column'
+}
+
+const cardStyle = {
+  padding: '20px 30px 30px 30px',
+  width: '100%'
+}
+
+const lastColTextStyle = {
+  textAlign: 'right'
+}
+
+const textStyle = {
+  marginBottom: '14px'
+}
+
+const TransportCardProxy = ({ transport, currentUser }) => {
 
   return (
-    <React.Fragment>
-      <Row gutter={16} style={{ width: '100%' }}>
-        <Col span={6}>
-          <strong>
-            {transport.loadingPayload.address.countryId} - {transport.unloadingPayload.address.countryId}
-          </strong>
+    <Row style={cardStyle}>
+      <Col span={6} style={colStyle}>
+        <Title level={5} style={textStyle}>{transport.countryIndexFrom} - {transport.countryIndexTo}</Title>
+        <Text>{transport.date}</Text>
+        <Text>&mdash;</Text>
+        <Text style={textStyle}>{transport.date}</Text>
+        <Text style={textStyle}>{transport.time}</Text>
+      </Col>
+      <Col span={6} style={colStyle}>
+        <Text style={textStyle} strong>Откуда:</Text>
+        {transport.addressesFrom !== [] && (
+            transport.addressesFrom.map((item, index) => (
+                <Text>{item.address}</Text>
+            ))
+        )}
+      </Col>
+      <Col span={6} style={colStyle}>
+        <Text style={textStyle} strong>Куда:</Text>
+        {transport.addressesTo !== [] && (
+            transport.addressesTo.map(item => (
+                <Text>{item.address}</Text>
+            ))
+        )}
+      </Col>
+      <Col span={6} style={{...colStyle}}>
+        <Text style={{...lastColTextStyle, ...textStyle, color: '#40a9ff'}} strong>{transport.cost} USD</Text>
+        <Text style={{...lastColTextStyle, ...textStyle, color: '#40a9ff'}} strong>{transport.payment}</Text>
+      </Col>
+      <Col span={6} style={{ paddingTop: '14px'}}>
+        <Text strong>Транспорт: </Text>
+        <Text>{transport.transportType}</Text>
+      </Col>
+      <Col span={6} style={{ paddingTop: '14px'}}>
+        <Text strong>Описание: </Text>
+        <Text>{transport.description}</Text>
+      </Col>
+      {currentUser.id === transport.ownerId && (
+        <Col span={24} style={{paddingTop: '10px'}}>
+          <EditFormModal style={{marginRight: '10px'}} transport={transport} isTransport={true}/>
+          <DeleteFormModal transport={transport} isTransport={true}/>
         </Col>
-        <Col span={6}>
-          { transport.loadingPayload.address.address }
-        </Col>
-        <Col span={6}>
-          { transport.unloadingPayload.address.address }
-        </Col>
-        <Col span={6}>
-          Грузоподъёмность: { transport.truckDimensions.carryingCapacity },
-          Объём: { transport.truckDimensions.dimensions.volume },
-          Длина: { transport.truckDimensions.dimensions.length },
-          Высота: { transport.truckDimensions.dimensions.height }
-        </Col>
-        {/*<Col span={4}>*/}
-        {/*  {truckBodyTypes}*/}
-        {/*</Col>*/}
-        {/*<Col span={4}>*/}
-        {/*  {cargoStowageMethod}*/}
-        {/*</Col>*/}
-      </Row>
-      <Divider />
-      <Row gutter={16} style={{ width: '100%' }}>
-        <Col span={8}>
-          <strong style={{ color: 'black' }}>{transport.payment}</strong>
-        </Col>
-        <Col span={8}>
-          <strong style={{ color: 'black' }}>{transport.payment}</strong>
-        </Col>
-        {/*<Col span={6}>*/}
-        {/*  <span>Контакты:</span>*/}
-        {/*  <br/>*/}
-        {/*  {transport.contacts.name}*/}
-        {/*  <br/>*/}
-        {/*  {transport.contacts.phoneNumber}*/}
-        {/*</Col>*/}
-        <Col span={8}>
-          <span>Дата создания: {transport.dateOfCreation}</span>
-          <br/>
-          <span>Просмотров: {randomViewCount}</span>
-          <br/>
-        </Col>
-      </Row>
-    </React.Fragment>
+      )}
+    </Row>
   )
 }
 export default TransportCardProxy

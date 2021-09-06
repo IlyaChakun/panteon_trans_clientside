@@ -25,7 +25,7 @@ const Profile = (props) => {
   if (!isAuthenticated) {
     return <Redirect to="/login" />
   }
-
+  console.log("path: ", props.location.pathname)
   return (
     <Layout style={{ height: 'calc(100vh - 64px)' }}>
       <Sider width={200}>
@@ -34,13 +34,32 @@ const Profile = (props) => {
           selectedKeys={[props.location.pathname]}
           style={{ height: '100%', borderRight: 0, textTransform: 'uppercase', fontWeight: 500, paddingTop: '10%' }}
         >
-          <Menu.Item key="/profile/orders"><Link style={{ textDecoration: 'none' }} to={'/profile/orders'}>заказы</Link></Menu.Item>
-          <Menu.Item key="/profile/docs"><Link style={{ textDecoration: 'none' }} to={'/profile/docs'}>документы</Link></Menu.Item>
-          <Menu.Item key="/profile/company"><Link style={{ textDecoration: 'none' }} to={'/profile/company'}>компания</Link></Menu.Item>
-          <Menu.Item key="/profile/cargos"><Link style={{ textDecoration: 'none' }} to={'/profile/cargos'}>заявки</Link></Menu.Item>
-          <Menu.Item key="/profile/transports"><Link style={{ textDecoration: 'none' }} to={'/profile/transports'}>транспорт</Link></Menu.Item>
-          <Menu.Item key="/profile/dialogs"><Link style={{ textDecoration: 'none' }} to={'/profile/dialogs'}>диалоги</Link></Menu.Item>
-          <Menu.Item key="/profile/settings"><Link style={{ textDecoration: 'none' }} to={'/profile/settings'}>профиль</Link></Menu.Item>
+          <Menu.Item key="/profile/orders">
+            <Link style={{ textDecoration: 'none' }} to={'/profile/orders'}>заказы</Link>
+          </Menu.Item>
+          <Menu.Item key="/profile/docs">
+            <Link style={{ textDecoration: 'none' }} to={'/profile/docs'}>документы</Link>
+          </Menu.Item>
+          <Menu.Item key="/profile/company">
+            <Link style={{ textDecoration: 'none' }} to={'/profile/company'}>компания</Link>
+          </Menu.Item>
+          <Menu.Item key="/profile/cargos">
+            <Link style={{ textDecoration: 'none' }} to={'/profile/cargos'}>заявки</Link>
+          </Menu.Item>
+          <Menu.Item
+              key={
+                props.location.pathname === "/profile/transports/trucks" ? "/profile/transports/trucks" :
+                    props.location.pathname === "/profile/transports/drivers" ? '/profile/transports/drivers' : '/profile/transports'
+              }
+          >
+            <Link style={{ textDecoration: 'none' }} to={'/profile/transports'}>транспорт</Link>
+          </Menu.Item>
+          <Menu.Item key="/profile/dialogs">
+            <Link style={{ textDecoration: 'none' }} to={'/profile/dialogs'}>диалоги</Link>
+          </Menu.Item>
+          <Menu.Item key="/profile/settings">
+            <Link style={{ textDecoration: 'none' }} to={'/profile/settings'}>профиль</Link>
+          </Menu.Item>
           <Menu.Item key="5" onClick={logOut}>выйти</Menu.Item>
         </Menu>
       </Sider>
@@ -58,7 +77,7 @@ const Profile = (props) => {
             <Route exact path='/profile/company' component={Company}/>
             <Route exact path='/profile/orders' component={Orders}/>
             <Route exact path='/profile/cargos' component={Cargos}/>
-            <Route exact path='/profile/transports' component={Transports}/>
+            <Route path='/profile/transports' component={Transports}/>
             <Route exact path='/profile/dialogs' component={Dialogs}/>
             <Route exact path='/profile/settings' component={Settings}/>
           </Switch>

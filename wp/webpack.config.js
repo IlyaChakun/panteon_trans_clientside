@@ -46,18 +46,21 @@ module.exports = {
             {
                 test: path.join(__dirname, '.'),
                 exclude: /(node_modules)/,
-                loader: 'babel-loader',
-                options: {
-                    presets: ['env', 'react', 'stage-2'],
-                    plugins: [
-                        ['import', {libraryName: "antd", style: true}]
-                    ]
-                },
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['env', 'react', 'stage-2'],
+                            plugins: [
+                                ['import', {libraryName: "antd", style: true}]
+                            ]
+                        }
+                    }
+                ]
             },
-
             {
                 test: /.jsx?$/,
-                loader: 'babel-loader',
+                use: ['babel-loader'],
                 exclude: /node_modules/,
             },
             {

@@ -13,7 +13,6 @@ import Login from '../components/user/login/Login/Login'
 import Home from '../components/home/Home/Home'
 import ReviewsList from '../components/company/review/ReviewsList/ReviewsList'
 import Profile from '../components/user/profile/Profile/Profile'
-import BreadCrumbComponent from '../components/common/Breadcrumb/BreadCrumb'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCurrentUser, logout } from '../redux/actions/auth'
 import LoadingIndicator from '../components/common/LoadingIndicator/LoadingIndicator'
@@ -23,10 +22,8 @@ import TransportList from '../components/transport/TransportList/TransportList'
 import Registration from '../components/user/registration/Registration/Registration'
 import News from '../components/news/News/News'
 import CompanyProfile from '../components/company/CompanyProfile/CompanyProfile'
-import AddForm from '../components/user/modal/AddForm/AddForm'
 import AddTransport from '../components/transport/AddTransport/AddTransport'
 import AddCargo from '../components/cargo/AddCargo/AddCargo'
-import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet";
 
 const { Content } = Layout
 

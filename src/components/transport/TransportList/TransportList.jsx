@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, withRouter } from 'react-router-dom'
-import { Button, Col, Form, Input, List, Row, Select } from 'antd'
+import { Button, Col, Form, Input, List, Row, Select, Typography } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { useQueryParam, NumberParam } from 'use-query-params'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
@@ -15,6 +15,8 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import icon from 'leaflet/dist/images/marker-icon.png'
 import iconShadow from 'leaflet/dist/images/marker-shadow.png'
+
+const { Title } = Typography
 
 let DefaultIcon = L.icon({
   iconUrl: icon,
@@ -68,23 +70,13 @@ const TransportList = (props) => {
     setPage(pageNumber)
   }
 
-  const loadMore = () => {
-    loadList(page + 1, size)
-  }
-
   const transportList = (transportsData) => {
     return transportsData.map(transport =>
-      <React.Fragment>
-        <TransportCardProxy
-          key={transport.id}
-          transport={transport}
-          updateList={updateList}
-        />
-        <Row style={{ width: '100%' }}>
-          <EditFormModal style={{marginRight: '10px'}} transport={transport} isTransport={true} />
-          <DeleteFormModal transport={transport} isTransport={true} />
-        </Row>
-      </React.Fragment>
+      <TransportCardProxy
+        key={transport.id}
+        transport={transport}
+        currentUser={currentUser}
+      />
     )
   }
 
@@ -184,68 +176,69 @@ const TransportList = (props) => {
   )
 
   return (
-
-    <div>
-      <Row style={{ width: '100%', padding: '30px' }}>
-        <Col span={6} style={{ backgroundColor: '#fff' }}>
-          <Form
-            labelCol={{
-              span: 24
-            }}
-            wrapperCol={{
-              span: 24
-            }}
-            style={{ padding: '20px' }}
-          >
-            {search}
-          </Form>
-        </Col>
-        <Col span={18} >
-          <MapContainer style={{ width: '100%', height: '100%' }} center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
-            <TileLayer
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <Marker position={[51.505, -0.09]}>
-              <Popup>
-                A pretty CSS3 popup. <br /> Easily customizable.
-              </Popup>
-            </Marker>
-          </MapContainer>
-        </Col>
-      </Row>
-      <Row style={{ width: '100%', padding: '0 30px' }}>
-        <Col span={24}>
-          {currentUser && <Button type={'primary'}><Link style={{ textDecoration: 'none' }} to={'/transports/add'}>Добавить транспорт</Link></Button>}
-          {!transports.length ? (
-            <LoadingIndicator />
-          ) : (
-            <List
-              pagination={allowPagination ? {
-                showSizeChanger: true,
-                defaultCurrent: page || 1,
-                defaultPageSize: size || 6,
-                pageSizeOptions: ['6', '9', '12'],
-                position: 'bottom',
-                total: totalElements,
-                showQuickJumper: true,
-                onShowSizeChange: onSizeChangeHandler,
-                onChange: onPageChangeHandler,
-              } : false}
-              dataSource={transportList(transports)}
-              renderItem={item => (
-                <List.Item style={{ backgroundColor: '#fff', marginBottom: '25px', flexDirection: 'column', padding: '20px' }}>
-                  {item}
-                </List.Item>
-              )}
-            />
-          )}
-          {!allowPagination && (
-            <Link to={'/transports'}><Button style={{ width: '100%' }}>Весь транспорт</Button></Link>
-          )}
-        </Col>
-      </Row>
-    </div>
+    <Row justify="center">
+      <Col md={24} lg={18}>
+        <Row style={{ width: '100%', padding: '30px' }}>
+          <Col span={6} style={{ backgroundColor: '#fff', padding: '20px' }}>
+            <Title level={4}>Поиск транспорта</Title>
+            <Form
+              labelCol={{
+                span: 24
+              }}
+              wrapperCol={{
+                span: 24
+              }}
+            >
+              {search}
+            </Form>
+          </Col>
+          <Col span={18} >
+            <MapContainer style={{ width: '100%', height: '100%' }} center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+              <TileLayer
+                  attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              <Marker position={[51.505, -0.09]}>
+                <Popup>
+                  A pretty CSS3 popup. <br /> Easily customizable.
+                </Popup>
+              </Marker>
+            </MapContainer>
+          </Col>
+        </Row>
+        <Row style={{ width: '100%', padding: '0 30px' }}>
+          <Col span={24}>
+            {/*{currentUser && <Button type={'primary'}><Link style={{ textDecoration: 'none' }} to={'/transports/add'}>Добавить транспорт</Link></Button>}*/}
+            {!transports.length ? (
+              <LoadingIndicator />
+            ) : (
+              <List
+                pagination={allowPagination ? {
+                  showSizeChanger: true,
+                  defaultCurrent: page || 1,
+                  defaultPageSize: size || 6,
+                  pageSizeOptions: ['6', '9', '12'],
+                  position: 'bottom',
+                  total: totalElements,
+                  showQuickJumper: true,
+                  onShowSizeChange: onSizeChangeHandler,
+                  onChange: onPageChangeHandler,
+                } : false}
+                dataSource={transportList(transports)}
+                renderItem={item => (
+                  <List.Item style={{ backgroundColor: '#fff', padding: 0, marginBottom: '26px' }}>
+                    {item}
+                  </List.Item>
+                )}
+              />
+            )}
+            {!allowPagination && (
+              <Link to={'/transports'}><Button style={{ width: '100%' }}>Весь транспорт</Button></Link>
+            )}
+          </Col>
+        </Row>
+      </Col>
+    </Row>
 
   )
 }

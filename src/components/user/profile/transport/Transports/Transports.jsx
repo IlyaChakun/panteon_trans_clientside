@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Form, Input, message, Select, Steps, Row, Col, Typography, Divider, Tabs } from 'antd'
-import { withRouter, Link } from 'react-router-dom'
-import TransportCardProxy from '../../../../transport/TransportCardProxy/TransportCardProxy'
+import React, { useEffect } from 'react'
+import { Row, Col, Tabs, Menu} from 'antd'
+import {withRouter, Link, Route, Redirect, Switch} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProfileTransports } from '../../../../../redux/actions/profile'
-import EditFormModal from '../../../modal/EditFormModal/EditFormModal'
-import DeleteFormModal from '../../../modal/DeleteFormModal/DeleteFormModal'
+import Trucks from "../Trucks/Trucks";
+import Drivers from "../Drivers/Drivers";
 
 const { TabPane } = Tabs
 
-const Cargos = (props) => {
+const Transports = (props) => {
   const dispatch = useDispatch()
   const { transports } = useSelector(state => state.profileState)
   const { currentUser } = useSelector(state => state.authState)
+
+  console.log("transports path: ", props.location.pathname)
 
   useEffect(() => {
     if (currentUser) {
@@ -27,30 +28,24 @@ const Cargos = (props) => {
   return (
     <Row style={{ height: 'calc(100vh - 64px)', padding: '20px' }} >
       <Col span={24} style={{ backgroundColor: '#fff', padding: '16px 32px' }} >
-        <Tabs defaultActiveKey="1" centered>
-          <TabPane tab="Мой автопарк" key="1">
-            <Button type={"primary"}><Link style={{ textDecoration: 'none' }} to={'/transports/add'}>Добавить транспорт</Link></Button>
-            {transports.length &&
-            transports.map((transport) => (
-                    <Row style={{ backgroundColor: '#fff', marginBottom: '20px', padding: '15px' }}>
-                      <Row>
-                        <TransportCardProxy transport={transport}/>
-                      </Row>
-                      <Row>
-                        <EditFormModal style={{marginRight: '10px'}} transport={transport} isTransport={true} />
-                        <DeleteFormModal transport={transport} isTransport={true} />
-                      </Row>
-                    </Row>
-                )
-            )}
-          </TabPane>
-          <TabPane tab="Водители" key="2">
-            Content of Tab Pane 2
-          </TabPane>
-        </Tabs>
+        <Menu
+            mode="horizontal"
+            selectedKeys={[props.location.pathname]}
+            style={{ marginBottom: '20px' }}
+        >
+          <Menu.Item key="/profile/transports/trucks"><Link style={{ textDecoration: 'none' }} to={'/profile/transports/trucks'}>Мой автопарк</Link></Menu.Item>
+          <Menu.Item key="/profile/transports/drivers"><Link style={{ textDecoration: 'none' }} to={'/profile/transports/drivers'}>Водители</Link></Menu.Item>
+        </Menu>
+        <React.Fragment>
+          <Switch>
+            <Route exact path='/profile/transports' render={() => <Redirect to='/profile/transports/trucks' />}/>
+            <Route exact path='/profile/transports/trucks' component={Trucks}/>
+            <Route exact path='/profile/transports/drivers' component={Drivers}/>
+          </Switch>
+        </React.Fragment>
       </Col>
-    </Row>
+     </Row>
   )
 }
 
-export default withRouter(Cargos)
+export default withRouter(Transports)

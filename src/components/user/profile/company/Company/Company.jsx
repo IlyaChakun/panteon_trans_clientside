@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import { Table, Typography } from 'antd'
+import {Table, Typography, Row, Col, Divider} from 'antd'
 import { withRouter } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCompanyProfile } from '../../../../../redux/actions/profile'
-import CompanyRegistration from '../CompanyRegistration/CompanyRegistration'
+import CompanyForm from '../CompanyRegistration/CompanyForm'
 import ChangeModal from '../../../settings/ChangeModal/ChangeModal'
+import {DivIcon} from "leaflet/dist/leaflet-src.esm";
 
-const { Column } = Table;
+const { Title, Text } = Typography
 
-const { Title } = Typography
+const dividerStyles = {
+  margin: '14px 0'
+}
+
+const labelStyles = {
+  marginBottom: '8px',
+  fontSize: '12px',
+  color: '#a3a3a3'
+}
 
 const Company = (props) => {
   const dispatch = useDispatch()
@@ -44,26 +53,17 @@ const Company = (props) => {
     }
   }, [currentUser])
   return (
-    <React.Fragment>
-      {Object.keys(company).length ? (
-          <React.Fragment>
-            <Title level={2}>Ваша компания: </Title>
-            {currentUser && (
-              <Table style={{ marginBottom: '20px' }} showHeader={false} pagination={false} dataSource={companyData(company)}>
-                <Column dataIndex="parameter" key="parameter" />
-                <Column
-                  dataIndex="value"
-                  key="value"
-                />
-              </Table>
-            )}
-          </React.Fragment>
-      ) : (
-        <React.Fragment>
-          <CompanyRegistration />
-        </React.Fragment>
-      )}
-    </React.Fragment>
+      <Row style={{ height: 'calc(100vh - 64px)', padding: '20px' }} align={"top"} justify={"start"}>
+        <Col span={18} style={{ backgroundColor: '#fff', padding: '16px 32px' }} >
+          {Object.keys(company).length ? (
+              <CompanyForm edit={true}/>
+          ) : (
+            <React.Fragment>
+              <CompanyForm registration={true}/>
+            </React.Fragment>
+          )}
+        </Col>
+      </Row>
   )
 }
 
