@@ -1,21 +1,25 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { Button, Form, Input, Modal, Select, Row, Col, notification, Typography, DatePicker } from 'antd'
-import { addCargo } from '../../../../redux/actions/cargo'
 import { useDispatch, useSelector } from 'react-redux'
-import { addTransport } from '../../../../redux/actions/transport'
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import {MapContainer, TileLayer, Marker, Popup, MapConsumer} from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+// import icon from 'leaflet/dist/images/marker-icon.png';
+// import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import Routing from "../../../../map/Routing/Routing";
 
-let DefaultIcon = L.icon({
-  iconUrl: icon,
-  shadowUrl: iconShadow
+const icon = L.icon({
+  iconUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-icon.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-shadow.png"
 })
 
-L.Marker.prototype.options.icon = DefaultIcon
+// let DefaultIcon = L.icon({
+//   iconUrl: icon,
+//   shadowUrl: iconShadow
+// })
+//
+// L.Marker.prototype.options.icon = DefaultIcon
 
 const { Title } = Typography
 const { Option } = Select
@@ -30,6 +34,11 @@ const AddForm = ({isCargo, isTransport, style}) => {
   const { currentUser } = useSelector(state => state.authState)
 
   const [isLoading, setLoading] = useState(false)
+  const markers = []
+
+  const addMarker = (e) => {
+    setMarkers(prevMarkers => [...prevMarkers, e.latlng])
+  }
 
   // const [carryingCapacity, setCarryingCapacity] = useState('')
   // const [volumeTransport, setVolumeTransport] = useState('')
@@ -272,16 +281,37 @@ const AddForm = ({isCargo, isTransport, style}) => {
                   </Row>
                 </Col>
                 <Col span={16}>
-                  <MapContainer style={{ width: '100%', height: '100%' }} center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+                  <MapContainer
+                    style={{ width: '100%', height: '100%' }}
+                    center={[51.505, -0.09]}
+                    zoom={13}
+                    scrollWheelZoom={false}
+                    onClick={addMarker}
+                  >
                     <TileLayer
                         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
-                    <Marker position={[51.505, -0.09]}>
-                      <Popup>
-                        A pretty CSS3 popup. <br /> Easily customizable.
-                      </Popup>
-                    </Marker>
+
+                    <MapConsumer>
+                      {(map) => {
+                        map.on("click", (e) => {
+                          const { lat, lng } = e.latlng
+                          const marker = L.marker([lat, lng], { icon }).addTo(map)
+                          markers.push(marker)
+
+                          if(markers.length >= 2) {
+                            const routing = L.Routing.control({
+                              waypoints: markers.map(marker => L.latLng(marker.getLatLng().lat, marker.getLatLng().lng)),
+                              routeWhileDragging: true
+                            }).addTo(map)
+                            console.log('routing: ', routing)
+                          }
+                        })
+                        return null
+                      }}
+                    </MapConsumer>
+
                   </MapContainer>
                 </Col>
               </Row>
