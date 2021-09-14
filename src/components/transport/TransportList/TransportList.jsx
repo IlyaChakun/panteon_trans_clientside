@@ -73,7 +73,6 @@ const TransportList = (props) => {
   const transportList = (transportsData) => {
     return transportsData.map(transport =>
       <TransportCardProxy
-        key={transport.id}
         transport={transport}
         currentUser={currentUser}
       />

@@ -16,6 +16,8 @@ import {registration} from "../../../../redux/actions/auth";
 const Registration = (props) => {
 
   const [email, setEmail] = useState({ value: '' })
+  const [name, setName] = useState({ value: '' })
+  const [lastname, setLastName] = useState({ value: '' })
   const [password, setPassword] = useState({ value: '' })
   const [repeatPassword, setRepeatPassword] = useState({ value: '' })
 
@@ -23,14 +25,14 @@ const Registration = (props) => {
   const { isAuthenticated } = useSelector(state => state.authState)
 
   const handleSubmit = (values) => {
-    dispatch(registration(values))
-        .then((data) => {
-          console.log('got data:', data)
-        })
-        .catch(error => {
-          console.log('error:', error)
-        })
-    console.log('Received values of form:', values)
+    // dispatch(registration(values))
+    //     .then((data) => {
+    //       console.log('got data:', data)
+    //     })
+    //     .catch(error => {
+    //       console.log('error:', error)
+    //     })
+    console.log('Received values of form:', { user: { ...values, roles: [ "user" ] } })
   }
 
   const handlePasswordChange = (event) => {
@@ -86,10 +88,8 @@ const Registration = (props) => {
           <Form.Item
               name='firstName'
               label={'Имя:'}
-              rules={[{ required: true, message: localizedStrings.alertBadEmail }]}
-              onChange={handleEmailChange}
-              validateStatus={email.validateStatus}
-              help={email.errorMsg}
+              rules={[{ required: true, message: 'Пожалуйста, введите Ваше имя' }]}
+              onChange={(e) => { setName({ value: e.target.value })}}
           >
             <Input
                value={email.value}
@@ -100,10 +100,8 @@ const Registration = (props) => {
           <Form.Item
               name='lastName'
               label={'Фамилия:'}
-              rules={[{ required: true, message: localizedStrings.alertBadEmail }]}
-              onChange={handleEmailChange}
-              validateStatus={email.validateStatus}
-              help={email.errorMsg}
+              rules={[{ required: true, message: 'Пожалуйста, введите Вашу фамилию' }]}
+              onChange={(e) => { setLastName({ value: e.target.value })}}
           >
             <Input
                value={email.value}
@@ -130,7 +128,7 @@ const Registration = (props) => {
           </Form.Item>
 
           <Form.Item
-            name='password_repeat'
+            name='confirmedPassword'
             label={'Повторите пароль:'}
             rules={[{ required: true, message: localizedStrings.alertBadPassword }]}
             onChange={handleRepeatPasswordChange}
@@ -138,8 +136,7 @@ const Registration = (props) => {
             help={repeatPassword.errorMsg}
           >
             <Input.Password
-              autoComplete={'current-password'}
-              name='password_repeat'
+              name='confirmedPassword'
               type='password'
               value={repeatPassword.value}
               placeholder={'Повторите пароль:'}

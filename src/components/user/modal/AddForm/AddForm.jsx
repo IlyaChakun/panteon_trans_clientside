@@ -149,7 +149,7 @@ const AddForm = ({isCargo, isTransport, style}) => {
     //       })
     //       console.log('error: ', error)
     //     })
-
+    //
     // }
     // else {
     //   dispatch(addTransport(createTransportFromState())).then((data) => {

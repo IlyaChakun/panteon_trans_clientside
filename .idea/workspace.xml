@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f192d2f1-ed20-49ce-b365-80d1538368ef" name="Default Changelist" comment="refactor cargos and transports cards">
-      <change afterPath="$PROJECT_DIR$/src/map/Routing/Routing.jsx" afterDir="false" />
+    <list default="true" id="f192d2f1-ed20-49ce-b365-80d1538368ef" name="Default Changelist" comment="add routing to map">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/transport/AddDriver/AddDriver.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/transport/AddDriver/AddDriver.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/transport/TransportList/TransportList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/transport/TransportList/TransportList.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/user/modal/AddForm/AddForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/modal/AddForm/AddForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/registration/Registration/Registration.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/registration/Registration/Registration.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,7 +19,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="refactor_fields" />
+        <entry key="$PROJECT_DIR$" value="refactor_cargos" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -38,10 +38,11 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -58,6 +59,23 @@
       <recent name="D:\panteon_trans_clientside\src\map\Routing" />
     </key>
   </component>
+  <component name="RunManager">
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.start" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -72,7 +90,9 @@
       <workItem from="1630589812314" duration="2282000" />
       <workItem from="1630676207874" duration="1522000" />
       <workItem from="1630913017594" duration="15034000" />
-      <workItem from="1630999960076" duration="7393000" />
+      <workItem from="1630999960076" duration="8866000" />
+      <workItem from="1631090199363" duration="12000" />
+      <workItem from="1631602601759" duration="10894000" />
     </task>
     <task id="LOCAL-00001" summary="add transport routing">
       <created>1630335775031</created>
@@ -109,7 +129,14 @@
       <option name="project" value="LOCAL" />
       <updated>1630943346162</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="add routing to map">
+      <created>1631013609755</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1631013609755</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -132,6 +159,7 @@
     <MESSAGE value="refactor fields" />
     <MESSAGE value="refactor cargos" />
     <MESSAGE value="refactor cargos and transports cards" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor cargos and transports cards" />
+    <MESSAGE value="add routing to map" />
+    <option name="LAST_COMMIT_MESSAGE" value="add routing to map" />
   </component>
 </project>
