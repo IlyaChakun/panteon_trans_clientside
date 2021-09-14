@@ -5,21 +5,24 @@ import { useDispatch, useSelector } from 'react-redux'
 import {MapContainer, TileLayer, Marker, Popup, MapConsumer} from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-// import icon from 'leaflet/dist/images/marker-icon.png';
-// import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import 'leaflet-geosearch/dist/geosearch.css'
+import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import Routing from "../../../../map/Routing/Routing";
+import MapSearchField from '../../../../map/MapSearchField/MapSearchField'
 
-const icon = L.icon({
-  iconUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-icon.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-shadow.png"
+// const icon = L.icon({
+//   iconUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-icon.png",
+//   shadowUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-shadow.png"
+// })
+
+let defaultIcon = L.icon({
+  iconUrl: icon,
+  shadowUrl: iconShadow
 })
 
-// let DefaultIcon = L.icon({
-//   iconUrl: icon,
-//   shadowUrl: iconShadow
-// })
-//
-// L.Marker.prototype.options.icon = DefaultIcon
+L.Marker.prototype.options.icon = defaultIcon
 
 const { Title } = Typography
 const { Option } = Select
@@ -35,10 +38,6 @@ const AddForm = ({isCargo, isTransport, style}) => {
 
   const [isLoading, setLoading] = useState(false)
   const markers = []
-
-  const addMarker = (e) => {
-    setMarkers(prevMarkers => [...prevMarkers, e.latlng])
-  }
 
   // const [carryingCapacity, setCarryingCapacity] = useState('')
   // const [volumeTransport, setVolumeTransport] = useState('')
@@ -286,31 +285,35 @@ const AddForm = ({isCargo, isTransport, style}) => {
                     center={[51.505, -0.09]}
                     zoom={13}
                     scrollWheelZoom={false}
-                    onClick={addMarker}
                   >
                     <TileLayer
                         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
+                    <MapSearchField />
+                    {/*<MapConsumer>*/}
+                    {/*  {(map) => {*/}
+                    {/*    console.log('111')*/}
+                    {/*    const search = new GeoSearchControl({*/}
+                    {/*      provider: new OpenStreetMapProvider(),*/}
+                    {/*    })*/}
+                    {/*    map.addControl(search)*/}
+                    {/*    map.on("click", (e) => {*/}
+                    {/*      const { lat, lng } = e.latlng*/}
+                    {/*      const marker = L.marker([lat, lng], { icon }).addTo(map)*/}
+                    {/*      markers.push(marker)*/}
 
-                    <MapConsumer>
-                      {(map) => {
-                        map.on("click", (e) => {
-                          const { lat, lng } = e.latlng
-                          const marker = L.marker([lat, lng], { icon }).addTo(map)
-                          markers.push(marker)
-
-                          if(markers.length >= 2) {
-                            const routing = L.Routing.control({
-                              waypoints: markers.map(marker => L.latLng(marker.getLatLng().lat, marker.getLatLng().lng)),
-                              routeWhileDragging: true
-                            }).addTo(map)
-                            console.log('routing: ', routing)
-                          }
-                        })
-                        return null
-                      }}
-                    </MapConsumer>
+                    {/*      if(markers.length >= 2) {*/}
+                    {/*        const routing = L.Routing.control({*/}
+                    {/*          waypoints: markers.map(marker => L.latLng(marker.getLatLng().lat, marker.getLatLng().lng)),*/}
+                    {/*          routeWhileDragging: true*/}
+                    {/*        }).addTo(map)*/}
+                    {/*        console.log('routing: ', routing)*/}
+                    {/*      }*/}
+                    {/*    })*/}
+                    {/*    return null*/}
+                    {/*  }}*/}
+                    {/*</MapConsumer>*/}
 
                   </MapContainer>
                 </Col>
