@@ -1,7 +1,7 @@
 import {
   PROFILE_SET_CARGOS,
   PROFILE_SET_TRANSPORT,
-  PROFILE_SET_COMPANY, PROFILE_CLEAR
+  PROFILE_SET_COMPANY, PROFILE_CLEAR, PROFILE_SET_DRIVERS
 } from '../actions/types'
 
 import ProfileService from '../../service/ProfileService'
@@ -34,6 +34,21 @@ export const getProfileTransports = (userId) => (dispatch) => {
     .catch((error) => {
       return Promise.reject(error)
     })
+}
+
+export const getProfileDrivers = (companyId) => (dispatch) => {
+  return ProfileService.getCompanyDrivers(companyId)
+      .then(response => {
+        dispatch({
+          type: PROFILE_SET_DRIVERS,
+          payload: response
+        })
+        console.log('transport data: ', response)
+        return Promise.resolve(response)
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
 }
 
 export const getCompanyProfile = (userId) => (dispatch) => {

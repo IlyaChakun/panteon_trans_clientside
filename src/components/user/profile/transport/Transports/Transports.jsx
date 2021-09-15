@@ -6,8 +6,6 @@ import { getProfileTransports } from '../../../../../redux/actions/profile'
 import Trucks from "../Trucks/Trucks";
 import Drivers from "../Drivers/Drivers";
 
-const { TabPane } = Tabs
-
 const Transports = (props) => {
   const dispatch = useDispatch()
   const { transports } = useSelector(state => state.profileState)

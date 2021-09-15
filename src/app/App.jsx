@@ -22,7 +22,7 @@ import TransportList from '../components/transport/TransportList/TransportList'
 import Registration from '../components/user/registration/Registration/Registration'
 import News from '../components/news/News/News'
 import CompanyProfile from '../components/company/CompanyProfile/CompanyProfile'
-import AddTransport from '../components/transport/AddTransport/AddTransport'
+import AddTransport from '../components/user/profile/drivers/AddTransport/AddTransport'
 import AddCargo from '../components/cargo/AddCargo/AddCargo'
 
 const { Content } = Layout

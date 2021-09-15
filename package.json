@@ -14,6 +14,8 @@
     "axios": "^0.21.1",
     "bootstrap": "^5.1.0",
     "leaflet": "^1.7.1",
+    "leaflet-geosearch": "^3.5.0",
+    "leaflet-routing-machine": "^3.2.12",
     "query-string": "^7.0.1",
     "react": "^17.0.2",
     "react-chat-engine": "^1.10.17",

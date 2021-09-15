@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="f192d2f1-ed20-49ce-b365-80d1538368ef" name="Default Changelist" comment="refactor cargos">
+    <list default="true" id="15d10008-66d9-42a5-9037-264c5284d9f1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/user/profile/drivers/DriverCard/DriverCard.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/user/profile/drivers/DriverList/DriverList.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/cargo/CargoCardProxy/CargoCardProxy.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cargo/CargoCardProxy/CargoCardProxy.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/cargo/CargoList/CargoList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cargo/CargoList/CargoList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/transport/TransportCardProxy/TransportCardProxy.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/transport/TransportCardProxy/TransportCardProxy.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/transport/TransportList/TransportList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/transport/TransportList/TransportList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/user/modal/EditFormModal/EditFormModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/modal/EditFormModal/EditFormModal.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/CargoService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/CargoService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/TransportService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/TransportService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/transport/AddDriver/AddDriver.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/profile/drivers/AddDriver/AddDriver.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/transport/AddTransport/AddTransport.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/profile/drivers/AddTransport/AddTransport.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/modal/DeleteFormModal/DeleteFormModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/modal/DeleteFormModal/DeleteFormModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/profile/transport/Drivers/Drivers.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/profile/transport/Drivers/Drivers.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/profile/transport/Transports/Transports.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/profile/transport/Transports/Transports.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/types.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/types.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/ProfileService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/ProfileService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/wp/webpack.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,22 +23,9 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="refactor_fields" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitSEFilterConfiguration">
-    <file-type-list>
-      <filtered-out-file-type name="LOCAL_BRANCH" />
-      <filtered-out-file-type name="REMOTE_BRANCH" />
-      <filtered-out-file-type name="TAG" />
-      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
-    </file-type-list>
-  </component>
-  <component name="ProjectId" id="1xR7WtGhb6K5w8HxM60LjcIZa1p" />
+  <component name="ProjectId" id="1y8SJ6i0y61Tr2ajoU0Y9TWZwxx" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -45,61 +35,43 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.standard" value="true" />
-    <property name="node.js.detected.package.tslint" value="true" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.standard" value="" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.JavaScript" />
     <property name="ts.external.directory.path" value="D:\panteon_trans_clientside\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\panteon_trans_clientside\src\components\user\profile\drivers" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.start" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f192d2f1-ed20-49ce-b365-80d1538368ef" name="Default Changelist" comment="" />
-      <created>1630306083719</created>
+      <changelist id="15d10008-66d9-42a5-9037-264c5284d9f1" name="Default Changelist" comment="" />
+      <created>1631631655698</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1630306083719</updated>
-      <workItem from="1630306086173" duration="11077000" />
-      <workItem from="1630392356869" duration="17930000" />
-      <workItem from="1630484532603" duration="7090000" />
-      <workItem from="1630589812314" duration="2282000" />
-      <workItem from="1630676207874" duration="1522000" />
-      <workItem from="1630913017594" duration="14626000" />
+      <updated>1631631655698</updated>
+      <workItem from="1631631658988" duration="1051000" />
+      <workItem from="1631694395907" duration="8945000" />
     </task>
-    <task id="LOCAL-00001" summary="add transport routing">
-      <created>1630335775031</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1630335775031</updated>
-    </task>
-    <task id="LOCAL-00002" summary="refactor fields">
-      <created>1630421998505</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1630421998505</updated>
-    </task>
-    <task id="LOCAL-00003" summary="refactor fields">
-      <created>1630594178555</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1630594178555</updated>
-    </task>
-    <task id="LOCAL-00004" summary="refactor cargos">
-      <created>1630922078657</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1630922078657</updated>
-    </task>
-    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -115,12 +87,5 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="add transport routing" />
-    <MESSAGE value="refactor fields" />
-    <MESSAGE value="refactor cargos" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor cargos" />
   </component>
 </project>

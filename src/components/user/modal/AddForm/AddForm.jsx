@@ -1,21 +1,28 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { Button, Form, Input, Modal, Select, Row, Col, notification, Typography, DatePicker } from 'antd'
-import { addCargo } from '../../../../redux/actions/cargo'
 import { useDispatch, useSelector } from 'react-redux'
-import { addTransport } from '../../../../redux/actions/transport'
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import {MapContainer, TileLayer, Marker, Popup, MapConsumer} from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import 'leaflet-geosearch/dist/geosearch.css'
+import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import Routing from "../../../../map/Routing/Routing";
+import MapSearchField from '../../../../map/MapSearchField/MapSearchField'
 
-let DefaultIcon = L.icon({
+// const icon = L.icon({
+//   iconUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-icon.png",
+//   shadowUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-shadow.png"
+// })
+
+let defaultIcon = L.icon({
   iconUrl: icon,
   shadowUrl: iconShadow
 })
 
-L.Marker.prototype.options.icon = DefaultIcon
+L.Marker.prototype.options.icon = defaultIcon
 
 const { Title } = Typography
 const { Option } = Select
@@ -30,6 +37,7 @@ const AddForm = ({isCargo, isTransport, style}) => {
   const { currentUser } = useSelector(state => state.authState)
 
   const [isLoading, setLoading] = useState(false)
+  const markers = []
 
   // const [carryingCapacity, setCarryingCapacity] = useState('')
   // const [volumeTransport, setVolumeTransport] = useState('')
@@ -141,7 +149,7 @@ const AddForm = ({isCargo, isTransport, style}) => {
     //       })
     //       console.log('error: ', error)
     //     })
-
+    //
     // }
     // else {
     //   dispatch(addTransport(createTransportFromState())).then((data) => {
@@ -272,16 +280,41 @@ const AddForm = ({isCargo, isTransport, style}) => {
                   </Row>
                 </Col>
                 <Col span={16}>
-                  <MapContainer style={{ width: '100%', height: '100%' }} center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+                  <MapContainer
+                    style={{ width: '100%', height: '100%' }}
+                    center={[51.505, -0.09]}
+                    zoom={13}
+                    scrollWheelZoom={false}
+                  >
                     <TileLayer
                         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
-                    <Marker position={[51.505, -0.09]}>
-                      <Popup>
-                        A pretty CSS3 popup. <br /> Easily customizable.
-                      </Popup>
-                    </Marker>
+                    <MapSearchField />
+                    {/*<MapConsumer>*/}
+                    {/*  {(map) => {*/}
+                    {/*    console.log('111')*/}
+                    {/*    const search = new GeoSearchControl({*/}
+                    {/*      provider: new OpenStreetMapProvider(),*/}
+                    {/*    })*/}
+                    {/*    map.addControl(search)*/}
+                    {/*    map.on("click", (e) => {*/}
+                    {/*      const { lat, lng } = e.latlng*/}
+                    {/*      const marker = L.marker([lat, lng], { icon }).addTo(map)*/}
+                    {/*      markers.push(marker)*/}
+
+                    {/*      if(markers.length >= 2) {*/}
+                    {/*        const routing = L.Routing.control({*/}
+                    {/*          waypoints: markers.map(marker => L.latLng(marker.getLatLng().lat, marker.getLatLng().lng)),*/}
+                    {/*          routeWhileDragging: true*/}
+                    {/*        }).addTo(map)*/}
+                    {/*        console.log('routing: ', routing)*/}
+                    {/*      }*/}
+                    {/*    })*/}
+                    {/*    return null*/}
+                    {/*  }}*/}
+                    {/*</MapConsumer>*/}
+
                   </MapContainer>
                 </Col>
               </Row>
