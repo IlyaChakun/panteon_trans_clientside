@@ -1,13 +1,11 @@
 import React from 'react'
-import AddDriver from "../../../../transport/AddDriver/AddDriver"
 import {withRouter} from "react-router-dom";
+import DriverList from "../../drivers/DriverList/DriverList";
 
 const Drivers = () => {
 
     return (
-        <React.Fragment>
-            <AddDriver/>
-        </React.Fragment>
+        <DriverList/>
     )
 }
 

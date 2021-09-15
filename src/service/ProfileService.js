@@ -304,6 +304,55 @@ const companies = {
   totalElements: 2
 }
 
+const driversData = {
+  objects: [
+    {
+      id: 1,
+      user: {
+        email: 'email@yandex.by',
+        firstName: 'Имя',
+        lastName: 'Фамилия'
+      },
+      passportSeries: 'MP',
+      passportNumber: '7777777'
+
+    },{
+      id: 2,
+      user: {
+        email: 'email@yandex.by',
+        firstName: 'Имя',
+        lastName: 'Фамилия'
+      },
+      passportSeries: 'MP',
+      passportNumber: '7777777'
+
+    },{
+      id: 3,
+      user: {
+        email: 'email@yandex.by',
+        firstName: 'Имя',
+        lastName: 'Фамилия'
+      },
+      passportSeries: 'MP',
+      passportNumber: '7777777'
+
+    },{
+      id: 4,
+      user: {
+        email: 'email@yandex.by',
+        firstName: 'Имя',
+        lastName: 'Фамилия'
+      },
+      passportSeries: 'MP',
+      passportNumber: '7777777'
+
+    },
+
+  ],
+  totalPages: 1,
+  totalElements: 4
+}
+
 //не предусмотрено фунционалом rest api (все три фукнции)
 const getProfileCargos = (userId) => {
   const cargos = cargosData.objects.filter(item => item.owner == userId)
@@ -319,9 +368,14 @@ const getCompanyProfile = (userId) => {
   const company = companies.objects.find(item => item.owner.id == userId)
   return company ? Promise.resolve(company) : Promise.reject('error getting profile company')
 }
+const getCompanyDrivers = (companyId) => {
+  // const drivers = driversData.objects.filter(item => item.owner == userId)
+  return Promise.resolve(driversData);
+}
 
 export default {
   getProfileCargos,
   getProfileTransport,
-  getCompanyProfile
+  getCompanyProfile,
+  getCompanyDrivers
 }

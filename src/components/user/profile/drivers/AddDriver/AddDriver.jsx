@@ -11,10 +11,6 @@ const AddDriver = () => {
     setIsModalVisible(true)
   }
 
-  const handleOk = () => {
-    setIsModalVisible(false)
-  }
-
   const handleCancel = () => {
     setIsModalVisible(false)
   }
@@ -48,7 +44,6 @@ const AddDriver = () => {
                       }
                     }
                     console.log('Values:', transformedObj);
-                    // form.resetFields();
                   })
                   .catch(info => {
                     console.log('Validate Failed:', info);

@@ -4,7 +4,7 @@ import { addCargo, deleteCargo } from '../../../../redux/actions/cargo'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteTransport } from '../../../../redux/actions/transport'
 
-const DeleteFormModal = ({isCargo, isTransport, cargo, transport, style}) => {
+const DeleteFormModal = ({isCargo, isTransport, isDriver, cargo, transport, driver, style}) => {
   const dispatch = useDispatch()
 
   const [isLoading, setLoading] = useState(false)
@@ -27,11 +27,35 @@ const DeleteFormModal = ({isCargo, isTransport, cargo, transport, style}) => {
         setVisible(false)
       })
     }
-    else {
+    else if (isTransport) {
       dispatch(deleteTransport(transport.id)).then((data) => {
         console.log('transport: ', data)
         setVisible(false)
       })
+    }
+  }
+
+  const title = () => {
+    if (isCargo) {
+      return 'Удалить груз'
+    }
+    if (isTransport) {
+      return 'Удалить транспорт'
+    }
+    else if (isDriver) {
+      return 'Удалить водителя'
+    }
+  }
+
+  const content = () => {
+    if (isCargo) {
+      return 'груз?'
+    }
+    if (isTransport) {
+      return 'транспорт'
+    }
+    else if (isDriver) {
+      return 'водителя'
     }
   }
 
@@ -45,7 +69,7 @@ const DeleteFormModal = ({isCargo, isTransport, cargo, transport, style}) => {
         {'Удалить'}
       </Button>
       <Modal
-        title={isCargo ? 'Удалить груз' : 'Удалить транспорт'}
+        title={title()}
         visible={visible}
         cancelText='Отменить'
         okText={'Удалить'}
@@ -55,7 +79,7 @@ const DeleteFormModal = ({isCargo, isTransport, cargo, transport, style}) => {
         okButtonProps={{ danger: true }}
       >
         <Row>
-          <p>Вы уверены, что хотите удалить {isCargo ? 'груз' : 'транспорт'}?</p>
+          <p>Вы уверены, что хотите удалить {content()}?</p>
         </Row>
       </Modal>
     </React.Fragment>

@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Typography } from 'antd'
 
-import AddForm from '../../user/modal/AddForm/AddForm'
+import AddForm from '../../../modal/AddForm/AddForm'
 
 const { Title } = Typography
 
